@@ -1,0 +1,32 @@
+---- 사전작업(공통) ----
+1. src > db(패키지) > JdbcUtil 맨들기
+2. WebContent > META-INF > context.xml 만들기 (복붙)
+3. pakage 만들기 (action, ctrl, dao, svc, vo )
+4. 각 패키지에 기본 필요한 파일 가져오기(복분)
+	- action > action.java 
+	- vo > ActionForward.java
+	- vo > PageInfo.java
+
+
+---- 본격시작(머 만들때 또 처음할거...) ----
+1. vo 생성
+	- 디비 컬럼대로 변수 선언하고 getter/setter
+2. dao 생성
+	- 기본적인거 먼저 만들기 (변수, 생성자, getInstance, connection) / 다른데서 복복
+	- 쿼리만들고 sql 가져와주는 메소드 만드는 곳
+3. svc 생성
+	- action 이랑 dao 랑 연결해주는 애
+	- 일단 만들어만 두기 (약간 기능별로 만들어져야할듯? dao 랑 거의 동일)
+4. ctrl 생성 (페이지 띄워줄)
+	- doProcess 만들고 다른데서 복사 (페이지 포워딩처리)
+5. action 생성
+	- 페이징 보여주는쪽 (~~~.jsp)
+
+
+---- 찐 시작 ----
+[test_list.jsp]
+1. jsp (html) 만들기
+2. dao 필요한 쿼리 만들어서 가져오는 메소드
+3. action - 쿼리를 가져와서 페이지로 값 보내주는 작업 하기
+4. svc - action 이랑 dao 연결해주는 메소드 만들기
+4. jsp - request 값 이용해서 뿌려주기

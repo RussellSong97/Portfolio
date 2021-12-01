@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$(":text").focus(function() {	// type="text" 인 요소에 포커스가 들어오면
+			$(this).css("background", "yellow");
+			// 이벤트를 일으킨 주체(focus이벤트가 발생한 객체)의 배경색을 'yellow'로 변경
+		});
+		$(":text").blur(function() {	// type="text" 인 요소에서 포커스가 나가면
+			$(this).css("background", "white");
+			// 이벤트를 일으킨 주체(blur이벤트가 발생한 객체)의 배경색을 'white'로 변경
+		});
+		$(":text").select(function() {
+			alert("text marked");
+		});
+		$("form").submit(function() {
+			alert("제출 완료");
+		});
+	});
+	</script>
+</head>
+<body>
+<form name="frm">
+Name : <input type="text" name="name" /><br />
+Mail : <input type="text" name="mail" /><br />
+<input type="submit" value="Submit" />
+</form>
+</body>
+</html>

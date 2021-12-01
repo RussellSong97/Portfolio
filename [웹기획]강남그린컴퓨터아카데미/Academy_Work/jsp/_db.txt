@@ -1,0 +1,127 @@
+DB(MySQL)와 자바와의 연동
+ - 'C:\Program Files (x86)\MySQL\Connector J 8.0 \ mysql-connector-java-8.0.23.jar' 파일을 프로젝트 폴더의 'lib' 폴더에 복사 
+
+ - 커넥터 버전 5.1x 이하 
+String driver = "com.mysql.jdbc.Driver";
+String url = "jdbc:mysql://localhost:3306/DB명";
+
+ - 커넥터 버전 6.x 이상
+String driver = "com.mysql.cj.jdbc.Driver";
+String url = "jdbc:mysql://localhost:3306/DB명?useUnicode=true&characterEncoding=UTF-8&";
+url += "verifyServerCertificate=false&useSSL=false&serverTimezone=UTC";
+
+ - localhost는 같은 컴퓨터 내에 웹서버와 DB서버가 쓰였다는 의미로 사용한 것이며, 서버가 다를 경우 localhost 대신 IP 주소를 입력
+	웹서버와 DB서버가 같은 컴퓨터일 경우 'lcoalhost' 대신 '127.0.0.1'로 사용해도 됨
+
+ - Connection 객체로 DB서버의 특정 DB와 연결함
+
+ - DB관련 객체 및 메소드 사용시 무조건 예외처리(try-catch문 사용)를 해야 함.
+	거의 모든 메소드가 throws SQLException 으로 선언되어 있음
+	throws SQLException : 본 메소드 사용시 SQLException 예외가 발생해도 예외처리를 하지 않고 메소드를 호출한 곳으로 예외처리를 넘긴다는 의미 
+	그러므로 DB관련 메소드 호출시 반드시 try-catch 문 안에서 호출해야 함
+
+ - DB관련 객체 및 메소드를 사용한 후에는 반드시 close()메소드를 이용하여 닫아야 함
+	그래서 close()메소드는 try-catch문에서 finally영역에서 닫는 경우가 많다.
+
+
+1. java.sql.Statement 인터페이스
+ - db에 sql문을 전달해주는 객체로 Connection객체가 열어놓은 통로로 쿼리를 전달 
+ - 주요 메소드
+리턴타입	메소드명 및 설명
+void	close() : Statement 객체를 닫음(하나의 쿼리 실행 후 반드시 닫아줌)
+Result	excuteQuery(String sql) : 쿼리문들 중 select문을 처리함
+ - 쿼리의 결과를 table 형식으로 Resultset 객체에 담아 리턴
+int		excuteUpdate(String sql) : insert, update, delete 쿼리들을 실행
+ - 리턴값은 쿼리 처리결과로 각각 입력, 수정, 삭제된 레코드의 개수를 리턴
+
+
+2. java.sql.PreparedStatement 인터페이스
+ - Statement 인터페이스를 상속받아 사용하는 인터페이스
+ - Statement 인터페이스와 동일하게 쿼리 실행작업을 함
+	단, Statement 인터페이스와 다르게 값을 파라미터로 전달하여 작업함
+	파라미터들의 인덱스 번호는 0이 아닌 1부터 시작
+	파라미터의 값들은 set~() 메소드를 이용하여 설정함
+ - Statement 인터페이스보다 반복적인 작업을 할 경우 좀 더 유리함
+	지정할 값이 많을 경우에도 사용하기 편함
+ - 주요 메소드는 Statement 인터페이스와 동일
+
+
+3. java.sql.CallableStatement 인터페이스
+ - PreparedStatement 인터페이스를 상속받아 사용하는 인터페이스
+ - db의 stored procedure 를 실행시켜주는 Statement 객체
+ - 사용법은 PreparedStatement와 같이 파라미터 전달방법으로 실행함
+
+
+4. java.sql.ResultSet 인터페이스
+ - 쿼리들 중 select문을 실행한 결과를 받아오는 객체
+ - 테이블 모양으로 받아오며 컬럼명 또는 인덱스 번호를 이용하여 데이터에 접근할 수 있음
+ - 주요 매서드
+리턴타입      매서드명 및 설명
+void		close() : ResultSet 객체를 닫음
+XXX         getXXX(int columIndex) : ResultSet에서 columnIndex에 해당하는 컬럼의 값을 해당 자료형으로 리턴
+ - 컬럼 인덱스 번호는 0이 아닌 1부터 시작
+XXX         getXXX(String columName) : ResultSet에서 columnName에 해당하는 컬럼의 값을 해당 자료형으로 리턴
+ - XXX : 자료형으로 DB에서 데이터를 받을 때 지정함(예:getInt(), getString() 등)
+ - 리턴타입 XXX의 매서드들은 오버로딩이므로 이에 관한 용어는 찾아서 익힐것
+boolean      next() : ResultSet의 다음 행으로 커서를 내림(다음 행에 데이터가 있으면 true, 없다면 false)
+ - 일반적으로 루프문 등의 조건으로 사용되며, ResultSet을 사용하면 무조건 최소 한 번은 사용해야 하는 매서드
+ - ResultSet에 데이터가 들어 있는지 여부를 판단하는 데에도 사용됨
+
+4-1. java.sql.ResultSetMetaData 
+ - ResultSet으로 받아온 레코드들의 메타 정보(컬럼 개수, 컬럼  명 컬럼 타입, 등)를 제공해 주는 객체
+ - 주요 메소드
+리턴타입		메소드명 및 설명
+int			getColumnCount() : ResultSet에 저장되어 있는 컬럼의 개수를 리턴
+String		getColumnLabel(int column) : 해당 번호의 컬럼 레이블을 리턴
+String		getColumnName(int column) : 해당 번호의 컬럼 이름을 리턴
+String		getColumnTypeName(int column) : 해당 번호의 컬럼 데이터 타입을 리턴
+ - int column : 컬럼 인덱스 번호로 1번 부터 시작
+
+4-2. ResultSet의 커서 자유롭게 움직이기
+ - 기본적으로 ResultSet은 생성한 후 커서는 전진(next())만 가능 
+ - 단, Statement 생성시 매개변수로 ResultSet에 특정 상수를 사용하면 커서의 자유로운 이동이 가능함
+ - 사용빈도가 높은 편은 아님
+ - 상수값
+static int CONCUR_READ_ONLY : 데이터 변경이 불가능 
+static int CONCUR_UPDATABLE : 데이터 변경이 가능 
+static int TYPE_FORWARD_ONLY : 다름 레코드로만 이동가능(기본값)
+static int TYPE_SCROLL_INSENSITIVE : 커서 이동이 자유롭고 업데이트 내용을 반영함
+static int TYPE_SCROLL_SENSITIVE : 커서 이동이 자유롭고 업데이트 내용을 반영 안함
+ - TYPE_SCROLL_INSENSITIVE 나 TYPE_SCROLL_SENSITIVE를 사용해야 커서를 자유롭게 움직일 수 있음
+
+ - 주요 메소드(ResultSet의 메소드들로 특정 상수 사용시에만 사용가능한 메소드들)
+boolean		absolute(int row) : 지정한 row 행으로 커서를 이동 
+void		afterLast() : 커서를 마지막 레코드의 다음(EOF, 레코드 아님)
+void		beforeLast() : 커서를 첫 레코드의 이전(BOF, 레코드 아님)
+boolean		first() : 커서를 첫 레코드로 이동
+boolean		last() : 커서를 마지막 레코드로 이동
+boolean		next() : 커서를 다음 레코드로 이동
+boolean		previous() : 커서를 이전 레코드로 이동
+
+
+5. 트랜잭션(Transaction) 사용
+ - Connection 객체의 기능으로 여러 개의 쿼리를 실행했을 때 모든 쿼리가 정상적으로 동작되는지 여부를 감시한 후 여러 개들 중 하나라도 오류가 발생하면 모든 쿼리의 실행을 취소시켜 원상태로 복귀 시키는 기능
+ 	all or nothing 이라고도 하며 ATM기에서 인출하는 등의 기능에 사용됨
+ - 여러 개의 쿼리가 한 번에 실행되는 기능에서는 필수로 사용해야 하며 특히 결제관련 기능이나 보안 관련 기능에서는 필히 사용해야 함
+ 	결제관련, 회원관련, 상품관련 등의 기능에서 주로 사용됨
+ - 쿼리의 적용 시점이 여러 쿼리 실행 후 이므로 속도가 느리다는 단점이 있어 꼭 필요한 부분에만 걸어서 작업해야 함
+ - 주요 메소드(Connection 객체의 메소드들)
+리턴타입		메소드명 및 설명
+void		commit() : 트랜잭션 시작 후 실행시켰던 쿼리들을 모두 적용시키는 메소드 
+void		rollback() : 트랜잭션 시작 후 실행시켰던 쿼리들을 모두 취소시키는 메소드 (실행 이전 상태로 복귀시킴)
+void		setAutoCommit(booblean autoCommit)
+ : 자동으로 모든 쿼리를 commit 시킬 것인지 여부를 지정하는 메소드로 기본값은 true
+ : 기본적으로 모든 쿼리는 실행 후 바로 적용되며, 트랜잭션을 사용하려면 false 로 지정해야 함
+ : 트랜잭션의 시작으로 setAutoCommit(false)를 실행하고, setAutoCommit(true)로 종료
+
+
+
+
+
+
+
+
+
+
+
+

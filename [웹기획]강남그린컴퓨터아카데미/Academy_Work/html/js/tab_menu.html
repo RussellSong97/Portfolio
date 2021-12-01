@@ -1,0 +1,76 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+		.menu { width:300px; height:200px; }
+		#menu1 { background-color : red; }
+		#menu2 { background-color : green; display:none; }
+		#menu3 { background-color : blue; display:none; }
+
+	</style>
+	<script> 
+		var cmenu = "menu1";		// 처음 보일 메뉴의 id
+
+		function showMenu(str) { 
+			// 1. 눌린 버튼에 해당하는 메뉴는 보여주고, 눌리지 않은 버튼의 베뉴는 숨김
+			/*
+			var menu1 = document.getElementById("menu1");	// 현 문서에서 id가 "menu1"인 요소를 받아와서 menu1에 넣음
+			var menu2 = document.getElementById("menu2");
+			var menu3 = document.getElementById("menu3");
+			if (str == "menu1") {
+				menu1.style.display = "block";
+				menu2.style.display = "none";
+				menu3.style.display = "none";
+			} else if (str == "menu2") {
+				menu1.style.display = "none";
+				menu2.style.display = "block";
+				menu3.style.display = "none";
+			} else if (str == "menu3") {
+				menu1.style.display = "none";
+				menu2.style.display = "none";
+				menu3.style.display = "block";
+			}
+			*/
+
+
+			// 2. 모든 메뉴를 숨긴 후 눌린 버튼에 해당하는 메뉴를 보여줌
+			/*
+			var menu1 = document.getElementById("menu1");
+			var menu2 = document.getElementById("menu2");
+			var menu3 = document.getElementById("menu3");
+			menu1.style.display = "none";
+			menu2.style.display = "none";
+			menu3.style.display = "none";
+			var obj = document.getElementById(str);
+			obj.style.display = "block";
+			*/
+			
+			// 2. 모든 메뉴를 숨긴 후 눌린 버튼에 해당하는 메뉴를 보여줌 (for)
+			for (var i = 0; i<document.getElementsByClassName("menu").length ; i++ )  {
+				document.getElementsByClassName("menu")[i].style.display = "none";
+			}
+			var obj = document.getElementById(str);
+			obj.style.display = "block";
+			
+
+			/*
+			// 3. 현재 보이는 메뉴를 숨기고 눌른 버튼에 해당하는 메뉴를 보여줌
+			var obj1 = document.getElementById(cmenu);	// 현재 보이는 메뉴의 객체를 받아옴
+			obj1.style.display = "none";				// 현재 보이는 메뉴객체를 숨김
+			var obj2 = document.getElementById(str);	// 버튼을 누른 메뉴 객체를 보여줌
+			obj2.style.display = "block";				// 현재 보이는 메뉴 객체의 이름을 변경
+			cmenu = str;								// 현재 보이는 메뉴 객체의 이름을 변경
+			*/
+		}
+	</script>
+</head>
+<body>
+
+<input type="button" value="메뉴1" onclick="showMenu('menu1')" />
+<input type="button" value="메뉴2" onclick="showMenu('menu2')" />
+<input type="button" value="메뉴3" onclick="showMenu('menu3')" />
+<div class="menu" id="menu1"></div>
+<div class="menu" id="menu2"></div>
+<div class="menu" id="menu3"></div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+공지사항
+
+	1. ctrl : 컨트롤러 (서블릿)
+	2. vo : NoticeInfo
+	3. ctrl : url(파일명)을 가져와 해당 페이지의 각 Action 연결
+	4. action : NoticeListAction
+					- NoticeListSvc 호출
+	5. svc : NoticeListSvc
+	6. dao : NoticeDao

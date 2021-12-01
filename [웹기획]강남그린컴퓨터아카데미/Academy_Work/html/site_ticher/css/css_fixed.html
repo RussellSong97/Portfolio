@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	h2 { background:silver; color:white; }
+	.pBox { background:yellow; padding:10px; }
+	#fix {
+		width:300px; height:120px; background:aqua;
+		position:fixed; bottom:0; right:0; margin:0; 
+	}
+	</style>
+</head>
+<body>
+<h2>Fixed Position</h2>
+<p id="fix">absolute와 유사하나 fixed로 지정한 요소는 body태그를 기준으로 배치된다. 그럴경우 본문 요소들이 많아서 스크롤바가 생겨도 fixed로 지정한 요소는 항상 같을 위치에 배치될 수 있다.</p>
+
+<p class="pBox">이 방식은 IE6 이하의 버전에서는 제대로 동작하지 않으며 이하 버전 사용시 자바스크립트이 도움을 받아야 함</p>
+
+<p class="pBox">오프셋 지정 방식은 다른 요소와 동일하며 top, right, bottom, left 모두를 사용할 수 있다.</p>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

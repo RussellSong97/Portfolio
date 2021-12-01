@@ -1,0 +1,144 @@
+브라우저 객체(BOM : Browser Object Model)
+ - 웹브라우저가 가진 모든 객체를 의미
+ - 최상위에 window객체가 있고 하위로 document, frames[], history, location, navigator, screen의 6개 객체가 존재
+
+1. window 객체
+ - 모든 브라우저에서 지원되며, 브라우저 창을 나타내는 객체이다.
+ - 전역 변수나 함수 등은 자동으로 window객체의 멤버가 됨
+
+ - 주요 속성
+자료형	속성명 및 설명
+boolean	closed : 창이 닫혀 있는지 여부
+number	innerHeight : 내용 영역의 높이값(px)
+number	innerWidth : 내용 영역의 넓이값(px)
+number	length : 현재 창의 <iframe> 요소 수
+String	name : 창 이름(frame 또는 팝업창, 새 창의 name)으로 리턴받거난 설정할 수 있음
+number	outerHeight : 각종 도구모음, 스크롤 바 등을 포함한 창 외부의 높이값(px)
+number	outerWidth : 각종 도구모음, 스크롤 바 등을 포함한 창 외부의 넓이값(px)
+Object	parent : 현재 창(frame)의 부모 창을 리턴
+number	screenX : 화면을 기준으로 한 X좌표값
+number	screenY : 화면을 기준으로 한 Y좌표값
+Object	top : 가장 위의 브라우저 창을 리턴
+
+ - 주요 메소드 : window.메소드명();
+alert() : 메시지 전달용 상자로 [확인]버튼만 존재 - window. 을 생략해도 됨
+blur() : 현재 창에서 포커스를 제거
+clearInterval() : setInterval()로 지정한 타이머 셋을 삭제
+clearTimeout() : setTimeout()으로 지정한 타이머 셋을 삭제
+close() : 현재 창을 닫음
+confirm() : 사용자에게 확인을 받는 메시지 박스로 [확인]과 [취소]버튼 존재 - window. 을 생략해도 됨
+focus() : 현재 창에 포커스를 설정
+moveBy() : 현재 위치를 기준으로 창을 이동시킴
+moveTo() : 지정한 위치로 창을 이동시킴
+open() : 새 창이나 팝업창을 염
+prompt() : 사용자에게 문자열을 입력받는 메시지 박스 - window. 을 생략해도 됨
+resizeBy() : 지정된 픽셀을 기준으로 창의 크기를 조절
+resizeTo() : 지정된 넓이와 높이로 창의 크기를 조절
+setInterval() : 지정된 간격(밀리초)으로 지정된 작업을 수행함
+setTimeout() : 지정된 밀리초 후에 함수 등을 호출함
+stop() : 창의 로딩을 중단시킴
+
+1-1. screen 객체
+ - 사용자 화면에 대한 정보를 담고 있는 객체
+ - 메소드는 없으며 속성들만 존재하는 객체
+ - 주요 속성
+자료형	속성명 및 설명
+number	screen.width : 화면의 넓이
+number	screen.height : 화면의 높이
+number	screen.availWidth : 작업 표시줄 등의 인터페이스를 제외한 화면 넓이
+number	screen.availHeihgt : 작업 표시줄 등의 인터페이스를 제외한 화면 높이
+number	screen.colorDepth : 색상을 표현하는 비트 수
+number	screen.pixelDepth : 해상도를 표현하는 비트 수
+
+1-2. location 객체
+ - 현재 페이지 주소에 대한 정보를 담고 있는 객체
+ - 공개된 표준은 없으나 대부분의 주요 브라우저에서 지원해줌
+ - 주요 속성
+자료형	속성명 및 설명
+String	location.host : URL의 호스트 이름과 포트 번호
+String	location.href : 현재 페이지의 URL을 리턴하거나 변경할 수 있음
+String	location.hostname : 웹 호스트의 도메인 이름
+String	location.pathname : 현재 페이지의 경로와 파일 이름
+number	location.port : URL의 포트 번호
+String	location.protocol : 사용된 웹 프로토콜(http or https)
+
+ - 주요 메소드
+location.replace() : 현재 페이지의 주소를 지정된 주소로 변경 - 페이지 이동이 아니므로 history에 쌓이지 않음
+location.reload() : 현재 페이지 새로 고침
+
+1-3. history 객체
+ - 사용자가 방문한 URL을 포함하여 브라우저의 기록을 담고 있는 객체
+ - 주요 속성
+history.length : history목록의 URL수
+ - 주요 메소드
+history.back() : 뒤로 가기
+history.forward() : 앞으로 가기
+history.go() : 지정한 숫자만큼 이동하며 그 숫자가 양수면 '앞으로 가기', 음수면 '뒤로 가기'
+
+1-4. navigator 객체
+ - 브라우저에 대한 정보를 담고 있는 객체
+ - 주요 속성
+navigator.cookieEnabled : 쿠키의 활성화 여부
+navigator.appName : 브라우저의 프로그램 명
+navigator.product : 브라우저 엔진의 제품명
+navigator.appVersion : 브라우저에 대한 버전 정보
+navigator.platform : 브라우저 플랫폼(OS) 정보
+navigator.language : 브라우저의 언어
+
+1-5. DOM (Document Object Model)
+ - HTML문서 객체로 가장 많이 사용되는 객체
+ - 페이지가 로드되면 브라우저는 페이지의 문서 객체 모델(DOM)을 생성함
+
+ - DOM이 제공하는 기능들
+	자바스크립트로 페이지의 모든 HTML 요소를 변경할 수 있다.
+	자바스크립트로 페이지의 모든 HTML 속성을 변경할 수 있다.
+	자바스크립트로 페이지의 모든 CSS 스타일을 변경할 수 있다.
+	자바스크립트로 페이지의 모든 HTML 요소와 속성을 삭제할 수 있다.
+	자바스크립트로 페이지의 모든 HTML 이벤트에 반응할 수 있다.
+
+ - DOM에서는 모든 HTML요소는 객체로 취급됨
+ - DOM객체는 페이지에 있는 모든 객체의 소유자로 동작함
+ - document - root element(html) - head - title
+								 - body - 각종 element, attribute, text 등
+
+1) HTML 요소를 가져오는(받아오는) 메소드
+ - 문서상에서 특정 요소나 요소들을 자바스크립트에서 사용하기 위해 받아오는 메소드
+리턴타입		메소드명 및 설명
+object		document.getElementById(id명) : 지정한 id에 해당하는 요소를 받아옴(가장 많이 사용됨)
+object[]	document.getElementByTagName(tag명) : 지정한 태그명에 해당하는 요소들을 배열로 받아옴
+object[]	document.getElementByClassName(class명) : 지정한 클래스명에 해당하는 요소들을 배열로 받아옴
+
+2) HTML Object Collections
+ - 자바스크립트에서는 특정 요소가 페이지내에서 여러 개 존재할 경우 자동으로 배열이 생성됨
+ - forms[], anchors[], images[] 등
+ - 폼안의 name속성의 값이 동일한 컨트롤이 여러 개일 경우 컨트롤의 종류에 상관없이 배열로 생성됨
+	서로 다른 컨트롤들 끼리도 배열로 만들어 짐
+
+3) 자바스크립트를 이용한 HTML 요소 변경
+ - 가장 먼저 변경할 요소를 getElementBy~ 로 받은 후 사용해야 함
+ - HTML 요소의 내용 변경 : element.innerHTML = "바꿀 내용";
+ - HTML 요소의 속성 변경 : element.속성명 = "바꿀 값";
+					or element.setAttribute("속성명, 바꿀값");
+ - HTML 요소의 스타일 변경 : element.style.속성명 = "바꿀 값";
+
+4) 이벤트
+ - 사용자가 행하는 모든 행위를 이벤트라 하며, 자바스크립트가 동작할 시점을 지정할 때 사용됨
+ - 이벤트도 HTML요소의 속성으로 사용되며, 반드시 자바스크립트로 작업해야 함
+ - 종류
+onblur		: 요소에서 포커스가 빠져나갔을 때(textfield나 textarea 등에서 주로 사용)
+onclick		: 요소를 클릭했을 때
+onchange	: 요소의 선택값이 변경되었을 때(콤보박스에서 주로 사용)
+ondblclick	: 요소를 더블클릭했을 때
+onfocus		: 요소가 포커스를 얻었을 때(textfield나 textarea 등에서 주로 사용)
+onkeyup		: 키보드의 키를 누른 후 손을 뗄 때
+onkeydown	: 키보드의 키를 누를 때
+onload		: 페이지가 로드되었을 때(body에서 주로 사용)
+onmouseover	: 요소에 마우스가 들어왔을 때
+onmouseout	: 요소에서 마우스가 나갔을 때
+onmousedown	: 마우스 버튼을 눌렀을 때
+onmouseup	: 마우스 버튼을 눌렀다가 손을 뗄 때
+onsubmit	: 양식을 제출할 때(form에서 주로 사용)
+onunload	: 페이지에서 벗어날 때(body에서 주로 사용)
+
+
+

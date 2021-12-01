@@ -1,0 +1,70 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	h2, p { padding:0; margin:0; }
+	#addr { width:450px; height:180px; overflow:auto; margin:10 auto; border:1px black solid; }
+	#addr p { margin:5px; }
+	</style>
+	<script>
+	function writeAddr() {
+		var addr = document.frmAddr.addr;
+		// 현재 문서안에(document.) 있는 폼안에(frmAddr.) 있는 라디오버튼 객체(addr)를 배열로 가져와서 addr에 넣음
+		var chkAddr = "";
+		for (var i = 0; i < addr.length; i++) {
+			if (addr[i].checked) {			// addr 배열에서 선택된 라디오버튼이 있으면 
+				chkAddr = addr[i].value;	// 선택된 라디오버튼의 값(value) 속성을 가져와서 chkAddr에 넣음
+				break;						// for문을 빠져나감
+			}
+		}
+		if (chkAddr == "") {		// 사용자가 주소를 선택하지 않았을 경우
+			alert("사용할 주소를 선택하세요."); return;
+			// 주소를 선택하지 않았으므로 메시지를 보여준 후 함수를 강제 종료시킴
+		}
+		/*
+		var arrAddr = chkAddr.split("|");
+		// 구분자 '|'을 기준으로 배열로 만들어 우편번호와 주소 부분을 분리함
+		var zip = arrAddr[0];	var addr1 = arrAddr[1];
+		// 인덱스번호를 직접 입력해도 됨(변하는 값이 아니므로)
+
+		var zip = chkAddr.substring(0, chkAddr.indexOf("|"));
+		var addr1 = chkAddr.substring(chkAddr.indexOf("|") + 1);
+		// 구분자 '|'의 위치를 기준으로 문자열을 잘라내어 우변번호와 주소 부분을 분리함
+		*/
+
+		var zip = chkAddr.substring(0, 5);
+		var addr1 = chkAddr.substring(6);
+		// 우편번호의 개수는 변하는 값이 아니므로 직접 개수를 입력하여 우편번호와 주소 부분을 분리함
+
+		// 크롬에서는 도메인이 없어서 동작이 안됨(IE는 됨)
+		opener.document.frmJoin.zip.value = zip;
+		opener.document.frmJoin.addr1.value = addr1;
+		opener.document.frmJoin.addr2.focus();
+		// opener : 팝업창을 열어준 창을 의미하는 객체
+
+		self.close();
+	}
+	</script>
+</head>
+<body onload="window.resizeTo(500px,310px);">
+<h2>주소 검색 창</h2>
+<form name="frmAddr">
+	<div id="addr">
+		<p><input type="radio" name="addr" value="12345|서울시 강남구 삼성동"  /> [12345] 서울시 강남구 삼성동</p>
+		<p><input type="radio" name="addr" value="12346|서울시 강남구 삼성1동" /> [12346] 서울시 강남구 삼성1동</p>
+		<p><input type="radio" name="addr" value="12347|서울시 강남구 삼성2동" /> [12347] 서울시 강남구 삼성2동</p>
+		<p><input type="radio" name="addr" value="12348|서울시 강남구 삼성3동" /> [12348] 서울시 강남구 삼성3동</p>
+		<p><input type="radio" name="addr" value="12349|서울시 강남구 삼성4동" /> [12349] 서울시 강남구 삼성4동</p>
+		<p><input type="radio" name="addr" value="12340|서울시 강남구 삼성5동" /> [12340] 서울시 강남구 삼성5동</p>
+		<p><input type="radio" name="addr" value="12341|서울시 강남구 삼성6동" /> [12341] 서울시 강남구 삼성6동</p>
+		<p><input type="radio" name="addr" value="12342|서울시 강남구 삼성7동" /> [12342] 서울시 강남구 삼성7동</p>
+		<p><input type="radio" name="addr" value="12343|서울시 강남구 삼성8동" /> [12343] 서울시 강남구 삼성8동</p>
+		<p><input type="radio" name="addr" value="12344|서울시 강남구 삼성9동" /> [12344] 서울시 강남구 삼성9동</p>
+	</div>
+</form>
+<p style="text-align:center">
+	<input type="button" value="적 용" onclick="writeAddr();" /> &nbsp;&nbsp; 
+	<input type="button" value="닫 기" onclick="self.close();" />
+</p>
+</body>
+</html>

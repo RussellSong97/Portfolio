@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Document</title>
+	<!-- 버튼을 클릭하면 이미지를 천천히 사라지게 만듦
+		단, 사라진 후 "이미지는 잠시 후 사라질 것입니다." 라는 메시지를 alert()으로 보여줌 - callback함수 이용
+	-->
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		function message(){
+			alert("이미지는 잠시 후 사라질 것입니다.");
+		}
+
+		$(document).ready(function() { 
+			$("#btn1").click(function() {
+				$("#img1").hide(1000, message());
+			});
+		});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="HIDE" /><br />
+<p>This is callBack Function</p>
+<img id="img1" src="../img/a.jpg" width="400" />
+</body>
+</html>

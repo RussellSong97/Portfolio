@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#p1").on("click", function() {
+		// on()메소드는 여러 개의 이벤트를 처리하기 위한 메소드이나 하나의 이벤트만을 정의해도 무관
+			$(this).css("background", "pink");
+		});
+		$("#btn").click(function() {
+			$("#p1").off("click");
+			// #p1 요소에 걸린 on()메소드를 이용한 click 이벤트 핸들러를 제거
+		});
+	});
+	</script>
+</head>
+<body>
+<p id="p1">Click or move the mouse pointer over this paragraph.</p>
+<input type="button" value="Remove the click event handler" id="btn" />
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<h2>회원가입 폼</h2>
+<form name="frm" action="" method="post">
+
+<table width="700" cellpadding="0" cellspacing="0" >
+	<tr><td>
+		<table width="100%" cellpadding="5" cellspacing="1" bgcolor="#c1c1c1" >
+			<tr bgcolor="#ffffff">
+				<th width="20%" bgcolor="#efefef">
+					<label for="name">이름</label>
+				</th>
+				<td width="*">
+					<input type="text" name="name" id="name" size="20" />
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="id">아이디</label>
+				</th>
+				<td>
+					<input type="text" name="id" id="id" size="20" />
+					<input type="button" value="아이디 중복 확인" /> <br />
+					* 영문 혹은 영문 숫자 조합으로만 작성하세요.
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="pw">비밀번호</label>
+				</th>
+				<td>
+					<input type="password" name="pw" id="pw" size="20" />
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="pw2">비밀번호 확인</label>
+				</th>
+				<td>
+					<input type="password" name="pw2" id="pw2" size="20" />
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="e1">이메일</label>
+				</th>
+				<td>
+					<input type="text" name="e1" id="e1" size="20" /> @
+					<select name="e2" id="e2">
+						<option value="naver.com" selected="selected">네이버</option>
+						<option value="nate.com">네이트</option>
+						<option value="gmail.com">구글</option>
+						<option value="direct">직접입력</option>
+					</select>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" name="open" id="open" checked="checked"><label for="open">공개</label>
+					<input type="checkbox" name="agree" id="agree" checked="checked"><label for="agree">수신동의</label>
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="p2">휴대폰</label>
+				</th>
+				<td>
+					<select name="p1" id="p1">
+						<option>010</option>
+						<option>011</option>
+						<option>016</option>
+						<option>019</option>
+					</select> - 
+					<input type="text" name="p2" id="p2" maxlength="4" size="4" /> - 
+					<input type="text" name="p3" id="p2" maxlength="4" size="4" />
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="zip">우편번호</label>
+				</th>
+				<td>
+					<input type="text" name="zip" id="zip" maxlength="5" size="5" readonly="readonly" />
+					<input type="button" value="우편번호 검색" />
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="addr2">주소</label>
+				</th>
+				<td>
+					<input type="text" name="addr1" id="addr1" size="30" readonly="readonly" />
+					<input type="text" name="addr2" id="addr2" size="30" />
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<th bgcolor="#efefef" align="center">
+					<label for="comment">코멘트</label>
+				</th>
+				<td>
+					<textarea name="comment" id="comment" rows="4" cols="70"></textarea>
+				</td>
+			</tr>
+		</table>
+	</td></tr>
+	<tr><td align="center">
+		<br />
+		<input type="button" value="회원가입" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="reset" value="다시입력" />
+	</td></tr>
+</table>
+</form>
+</body>
+</html>

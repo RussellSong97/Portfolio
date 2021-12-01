@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			$("#box1").animate({ width:"100px", height:"100px" });
+			$("#box1").delay(1000).animate({ height:"150px" });
+			// 1초 동안 대기 후 #box1의 높이를 150px로 변경
+		});
+		$("#btn2").click(function() {
+			$("#img1").slideDown(2000);
+		});
+		$("#btn3").click(function() {
+			$("#img1").stop();
+			// #img1에 바인딩된 애니메이션 효과를 멈추게 함
+		});
+	});
+	</script>
+</head>
+<body>
+<div id="box1" style="background:purple; height:70px; width:70px; margin:5px;"></div>
+<input type="button" id="btn1" value="Animate delay" />
+<br /><br />
+<input type="button" id="btn2" value="Slide Down" />
+<input type="button" id="btn3" value="Stop Animation" /><br /><br />
+<img id="img1" src="../img/b.jpg" width="300" style="display:none;" />
+</body>
+</html>

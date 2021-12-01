@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Document</title>
+<!--
+frameset 태그 : 화면을 여러 개의 프레임으로 분할하여 독립적인 파일을 실행시키는 기능
+ - frameset태그는 body안에서 사용하면 안되며 반드시 body 밖에서 사용해야 함
+ - cols="값1,값2,...값n" : 화면을 세로로 n개 만큼 지정된 넓이로 분할
+ - rows="값1,값2,...값n" : 화면을 가로로 n개 만큼 지정된 넓이로 분할
+ 	cols와 rows에 들어가는 값은 픽셀단위 또는 백분율과 와일드카드(*)를 사용할 수 있음
+ - frameborder="숫자" : 프레임 표시 유무
+ 
+frame 태그 : frameset 안에서 사용하며 frameset으로 나눈 각 화면에 대한 설정을 함
+ - src="경로 및 파일명" : 해당 프레임에서 보여줄 파일
+ - name="이름" : 해당 프레임의 이름으로 링크를 걸 때 사용
+
+framset으로 화면을 분할하면 링크로 화면 이동시 url이 변하지 않음
+-->
+<frameset rows="100, *" frameborder="0">
+	<frame src="frame_top.html" name="top" />
+	<frameset cols="100, *">
+		<frame src="frame_left.html" name="left" />
+		<frame src="frame_body.html" name="body" />
+	</frameset>
+</frameset>
+</head>
+<body>
+
+</body>
+</html>

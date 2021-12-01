@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	.intro { font-size:30px; color:blue; }
+	.note { background:yellow; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			// span 태그에 intro라는 클래스를 추가하고, 첫번째 p태그에 intro와 note클래스를 추가
+			$("span").addClass("intro");
+			$("p:first").addClass("intro note");
+		});
+	</script> 
+</head>
+<body>
+<h2>This is a heading</h2>
+<p>This is a paragraph</p>
+<p>This is <span>another</span> paragraph</p>
+<input type="button" id="btn1" value="Add Class" />
+</body>
+</html>

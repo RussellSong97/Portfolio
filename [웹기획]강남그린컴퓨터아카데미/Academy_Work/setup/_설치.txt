@@ -1,0 +1,58 @@
+cmd 명령어 안될 때 :
+	환경변수 편집에 들어가서 PATH(혹은 Path)에 C:\WINDOWS\system32; 설정
+
+JDK 설치
+ - http://java.sun.com/ 으로 들어가 필요한 JDK를 다운받음 (Java SE : Standard Edition)
+ 	실제 실무에서 설치시에는 반드시 JDK의 버전을 맞추어 설치해야 함
+
+ - 예전 버전 설치시 자바를 설치해도 바로 사용할 수 없으므로 윈도우 환경변수를 설정해야 함
+	환경변수 설정 : [내PC]의 속성 창에서 ▶ 좌하단의 [고급 시스템 설정] 클릭 ▶ 시스템 속성 창에서 우하단의 [환경변수] 버튼 클릭 ▶ 환경변수 창에서 시스템 변수들 중 path변수를 더블 클릭 ▶ 
+	 - windows 10 : 환경변수 편집 창에서 우상단의 [새로 만들기] 버튼 클릭 후 자바가 설치된 경로에서 bin폴더의 위치를 입력함('C:\Program Files\Java\jdk-15.0.2\bin') 
+	 - windows 7 이하 : path변수의 값들을 세미콜론으로 구분하여 보여주는 창이 뜨고 그 값들의 마지막에 세미콜론 입력 후 자바가 설치된 경로에서 bin폴더의 위치를 입력함('C:\Program Files\Java\jdk-15.0.2\bin') 
+
+	bin 폴더 안에 있는 javac.exe와 java.exe 파일을 어느 곳에서든 실행할 수 있게 하기 위해서 환경변수를 설정함
+
+
+MySQL 설치
+ - https://www.mysql.com/ ▶ downloads ▶ (하단) MySQL Community (GPL) Downloads » MySQL Community Server ▶ GoTo Download Page ▶ 422MB ▶ No thanks, just start my download. 클릭하여 다운로드 시작
+
+ - 다운로드한 파일을 더블클릭하여 설치 시작 → Developer Default 선택 후 [Next] → [Excute] 클릭 (MySQL Server, MySQL Workbench, MySQL Shell, MySQL Router, Connector/ODBC, J, MySQL Documentation, Samples and Examples) → [Next] → 포트번호 확인(필요하면 변경가능) → [Next] → root 계정 비밀번호 지정 → [Next] → 시스템 이름 지정 → [Next] → Apply Configuration [excute] → [Finish] → [Next] → [Finish] → [Next] → Connect To Server화면에서 root 암호 입력 후 [check] 클릭하여 Connection Succeeded 녹색 메시지 확인 → [Next] → Apply Configuration [excute] → [Finish] → [Next] → [Finish] → Workbench 실행됨
+
+ - 설치 후 Workbench에서 작업 시 update와 delete는 where 절 없이 사용할 수 없음
+	where 절이 있어도 조건으로 키(PK, FK, Unique)가 사용되지 않으면 실행 불가
+	자유롭게 사용하려면 메뉴 [Edit] → [Preferences...] → 왼쪽 탭-SQL Editor → 가장 밑에 체크박스 체크를 풀어야 함
+
+
+JDK 설치 Kit 8 Update 181(64-bit) 설치
+	programs안에 있는 파일오픈 -> next -> change클릭(jsp안에 있는 java폴더에 저장) -> 확인 -> JRE폴더에 저장 -> 확인 -> 환경변수 설정 -> 완료 후 cmd창에서 javac 치고 엔터 -> 좌라라라라락! -> 완료
+
+
+Apache(Tomcat) 설치
+ - http://tomcat.apache.org/ 에서 왼쪽 메뉴 Download 중에서 필요한 버전의 Tomcat을 다운 받음(최신 버전은 피함)
+	다운받은 링크들 중 '32-bit/64-bit Windows Service Installer (pgp, sha512)' 을 눌러 다운 받음
+	- port : 8088, server name : Tomcat8,  user name : admin , pw : 1111
+	- 경로 : [JRE : ~~\jsp\jre] [APACHE : ~~\jsp\apache]
+
+ - jre가 설치된 경로를 지정해주고, apache를 설치할 경로를 지정해주고, 포트번호(8088) 등을 지정하면서 apache를 설치함
+	설치 후 브라우저에서 'http://localhost:8080/' 이나 'http://127.0.0.1:8080/' 을 입력하면 'D:\project\greenart_study\jsp\apache\webapps\ROOT' 경로의 'index.jsp' 파일이 실행되어야 정상적으로 설치된것임
+
+ - 톰캣 설치위치에서 apache\lib 안에 'servlet-api.jar' 파일을 jre 설치위치 jre1.8\lib\ext 안에 복사
+
+
+에디터(Eclipse) 설치
+ - 'https://www.eclipse.org/' 에서 우상단 [download] 클릭 -> 좌하단 [download 64bit] 클릭 -> 상단 중앙에서 [Download] 클릭 후 다운 받음
+
+ - 다운 받은 후 설치 폴더나 작업 공간 등의 위치를 지정하며 설치함
+
+ - Eclipse IDE for Enterprise Java and Web Developers
+
+
+ - 이클립스에 톰캣 서버 등록
+ 1. 메뉴 표시줄 [window]의 [preferences] 메뉴 클릭하면 대화상자 뜸 -> 대화상자 왼쪽 메뉴의 [server] 안에 있는 [runtime environments] 메뉴 선택 후 오른쪽 화면에서 [add] 버튼 클릭 -> 새로 뜬 창에서  Apache tomcat v8.5 버전 선택 후 [next] -> jdk가 설치된 폴더를 지정한 후 JRE에서 설치된 jdk를 선택한 후 [Finish] -> [Apply and clase] 클릭하여 종료
+
+ 2. 이클립스 화면 하단의 [Servers] 탭 클릭 > 링크가 걸린 " No servers are available. Click this link to create a new server..." 를 클릭하여 대화상자를 띄움 > 대화상자에서 1번 메뉴에서 추가한 서버를 선택한 후 [Next]할 필요 없이 바로 [Finish]를 클릭하여 종료.
+
+ 3. 설정
+	- 글꼴 설정 : 탭메뉴 windows → preferences → General → Appearance → Color and Fonts
+	- Encording 설정 : 탭메뉴 windows → preferences → WEB → CSS, HTML, JSP → Encoding : ISO 10646/Unicode(UTF-8) → Apply and Close
+

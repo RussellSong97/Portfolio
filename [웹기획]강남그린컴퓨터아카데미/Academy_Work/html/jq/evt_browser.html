@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	var cnt = 0;
+	$(document).ready(function() {
+		$(window).resize(function() {
+			$("#size").text("width : " + window.innerWidth + "px / height : " + window.innerHeight + "px");
+		});
+
+		$("#scrollTest").scroll(function(){ 
+			$("#count").text(++cnt);
+		});
+	}); 
+	</script>
+</head>
+<body>
+<p>size : <span id="size"></span></p>
+<div id="scrollTest" style="border:1px solid black; width:200px; height:100px; overflow:auto;">
+동해 물과 백두산이<br />마르고 닳도록<br /><br />하느님이 보우하사<br />우리나라 만세<br /><br />
+무궁화 삼천리<br />화려강산<br /><br />대한사람 대한으로<br />길이 보존하세
+</div>
+<p> 스크롤 횟수 : <span id="count"></span>회</p>
+</div>
+</body>
+</html>

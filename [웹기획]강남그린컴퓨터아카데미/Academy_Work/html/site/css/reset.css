@@ -1,0 +1,31 @@
+/*
+reset.css : HTML의 태그들이 가진 기본 속성값을 초기화 시키는 역할, 전체 페이지 적용
+*/
+
+/* 여백을 갖고있는 element 모두 여백 제거 */
+body, div, span, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, blockquote, p, address, pre, form, fieldset, input, textarea, select, table, th, td { margin:0; padding:0; }
+
+/* font size 초기화 */
+h1, h2, h3, h4, h5, h6 { font-size:100%; font-weight:normal; }
+
+/* 자동으로 테두리가 보여지는 element 모두 border 제거 */
+fieldset, img, abbr, acronym { border:0; }
+
+/* 리스트 태그 사용시 글머리 기호 제거 */
+ol, ul { list-style:none; }
+
+/* 자동 줄맞춤 제거 */
+caption, th, td { text-align:left; font-weight:normal; }
+
+/* 폰트 스타일 초기화 (기울임, 굵기) */
+b, strong, address, em, i { font-weight:normal; font-style:normal; }
+
+/* 밑줄 제거 */
+ins { text-decoration:none; }
+del { text-decoration:line-through; }	/* 취소선 */
+
+/* 인용문(따옴표) 제거 */
+blockquote:before, blockquote:after, q:before, q:after { content:""; }	/* 태그 앞 뒤로 아무런 content 주입하지 않음 */
+
+/* 사용 잘 안함 */
+hr { display:none; }

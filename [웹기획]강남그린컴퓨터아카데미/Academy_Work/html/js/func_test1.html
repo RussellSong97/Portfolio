@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>Function</title>
+	<script>
+	function firstFunc() {
+		alert("firstFunc() 함수 호출");
+	}
+	function secondFunc(num) {
+		alert(num);
+	}
+	function getTriArea(width, height) {
+		var area = width * height / 2;
+		return area;
+		// 계산된 값을 함수를 호출한 곳으로 리턴
+	}
+	function showArea(w, h) {
+		var area = getTriArea(w, h);
+		// 다른 함수를 호출하여 값을 받아옴
+		alert(area);
+	}
+	function count(x) {
+		if (x == 0) {
+			alert("함수 종료");
+		} else {
+			alert("함수 'count'가 호출될 때의 값 : " + x);
+			count(x - 1);	// 자신을 호출하는 함수를 재귀 함수라 함
+			// 재귀 호출 사용시 반드시 빠져나올 조건을 명확히 해야 함
+		}
+	}
+
+	</script>
+</head>
+<body>
+<input type="button" value="함수 호출 1" onclick="firstFunc();" />
+<input type="button" value="함수 호출 2" onclick="secondFunc(1);" />
+<input type="button" value="함수 호출 3" onclick="secondFunc(2);" />
+<input type="button" value="삼각형 넓이" onclick="showArea(20, 40);" />
+<input type="button" value="재귀 호출" onclick="count(5);" />
+</body>
+</html>

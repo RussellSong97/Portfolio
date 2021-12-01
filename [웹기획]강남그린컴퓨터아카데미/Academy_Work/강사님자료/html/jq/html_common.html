@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			var str = $("#naver").attr("href");
+			// #naver 요소의 'href'속성의 값을 str변수에 저장
+			alert(str);
+		});
+		$("#btn2").click(function() {
+			$("#p1").text("Hello World");
+			// #p1태그내의 문자열을 "Hello World"로 변경
+		});
+		$("#btn3").click(function() {
+			$("#p2").html("<strong>Hello World</strong>");
+			// #p2태그내의 문자열을 "<strong>Hello World</strong>"로 변경
+			// text()와 다르게 html태그를 사용할 수 있음
+		});
+		$("#btn4").click(function() {
+			$("#txt1").val("Hello World");
+			// #txt1 요소의 value속성값을 "Hello World"로 변경
+		});
+	});
+	</script>
+</head>
+<body>
+<p><a href="http://www.naver.com/" id="naver">naver.com</a></p>
+<input type="button" id="btn1" value="Show href value" />
+<br /><br />
+<p id="p1">This is a paragraph.</p>
+<p id="p2">This is another paragraph.</p>
+<p id="p3">Input field : <input type="text" id="txt1" value="Mickey Mouse" /></p>
+<input type="button" id="btn2" value="Set Text" />
+<input type="button" id="btn3" value="Set HTML" />
+<input type="button" id="btn4" value="Set Value" />
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	#box1 { width:200px; height:100px; margin:20px; padding:30px; border:5px solid black; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn0").click(function() {
+			var height = $("#box1").height();				$("#h").text(height);
+			var width = $("#box1").width();					$("#w").text(width);
+			// #box1의 크기
+
+			var innerHeight = $("#box1").innerHeight();		$("#ih").text(innerHeight);
+			var innerWidth = $("#box1").innerWidth();		$("#iw").text(innerWidth);
+			// #box1의 크기로 padding값 포함(border값과 margin값은 제외)
+
+			var outerHeight = $("#box1").outerHeight();		$("#oh").text(outerHeight);
+			var outerWidth = $("#box1").outerWidth();		$("#ow").text(outerWidth);
+			// #box1의 크기로 padding값과 border값 포함(margin값은 제외)
+
+			var outerHeight2 = $("#box1").outerHeight(true);$("#oh2").text(outerHeight2);
+			var outerWidth2 = $("#box1").outerWidth(true);	$("#ow2").text(outerWidth2);
+			// #box1의 크기로 padding값과 border값, margin값 포함
+			// outerHeight()과 outerWidth()메소드에 매개변수로 true를 넣으면 margin값까지 포함한 값을 리턴
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" id="btn0" value="크기 리턴" /><br />
+<div id="box1"></div>
+height : <span id="h"></span> / width : <span id="w"></span><br />
+innerHeight : <span id="ih"></span> / innerWidth : <span id="iw"></span><br />
+outerHeight : <span id="oh"></span> / outerWidth : <span id="ow"></span><br />
+outerHeight2 : <span id="oh2"></span> / outerWidth2 : <span id="ow2"></span>
+<br /><br />
+<input type="button" id="btn1" value="height" />
+<input type="button" id="btn2" value="width" />&nbsp;&nbsp;
+<input type="button" id="btn3" value="innerHeight" />
+<input type="button" id="btn4" value="innerWidth" />&nbsp;&nbsp;
+<input type="button" id="btn5" value="outerHeight" />
+<input type="button" id="btn6" value="outerWidth" /><br /><br />
+</body>
+</html>

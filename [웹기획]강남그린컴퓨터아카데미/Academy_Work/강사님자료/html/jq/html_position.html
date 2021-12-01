@@ -1,0 +1,20 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			var x = $("p").position();	// p태그의 위치값을 객체 x에 저장
+			// 단, p태그가 여러 개 있을경우 첫번째 p태그를 기준으로 위치값을 구함
+			$("#demo").text("position Top : " + x.top + ", Left : " + x.left);
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="position of P tag" />
+<p>This is a paragraph.</p>
+<p id="demo"></p>
+</body>
+</html>

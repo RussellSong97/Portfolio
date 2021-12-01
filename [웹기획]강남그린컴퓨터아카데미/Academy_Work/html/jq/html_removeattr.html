@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	#p1 { color:white; background:green; font-size:20px; padding:5px; }
+	.blue { color:white; background:blue; font-size:20px; padding:5px; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			$("#btn1").click(function() {
+				$("p").removeAttr("style");	// p 태그에 있는 style 속성을 삭제
+			});
+			$("#btn2").click(function() {
+				$("p").removeAttr("id class");	// p 태그에 있는 id와 class속성을 제거
+			});
+		});
+	</script> 
+</head>
+<body>
+<p style="font-size:120%; color:red">This is a paragraph.</p>
+<p style="font-weight:bold; color:blue;">This is another paragraph.</p>
+<input type="button" id="btn1" value="Remove the style attribute" />
+<br /><br />
+<p id="p1">This is a paragraph.</p>
+<p class="blue">This is another paragraph.</p>
+<input type="button" id="btn2" value="Remove id & class attribute" />
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	body { margin:0; }
+
+	.t1 {
+		text-indent:50px;	/* 들여쓰기로 첫 줄만 지정한 값 만큼 들여쓰기를 함 */
+		/* 값은 길이나 백분율로 입력하며, 음수값을 입력하면 내어쓰기가 됨 */
+		text-align:center;	/* 좌우정렬(left|center|right|justify) */
+	}
+	.t2 {
+		width:300px;
+		text-indent:-5%;
+		text-align:justify;
+		/* 양쪽정렬로 브라우저에 따라 다르게 동작되기도 함(letter-spacing이나 word-spacing등으로 조절하게 됨)
+		일반적으로 여러 줄의 텍스트를 보열 줄 때 사용됨 */
+	}
+
+	/* vertical-align : 수직 정렬로 박스모델 등에서 사용가능 */
+	#super { vertical-align:top; font-size:0.6em; }
+	#sub { vertical-align:bottom; font-size:0.6em; }
+	#top { vertical-align:top; }
+	/* id가 #top인 이미지 옆에 오는 개체는 #top의 윗쪽에 정렬됨 */
+	#middle { vertical-align:middle; }
+	/* id가 #middle인 이미지 옆에 오는 개체는 #middle의 중간윗쪽에 정렬됨 */
+	#bottom { vertical-align:bottom; }
+	/* id가 #bottom인 이미지 옆에 오는 개체는 #bottom의 아래쪽에 정렬됨(기본값) */
+
+	#none { text-decoration:none; }				/* 줄 없음 */
+	#over { text-decoration:overline; }			/* 윗줄 */
+	#through { text-decoration:line-through; }	/* 취소선 */
+	#underline { text-decoration:underline; }	/* 밑줄 */
+	#blink { text-decoration:blink; }	/* 깜박임(파이어 폭스 전용) 사용금지 */
+
+	#no { text-transform:none; }		/* 영문을 그대로 출력 */
+	#up { text-transform:uppercase; }	/* 영문을 대문자로 변경 */
+	#low { text-transform:lowercase; }	/* 영문을 소문자로 변경 */
+	#cap { text-transform:capitalize; }	/* 영문 단어별 첫글자를 대문자로 변경 */
+
+	#t3 { letter-spacing:1em; }	/* 글자 사이의 간격으로 1em은 한 글자의 넓이 */
+	#t4 { letter-spacing:-6px; }/* 음수도 사용할 수 있으면 글자가 겹칠 수도 있음 */
+
+	/* white-space : 공백을 조절하는 속성 */
+	#normal { white-space:normal; }
+	#nowrap { white-space:nowrap; }
+	/* 단어단위로 줄을 바꾸지 않고 계속 한 줄로 입력하게 함
+	단, 경우에 따라 좌우로 움직이는 스크롤바가 생길 수도 있음 */
+	#pre { white-space:pre; }
+	/* 여러 번의 연속된 띄어쓰기나 엔터 등의 기능을 입력한 그대로 출력시켜줌 */
+	</style>
+</head>
+<body>
+<h2>텍스트 서식 스타일</h2>
+<p class="t1">동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
+<p class="t2">Their presence wouldn't have been possible if Australia hadn't brought its local coronavirus epidemic under control in 2020 with strict public health measures. Australia's government quickly closed its borders in March at the start of the pandemic, banning non-residents from entering the country, and put in place mandatory hotel quarantine of 14 days for incoming travelers.</p>
+<p>X<span id="super">2</span> : 윗첨자로 사용</p>
+<p>H<span id="sub">2</span>O : 아래첨자로 사용</p>
+<p><img src="../img/a.jpg" height="70" id="top" />top 적용</p>
+<p><img src="../img/a.jpg" height="70" id="middle" />middle 적용</p>
+<p><img src="../img/a.jpg" height="70" id="bottom" />bottom 적용</p>
+<br />
+<p id="none">text-decoration:none 이 적용된 경우</p>
+<p id="over">text-decoration:overline 이 적용된 경우</p>
+<p id="through">text-decoration:line-through 이 적용된 경우</p>
+<p id="underline">text-decoration:underline 이 적용된 경우</p>
+<p id="blink">text-decoration:blink 이 적용된 경우</p>
+<br />
+<p id="no">text-transform:none 이 적용된 경우</p>
+<p id="up">text-transform:uppercase 이 적용된 경우</p>
+<p id="low">TEXT-TRANSFORM:LOWERCASE 이 적용된 경우</p>
+<p id="cap">text-transform: capitalize 이 적용된 경우</p>
+<br />
+<p id="t3">동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
+<p id="t4">무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세</p>
+<br />
+<p id="normal">공백 문자의 처리를 위해 white-space 속성을 사용할 수 있음</p>
+<p id="nowrap">자동 줄바꿈을 허용하지 않을 경우 white-space:nowrap; 형식으로 선언하면 한 줄에 출력할 수 있다. 만일 웹 브라우저 크기를 넘어갈 만큼의 넓이라면 스크롤바가 나타날 수도 있다.</p>
+<p id="pre">하나 이상의 연속적인 공백이 있을 때
+입력한                형태대로 출력하려고 한다면
+white_space:pre;    형식으로 선언하면 된다.</p>
+<br /><br /><br /><br /><br /><br />
+</body>
+</html>

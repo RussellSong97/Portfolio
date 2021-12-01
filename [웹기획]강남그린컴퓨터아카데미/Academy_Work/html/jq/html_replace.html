@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			$("#btn1").click(function() { 
+				$("<h2>Hellow World!!</h2>").replaceAll("p");
+			});
+			$("#btn2").click(function() { 
+				$("p").replaceWith("<h2>Hellow World!!</h2>");
+			});
+		});
+	</script> 
+</head>
+<body>
+<input type="button" id="btn1" value="ReplaceAll" />
+<input type="button" id="btn2" value="ReplaceWith" />
+<p id="p1">This is a paragraph.</p>
+<p class="blue">This is another paragraph.</p>
+</body>
+</html>

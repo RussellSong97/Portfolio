@@ -1,0 +1,36 @@
+/*
+main.stylesheet
+*/
+
+
+header {
+  position: fixed;  top: 0;  left: 0;  right: 0;  height: 75px;
+  padding: 1rem;  color: white;  background: #222; font-weight: bold;
+  display: flex; justify-content:space-between; align-items:center;
+}
+
+a {text-decoration: none; color: #EEE; padding-left:35px;}
+
+body {
+  background: #EEE;
+}
+
+body, html {
+  height: 200%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media screen and (max-width:768px;){
+	header{
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	nav{
+		flex-direction: column;
+		align-items: flex-start;
+		width: 100%;
+		}
+}

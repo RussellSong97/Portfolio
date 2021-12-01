@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			var x = $("#demo").offset();
+			// #demo의 위치(offset)를 객체로 받아와 x에 저장
+			$("#demo").text("Top : " + x.top + " / Left : " + x.left);
+			// x로 받은 위치객체에서 top(y좌표)과 left(x좌표)값을 출력
+		});
+
+		$("#btn2").click(function() {
+			$("#demo").offset({ top:100, left:200 });
+			// #demo의 위치(offset)를 특정 top과 left값으로 지정하여 이동시킴
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="Show offset" />
+<input type="button" id="btn2" value="Set offset" />
+<p id="demo" style="background:lightblue;"></p>
+</body>
+</html>

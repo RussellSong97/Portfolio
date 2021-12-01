@@ -1,0 +1,80 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+
+function getDateFormat(date, chk) {
+	// yyyy-mm-dd hh:mm:ss.sss 형식으로 날짜 데이터를 리턴하는 함수
+	
+	var y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate();
+	var tmpDate = y + "-" + m + "-" + d;		// 날짜 데이터 완성
+	var tmpTime = "";
+	if (chk == "t") {
+		var h = date.getHours(), n = date.getMinutes();
+		var s = date.getSeconds(), ms = date.getMilliseconds();
+		var th = (h < 10)? "0" + h : h;
+		var tn = (n < 10)? "0" + n : n;
+		var ts = (s < 10)? "0" + s : s;
+		tmpTime = " " + th + ":" + tn + ":" + ts + ":" + ms  ;
+	}
+
+	return tmpDate + tmpTime;
+}
+
+
+ 
+
+var br = "<br />";
+var today = new Date();
+document.write(today + br);	// Fri Feb 26 2021 12:24:16 GMT+0900 (대한민국 표준시)  // GMT : Greenwich Mean Time
+document.write(today.toUTCString() + br );	// Fri, 26 Feb 2021 03:39:41 GMT
+document.write(today.toDateString() + br );	// Fri Feb 26 2021
+
+document.write("<hr />");
+
+document.write("today.getDate() : " + today.getDate() + br);					// today.getDate() : 26             
+document.write("today.getDay() : " + today.getDay() + br);						// today.getDay() : 5               
+document.write("today.getFullYear() : " + today.getFullYear() + br);			// today.getFullYear() : 2021       
+document.write("today.getHours() : " + today.getHours() + br);					// today.getHours() : 12            
+document.write("today.getMilliseconds() : " + today.getMilliseconds() + br);	// today.getMilliseconds() : 916    
+document.write("today.getMinutes() : " + today.getMinutes() + br);				// today.getMinutes() : 53          
+document.write("today.getMonth() : " + today.getMonth() + br);					// today.getMonth() : 1 (2월이지만 0~11사이의 값이므로 1로 나옴)            
+document.write("today.getSeconds() : " + today.getSeconds() + br);				// today.getSeconds() : 31          
+document.write("today.getTime() : " + today.getTime() + br);					// today.getTime() : 1614311611916  
+
+document.write("<hr />");
+
+today.setDate(15);			document.write("today.setDate(15) : "			+ today + br);	// yyyy-mm-dd hh:mm:ss.sss				
+today.setFullYear(2022);	document.write("today.setFullYear(2022) : "		+ today + br);	// yyyy-mm-dd hh:mm:ss.sss				
+today.setHours(9);			document.write("today.setHours(9) : "			+ today + br);	// yyyy-mm-dd hh:mm:ss.sss				
+today.setMilliseconds(123); document.write("today.setMilliseconds(123) : "	+ today + br);	// yyyy-mm-dd hh:mm:ss.sss				
+today.setMonth(5);			document.write("today.setMonth(5) : "			+ today + br);	// yyyy-mm-dd hh:mm:ss.sss				
+today.setSeconds(23);		document.write("today.setSeconds(23) : "		+ today + br);	// yyyy-mm-dd hh:mm:ss.sss				
+today.setTime(1000 * 60 * 60 * 24 + today.getTime() );
+document.write("today.setTime() : "	+ today + br);					
+document.write(today + br);		
+
+document.write("<hr />");
+
+document.write("today.getDate() : " + getDateFormat(today, "d") + br);				// 2022-6-16                    
+document.write("today.getDay() : " + getDateFormat(today, "d") + br);				// 2022-6-16                     
+document.write("today.getFullYear() : " + getDateFormat(today, "d") + br);			// 2022-6-16                
+document.write("today.getHours() : " + getDateFormat(today, "t") + br);				// 2022-6-16 09:50:23:123       
+document.write("today.getMilliseconds() : " + getDateFormat(today, "t") + br);		// 2022-6-16 09:50:23:123
+document.write("today.getMinutes() : " + getDateFormat(today, "t") + br);			// 2022-6-16 09:50:23:123     
+document.write("today.getMonth() : " + getDateFormat(today, "d") + br);				// 2022-6-16                   
+document.write("today.getSeconds() : " + getDateFormat(today, "t") + br);			// 2022-6-16 09:50:23:123     
+document.write("today.getTime() : " + getDateFormat(today, "t") + br);				// 2022-6-16 09:50:23:123        
+</script>
+</body>
+</html>  
+
+
+
+
+
+
+
+

@@ -1,0 +1,227 @@
+<html>
+<head>
+	<title>배경 지정</title>
+	<style>
+	h2 { background:silver; color:white; }
+	/*
+	background : 배경 속성
+	background-color : 배경색을 지정하는 속성으로 이미지가 있으면 가려짐
+	
+	background-image : 배경이미지를 지정하는 속성으로 url("경로 및 이미지명")을 이용하여 배경이미지를 지정함
+	 - 배경보다 이미지가 작을 경우 기본적으로 바둑판 식으로 반복되어 표시됨
+	 - 반복을 막을 경우 이미지가 미치지 못하는 배경 부분에는 배경색이 표시됨
+	
+	background-repeat : 배경이미지가 배경크기보다 작을 경우 반복하는 방식을 지정
+	 - repeat : 기본값으로 수직, 수평으로 반복시킴
+	 - repeat-x : 이미지를 x축 즉 수평으로만 반복시킴
+	 - repeat-y : 이미지를 y축 즉 수평으로만 반복시킴
+	 - no-repeat : 반복 시키지 않고 한 번만 보여줌
+	
+	background-position : 배경이미지의 위치(좌상단 좌표값) 지정
+	 - 길이 : px로 지정하며 배경이미지의 위치를 지정해줌 - x좌표값 y좌표값
+	 - 백분율 : 배경이미지의 위치를 해당 요소를 기준으로 백분율로 지정
+	 - left|right|center|top|bottom 등을 조합하여 위치를 지정할 수도 있음
+
+	background-attachment : 배경이미지 고정여부
+	 - scroll : 기본값으로 배경이미지가 화면과 같이 스크롤됨
+	 - fixed : 화면이 스크롤되어도 배경이미지는 고정
+
+	배경스타일은 속서을 background로 줄여서 사용할 수 있음
+	예) background:속성값1 속성값2 ... 속성값n 
+	 - background로 줄여서 사용할 때 지정하는 속성값의 순서는 상관없음
+	*/
+	body {
+		background-image:url("../img/bg.png"); 
+		background-repeat:repeat-x;
+	}
+
+	#bgColor { background-color:#acc; }
+	#bgImage { 
+		background:#acc url("../img/b.jpg") 50px 0;
+	}
+	#list {
+		background-image:url("../img/d.jpg");
+		background-repeat:repeat;
+		background-position:top right;
+		background-attachment:fixed;
+	}
+	</style>
+</head>
+<body>
+<h2>배경 지정</hr>
+<p id="bgColor">각 요소의 배경색을 지정할 경우 background-color 속성을 사용한다. 이때 요소에 여백을 주면 배경 색상 안쪽으로 여백이 생성된다.</p>
+<p id="bgImage">요소에 배경 이미지를 지정할 경우 background-image 속성을 사용한다. 이때 요소의 범위보다 작은 이미지를 배경 이미지로 사용할 경우 이미지가 반복되어 채워지며 background-color 속성이 있어도 이미지에 가려지게 된다.<br />이미지가 없을 경우 아무런 동작을 하지 않고(에러 없이) 배경을 그대로 보여줌</p>
+<br />
+<table width="700" align="center" cellpadding="0" cellspacing="0" id="list">
+	<caption>게시판 목록 화면</caption>
+	<tr height="30">
+		<th width="7%">번호</th>
+		<th width="*">제목</th>
+		<th width="10%">작성자</th>
+		<th width="15%">작성일</th>
+		<th width="10%">조회수</th>
+	</tr>
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>20</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>19</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>18</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>17</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>16</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>15</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>14</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>13</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>12</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>11</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>10</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>9</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>8</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>7</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>6</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>5</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>4</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>3</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>2</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+	<tr align="center" height="40">
+		<td>1</td>
+		<td align="left">동해 물과 백두산이 마르고 닳도록 하느님이 보우...</td>
+		<td>홍길동</td>
+		<td>2020-09-24</td>
+		<td>153</td>
+	</tr> 
+	<tr height="1" bgcolor="black"><td colspan="5"></td></tr>
+</table>
+</body>
+</html>

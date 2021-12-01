@@ -1,0 +1,24 @@
+/*
+layout.css : 사이트 레이아웃 용 css
+*/
+
+#wrapper {background:url("../images/wrap_bg.jpg") no-repeat top center;}
+
+#header {
+	position:relative; margin:0 auto; width:940px; height:105px; 
+	background:url("../images/bg_menubox.png") no-repeat; 
+}
+
+#contents {
+	margin:0 auto; width:940px; min-height:400px; padding-top:30px;  
+	background:url("../images/contents_box.png") no-repeat;
+}
+
+#slogan {
+	clear:both; position:relative; width:940px; margin:20px auto 0; 
+}
+
+#footer {
+	height:75px; margin-bottom:15px; 
+	background:url("../images/footerbg.gif") repeat-x;
+}

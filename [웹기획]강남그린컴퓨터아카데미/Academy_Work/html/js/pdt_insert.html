@@ -1,0 +1,161 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	body { margin:0; }
+	table, th, td { border:1px solid black; padding:5px; font-size:12px; }
+	td { padding-left:20px; }
+	.frm_pdt { width:600px; border-collapse:collapse; }
+	.cata { width:150px; }
+	.ipt { width:320px; }
+	</style>
+	<script>
+	var arrA = new Array();	// 첫번째 대분류(대분류값 A)에 속한 소분류 메뉴를 저장할 배열
+	arrA[0] = new Option("", " - 소분류 선택 - ");	arrA[1] = new Option("A001", " A001 ");
+	arrA[2] = new Option("A002", " A002 ");		arrA[3] = new Option("A003", " A003 ");
+
+	var arrB = new Array();
+	arrB[0] = new Option("", " - 소분류 선택 - ");	arrB[1] = new Option("B001", " B001 ");
+	arrB[2] = new Option("B002", " B002 ");		arrB[3] = new Option("B003", " B003 ");
+
+	var arrC = new Array();
+	arrC[0] = new Option("", " - 소분류 선택 - ");	arrC[1] = new Option("C001", " C001 ");
+	arrC[2] = new Option("C002", " C002 ");		arrC[3] = new Option("C003", " C003 ");
+
+	function setCategory(x, target) {
+		for (var i = target.options.length - 1 ; i > 0 ; i--) {
+			target.options[i] = null;
+		}
+
+		if (x != "") {
+			var arr = eval("arr" + x);
+			for (var i = 0 ; i < arr.length ; i++) {
+				target.options[i] = new Option(arr[i].value, arr[i].text);
+			}
+			target.options[0].selected = true;
+		}
+	}
+	function onlyNum(obj) {
+		if (isNaN(obj.value ))	obj.value = "";
+	}
+	function isImg(str) {
+		var arrImg = ["jpg", "gif", "png", "jpeg"];
+		var ext = str.substring(str.lastIndexOf(".") + 1);
+		for (var i = 0 ; i < arrImg.length ; i++) {
+			if (ext == arrImg[i])	return true;
+		}
+		return false;
+	}
+
+	function chkValue(frm) {
+		var bigCata = frm.bigCata.value;		var smallCata = frm.smallCata.value;
+		var pdtName = frm.pdtName.value;		var brand = frm.brand.value;
+		var price = frm.price.value;	var img1 = frm.img1.value;	var img2 = frm.img2.value;
+		var img3 = frm.img3.value;		var desc = frm.desc.value;	var isview = frm.isview;
+
+		if (bigCata == "") {
+			alert("대분류를 선택하세요.");		frm.bigCata.focus();	return false;
+		}
+		if (smallCata == "") {
+			alert("소분류를 선택하세요.");		frm.smallCata.focus();	return false;
+		}
+		if (pdtName == "") {
+			alert("상품명을 입력하세요.");		frm.pdtName.focus();	return false;
+		}
+		if (brand == "") {
+			alert("브랜드를 선택하세요.");		frm.brand.focus();		return false;
+		}
+		if (price == "") {
+			alert("가격을 입력하세요.");			frm.price.focus();		return false;
+		}
+		if (img1 == "") {
+			alert("이미지를 입력하세요.");		frm.img1.focus();		return false;
+		} else if (!isImg(img1)) {	// img1의 파일이 이미지파일이 아니면
+			alert("이미지만 업로드 가능합니다.");	frm.img1.focus();		return false;
+		}
+		if (img2 == "") {
+			alert("이미지를 입력하세요.");		frm.img2.focus();		return false;
+		} else if (!isImg(img2)) {	// img2의 파일이 이미지파일이 아니면
+			alert("이미지만 업로드 가능합니다.");	frm.img2.focus();		return false;
+		}
+		if (img3 == "") {
+			alert("이미지를 입력하세요.");		frm.img3.focus();		return false;
+		} else if (!isImg(img3)) {	// img3의 파일이 이미지파일이 아니면
+			alert("이미지만 업로드 가능합니다.");	frm.img3.focus();		return false;
+		}
+		if (desc == "") {
+			alert("이미지를 입력하세요.");		frm.desc.focus();		return false;
+		} else if (!isImg(desc)) {
+			alert("이미지만 업로드 가능합니다.");	frm.desc.focus();		return false;
+		}
+		var isChecked = true;	// 선택여부를 저장할 변수로 선택되었다는 가정으로 작업을 시작
+		for (var i = 0 ; i < isview.length ; i++) {
+			if (isview[i].checked) {
+				isChecked = false;	break;
+			}
+		}
+		if (isChecked) {
+			alert("게시여부를 선택하세요.");		return false;
+		}
+
+		return true;
+	}
+	</script>
+</head>
+<body>
+<h2 align="center">상품 등록 폼</h2>
+<form name="frmPdt" onsubmit="return chkValue(this);">
+<!-- 이벤트에 return을 사용해서 함수를 호출하면 함수의 결과값(논리값)에 따라 이벤트를 진행할지 여부가 판가름됨 -->
+<table class="frm_pdt" align="center">
+<tr>
+<th width="25%">상품 분류</th>
+<td width="*">
+	<select name="bigCata" class="cata" onchange="setCategory(this.value, this.form.smallCata);">
+		<option value=""> - 대분류 선택 - </option>
+		<option value="A">A 분류</option>
+		<option value="B">B 분류</option>
+		<option value="C">C 분류</option>
+	</select>&nbsp;&nbsp;&nbsp;&nbsp;
+	<select name="smallCata" class="cata">
+		<option value=""> - 소분류 선택 - </option>
+	</select>
+</td>
+</tr>
+<tr><th>상품명</th><td><input type="text" name="pdtName" class="ipt" /></td></tr>
+<tr>
+<th>브랜드</th>
+<td>
+	<select name="brand" class="cata">
+		<option value=""> - 브랜드 선택 - </option>
+		<option value="C">C 브랜드</option>
+	</select>
+</td>
+</tr>
+<tr><th>상품 가격</th><td><input type="text" name="price" class="ipt" onkeyup="onlyNum(this);" /></td></tr>
+<tr><th>상품 이미지1</th><td><input type="file" name="img1" class="ipt" /></td></tr>
+<tr><th>상품 이미지2</th><td><input type="file" name="img2" class="ipt" /></td></tr>
+<tr><th>상품 이미지3</th><td><input type="file" name="img3" class="ipt" /></td></tr>
+<tr><th>설명 이미지</th><td><input type="file" name="desc" class="ipt" /></td></tr>
+<tr>
+<th>특별 상품</th>
+<td>
+	<input type="checkbox" name="hit" value="hit" />HIT 상품&nbsp;&nbsp;
+	<input type="checkbox" name="best" value="best" />BEST 상품&nbsp;&nbsp;
+	<input type="checkbox" name="new" value="new" />NEW 상품
+</td>
+</tr>
+<tr>
+<th>게시 여부</th>
+<td>
+	<input type="radio" name="isview" value="v" />게시&nbsp;&nbsp;
+	<input type="radio" name="isview" value="n" />미게시
+</td>
+</tr>
+</table>
+<p align="center">
+	<input type="submit" value="상품 등록" />&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="reset" value="다시 입력" />
+</p>
+</form>
+</body>
+</html>

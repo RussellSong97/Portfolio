@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			$("#btn1").click(function(){
+				$(".pc1").append("<strong>Appended text</strong>");
+			});
+			$("#btn2").click(function(){
+				$("#list").append("<li><strong>Appended item</strong></li>");
+			});
+			$("#btn3").click(function(){
+				$(".pc1").prepend("<strong>Prepend text</strong>");
+			});
+			$("#btn4").click(function(){
+				$("#list").prepend("<li><strong>Prepend item</strong></li>");
+			});
+			$("#btn5").click(function(){
+				$("h2").appendTo("p");	// 선택한 요소(h2)를 지정한 요소(p) 뒤에 옮기라는 명령
+			});
+			$("#btn6").click(function(){
+				$("h2").prependTo("p");	// 선택한 요소(h2)를 지정한 요소(p) 앞으로 옮기라는 명령
+			});
+
+		});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="Append text" />
+<input type="button" id="btn2" value="Append item" />
+<input type="button" id="btn3" value="Prepend text" />
+<input type="button" id="btn4" value="Prepend item" />
+<input type="button" id="btn5" value="AppendTo " />
+<input type="button" id="btn6" value="PrependTo " />
+<p id="p1" class="pc1">This is a paragraph.</p>
+<p id="p2" class="pc1">This is another paragraph.</p>
+<ol id="list">
+	<li>List item1</li>
+	<li>List item2</li>
+	<li>List item3</li>
+</ol>
+<h2>This is a heading</h2>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	.box * { display:block; border:2px solid orange; color:blue; padding:5px; margin:15px; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			$("#btn1").click(function(){
+				$("span").parents().css({ "color":"red", "border":"2px solid green" });
+				// 모든 span요소의 조상 요소 전부에 스타일 적용
+			});
+			$("#btn2").click(function(){
+				$("span").parents("ul").css({ "color":"purple", "border":"4px solid black" });
+				// 모든 span요소의 조상 요소들 중 ui 요소들에만 스타일 적용
+			});
+			$("#btn3").click(function(){
+				$("span").parents("li, div").css({ "font-style":"italic", "border":"4px dotted blue" });
+				// 모든 span요소의 조상 요소들 중 li와 div 요소들에만 스타일 적용
+			});
+		});
+	</script> 
+</head>
+<body>
+<div class="box">
+	<div style="width:500px;">
+		div (great-grandparent)
+		<ul>ul (grandparent)
+			<li class="first">li (direct parent)<span>span01</span></li>
+			<li class="first">li (direct parent)<span>span02</span></li>
+		</ul>
+	</div>
+	<div style="width:500px;">
+		div (great-grandparent)
+		<p>p (direct parent)<span>span</span></p>
+	</div>
+</div>
+<input type="button" id="btn1" value="parents()" />
+<input type="button" id="btn2" value="parents('ul')" />
+<input type="button" id="btn3" value="parents('li, div')" />
+</body>
+</html>

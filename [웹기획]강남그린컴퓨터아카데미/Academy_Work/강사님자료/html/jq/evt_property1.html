@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("h1, h2").click(function(event) {
+			$("#msg").text(event.currentTarget.innerHTML);
+			// currentTarget : 현재 이벤트를 일으킨 요소를 의미
+		});
+		$("#head, #p1, #btn").click(function() {
+			$("#box").html("Triggered by a " + event.target.nodeName + " element.");
+		});
+	});
+	</script>
+</head>
+<body>
+<h1> Heading 1 </h1>
+<h2> Heading 2 </h2>
+<p id="msg"></p>
+<h1 id="head">This is a heading</h1>
+<p id="p1">This is a paragraph</p>
+<input type="button" id="btn" value="This is a button" />
+<div id="box" style="color:blue;"></div>
+</body>
+</html>

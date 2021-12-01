@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	.line p:first-line { color:red; }
+	/* class명이 'line'인 요소안에 있는 p태그의 첫 번째 줄의 글자색을 빨간색으로 지정*/
+
+	.letter p:first-letter { color:blue; font-size:20px; }
+	/* class명이 'letter'인 요소안에 있는 p태그의 첫 번째 글자의 색과 크기를 지정*/
+
+	.ba p:before { content:"문단이 시작 : "; color:red; }
+	.ba p:after { content:"문단이 종료"; color:blue; }
+	/* class명이 'ba'인 요소안에 있는 p태그 텍스트들의 앞과 뒤에 특정 텍스트 지정*/
+
+	.child p:first-child { color:red; }
+	/* class명이 'child'인 요소안에 있는 p태그들 중 첫 번째 자식요소의 글자색 지정*/
+
+	a:link { color:#989898; text-decoration:none; }		/* 미방문 링크 */
+	a:visited { color:#a1a1a1; text-decoration:none; }	/* 방문한 링크 */
+	a:hover { color:red; text-decoration:none; }		/* 마우스 오버 */
+	a:active { color:blue; text-decoration:none; }		/* 눌렀을 때 */
+	a:focus { color:red; text-decoration:none; }		/* 포커스 */
+	</style>
+</head>
+<body>
+<h2>first-line 가상요소</h2>
+<div class="line">
+	<p>요소의 첫 번째 줄에 있는 컨텐츠만 선택하여 스타일을 지정할 때 사용하는 선택자 방식으로, 'first-line 가상 요소 선택자'라고 부른다. first-line 가상 요소 선택자를 지정할 경우 고정된 영역이 아닌 웹 브라우저 크기에 따라 유동적으로 스타일이 적용된다.</p>
+</div>
+<h2>first-letter 가상요소</h2>
+<div class="letter">
+	<p>요소의 첫 번째 글자만 선택하여 스타일을 지정할 때 사용하는 선택자 방식으로, 'first-letter 가상 요소 선택자'라고 한다.</p>
+</div>
+<hr />
+<h2>before & after 가상요소</h2>
+<div class="ba">
+	<p>가상 컨텐츠의 이전(before)이나 이후(after)에 내용을 추가할 수 있는 선택자로 content속성에 원하는 텍스트를 지정할 수 있다.</p>
+</div>
+<hr />
+<h2>first-child 가상요소</h2>
+<div class="child">
+	<p>first-child 가상 클래스는 첫 번째 자식 요소에만 스타일이 적용된다.</p>
+	<p>first-child 가상 클래스는 두 번째 자식 요소에는 스타일이 적용되지 않는다.</p>
+</div>
+<hr />
+<h2>링크 가상요소</h2>
+<ul>
+	<li><a href="#">HOME</a></li>
+	<li><a href="#">JOIN</a></li>
+	<li><a href="#">Login</a></li>
+	<li><a href="#">Site Map</a></li>
+</ul>
+<br /><br /><br /><br /><br /><br />
+</body>
+</html>

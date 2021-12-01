@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	#div1 { border:1px red solid; background:yellow; }
+	#div2 { border:1px blue solid; background:pink; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			$("#btn1").click(function() { 
+				$("p").wrap("<div id='div1'></div>");
+			});
+			$("#btn2").click(function() { 
+				$("p").wrapAll("<div id='div2'></div>");
+			});
+			$("#btn3").click(function() { 
+				$("p").wrapInner("<strong></strong>");
+			});
+			$("#btn4").click(function() { 
+				$("p").unwrap();	// wrap으로 작업한 횟수가 여러 번이면 그 만큼 실행시켜야 모두 풀어줄 수 있음
+			});
+		});
+	</script> 
+</head>
+<body>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<br />
+<input type="button" id="btn1" value="Wrap a div" />
+<input type="button" id="btn2" value="WrapAll a div" />
+<input type="button" id="btn3" value="WrapInner a div" />
+<input type="button" id="btn4" value="Unwrap a div" />
+</body>
+</html>

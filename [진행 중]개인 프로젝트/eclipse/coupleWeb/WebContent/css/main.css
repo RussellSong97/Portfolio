@@ -1,0 +1,31 @@
+@charset "UTF-8";
+@import url('//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css');
+
+body{margin:0; text-align: center;background-color:black; color: #dbe3eb;
+  font-family: 'Iropke Batang', serif;}
+h2{display:none;}
+
+/*a태그 색상 디자인*/
+a:link, a:visited {text-decoration:none; color:#dbe3eb;}
+
+
+/*네비게시녀 파트*/
+
+.logo {position:relative; margin:30px 0px 20px 0px;}
+.navbar_menu li{ display:inline; margin-left:50px; font-size:23px;}
+.navbar {display:inline;}
+
+/*콘텐츠 시작*/
+/*.couple_profile{margin:25px 0px 30px 0px; padding-bottom: 10px;border:2px gray solid; letter-spacing:7px;}*/
+.couple_profile{position:relative;width:75%;margin:30px auto; padding-bottom: 10px;border:2px gray solid; letter-spacing:7px;}
+#couples{font-size:30px; margin:15px 0px 15px 0px;}
+#cpDate{font-size:20px; margin-bottom:6px;}
+
+/*날씨 시작*/
+.photoZone{background-color:#2c2c2c;width:90%;position:relative;margin:30px auto; padding:50px 0px;border-radius:15px;}
+/*앨범 시작*/
+
+/*	반응형 웹페이지로 변경될 경우	*/
+@media screen and (max-width: 768px){
+	
+}

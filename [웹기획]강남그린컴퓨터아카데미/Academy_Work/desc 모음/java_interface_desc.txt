@@ -1,0 +1,22 @@
+abstract 클래스
+ - 추상(화) 클래스라고도 하는 클래스로 미완성 클래스
+ - 하나 이상의 abstract메소드를 가지고 있는 클래스
+ - 상속의 관계에서 상위클래스 역할을 하기 위해 정의되는 클래스
+ 	abstract 클래스를 상속받은 하위클래스에서는 반드시 abstract 클래스의 abstract 메소드를 오버라이딩해서 완성해야 함
+	만약 abstract 메소드를 오버라이딩하지 않거나 완성하지 않으면 하위클래스로 abstract 로 선언해야 함
+ - 인스턴스를 생성할 수 없는 클래스
+ - 선언 : abstract class 클래스명
+ 
+ - abstract 메소드
+ 	미완성된 메소드로 구현부 없이 선언부만 존재하는 메소드
+	선언 : abstract 리턴타입 메소드명([매개변수(들)]);
+
+
+interface
+ - 모든 메소드가 abstract 메소드인 완전한 abstract 클래스를 interface로 지정할 수 있음
+ - 자바에서 불가능한 다중상속의 효과를 낼 수 있는 기능이기도 함
+ 	단, interface의 목적을 다중 상속으로 두면 안됨
+ - 상속의 extends 대신 구현의 implements 키워드를 사용하며 여러 개의 interface를 한 번에 사용할 수도 있음
+	interface들 끼리는 상속이 가능
+ - 선언하는 모든 메소드는 자동으로 public abstract 로 선언됨
+ - 선언하는 모든 변수는 자동으로 public static final 로 선언됨

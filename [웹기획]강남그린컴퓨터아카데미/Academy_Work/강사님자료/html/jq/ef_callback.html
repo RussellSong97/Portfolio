@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	function message() {
+		alert("이미지는 잠시 후 사라질 것입니다.");
+	}
+
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			$("#img1").hide(1000, message());
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="HIDE" />
+<p>This is callBack Function...</p>
+<img id="img1" src="../img/a.jpg" width="400" />
+</body>
+</html>

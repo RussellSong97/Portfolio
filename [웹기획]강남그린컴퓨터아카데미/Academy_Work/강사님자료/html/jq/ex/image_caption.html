@@ -1,0 +1,167 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	html {
+	    font-family: "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+		font-size: 16px; line-height: 1.5;
+	}
+	body { background-color: #656565; }
+	img { vertical-align: middle; }
+	button { outline: none; }
+	::-moz-selection { background: #b3d4fc; text-shadow: none; }
+	::selection { background: #b3d4fc; text-shadow: none; }
+
+	.page-header { background-color: #fff; }
+	.page-header h1 {
+		width: 976px; height: 80px; margin: 0 auto; padding-left: 10px; font-size: 20px;
+		font-weight: normal; line-height: 80px; letter-spacing: 0.1em;
+	}
+	.page-main { position: relative; }
+	.page-main > div { padding: 50px 0 100px; }
+	.page-main > div h2 {
+		color: #fff; text-align: center; margin: 0 0 50px; 
+		font-weight: normal; letter-spacing: 0.15em;
+	}
+	.page-main > aside {
+		background-color: rgba(0,0,0,0.8); width: 350px; height: 100%; 
+		top: 0; left: -350px; position: fixed;
+	}
+	.page-main > aside ul {
+		margin: 0; padding: 0; top: 50px; left: 114px; position: absolute;
+	}
+	.page-main > aside li { margin: 0 0 20px; list-style: none; }
+	.page-main > aside button {
+		background-color: rgba(0,0,0,0.8); display: block; position: absolute; top: 150px; 
+		left: 350px; width: 52px; height: 132px; margin: 0; padding: 0; border: none;
+	}
+
+	#typo {
+		margin: 0; padding: 0; background-color: #3498db; font-weight: bold; font-size: 110px;
+		color: #fff; text-align: center; line-height: 500px; height: 500px;
+		-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+	}
+	#buttons1 { background-color: #ebc000; }
+	#buttons2 { background-color: #01b169; height: 340px; }
+	#images { background-color: #ff8873; }
+	#easing { background-color: #019faa; }
+	#typo .inner, #buttons1 .inner, #buttons2 .inner, #images .inner {
+		position: relative; width: 976px; margin: 0 auto;
+	}
+	#buttons1 button {
+		display: block; float: left; width: 224px; height: 80px; margin: 0 10px 20px;
+		padding: 0; font-size: 16px; letter-spacing: 0.15em; color: #ebc000;
+		background-color: #fff; border: none; border-radius: 20px;
+	}
+	#buttons2 button {
+		display: block; position: absolute; width: 224px; height: 224px; overflow: hidden;
+		padding: 0 0 35px; font-size: 16px; letter-spacing: 1px; color: #01b169;
+		background-color: #fff; border: none; border-radius: 112px; 
+	}
+	#buttons2 button:nth-child(1) { left: 10px; }
+	#buttons2 button:nth-child(2) { left: 254px; }
+	#buttons2 button:nth-child(3) { left: 498px; }
+	#buttons2 button:nth-child(4) { left: 742px; }
+
+	#images p { position: relative; width: 580px; height: 380px; margin: 0 auto 80px; }
+	#images p strong { color: #fff; font-size: 20px; }
+
+	.page-footer { background-color: #656565; }
+	.page-footer small {
+		display: block; color: #fff; font-size: 11px; text-align: right; width: 976px;
+		margin: 0 auto; height: 120px; line-height: 120px; letter-spacing: 0.15em;
+	}
+	.page-footer a { color: #fff; text-decoration: none; }
+
+	.clearfix:before, .clearfix:after { content: " "; display: table; }
+	.clearfix:after { clear: both; }
+
+	#images p { overflow: hidden; }
+	#images p strong {
+		position: absolute; display: block; z-index: 1; bottom: 0; width: 540px; height: 30px;
+		background: rgba(0, 0, 0, 0.5); text-align: left; padding: 20px;
+	}
+	#images p span {
+		position: absolute; display: block; z-index: 0; top: 0; width: 580px; height: 380px;
+		box-shadow: inset 0 0 50px rgba(50, 30, 0, 0.6), inset 0 0 100px rgba(50, 30, 0, 0.3);
+		background: rgba(255, 155, 0, 0.2); opacity: 0;
+	}
+	#images p:nth-child(1) strong { opacity: 0; }
+	#images p:nth-child(2) strong { opacity: 0; left: -200%; }
+	#images p:nth-child(3) strong { bottom: -80px; background: rgba(34, 34, 34, 1); }
+	#images p:nth-child(3) img { position: absolute; top: 0px; }
+	</style>
+	<script src="../jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		var duration = 400;	// 애니메이션에 걸리는 시간
+		var $images = $("#images p");
+
+		// 객체.filter() : 선택된 객체에 포함된 모든 요소를 선택할 때 사용
+		// 객체.find() : 선택된 객체의 하위 요소를 선택할 때 사용
+		$images.filter(":nth-child(1)")		// 첫번째 이미지가 있는 <p> 선택
+			.on("mouseover", function() {	// 객체에 마우스 오버시
+				$(this).find("strong, span").stop(true).animate({ opacity:1 }, duration);
+				// 첫번째 이미지가 있는 <p>안의 strong과 span에 duration만큼의 시간동안 투명도를 1로 만듦
+			})
+			.on("mouseout", function() {	// 객체에 마우스 아웃시
+				$(this).find("strong, span").stop(true).animate({ opacity:0 }, duration);
+				// 첫번째 이미지가 있는 <p>안의 strong과 span에 duration만큼의 시간동안 투명도를 0으로 만듦
+			});
+
+		$images.filter(":nth-child(2)")		// 두번째 이미지가 있는 <p> 선택
+			.on("mouseover", function() {
+				$(this).find("strong").stop(true).animate({ opacity:1, left:"0%" }, duration);
+				// 두번째 이미지가 있는 <p>안의 strong에 duration만큼의 시간동안 투명도를 1로 만들고 위치를 이미지에 맞춤
+				$(this).find("span").stop(true).animate({ opacity:1 }, duration);
+				// 두번째 이미지가 있는 <p>안의 span에 duration만큼의 시간동안 투명도를 1로 만듦(그림자)
+			})
+			.on("mouseout", function() {
+				$(this).find("strong").stop(true).animate({ opacity:0, left:"-200%" }, duration);
+				// 두번째 이미지가 있는 <p>안의 strong에 duration만큼의 시간동안 투명도를 0으로 만들고 위치를 왼쪽으로 이동
+				$(this).find("span").stop(true).animate({ opacity:0 }, duration);
+				// 두번째 이미지가 있는 <p>안의 span에 duration만큼의 시간동안 투명도를 0으로 만듦(그림자)
+			});
+
+		$images.filter(":nth-child(3)")		// 세번째 이미지가 있는 <p> 선택
+			.on("mouseover", function() {
+				$(this).find("strong").stop(true).animate({ bottom:"0px" }, duration);
+				// strong에 duration만큼의 시간동안 위치를 바닥에 붙임
+				$(this).find("span").stop(true).animate({ opacity:1 }, duration);
+				// span에 duration만큼의 시간동안 투명도를 1로 만듦
+				$(this).find("img").stop(true).animate({ top:"-20px" }, duration * 1.3);
+				// img에 duration * 1.3 만큼의 시간동안 위치를 위로 20px만큼 올려버림(이미지가 움지이는 듯한 효과)
+				// 이미지가 올라가면 overflow가 발생하나 css에서 hidden으로 지정했기 때문에 가려짐
+			})
+			.on("mouseout", function() {
+				$(this).find("strong").stop(true).animate({ bottom:"-80px" }, duration);
+				// strong에 duration만큼의 시간동안 위치를 아래쪽으로 숨김
+				$(this).find("span").stop(true).animate({ opacity:0 }, duration);
+				// span에 duration만큼의 시간동안 투명도를 0으로 만듦
+				$(this).find("img").stop(true).animate({ top:"0px" }, duration * 1.3);
+				// img에 duration * 1.3 만큼의 시간동안 20px 올라갔던 위치를 원래대로 내림(이미지가 움지이는 듯한 효과)
+			});
+	});
+	</script>
+</head>
+<body>
+<div class="page-header">
+	<h1>Creative jQuery Sample</h1>
+</div>
+
+<div class="page-main" role="main">
+	<div id="images">
+		<h2>IMAGES</h2>
+		<div class="inner clearfix">
+			<p><img src="images/01_img.jpg" /><strong>Hummingbird</strong><span></span></p>
+			<p><img src="images/02_img.jpg" /><strong>Sitta</strong><span></span></p>
+			<p><img src="images/03_img.jpg" /><strong>Bee-eater</strong><span></span></p>
+		</div>
+	</div>
+</div>
+
+<div class="page-footer">
+	<small class="copyright">COPYRIGHT &copy; <a href="#">COMPANY Inc.</a></small>
+</div>
+</body>
+</html>

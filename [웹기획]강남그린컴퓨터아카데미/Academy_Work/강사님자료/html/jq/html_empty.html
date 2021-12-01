@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			$("#box1").remove();	// 선택한 요소를 자식 요소 포함 모두 삭제
+		});
+		$("#btn2").click(function() {
+			$("#box1").empty();		// 선택한 요소의 내용과 자식 요소들만 삭제
+		});
+	});
+	</script>
+</head>
+<body>
+<div id="box1" style="height:100px; width:300px; border:1px solid black; background:yellow;">
+	This is some test in the div.
+	<p>This is a paragraph in the div.</p>
+	<p>This is another paragraph in the div.</p>
+</div>
+<br />
+<input type="button" id="btn1" value="Remove div element" />
+<input type="button" id="btn2" value="Empty div element" />
+</body>
+</html>

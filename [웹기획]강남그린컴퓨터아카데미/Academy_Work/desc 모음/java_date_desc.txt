@@ -1,0 +1,198 @@
+날짜와 시간
+ - 날짜와 시간을 표현하는 기능으로 jdk1.0에서 java.util.Date 클래스를 제공했으나 기능이 부실해서 jdk1.1에서 Calendar 클래스를 다시 만들어 제공하게 됨
+ - 후에 jdk1.8에서 time패키지를 제공함
+
+java.util.Calendar 클래스
+ - Date클래스의 약점을 보완한 클래스로 abstract 로 선언되어 있어 생성자를 통해 인스턴스를 생성할 수 없고 getInstance() 메소드를 통해 인스턴스를 생성해야 함
+
+ - 주요 필드(field) : 모두 static final이므로 Calendar.필드명 방식으로 사용할 수 있음
+static int	AM_PM : 오전(0)과 오후(1)를 표현한 상수
+static int	DATE : 년월일 중 일(day)을 의미하는 상수
+static int	DAY_OF_MONTH : DATE와 동일
+static int	DAY_OF_WEEK : 요일 번호를 의미(1~7로 1이 일요일)
+static int	DAY_OF_WEEK_IN_MONTH : 월 기준으로 몇 번째 요일인지를 의미하는 상수
+static int	DAY_OF_YEAR : 년 기준으로 몇 번째 일인지를 의미하는 상수
+static int	HOUR : 0~11까지의 시를 의미하는 상수
+static int	HOUR_OF_DAY : 0~23시까지를 의미하는 상수
+static int	MILLISECOND : 밀리초를 의미하는 상수
+static int	MINUTE : 분을 의미하는 상수
+static int	MONTH : 월을 의미하는 상수
+static int	SECOND : 초를 의미하는 상수
+static int	WEEK_OF_MONTH :  월 기준으로 몇 번째 주인지를 의미하는 상수
+static int	WEEK_OF_YEAR : 년 기준으로 몇 번째 주인지를 의미하는 상수
+static int	YEAR : 년을 의미하는 상수
+
+ - 주요 메소드
+void	add(int field, int amount) : 날짜/시간에서 지정한 field의 값에 amount(음수 사용가능)를 더함
+int		compareTo(Calendar anotherCalendar) : 날짜/시간과 anotherCalendar가 동일한지를 정수로 리턴(같으면 0)
+boolean	equals(Object obj) : 날짜/시간과 obj가 동일한지 여부를 리턴
+int		get(int field) : 날짜/시간에서 지정한 field의 값을 리턴
+int		getActualMaximum(int field) : 날짜/시간에서 지정한 field의 최대값을 리턴
+int		getActualMinimum(int field) : 날짜/시간에서 지정한 field의 최소값을 리턴
+static Calendar	getInstance() : Calendar클래스의 인스턴스를 생성하여 리턴(오늘 날짜 및 현재 시간으로 생성됨)
+long	getTimeInMillis() : 날짜 /시간을 1970년 1월 1일 0시를 기준으로 밀리초 단위로 리턴
+void	roll(int field, int amount) : add()와 같으나 지정한 field의 값만 변하고 다른 field의 값은 변하지 않음
+void	set(int field, int value) : 날짜/시간에 지정한 field의 값만을 value로 변경
+void	set(int year, int month, int date) : 날짜/시간을 지정한 년월일로 변경
+void	set(int year, int month, int date, int hourOfDay, int minute) : 날짜/시간을 지정한  년월일 시분으로 변경
+void	set(int year, int month, int date, int hourOfDay, int minute, int second) : 날짜/시간을 지정한  년월일 시분초 으로 변경
+
+
+java.time 패키지
+ - jdk1.8에서 추가된 날짜/시간 관련 패키지
+	java.time : 날짜/시간에 관련된 핵심 클래스들
+	java.time.chrono : 표준(ISO)이 아닌 달력
+	java.time.temporal : 날자/시간의 필드와 단위를 위한 클래스들
+	java.time.zone : 시간대(time-zone)와 관련된 클래스들
+- 날짜와 시간을 하나의 인스턴스로 표현하는 Calendar와 다르게 time패키지에서는 날짜와 시간을 각각 따로 표현 할 수 있음
+	날짜 : LocalDate클래스 / 시간 : LocalTime클래스 / 날짜&시간 : LocalDateTime클래스
+
+LocalDateTime클래스 : 날짜와 시간을 모두 표현하는 클래스
+ - 생성자는 없고 메소드를 통해 인스턴스를 생성해야 함
+static LocalDateTime now () : 오늘 날짜 및 현재 시간으로 LocalDateTime클래스의 인스턴스 생성
+static LocalDateTime	of(int year, int month, int dayOfMonth, int hour, int minute)
+ : 지정한 연월일 시분으로 LcoalDateTime클래스의 인스턴스 생성
+static LocalDateTime	of(int year, int month, int dayOfMonth, int hour, int minute, int second)
+ : 지정한 연월일 시분초로 LcoalDateTime클래스의 인스턴스 생성
+static LocalDateTime	of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanoOfSecond)
+ : 지정한 연월일 시분초나노초로 LcoalDateTime클래스의 인스턴스 생성
+ static LocalDateTime	of(LocalDate date, LocalTime time)
+  : 지정한 LcoalDate와 LcoalDateTime클래스의 인스턴스 생성
+
+ - 그 외의 주요 메소드
+리턴타입				메소드명 및 설명
+int					get(TemporalField field)  : 날짜/시간에서 지정한 field에 해당하는 값을 리턴
+int					getDayOfMonth() : 날짜의 일(day) 부분을 리턴
+DayOfWeek		getDayOfWeek() : 요일을 DayOfWeek형 인스턴스로 리턴
+ - 날짜객체.getDayOfWeek().getValue()로 요일번호를 리턴(1~7, 1:월요일)
+int					getDayOfYear() : 년을 기준으로 몇 번째 일(day)인지 리턴
+int					getHour() : 시간에서 시(hour)를 리턴(24시간제)
+int					getMinute() : 시간에서 분을 리턴(24시간제)
+Month				getMonth() : 날짜에서 월을 Month객체로 리턴하여 getMonth().getValue()로 정수로 변경하여 사용가능
+int					getMonthValue () : 날짜에서 월을 1~12사이의 정수로 리턴
+int					getNano() : 시간에서 나노초를 리턴
+int					getSecond() : 시간에서 초를 리턴
+int					getYear() : 시간에서 년을 리턴
+
+boolean				isAfter(ChronoLocalDateTime<?> other) : 날짜를 비교하여 이후 날짜인지 여부를 리턴
+boolean				isBefore(ChronoLocalDateTime<?> other) : 날짜를 비교하여 이전 날짜인지 여부를 리턴
+
+날짜/시간 빼기 메소드들
+LocalDateTime	minus(long amountToSubtract, TemporalUnit unit) : 날짜/시간의 unit에 amountToSubtract 만큼 뺀 날짜/시간을 리턴
+LocalDateTime	minusDays(long days) : 날짜에서 일(day)부분만 days만큼 감소 시킴
+LocalDateTime	minusHours(long hours) : 시간에서 시(hour)부분만 hours만큼 감소 시킴
+LocalDateTime	minusMinutes(long minutes) : 시간에서 분(minute)부분만 minutes만큼 감소 시킴
+LocalDateTime	minusMonths(long months) : 시간에서 월(month)부분만 months만큼 감소 시킴
+LocalDateTime	minusNanos(long nanos) : 시간에서 나노초(nano-second)부분만 nanos만큼 감소 시킴
+LocalDateTime	minusSeconds(long seconds) : 시간에서 나노초(second)부분만 seconds만큼 감소 시킴
+LocalDateTime	minusWeeks(long weeks) : 시간에서 주(weeks)부분만 weekss만큼 감소 시킴
+LocalDateTime	minusYears(long years) : 시간에서 년(years)부분만 years만큼 감소 시킴
+
+날짜/시간 더하기 메소드들
+LocalDateTime	plus(long amountToSubtract, TemporalUnit unit) : 날짜/시간의 unit에 amountToAdd 만큼 뺀 날짜/시간을 리턴
+LocalDateTime	plusDays(long days) : 날짜에서 일(day)부분만 days만큼 증가 시킴
+LocalDateTime	plusHours(long hours) : 시간에서 시(hour)부분만 hours만큼 증가 시킴
+LocalDateTime	plusMinutes(long minutes) : 시간에서 분(minute)부분만 minutes만큼 증가 시킴
+LocalDateTime	plusMonths(long months) : 시간에서 월(month)부분만 months만큼 증가 시킴
+LocalDateTime	plusNanos(long nanos) : 시간에서 나노초(nano-second)부분만 nanos만큼 증가 시킴
+LocalDateTime	plusSeconds(long seconds) : 시간에서 나노초(second)부분만 seconds만큼 증가 시킴
+LocalDateTime	plusWeeks(long weeks) : 시간에서 주(weeks)부분만 weekss만큼 증가 시킴
+LocalDateTime	plusYears(long years) : 시간에서 년(years)부분만 years만큼 증가 시킴
+
+날짜/시간 변경 메소드들
+LocalDateTime	with(TemporalField field, long newValue) : 날짜/시간의 field의 값을 newValue 로 변경하여 리턴
+LocalDateTime	withDayOfMonth(int dayOfMonth) : 날짜에서 일(day)부분만 dayOfMonth 로 변경하여 리턴
+LocalDateTime	withDayOfYear(int dayOfYear) : 날짜에서 일(day)부분만 dayOfYear 로 변경하여 리턴
+LocalDateTime	withHour(int hour) : 시간에서 시(hour)부분을 hour 로 변경하여 리턴
+LocalDateTime	withMinute(int minute) : 시간에서 분(minute)부분을 minute 로 변경하여 리턴
+LocalDateTime	withMonth(int month) : 날짜에서 월(month)부분을 month 로 변경하여 리턴
+LocalDateTime	withNano(int nanoOfSecond) : 시간에서 나노초(nano-second)부분을 nanoOfSecond 로 변경하여 리턴
+LocalDateTime	withSecond(int second) : 시간에서 초(second)부분을 second 로 변경하여 리턴
+LocalDateTime	withYear(int year) : 날짜에서 년(year)부분을 year 로 변경하여 리턴
+
+LocalDateTime	truncatedTo(TemporalUnit unit) : LocalTime 전용 메소드로 지정한 유닛보다 작은 유닛들은 0으로 변경
+
+TemporalUnit(chronoUnit) : plus()나 minus() 같은 메소드에서 수정할 필드를 의미하는 상수값
+ERAS : 1000000000년
+MILLENNIA : 1000년
+CENTURIES : 100년
+DECADES : 10년
+YEARS : 년
+MONTHS : 월
+WEEKS : 주
+DAYS : 일
+HALF_DAYS : 반나절
+HOURS : 시
+MINUTES : 분
+SECONDS : 초
+MILLIS : 밀리초(천분의 일초)
+MICROS : 마이크로초(백만분의 일초)
+NANOS : 나노초(십억분의 일초)
+
+java.time.temporal.TemporalAdjuster 클래스
+ - 계산하기 복잡한 날짜들을 쉽게 구하기 위해 미리 메소드를 정의해 놓은 클래스 
+ - 생성자는 따로 없으며 모든 메소드가 static으로 선언되어 있음
+ - 주요 메소드
+리턴타입				메소드명 및 설명
+TemporalAdjuster	firstDayOfMonth() : 이번 달의 첫 날
+TemporalAdjuster	firstDayOfNextMonth() : 다음 달의 첫 날
+TemporalAdjuster	firstDayOfNextYear() : 다음 해의 첫 날
+TemporalAdjuster	firstDayOfYear() : 이번 해의 첫 날
+TemporalAdjuster	firstInMonth(DayOfWeek dayOfWeek) : 이번 달의 첫 번째 지정한 요일
+TemporalAdjuster	lastDayOfMonth() : 이번 달의 마지막 날
+TemporalAdjuster	lastDayOfYear() : 다음 해의 마지막 날
+TemporalAdjuster	lastInMonth(DayOfWeek dayOfWeek) : 이번 달의 마지막 지정한 요일
+TemporalAdjuster	next(DayOfWeek dayOfWeek) : 다음 지정한 요일(당일 미포함)
+TemporalAdjuster	nextOrSame(DayOfWeek dayOfWeek) : 다음 지정한 요일(당일 포함)
+TemporalAdjuster	previous(DayOfWeek dayOfWeek) : 이전 지정한 요일(당일 미포함)
+TemporalAdjuster	previousOrSame(DayOfWeek dayOfWeek) : 이전 지정한 요일(당일 포함)
+
+
+Period 클래스
+ - Period : 날짜 사이의 기간을 구하는 클래스
+ - 생성자가 따로 없어 static 메소드를 통해 인스턴스를 생성해야 함
+ - 인스턴스 생성용 메소드
+static Period	between(LocalDate startDateInclusive, LocalDate endDateExclusive)
+ : 두 날짜(startDateInclusive, endDateExclusive) 사이의 기간으로 Period 인스턴스 생성
+ - startDateInclusive 가 endDateExclusive 보다 이전 날짜이면 음수로 인스턴스가 생성
+ - 음수로 저장되는 것을 막으려면 따로 절대값 메소드가 없으므로 if문과 isNegative() 메소드로 음수인 것을 확인하여 매개변수의 순서를 바꾸어 생성해야 함
+
+ - 그 외의 주요 메소드
+리턴타입	메소드명 및 설명
+long	get(TemporalUnit unit) : Period 에서 지정한 unit에 해당하는 값을 리턴
+int		getDays() : Period 에 저장된 기간의 일(day)을 단위로 리턴
+int		getMonths() : Period 에 저장된 기간의 월(month)을 리턴
+int		getYears() : Period 에 저장된 기간의 년(year)을 리턴
+List<TemporalUnit>	getUnits() : Period 의 get 관련 메소드에서 사용할 수 있는 unit을 리턴
+boolean	isNegative() : Period 가 음수인지 여부를 리턴
+long	toTotalMonths() : Period 에 저장된 기간을 월(month) 단위로 변환하여 리턴
+ - 기타 minus(), plus(), of(), with() 등의 메소드들이 있으며 LocalDate 클래스의 메소드들과 사용법이 같음
+
+
+Duration 클래스
+ - 시간 사이의 차이를 구하는 클래스
+ - 생성자가 따로 없어 static 메소드를 통해 인스턴스를 생성해야 함
+ - 인스턴스 생성용 메소드
+static Duration	between(Temporal startInclusive, Temporal endExclusive)
+ : 두 시간 (startInclusive와 endExclusive) 사이의 차로 Duration 인스턴스 생성
+
+ - 그 외의 주요 메소드
+리턴타입		메소드명 및 설명
+Duration	abs() : 두 시간의 차를 절대값으로 변경하여 새로운 Duration 인스턴스로 리턴
+long		get(TemporalUnit unit) : Duration 에서 지정한 unit에 해당하는 값을 리턴
+int			getNano() : Duration 에서 나노초를 리턴 
+long		getSeconds() : Duration 에서 초를 리턴(시와 분을 구하는 메소드가 없으므로 초를 이용해 나눗셈으로 구해야 함)
+List<TemporalUnit>	getUnits() : Duration 의 get 관련 메소드에서 사용할 수 있는 unit을 리턴
+boolean	isNegative() : Duration 가 음수인지 여부를 리턴
+long		toDays() : Duration 의 값을 일(day) 단위로 변환하여 리턴
+long		toHours() : Duration 의 값을 시간(hour) 단위로 변환하여 리턴
+long		toMillis() : Duration 의 값을 밀리초(milli-second) 단위로 변환하여 리턴
+long		toMinutes() : Duration 의 값을 분(minute) 단위로 변환하여 리턴
+long		toNanos() : Duration 의 값을 나노초(nano-second) 단위로 변환하여 리턴
+ - 기타 minus(), plus(), of(), with() 등의 메소드들이 있으며 LocalDate 클래스의 메소드들과 사용법이 같음
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	.intro { font-size:120%; color:red; background:yellow; }
+	.intro2 { font-size:120%; font-weight:bold; color:red; background:pink; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() { 
+			$("#btn1").click(function() { 
+				if (!$("p:first").hasClass("intro"))	$("p:first").addClass("intro2");
+				if (!$("p:last").hasClass("intro"))		$("p:last").addClass("intro2");
+				// hasClasS()는 선택자로 선택한 요소(들)에 지정한 클래스가 있으면 true 없으면 false
+			});
+			
+		});
+	</script> 
+</head>
+<body>
+<input type="button" id="btn1" value="hasClass??" />
+<p id="p1" class="intro">This is a paragraph.</p>
+<p id="p2" >This is another paragraph.</p>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	body { margin:0; }
+	/* body태그에서만 margin으로 안쪽 여백을 지정함(padding은 적용안됨) */
+
+	/*
+	margin : 요소의 바깥쪽 여백을 지정하는 css속성
+	padding : 요소의 안쪽 여백을 지정하는 css속성
+
+	두 여백 모두 박스의 원래 크기에 추가되는 개념으로 여백이 지정됨
+	*/
+	.box { width:100px; height:100px; }
+	#box1 {
+		background-color:#0f0; 
+		margin:10px;
+		/* #box1의 상하좌우에 10px의 여백을 지정(#box1이 차지하는 공간이 늘어남) */
+
+		margin-top:5px;		/* box1의 윗쪽 여백 지정 */
+		margin-left:10px;	/* box1의 왼쪽 여백 지정 */
+		margin-right:15px;	/* box1의 오른쪽 여백 지정 */
+		margin-bottom:20px;	/* box1의 아랫쪽 여백 지정 */
+
+		/* 가장 늦게 지정한 스타일이 적용됨 */
+	}
+	#box2 {
+		background-color:#00f;
+
+		margin:5px;					/* 상하좌우 5 */
+		margin:5px 10px;			/* 상하 5, 좌우 10 */
+		margin:5px 10px 15px;		/* 상 5, 좌우 10, 하 15 */
+		margin:5px 10px 15px 20px;	/* 상 5, 우 10, 하 15, 좌 20 */
+	}
+	/*
+	여백 겹침 현상(margin collapsing) : 두 박스 사이의 마진이 결칠 경우 둘 중 큰 값으로 적용됨(두 값이 더해지진 않음)
+	*/
+
+	.pBox { background-color:gray; margin:0; width:300px; }
+	#pBox1 { padding:20px; }
+	#pBox2 { padding:20px 50px; }
+	#pBox3 { padding:20px 50px 30px; }
+	#pBox4 { padding:20px 50px 30px 70px; }
+	/*
+	padding도 margin처럼 특정 방향에만 여백을 지정할 수도 있음
+	padding-top, padding-left, padding-right, padding-bottom으로 지정가능
+	*/
+	</style>
+</head>
+<body>
+<!--
+div 태그 : 블록요소나 인라인요소들을 묶기 위한 태그로 기본적으로 여백이 0인 태그
+ - 주로 레이아웃용으로 사용되어 예전 table태그를 대체하는 용도로 사용됨
+-->
+<div class="box" id="box1">BOX 1</div>
+<div class="box" id="box2">BOX 2</div>
+<br /><br />
+<p class="pBox" id="pBox1">박스의 상하좌우에 모두 20px의 안쪽 여백 지정</p>
+<p class="pBox" id="pBox2">박스의 상하에 20px, 좌우에 50px의 안쪽 여백을 지정</p>
+<p class="pBox" id="pBox3">상20px, 좌우50px, 하30px의 안쪽 여백 지정</p>
+<p class="pBox" id="pBox4">상20px, 우50px, 하30px, 좌70px 안쪽 여백 지정</p>
+<br /><br /><br /><br />
+</body>
+</html>

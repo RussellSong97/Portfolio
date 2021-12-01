@@ -1,0 +1,188 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<!--
+form 태그 : 사용자가 서버에 데이터를 전달하기 위해 입력한 값들(폼 내부의 데이터)을 서버에 일괄적으로 전송시켜주는 역할을 하며, 화면상에는 아무런 표시가 나지 않는 태그
+ - 한 페이지내에 여러 개의 폼이 존재할 수 있으나 폼 안에 다른 폼이 존재할 순 없음
+ - 폼 태그 내부에는 데이터를 입력받거나 선택 할 수 있는 컨트롤(입력양식)들이 들어감
+ - name="이름" 폼의 이름으로 한 페이지내에서는 유일해야 함
+ - action="경로 및 파일명" 폼 안의 데이터를 전송할 위치로 서버의 특정 파일을 지정
+	생략하면 현재 팡리이 action 속성의 값으로 지정됨
+ - method="get|post" : 데이터를 전송하는 방식으로 대부분 post를 선택
+	get : 기본값으로 데이터를 url의 뒤에 쿼리스트링으로 전송하는 방식으로 주로 검색에 사용
+	 - 장점 : 속도가 빠름
+     - 단점 : 전송할 수 있는 데이터의 양이 적고, 특정 데이터(파일)는 전송불가, 보안에 취약
+	post : 데이터를 폼의 본문으로 전송하는 방식
+	 - 장점 : 전송할 수 있는 데이터의 양과 종류(파일)가 많고, get에 비해 보안에 뛰어남
+	 - 단점 : get에 비해 속도가 느림, 반드시 폼태그를 이용해야 함
+
+fieldset 태그 : 폼안의 컨트롤들을 그룹화하는 역할 태그
+ - 사용 시 옅은 회색의 사각형으로 감쌈
+legend 태그 : fieldset 안에서 사용하며, 묶은 컨트롤들의 제목을 입력하는 태그
+ - 회색 사각형의 좌상단에 이름이 보임
+ - fieldset과 legend 모두 화면상에서는 안보이게 css로 처리하는 경우가 많음
+
+label 태그 : 특정 컨트롤과 매칭시키는 역할을 해주는 태그
+ - 웹표준에서는 컨트롤에 사용하는 것을 권장함
+
+input 태그 : type 속성에 따라 각기 다른 종류의 컨트롤을 표시하는 태그 
+ - type="text|password|file|checkbox|radio|button|submit|reset|hidden" :  input 태그의 컨트롤 종류를 지정하는 속성으로 'text'가 기본값
+	text : 기본값으로 텍스트 필드를 의미하며, 한 줄의 텍스트를 입력받는 컨트롤
+	password : 패스워드필드로 텍스트 필드와 비슷하나 글자가 특수문자로 대체됨
+	file : 파일필드로 업로드할 파일을 선택하는 컨트롤
+	checkbox : 체크박스 또는 확인란 이라하며 선택과 선택취소를 할 수 있음
+	radio : 라디오버튼 또는 옵션버튼 이라하며 선택취소가 불가하여 필수입력사항에서 사용됨
+	button : 일반 버튼으로 자바스크립트를 이용하여 기능을 부여해야 함
+	submit : 서브밋버튼으로 폼안의 데이터를 지정한 action으로 전송하는 컨트롤
+	 - 텍스트필드 등에서 데이터 입력 후 엔터를 치면 동작함
+	reset : 리셋버튼으로 폼안의 데이터들을 초기화 시키는 컨트롤
+	image : 서브밋 이미지로 서브밋 버튼 대용으로 사용가능(img태그와 동일한 속성 사용)
+	hidden : 사용자에게 보이지 않고 데이터를 전송시키는 컨트롤
+	range : 지정한 최소값과 최대값 사이의 값을 선택하는 컨트롤
+	email : email 주소의 문법이 맞는지 검사해주는 일종의 텍스트필드
+	url : url의 문법이 맞는지 검사해주는 일종의 텍스트필드
+
+ - name="이름" : 컨트롤의 이름으로 서버에서 데이터를 받을 때 사용됨(공용)
+ - disabled="disabled" : 컨트롤을 사용불가로 만듦(공용)
+ 	disabled를 적용한 컨트롤은 서버로 전송되지 않음
+
+ - value="텍스트"
+	text, password, file, checkbox, radio : 서버로 전송할 값을 의미
+	text, password : value 속성에 값을 이미 넣으면 화면에 보임
+	button, submit, reset : 버튼의 캡션으로 사용
+
+ - maxlength="숫자" : 입력되는 글자의 수를 제한(text, password)
+ - size="숫자" : 컨트롤의 크기로 기본값은 20이며 한 번에 보일 글자수로 지정(text, password)
+	일반적으로 IE와 크롬의 size가 다르게 동작되므로 css에서 픽셀 단위로 작업해야 함
+ - readonly="readonly" : 쓰기 기능을 막고 읽기 전용으로 사용(text, password)
+ - placeholder="텍스트" : text와 password에서 미리 보여줄 텍스트를 지정
+ - min="숫자" : range에서 최소값을 지정하는 속성
+ - max="숫자" : range에서 최대값을 지정하는 속성
+ - step="숫자" : range에서 한번에 이동할 값을 지정하는 속성
+
+ - checked="checked" : 미리 선택된 상태로 만듦(checkbox, radio)
+-->
+<form name="frm" action="" method="post">
+<fieldset>
+	<legend>폼 태그 사용 예제</legend>
+	<label for="id">아이디 : </label>
+	<input type="text" name="txt" id="id" size="15" placeholder="아이디 입력" disabled="disabled" />
+	<br />
+	<label for="pw">비밀번호 : </label>
+	<input type="password" name="pwd" id="pw" size="15" placeholder="비밀번호 입력" />
+	<br />
+	<label for="fl">첨부파일 : </label>
+	<input type="file" name="fl" id="fl" disabled="disabled" />
+	<br />
+	취미 : <input type="checkbox" name="hobby" id="movie" />
+	<label for="movie">영화감상</label>
+	<input type="checkbox" name="hobby" id="sports" disabled="disabled" />
+	<label for="sports">운동</label>
+	<input type="checkbox" name="hobby" id="music" checked="checked" />
+	<label for="music">음악감상</label>
+	<br />
+	성별 : 	<input type="radio" name="gender" value="m" id="male" disabled="disabled"/>
+	<label for="male">남</label>
+	<input type="radio" name="gender" value="f" id="female" checked="checked" />
+	<label for="female">여</label>
+	<br />
+	<input type="button" value="일반 버튼" disabled="disabled" /><br />
+	<input type="submit" value="데이터 전송" /><br />
+	<input type="reset" /><br />
+	<input type="image" src="img/a.jpg" width="150" /><br />
+	<input type="hidden" name="hid" value="test" />
+	<br /><br />
+<!--
+select 태그 : 콤보박스와 리스트박스를 표현하는 태그
+ - 작은 공간에서 많은 양의 데이터를 보여줄 수 있어서 자주 사용되는 컨트롤
+ - name="이름" : 콤보박스의 이름
+ - size="숫자" : 한 번에 보여줄 아이템의 개수로 2이상이면 리스트박스로 취급함
+ - multiple="multiple" : 다중 선택이 가능하게 함(shift와 ctrl키 사용)
+
+option 태그 : select 태그 내부에서 사용되며 선택할 아이템을 나타냄
+ - value="값" : 선택한 아이템의 값으로 서버로 전송될 값을 의미
+	보이는 값과 전송할 값이 같을 경우에는 value 속성을 생략해도 됨
+ - selected="selected" : 특정 아이템을 선택된 상태로 해줌 
+
+optgroup 태그 : select 태그 내부에서 사용되며 아이템들의 그룹화를 해줌
+ - option 태그를 묶어주는 일을 하며 선택은 할 수 없음
+ - label="그룹명" : 그룹명을 지정하는 속성
+-->
+	<input type="text" size="10" /> @ 
+	<select>
+		<option value="naver.com">네이버</option>
+		<option value="nate.com" selected="selected">네이트</option>
+		<option value="gmail.com">구글</option>
+		<option value="direct">직접입력</option>
+	</select>
+	<select>
+		<optgroup label="서울특별시">
+			<option value="gangnam">강남구</option>
+			<option value="songpa">송파구</option>
+			<option value="sejong">성동구</option>
+		</optgroup>
+		<optgroup label="경기도">
+			<option value="gwacheon">과천시</option>
+			<option value="busheon">부천시</option>
+			<option value="anyang">안양시</option>
+		</optgroup>
+	</select>
+	<select size="8" multiple="multiple">
+		<optgroup label="서울특별시">
+			<option value="gangnam">강남구</option>
+			<option value="songpa">송파구</option>
+			<option value="sejong">성동구</option>
+		</optgroup>
+		<optgroup label="경기도">
+			<option value="gwacheon">과천시</option>
+			<option value="busheon">부천시</option>
+			<option value="anyang">안양시</option>
+		</optgroup>
+	</select>
+	<br /><br />
+<!--
+textarea 태그 : 여러줄의 글을 입력받는 컨트롤
+ - value 속성이 따로 없고 태그 내부에서 글을 입력하면 보임
+ - cols="숫자" : textarea의 넓이로 한 번에 보일 글자 수
+ - rows="숫자" : textarea의 높이로 한 번에 보일 글자 수
+ 	textarea의 크기는 보통 css를 이용해 pixel 단위로 지정함
+-->
+	<textarea cols="50" rows="5"></textarea>
+	<br /><br />
+<!--
+button 태그 : input type="button" 보다 유연한 디자인을 위해 사용됨
+ - 웹표준의 문법에 맞춰 닫는 태그가 존재
+ - type="button|submit|reset|image" : 버튼의 종류를 지정
+ - value 속성은 필요없으며 태그(button) 사이에 입력하는 텍스트가 캡션으로 사용됨
+ - type을 image로하면 서브밋 이미지 버튼이 되나 버튼 위에 이미지가 들어간 것으로 보임
+ 	이미지외에 버튼 부분은 css의 board와 background로 안보이게 해야 함
+-->
+	<button type="button">그냥 버튼</button>
+	<button type="image"><img src="img/c.jpg" width="100" /></button>
+<!--
+list 속성 : 텍스트필드의 속성으로 콤보박스처럼 특정 값을 선택할 수 있게 해주며, 값을 직접 입력할 수도 있음
+
+datalist 태그 : 텍스트필드의 list속성과 연결되는 태그로 선택할 값들을 지정
+ - id="아이디" : 텍스트필드의 list속성과 연결되는 속성으로 같은 값을 입력해야 함
+
+option 태그 : select태그의 option과 동일하며, 선택한 아이템을 나타냄
+ - value="값" : 선택한 아이템의 값으로 서버로 전송될 값을 의미
+	보이는 값과 전송할 갑싱 같을 경우에는 value속성을 생략해도 됨
+-->
+	<br /><br />
+	range : <input type="range" min="100" max="1000" step="50" /><br />
+	email : <input type="email" /><br />
+	url : <input type="url" /><br />
+	datalist : <input type="text" list="test" />
+	<datalist id="test">
+		<option value="a">AAA</option>
+		<option value="b">BBB</option>
+		<option value="c">CCC</option>
+	</datalist>
+</fieldset>
+</form>
+<br /><br /><br /><br />
+</body>
+</html>

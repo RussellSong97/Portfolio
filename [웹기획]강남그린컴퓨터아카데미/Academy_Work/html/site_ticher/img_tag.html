@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<!--
+img 태그 : image. 이미지를 html문서에서 보여주는 태그
+ - 인라인 요소이나 자리가 모자르면 다음 줄로 내려감
+ - src="경로 및 파일명" : 해당 태그로 보여줄 이미지의 경로 및 이미지 파일명
+ - width="픽셀값 or 백분율" : 이미지의 넓이로 백분율은 브라우저를 기준으로 함
+ - height="픽셀값 or 백분율" : 이미지의 높이로 백분율은 브라우저를 기준으로 함
+	width와 height속성을 사용하지 않으면 원본 이미지의 크기로 보임
+	width나 height중 하나만 사용하면 나머지 크기는 자동으로 비율에 맞춰 들어옴
+	이미지의 크기와 비율이 일정하지 않으면 보통 width값만 사용한다.
+ - border="정수" : 이미지의 테두리선 두께로 일반적으로 0으로 셋팅후 작업함
+ - alt="대체 텍스트" : 이미지가 안보일 경우 대신 보여줄 텍스트
+	주로 메뉴와 같이 글자로 보이는 이미지에서 사용함
+ - title="텍스트" : 이미지에 마우스 오버시 보여줄 텍스트
+	보통 메뉴등에 대한 설명글을 입력함
+ - usemap="#맵이름" : 현 이미지를 이미지 맵 기능으로 사용하겠다는 의미
+
+이미지 맵 : 이미지의 특정 부분에 링크를 걸어주는 기능
+map 태그 : 이미지 맵 기능을 구현하여 링크를 거는 태그
+ - id="맵이름" : 링크를 걸 이미지에 붙인 맵의 이름
+
+area 태그 : map 태그 내부에서만 사용되는 태그로 링크와 링크를 걸 부분을 지정하는 태그
+ - shape="rect|circle|poly" : 링크를 걸 부분에 대한 모양을 지정
+ - coords="좌표값들" : shape속성에 지정한 도형에 맞는 좌표값을 x,y순으로 지정
+ - href="url" : 이동할 url
+ - alt="대체 텍스트" : 이미지가 안보일 경우 보여줄 텍스트
+-->
+<img src="img/a0.jpg" width="200" height="280" title="이것은 title속성입니다." alt="alt속성입니다." /><img src="img/b.jpg" width="200" border="0" />
+<br /><br />
+<img src="https://ssl.pstatic.net/tveta/libs/1316/1316311/f18d468362845d3ef467_20210129155200465.jpg" width="800" usemap="#map" />
+<map name="map" id="map">
+<!-- IE는 id만 줘도 되지만 크롬은 name을 입력해야 정상적으로 동작 -->
+	<area shape="rect" coords="30,20,180,120" href="p_tag.html" title="RECT" />
+	<area shape="circle" coords="300,80,60" href="h_tag.html" title="CIRCLE" />
+	<area shape="poly" coords="500,20,600,10,800,50,700,120,550,110" href="font_tag.html" title="POLY" />
+</map>
+</body>
+</html>

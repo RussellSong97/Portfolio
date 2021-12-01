@@ -1,0 +1,51 @@
+뷰(View)
+ - 기존 테이블(들)을 기반으로 하여 select쿼리의 결과를 객체로 만들어낸 것
+ - 사용하는 방법은 테이블과 동일함
+ - 생성
+create view 뷰이름 as select쿼리;
+
+ - 뷰는 테이블과 동일하게 동작하므로 수정이나 삭제도 가능
+	단, 아주 특별한 경우가 아니면 뷰를 통해 수정이나 삭제 등의 작업을 하는 것은 바람직하지 않다.
+
+ - 뷰를 생성시 반드시 명세서도 입력해 놓아야 함
+	뷰의 명세서에는 컬럼 정보가 아닌 뷰를 생성시킨 select쿼리가 있어야 함
+
+뷰의 장점
+ - 보안에 도움이 됨
+	뷰를 이루는 컬럼들 외에 다름 컬럼에 대한 정보를 감추는 역할을 함
+
+ - 복잡한 쿼리를 단순화 시켜줌
+	복잡한 쿼리로 뷰를 생성하면 다음 부터는 결과를 얻기 위해 복잡한 쿼리대신 뷰를 이용할 수 있음
+	뷰를 호출할 때 마다 뷰 생성시 입력한 select쿼리가 다시 실행되므로 항상 최신 정보를 유지할 수 있음
+	 - 즉, 뷰를 사용한다고 해서 속도가 빨라지지는 않음
+	 - 뷰에 들어갈 컬럼의 종류나 조건의 값이 변경되는 경우 뷰를 사용할 수 없고, 프로시저 등으로 작업해야 함
+
+
+커서(Cursor)
+ - Stored Procedure나 Stored Function에서 사용할 수 있는 기능
+	일반 언어의 파일처리나 자바의 ResultSet과 비슷한 형태로 동작함
+ - 테이블에서 여러 행의 레코드를 쿼리로 select한 후 결과를 루프를 돌면서 한 행(레코드)씩 작업할 수 있게 해줌
+ - 문법 :프로시저 내부에서의 사용
+delimiter $$
+create procedure sp_test()
+begin
+	declare end_row boolean default false; -- 커서가 끝까지 판단할 변수 
+
+	declare c_set cursor for 커서를 만들 select문; -- c_set이라는 커서가 지정된 select문에 의해 생성됨
+
+	declare continue handler for not found set end_row = true; -- 커서의 끝에 닿으면 end_row를 true로 변경
+
+	open c_set;	-- c_set이라는 커서를 열어줌
+	lblLoop:while true do
+		fetch c_set into 변수명; -- c_set 에 들어있는 데이터를 지정한 변수에 저장
+		작업할 실행 & 쿼리문;
+
+		if end_row then	-- 커서의 끝에서 루프를 돌았으면 
+			leave lblLoop;	-- 지정한 레이블(lblLoop)의 루프문을 빠져나감
+		end if;
+	end while;
+
+	close c_set;	-- 열었던 커서를 닫음
+end$$
+delimiter ;
+

@@ -1,0 +1,114 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<!-- 
+table 태그 : 표를 표현하는 블록 요소로 태그로 tr과 td등 필수적으로 다른 태그와 같이 사용해야 함
+ - 웹표준 이전에 표 뿐만 아니라 레이아웃 용으로도 많이 사용되었으나 표를 그리기 위한 용도로만 사용함 (레이아웃은 div와 p 등을 이용함)
+ - align="left|center|right" : 표의 좌우정렬(웹브라우저 기준)
+ - width="픽셀값|백분율" : 표의 넓이
+ - height="픽셀값|백분율" : 표의 높이(보통 넓이값만 주고 높이는 지정하지 않는 경우가 많음)
+ - border="정수" : 표의 테두리로 셀끼리의 경계선을 표시(두께때문에 거의 사용하지 않음)
+ - bgcolor="색상값" : 표의 배경색 지정
+ - background="경로 및 파일명" : 표의 배경 이미지로 표보다 작으면 바둑판식으로 배열됨
+	이미지가 작을 경우 반복되는 것을 제어할 수 없어서 보통 css로 지정
+	배경 이미지가 있을 경우 height값을 주는 경우가 많다.
+ - cellpadding="픽셀값" : 셀의 안쪽 여백으로 기본값이 2로 0이 아님
+ - cellspacing="픽셀값" : 셀과 셀 사이의 간격으로 기본값이 2로 0이 아님
+ - summary="요약정보" : 표에 대한 설명으로 리더기를 위한 기능
+
+tr 태그 : Table Row. 표에서 한 줄에 대한 표현을 해주는 태그
+ - align="left|center|right" : 해당 줄안의 데이터들의 좌우정렬
+ - height="픽셀값|백분율" : 한 줄의 높이로 데이터의 양에 따라 변경될 수 있음
+ - bgcolor="색상값" : 한 줄의 배경색 지정
+
+td 태그 : 표에서 한 칸을 표현하는 태그로 표에서 보여줄 모든 데이터를 입력하는 곳
+ - 표 안에 다른 표나 박스요소가 필요하면 td태그 안에서 작업함
+ - align="left|center|right" : 해당 줄안의 데이터들의 좌우정렬
+ - width="픽셀값|백분율" : 한 줄의 넓이로 백분율을 사용하는 경우도 많다.
+	colspan으로 합쳐져 있지 않은 셀에서 값을 줘야 모든 셀에 넓이가 지정됨
+	각 열마다 하나의 td에만 넓이를 지정해도 됨
+ - bgcolor="색상값" : 한 칸의 배경색 지정
+ - background="경로 및 파일명" : 한 칸의 배경 이미지
+ - rowspan="2이상의 정수" : 줄 단위로 지정한 값만큼의 아랫쪽 셀을 병합
+ - colspan="2이상의 정수" : 칸 단위로 지정한 값만큼의 오른쪽 셀을 병합
+
+th 태그 : 데이터에 대한 제목을 의미하는 태그로 자동으로 중앙정렬 및 굵은 글씨체로 지정됨
+ - 기타 기능은 td 태그와 동일함
+
+caption 태그 : 표의 제목을 표시해주는 태그로 표의 바깥쪽 중앙에 표시됨
+
+thead 태그 : 테이블의 행을 논리적으로 구성할 때 헤더(제목) 영역을 표시하는 태그
+tfoot 태그 : 테이블의 가장 아래에 위치하는 영역을 표시하는 태그로 주로 계산 관련 데이터 사용
+tbody 태그 : 테이블의 본문 행들을 묶어주는 태그
+ - 반드시 thead -> tffod -> tbody 순으로 입력해야 함
+ - thead와 tfoot은 테이블당 하나씩만 존재할 수 있음.
+-->
+<table align="center" border="1" cellspacing="0" width="513" cellpadding="5">
+	<tr>
+		<td colspan="2">1</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td width="33.3%" rowspan="2">4</td>
+		<td width="33.3%">5</td>
+		<td width="33.3%">6</td>
+	</tr>
+	<tr>
+		<td colspan="2" rowspan="2">
+			<table border="1" width="100%">
+				<tr align="center">
+					<td>a</td>
+					<td>b</td>
+					<td>c</td>
+				</tr>
+				<tr align="center">
+					<td align="left">d</td>
+					<td align="right">e</td>
+					<td>f</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>10</td> 
+	</tr>
+</table>
+<br /><br />
+<table width="500" rules="groups" align="center" border="1">
+	<caption>그린 컴퓨터 교육과정</caption>
+	<thead>
+		<tr>
+			<th>교육과정</th>
+			<th>교육비</th>
+			<th>정원</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td>평균 교육비</td>
+			<td colspan="2">4,500,000원</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td>자바 웹프로그래밍</td>
+			<td>2,000,000원</td>
+			<td>25명</td>
+		</tr>
+		<tr>
+			<td>웹디자인</td>
+			<td>1,500,000원</td>
+			<td>25명</td>
+		</tr>
+		<tr>
+			<td>프론트엔드</td>
+			<td>1,000,000원</td>
+			<td>25명</td>
+		</tr>
+	</tbody>
+</table>
+<br /><br />
+</body>
+</html>

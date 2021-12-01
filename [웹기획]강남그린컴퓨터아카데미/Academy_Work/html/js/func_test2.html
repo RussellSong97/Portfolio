@@ -1,0 +1,38 @@
+<html>
+<head>
+	<title>Function - 내장함수</title>
+</head>
+<body>
+<script>
+document.write("=========================== eval() ============================<br />");
+document.write("eval(\"10 + 20 - 3\") : " + eval("10 + 20 - 3") + "<br />");		// 27
+
+document.write("<br />====================== parseInt(), parseFloat() ======================<br />");
+document.write("parseInt(\"1010.1010a\") : " + parseInt("1010.1010a") + "<br />");		// 1010
+document.write("parseInt(\"1010.1010\") : " + parseInt("1010.1010") + "<br />");		// 1010
+document.write("parseInt(\"1010.1010\", 2) : " + parseInt("1010.1010", 2) + "<br />");	// 10
+document.write("parseInt(\"1010.1010\", 8) : " + parseInt("1010.1010", 8) + "<br />");	// 520
+document.write("parseInt(\"1010.1010\", 16) : " + parseInt("1010.1010", 16) + "<br />");// 4112
+document.write("parseFloat(\"1010.1010\") : " + parseFloat("1010.1010") + "<br />");	// 1010.101
+	
+document.write("<br />======================== inFinite(), isNaN() ========================<br />");
+document.write("isFinite(10 / 3) : " + isFinite(10 / 3) + "<br />");	// true
+document.write("isNaN(\"123\") : " + isNaN(123) + "<br />");			// false
+	
+document.write("<br />======================== Number(), String() ========================<br />");
+document.write("Number(\"123\") : " + Number("123") + "<br />");	// 123
+document.write("Number(\"123a\") : " + Number("123a") + "<br />");	// NaN (not a number)
+document.write("String(123) : " + String(123) + "<br />");			// 123
+
+document.write("<br />======================= escape(), unescape() =======================<br />");
+document.write("escape(\"자바 스크립트\") : " + escape("자바 스크립트") + "<br />");		// %uC790%uBC14%20%uC2A4%uD06C%uB9BD%uD2B8
+document.write("escape(\"Java Script\") : " + escape("Java Script") + "<br />");	// Java%20Script
+document.write("escape(\"1234\") : " + escape("1234") + "<br />");					// 1234
+document.write("unescape(escape(\"자바 스크립트\")) : " + unescape(escape("자바 스크립트")) + "<br />");		// 자바 스크립트
+document.write("unescape(escape(\"Java Script\")) : " + unescape(escape("Java Script")) + "<br />");	// Java Script
+document.write("unescape(escape(\"1234\")) : " + unescape(escape("1234")) + "<br />");					// 1234
+	
+</script>
+<br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

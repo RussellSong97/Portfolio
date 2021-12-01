@@ -1,0 +1,35 @@
+body {
+	margin: 0;
+}
+
+#wrapper {
+	margin: 0 auto;
+	width: 700px;
+	text-align: left;
+}
+
+.pdt, .pdt th, .pdt td {
+	border: 1px black solid;
+}
+
+#col {
+	border-collapse: collapse;
+}
+
+.pdt td {
+	height: 70px;
+}
+
+.txtRed {
+	color: red;
+	font-weight: bold;
+}
+
+.txtBlue {
+	color: blue;
+	font-weight: bold;
+}
+
+#txtToday {
+	background: #efefef;
+}

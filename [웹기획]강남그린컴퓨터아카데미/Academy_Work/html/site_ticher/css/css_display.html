@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	h2 { background:silver; color:white; }
+	div { width:195px; height:100px; }
+	#drBox, #vrBox { background:red; }
+	#dgBox, #vgBox { background:green; }
+	#dbBox, #vbBox { background:blue; }
+
+	#dgBox { display:none; }
+	/*
+	display 속성 : 특정 요소를 보이거나 안보이게 하는 속성
+	 - none : 안보이게 하며 그 자리를 다른 요소가 차지함 (디자인이 비지 않음)
+	 - block : 블록요소로 보이게 함(인라인 요소도 블록요소로 보이게 함)
+	 - inline : 인라인요소로 보이게 함(블록요소도 인라인요소로 보이게 함)
+		목록태그의 li태그들을 수평으로 보이게 할 때 많이 사용됨
+	*/
+
+	#vgBox { visibility:hidden; }
+	/*
+	visibility 속성 : display와 마찬가지로 특정 요소를 보이거나 안보이게 하는 속성
+	 - hidden : 안보이게 하며 그 자리는 계속 비워둠 (화면에 빈 공간이 생김)
+	 - visible : 보이게 함
+	 - 실제로는 거의 사용되지 않음
+	*/
+	</style>
+</head>
+<body>
+<h2>display 속성과 visibility 속성</h2>
+<table width="400" border="1">
+<tr align="center">
+<td width="50%" valign="top">display 속성
+	<div id="drBox"></div><div id="dgBox"></div><div id="dbBox"></div>
+</td>
+<td width="50%" valign="top">visibility 속성
+	<div id="vrBox"></div><div id="vgBox"></div><div id="vbBox"></div>
+</td>
+</tr>
+</table>
+</body>
+</html>

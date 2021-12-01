@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	h2 { background:silver; color:white; }
+	#pBox { background:yellow; padding:10px; }
+	#abs {
+		position:absolute;	/* 기본적으로 body태그를 기준점으로 작업됨 */
+		top:100px;	/* body태그의 좌상단 꼭지점에서 아래로 좌표값 적용 */
+		left:300px;	/* body태그의 좌상단 꼭지점에서 오른쪽으로 좌표값 적용 */
+		width:300px; height:130px; background:aqua;
+	}
+	#rel { position:relative; background:orange; height:200px; }
+	#abs2 {
+		position:absolute;	/* 부모요소인 #rel을 기준으로 작업됨 */
+		/* 부모요소의 position이 relative이므로 자식요소 position의 기준이 됨 */
+		right:0; bottom:0; margin:0; 
+		/* 우측 하단에 붙여서 배치(#abs2가 p태그이므로 margin을 0으로 지정) */
+		width:150px; height:100px; background:#efefef;
+	}
+	</style>
+</head>
+<body>
+<h2>Absolute Position</h2>
+<p id="abs">absolute 방식은 요소가 포함된 블록요소를 기준으로 지정한 오프셋 속성의 값만큼 떨어져서 배치되는 방식을 말한다. 또 문서의 일반적인 흐름을 따라 배치되지 않기 때문에 본문에 있는 다른 요소들의 배치 위치에 영향을 준다.</p>
+
+<p id="pBox">absolute로 지정한 요소의 상위 요소가 position:static(기본값)이거나 body일 경우 absolute로 지정한 요소의 오프셋은 body태그를 기준으로 배치된다.</p>
+
+<div id="rel">
+	<p id="abs2">상위요소가 body도 position:static도 아니므로 상위요소를 기준으로 배치 된다.</p>
+</div>
+</body>
+</html>

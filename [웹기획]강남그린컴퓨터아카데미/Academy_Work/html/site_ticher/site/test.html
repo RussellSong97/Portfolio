@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	body { margin:0; background:url("images/bg_body.gif") repeat-x; }
+	a:link { color:#4f4f4f; text-decoration:none; }
+	a:visited { color:#4f4f4f; text-decoration:none; }
+	a:hover { color:#f00; text-decoration:underline; }
+	a:active { color:#f00; text-decoration:none; }
+	a:focus { color:#f00; text-decoration:underline; }
+	th, td {
+		font-family:"돋움", "굴림", "sans-serif";
+		font-size:12px; color:#000; line-height:1.2;
+	}
+	.hand { cursor:pointer; }	/* 해당 요소에서 마우스를 손모양으로 변경 */
+
+	#uid, #pwd { width:95px; height:18px; border:1px solid #b4b4b4; }
+	</style>
+</head>
+<body>
+<form name="frmLogin" action="" method="post">
+<table width="239" height="138" cellpadding="0" cellspacing="0" border="0" background="images/login_box.gif">
+<tr height="35"><td colspan="3" style="padding-left:10px;">
+	<img src="images/h3_login.gif" width="44" height="18" alt="로그인" />
+</td></tr>
+<tr>
+<td width="50" style="padding-left:15px;"><img src="images/title_id.gif" width="30" height="12" alt="아이디" /></td>
+<td width="*"><input type="text" name="uid" id="uid" /></td>
+<td width="70" rowspan="2"><input type="image" width="50" height="45" src="images/btn_login.gif" alt="로그인" /></td>
+</tr>
+<tr>
+<td style="padding-left:15px;"><img src="images/title_pw.gif" width="41" height="12" alt="비밀번호" /></td>
+<td><input type="password" name="pwd" id="pwd" /></td>
+</tr>
+<tr><td colspan="3" align="center">
+	<hr width="85%" style="border:1px solid #d1d1d1;" />
+	<img src="images/icon_login.gif" /> <a href="#">회원가입</a>&nbsp;
+	<img src="images/icon_login.gif" /> <a href="#">아이디/비밀번호 찾기</a>
+</td></tr>
+<tr height="13"><td colspan="3"></td></tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<html>
+<head>
+	<title>Document</title>
+	<script>
+	function onlyNum(obj) {
+		var num = obj.value;
+		if (isNaN(num))	obj.value = "";
+	}
+
+	function move() {
+		var r1 = document.frm.r1, r2 = document.frm.r2;
+		if (r1.value.length == 6)	r2.focus();
+	}
+
+	function calcRegNum() {
+		var frm = document.frm;
+		var r1 = frm.r1.value, r2 = frm.r2.value;
+		var age = frm.age, gender = frm.gender;
+		var gg = r2.charAt(0);	// 성별구분자
+		var g = "";	// 성별을 저장할 변수
+		if (gg % 2 == 1)	g = "m";
+		else				g = "f";
+		// 성별구분자가 짝수이면 '여자', 홀수이면 '남자'가 됨
+		for (var i = 0 ; i < gender.length ; i++) {
+			if (gender[i].value == g)	gender[i].checked = true;
+		}
+
+		var today = new Date();
+		var cYear = today.getFullYear();		// 현재 연도
+		var y = 1900;
+		if (gg >= 3)	y = 2000;
+		var bYear = y + parseInt(r1.substring(0, 2));	// 태어난 연도
+		// substring()으로 추출한 값으로 산술연산을 하려면 그 값을 parseInt()등으로 숫자로 변경 후 작업하면 됨
+
+//		var bYear = y + r1.substring(0, 2);	// 태어난 연도
+		// substring()으로 추출한 값은 문자열이므로 1900을 더하는 것이 아닌 "19"를 붙여줌
+
+		age.value = cYear - bYear;
+		// 문자열이 변수에 들어가 있는 경우 산술연산이 가능
+
+		var year = bYear;
+		var month = r1.substring(2, 4);
+		var day = r1.substring(4);
+		var obj = document.getElementById("birth");
+		obj.innerHTML = year + "년 " + month + "월 " + day + "일 생";
+	}
+	</script>
+</head>
+<body>
+<h2>주민등록번호 이용</h2>
+<form name="frm">
+주민등록번호 :	<input type="text" name="r1" maxlength="6" onkeyup="onlyNum(this); move();" /> -
+			<input type="text" name="r2" maxlength="7" onkeyup="onlyNum(this);" /><br />
+<input type="button" value="적 용" onclick="calcRegNum();" /><br /><br />
+나이 : <input type="text" name="age" readonly="readonly" /><br />
+성별 :	<input type="radio" name="gender" value="m" />남
+		<input type="radio" name="gender" value="f" />여<br />
+생년월일 : <span id="birth"></span>
+</form>
+</body>
+</html>

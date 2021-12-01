@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+function getDateFormat(date, chk) {
+// yyyy-mm-dd hh:mm:ss.sss 형식으로 날짜 데이터를 리턴하는 함수
+	var y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate();
+	var tm = (m < 10) ? "0" + m : m;
+	var td = (d < 10) ? "0" + d : d;
+	var tmpDate = y + "-" + tm + "-" + td;
+	var tmpTime = "";
+	if (chk == "t") {
+		var h = date.getHours(), n = date.getMinutes();
+		var s = date.getSeconds(), ms = date.getMilliseconds();
+		var th = (h < 10) ? "0" + h : h;
+		var tn = (n < 10) ? "0" + n : n;
+		var ts = (s < 10) ? "0" + s : s;
+		tmpTime = " " + th + ":" + tn + ":" + ts + "." + ms;
+	}
+
+	return tmpDate + tmpTime;
+}
+
+var br = "<br />";
+var today = new Date();
+document.write(today + br);		// Fri Feb 26 2021 12:20:45 GMT+0900 (대한민국 표준시)
+document.write(today.toUTCString() + br);	// Fri, 26 Feb 2021 03:38:57 GMT
+document.write(today.toDateString() + br);	// Fri Feb 26 2021
+
+document.write("<hr />");
+
+document.write("today.getDate() : " + today.getDate() + br);		// 26
+document.write("today.getDay() : " + today.getDay() + br);			// 5
+document.write("today.getFullYear() : " + today.getFullYear() + br);// 2021
+document.write("today.getHours() : " + today.getHours() + br);		// 12
+document.write("today.getMilliseconds() : " + today.getMilliseconds() + br);	// 470
+document.write("today.getMonth() : " + today.getMonth() + br);
+// 1(2월이지만 0~11사이의 값이므로 1로 나옴)
+document.write("today.getSeconds() : " + today.getSeconds() + br);	// 16
+document.write("today.getTime() : " + today.getTime() + br);		// 1614311656470
+
+document.write("<hr />");
+
+today.setDate(15);
+document.write("today.setDate(15) : " + getDateFormat(today, "d") + br);	// 2021-02-15
+today.setFullYear(2022);
+document.write("today.setFullYear(2022) : " + getDateFormat(today, "d") + br);// 2021-02-15
+today.setHours(9);
+document.write("today.setHours(9) : " + getDateFormat(today, "t") + br);	// 2022-02-15 09:05:08.862
+today.setMilliseconds(123);
+document.write("today.setMilliseconds(123) : " + getDateFormat(today, "t") + br);// 2022-02-15 09:05:08.862
+today.setMonth(5);
+document.write("today.setMonth(5) : " + getDateFormat(today, "d") + br);	// 2022-06-15
+today.setSeconds(23);
+document.write("today.setSeconds(23) : " + getDateFormat(today, "t") + br);	// 2022-02-15 09:05:08.862
+today.setTime(1000 * 60 * 60 * 24 + today.getTime());
+document.write("today.setTime() : " + getDateFormat(today, "t") + br);		// 2022-02-15 09:05:08.862
+
+// 2022-02-15 09:48:28.94
+</script>
+<br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

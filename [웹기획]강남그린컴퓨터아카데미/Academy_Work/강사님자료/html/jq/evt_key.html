@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	#comment { width:600px; height:200px; }
+	</style>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#comment").keyup(function() {
+			var cmt = $(this).val();	// 이벤트를 일으킨 컨트롤(this)의 value를 cmt에 저장
+			if (cmt.length > 200)	alert("200자 이내로 입력하세요.");
+			// 입력한 글자가 200자가 넘으면 경고 메시지를 띄워줌
+
+			cmt = cmt.substring(0, 200);	// 입력한 값들 중 200자 까지만 잘라옴
+			$(this).val(cmt);	// 이벤트를 일으킨 컨트롤(this)의 value에 cmt를 넣음
+			$("#count").text(cmt.length);	// 현재 글자 개수 출력
+		});
+	});
+	</script>
+</head>
+<body>
+<textarea id="comment"></textarea><br />
+200자 이내로 입력하세요 (글자 수 : <span id="count">0</span> / 200)
+</body>
+</html>

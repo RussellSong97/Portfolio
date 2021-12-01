@@ -1,0 +1,29 @@
+<html>
+ <head> 
+  <title>Document</title>
+  <script>
+	function choice(val) {
+		var txt =  document.frm.content;//document.frm.content;
+		if (val == "기타") {
+			txt.disabled = false;
+			txt.value = "";
+		} else {
+			txt.disabled = true;
+			txt.value = val;
+		}
+		txt.focus();
+	}
+  </script>
+ </head>
+ <body>
+  <form name="frm" method="post">
+  	<input type="radio" name="r911" value="광고성 후기" onclick="choice(this.value);" checked="checked" />광고성 후기<br />
+  	<input type="radio" name="r911" value="욕설 및 비속어 포함" onclick="choice(this.value);" />욕설 및 비속어 포함<br />
+  	<input type="radio" name="r911" value="선정적 후기" onclick="choice(this.value);" />선정적 후기<br />
+  	<input type="radio" name="r911" value="관련없는 후기" onclick="choice(this.value);" />관련없는 후기<br />
+  	<input type="radio" name="r911" value="기타 - 직접 입력받음" onclick="choice(this.value);" />기타 - 직접 입력받음<br />
+	<input type="text"  name="content" value="광고성 후기" disabled="disabled" />
+	<input type="submit" value="신고하기" />
+  </form>
+ </body>
+</html>

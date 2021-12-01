@@ -1,0 +1,17 @@
+@charset "UTF-8";
+@import url('//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css');
+
+body{margin:0;background-color:black; color: #dbe3eb;
+  font-family: 'Iropke Batang', serif; font-size:30px;
+  }
+.font{text-align:center;}
+#first_introduce{
+	position: absolute;top:35%; left:45%;
+	}
+#second_introduce{display:none;margin: 30px auto;}
+#login_select{display:none;}
+a{text-decoration:none; color:#dbe3eb;font-size:20px;}
+a:hover{
+	background-color:#2c2c2c;border-radius:15px;padding:9px 15px;
+	text-decoration:none; color:#dbe3eb; 
+	}

@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#btn1").click(function() {
+				$("#img1").fadeIn("slow");
+			});
+			$("#btn2").click(function() {
+				$("#img1").fadeOut("fast");
+			});
+			$("#btn3").click(function() {
+				$("#img1").fadeTo(1000, 0.5);
+			});
+			$("#btn4").click(function() {
+				$("#img1").fadeToggle(1000);
+			});
+			
+		});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="fadeIn" />
+<input type="button" id="btn2" value="fadeOut" /><br /><br />
+<img id="img1" src="../img/c.jpg" width="300" /><br /><br />
+<input type="button" id="btn3" value="fadeTo" />
+<input type="button" id="btn4" value="fadeToggle" /><br /><br />
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Document</title>
+	<script>
+	var flag = true;	// 내용 변경시 사용할 전역변수
+	// 두 가지 값을 번갈아 가면서 사용하려면 논리값으로 변수를 지정 후 !을 써서 값을 변경하면 됨
+
+	var colorCnt = 0;	// 색상 변경시 사용할 전역변수
+	// 두 가지를 초과하는 상태를 반복적으로 사용하려면 1씩 증가하는 변수를 지정 후 % 연산으로 나머지를 구하여 변경하면 됨
+
+	function change(kind) {
+		var txt = document.getElementById("txt");
+		// document. : 현 문서내에서
+		// getElementById("txt") : id가 "txt"인 element(객체 : 태그)를 가져와서
+		// var txt = : txt에 담음 - txt는 변수이지만 자바스크립트 특성에 맞춰 객체(태그)도 담을 수 있음
+		// [내용 변경]과 [색상 변경] 버튼을 클릭시 작업할 객체로 공용으로 사용하므로 if문 밖에서 선언 및 생성을 함
+
+		if (kind == "content") {
+			flag = !flag;	// !을 사용하여 flag변수의 값을 반대로 뒤집어 저장
+			if (flag)	txt.innerHTML = "Hello!!";
+			else		txt.innerHTML = "<strong>Good bye!!</strong>";
+		} else {
+			colorCnt++;
+			var arrColor = ["black", "red", "orange", "yellow", "green", "blue", "navy", "purple"];
+			txt.style.color = arrColor[colorCnt % 8];
+		}
+	}
+	</script>
+</head>
+<body>
+<p id="txt">Hello!!</p>
+<input type="button" value="내용 변경" onclick="change('content');" />
+<input type="button" value="색상 변경" onclick="change('color');" />
+</body>
+</html>

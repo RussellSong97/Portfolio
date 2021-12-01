@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+var br = "<br />", str1 = "abcd a efghij";
+document.write("str1.indexOf(\"a\") : " + str1.indexOf("a") + br);			// 0
+// str1.indexOf("a") : str1의 문자열에서 "a"의 위치를 찾아 리턴
+document.write("str1.indexOf(\"a\", 3) : " + str1.indexOf("a", 3) + br);	// 5
+// str1.indexOf("a", 3) : str1의 문자열에서 3번 인덱스 부터 "a"의 위치를 찾아 리턴
+
+document.write("str1.lastIndexOf(\"a\") : " + str1.lastIndexOf("a") + br);	// 5
+// str1.lastIndexOf("a") : str1의 문자열에서 끝에서 부터 "a"의 위치를 찾아 리턴
+document.write("str1.lastIndexOf(\"a\", 3) : " + str1.lastIndexOf("a", 3) + br);// 0
+// str1.lastIndexOf("a", 3) : str1의 문자열에서 3번 인덱스 부터 거꾸로 "a"의 위치를 찾아 리턴
+
+document.write("str1.search(\"a\") : " + str1.search("a") + br);			// 0
+// str1.search("a") : str1의 문자열에서 "a"의 위치를 찾아 리턴
+
+document.write("str1.indexOf(\"z\") : " + str1.indexOf("z") + br);			// -1
+document.write("str1.lastIndexOf(\"z\") : " + str1.lastIndexOf("z") + br);	// -1
+document.write("str1.search(\"z\") : " + str1.search("z") + br);			// -1
+// indexOf()와 search(), lastIndexOf() 모두 찾는 값이 없을 경우 -1을 리턴
+
+document.write("<hr />");
+
+document.write("str1.charAt(3) : " + str1.charAt(3) + br);			// d
+// str1.charAt(3) : str1 문자열에서 3번 인덱스에 있는 문자를 추출
+document.write("str1.charAt(50) : " + str1.charAt(50) + br);		// 빈 문자열
+// charAt() 메소드 사용시 인덱스 번호가 범위를 벗어나면 빈 문자열 리턴
+document.write("str1.charCodeAt(3) : " + str1.charCodeAt(3) + br);	// 100
+// str1.charCodeAt(3) : str1 문자열에서 3번 인덱스에 있는 문자의 유니코드값을 리턴
+document.write("str1.charCodeAt(50) : " + str1.charCodeAt(50) + br);// NaN
+// charCodeAt() 메소드 사용시 인덱스 번호가 범위를 벗어나면 NaN 리턴
+
+document.write("<hr />");
+
+document.write("str1.slice(2, 8) : " + str1.slice(2, 8) + br);			// cd a e
+// str1.slice(2, 8) : str1의 문자열에서 2번 인덱스 부터 8 - 1 인덱스까지 잘라내어 리턴
+document.write("str1.slice(2) : " + str1.slice(2) + br);				// cd a efghij
+// str1.slice(2) : str1의 문자열에서 2번 인덱스 부터 끝까지 잘라내어 리턴
+document.write("str1.substring(2, 8) : " + str1.substring(2, 8) + br);	// cd a e
+// str1.substring(2, 8) : str1의 문자열에서 2번 인덱스 부터 8 - 1 인덱스까지 잘라내어 리턴
+document.write("str1.substring(2) : " + str1.substring(2) + br);		// cd a efghij
+// str1.substring(2) : str1의 문자열에서 2번 인덱스 부터 끝까지 잘라내어 리턴
+document.write("str1.substr(2, 8) : " + str1.substr(2, 8) + br);		// cd a efg
+// str1.substr(2, 8) : str1의 문자열에서 2번 인덱스 부터 8개의 문자를 잘라내어 리턴
+document.write("str1.substr(2) : " + str1.substr(2) + br);				// cd a efghij
+// str1.substr(2) : str1의 문자열에서 2번 인덱스 부터 끝까지 잘라내어 리턴
+
+document.write("<hr />");
+
+document.write("\"abAB가나\".toLowerCase() : " + "abAB가나".toLowerCase() + br);	// abab가나
+document.write("\"abAB가나\".toUpperCase() : " + "abAB가나".toUpperCase() + br);	// ABAB가나
+document.write("replace() 전 str1 : " + str1 + br);	// abcd a efghij
+document.write("str1.replace(\"efg\", \"qqq\") : " + str1.replace("efg", "qqq") + br);
+// abcd a qqqhij 원본을 변경하지 않음
+document.write("replace() 후 str1 : " + str1 + br);	// abcd a efghij
+document.write("str1.match(\"abc\") : " + str1.match("abc") + br);	// abc
+document.write("str1.match(\"zzz\") : " + str1.match("zzz") + br);	// null
+
+document.write("<hr />");
+
+var str2 = "010-1234-5678";
+var arrTest = str2.split("-");
+for (var i = 0 ; i < arrTest.length ; i++) {
+	document.write(arrTest[i] + br);
+}
+</script>
+<br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

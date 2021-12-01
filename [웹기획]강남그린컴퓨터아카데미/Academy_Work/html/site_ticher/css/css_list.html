@@ -1,0 +1,70 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	h2 { background:silver; color:white; }
+	.none { list-style-type:none; }
+	.disc { list-style-type:disc; }
+	.circle { list-style-type:circle; }
+	.upperA { list-style-type:upper-alpha; }
+	.lowerA { list-style-type:lower-alpha; }
+	.upperR { list-style-type:upper-roman; }
+	.lowerR { list-style-type:lower-roman; }
+	.armenian { list-style-type:armenian; }
+	.georgian { list-style-type:georgian; }
+	/*
+	list-style-type : 목록태그의 글머리 기호와 번호를 지정
+	none : 기호없음 / disc : 검은색 원 / circle : 빈 원 / square : 검은색 사각형
+	decimal : 1, 2형식의 숫자 / decimal-leading-zero : 01, 02형식의 숫자
+	upper-alpha : A, B형식의 알파벳대문자 / lower-alpha : a, b형식의 알파벳소문자
+	upper-roman : I, II형식의 로마자 / lower-roman : i, ii형식의 로마자
+	lower-greek : 소문자의 그리스 숫자 / armenian : 아르메니안 숫자
+	georgian : 조지안 숫자
+	*/
+
+	.list1 { list-style-position:inside; }
+	.list2 { list-style-position:outside; }
+	/* list-style-position : 목록의 들여쓰기 및 내어쓰기를 지정하는 스타일로 기본값은 내어쓰기인 outside임 */
+
+	.list3 { list-style-image:url("../img/ico.gif"); }
+	/* list-style-image : 목록의 글머리 기호를 이미지로 변경 */
+
+	.menu li {
+		display:inline; padding:2px 5px; list-style-type:none;
+		background:#a1a1a1;
+	}
+
+	a:link { color:#fff; text-decoration:none; }
+	a:visited { color:#fff; text-decoration:none; }
+	a:hover { color:red; font-weight:bold; text-decoration:underline; }
+	a:active { color:red; text-decoration:none; }
+	a:focus { color:red; text-decoration:none; }
+	/* hover에서 글자를 굵게 또는 밑줄로 표현하면 링크자체가 커지는 효과를 가지기 때문에 상황에 따라 디자인이 깨지는 현상이 발생할 수도 있으므로 신중하게 사용해야 함 */
+	</style>
+</head>
+<body>
+<h2>목록 태그(ul, ol) 스타일</h2>
+<ul class="list1">
+	<li class="none">none</li>
+	<li class="disc">disc</li>
+	<li class="circle">circle</li>
+</ul>
+<ul class="list2">
+	<li class="upperA">upperA</li>
+	<li class="lowerA">lowerA</li>
+	<li class="upperR">upperR</li>
+</ul>
+<ul class="list3">
+	<li class="lowerR">lowerR</li>
+	<li class="armenian">armenian</li>
+	<li class="georgian">georgian</li>
+</ul>
+<ul class="menu">
+	<li><a href="#">로그인</a></li>
+	<li><a href="#">회원가입</a></li>
+	<li><a href="#">고객센터</a></li>
+	<li><a href="#">사이트맵</a></li>
+</ul>
+<br /><br /><br /><br /><br /><br />
+</body>
+</html>

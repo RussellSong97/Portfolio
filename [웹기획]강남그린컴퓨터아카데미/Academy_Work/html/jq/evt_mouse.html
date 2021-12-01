@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			$(document).mousemove(function(evt) {
+				// evt : mousemove 이벤트를 일으킨 주체 즉 마우스를 객체로 받아옴
+				$("#coords").text("[" + evt.pageX + "," + evt.pageY +"]" );
+			});
+
+			$("#p1").mouseenter(function () {
+				$("#p1").css("background", "yellow");
+			});
+            $("#p1").mouseleave(function () {
+				$("#p1").css("background", "lightgray");
+			});
+			$("#p2").mouseover(function () {
+				$("#p2").css("background", "yellow");
+			});
+            $("#p2").mouseout(function () {
+				$("#p2").css("background", "lightgray");
+			});
+            
+		});
+	</script>
+</head>
+<body>
+<p id="p1">This is a paragraph. - enter & leave</p>
+<p id="p2">This is a paragraph. - over & out</p>
+<p id="p3">Mouse is at coordinates : <span id="coords"></span></p>
+</body>
+</html>

@@ -1,0 +1,50 @@
+쿠키(Cookie)
+ - 쿠키는 클라이언트 쪽에 저장되어 관리된느 정보(텍스트)들을 의미(세션은 서버에 저장되고, 쿠키는 클라이언트에 저장됨)
+ - 쿠키는 세션과 다르게 브라우저가 종료되거나, 컴퓨터가 꺼져도 유지될 수 있음
+	쿠키의 생존기간을 지정할 수 있어서 그 기간에 따라 달라짐
+ - 쿠키는 클라이언트 쪽에 저장되므로 보안에 매우 취약함(보안이 필요한 데이터는 쿠키에 저장하지 않는 것이 좋다)
+ - 쿠키는 HTTP 헤더를 이용한 방법과 서블릿 API를 이용한 방법 두 가지가 있음
+ - 쿠키는 사용자의 브라우저 셋팅에 따라 동작이 안될 수도 있으므로 쿠키 사용이 불가할 경우에 대해서도 작업해 놔야 함
+
+1) HTTP 헤더를 이용한 쿠키 설정
+ - 문법
+Set-Cookie:name=value; expires=date; domain=domain; path=path; secure
+	name : 쿠키 이름
+	value : 쿠키 값
+	expires : 쿠키의 만료기간
+	domain : 도메인 지정
+	path : 쿠키가 전송될 서버의 URL
+	secure : 보안 채널(SSL)로 전송되어야 함
+ - 속성들 중 name과 value만 필수요소임
+ - expires는 생략하면 브라우저 종료시 쿠키도 소멸됨
+
+2) 서블릿 API를 이용한 방법
+ - 일반적인 자바의 객체처럼 Cookie 객체(Cookie클래스의 인스턴스)를 생성하여 작업함
+ - 쿠키(인스턴스) 생성 : Cookie cookie = new Cookie(String name, String value);
+ - 쿠키(인스턴스) 생성만으로 쿠키가 클라이언트 PC의 하드에 저장되는 것은 아니며, 생성한 쿠키를 클라이언트에 전송시켜야 함
+	response.addCookie(쿠키); // 쿠키를 클라이언트 PC에 저장함
+ - 주요 메소드
+리턴타입	메소드명 및 설명
+String	getMaxAge() : 쿠키의 만료기간을 리턴
+String	getName() : 쿠키의 이름을 리턴
+String	getValue() : 쿠키의 값을 리턴
+void	setMaxAge(int seconds) : 쿠키 만료기간을 초단위로 지정
+void	setValue(String value) : 쿠키의 값을 지정
+
+ - 쿠키는 실제 클라이언트 PC의 특정 위치에 저장됨
+	크롬 : C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Default 안에 Cookies라는 파일로 저장
+
+
+예외처리
+ - 페이지에서 오류가 발생시 사용자에게 보여지는 페이지를 오류 페이지가 아닌 특정 페이지(에러 페이지로 지정된 페이지)를 보여줌
+ - 에러 페이지 생성 문법
+<%@ page ... errorPage="에러페이지경로 및 파일명" %>
+	해당 페이지에서 에러 발생시 지정해 놓은 페이지로 이동됨
+	단, 사용자 브라우저가 IE일 경우 에러 페이지 크기가 513byte 이상이어야 함
+
+
+
+
+
+
+

@@ -1,0 +1,119 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+document.write("---------------------------- FOR ----------------------------<br />");
+for (var i = 1 ; i <= 5 ; i++) {
+	document.write(i + "번째 출력<br />");
+}
+
+
+var arrFruits = ["apple", "mango", "orange", "lemon", "pear"];
+for (var i = 0 ; i < arrFruits.length ; i++) {
+// arrFruits.length : arrFruits배열의 크기로 데이터의 개수를 의미하며 마지막 인덱스 + 1
+	document.write(arrFruits[i] + "&nbsp;&nbsp;");
+}
+
+
+// arrFruits배열 데이터들 중 인덱스번호가 0, 2, 4번 인것만 출력
+for (var i = 0 ; i < arrFruits.length ; i += 2) {
+	document.write(arrFruits[i] + "&nbsp;&nbsp;");
+}
+
+
+// arrFruits배열 데이터들을 거꾸로 출력
+for (var i = arrFruits.length - 1 ; i >= 0 ; i--) {
+	document.write(arrFruits[i] + "&nbsp;&nbsp;");
+}
+
+
+document.write("<br /><br />---------------------------- 중첩 FOR ----------------------------<br />");
+/*
+i : 1, j : 1 / i : 1, j : 2 / i : 1, j : 3
+i : 2, j : 1 / i : 2, j : 2 / i : 2, j : 3
+i : 3, j : 1 / i : 3, j : 2 / i : 3, j : 3
+*/
+for (var i = 1 ; i <= 3 ; i++) {
+	for (var j = 1 ; j <= 3 ; j++) {
+		document.write("i : " + i + ", j : " + j);
+		if (j < 3) {
+			document.write(" / ");
+		}
+	}
+	document.write("<br />");
+}
+
+
+document.write("<br /><br />---------------------------- FOR IN ----------------------------<br />");
+for (var i in arrFruits) {
+// i변수에 arrFruits배열의 인덱스 번호를 0번 부터 끝까지 차례로 넣어줌
+	document.write(arrFruits[i] + "&nbsp;&nbsp;");
+}
+
+ 
+
+document.write("<br /><br />---------------------------- WHILE ----------------------------<br />");
+var i = 1;	// while 문은 for문 처럼 루프문 내부에서 변수를 선언할 수 없으므로 외부의 변수를 사용해야 함
+while (i <= 5) {
+	document.write(i + "번째 출력<br />");
+	i++;	// while 문은 for문 처럼 루프문 내부에서 증감식을 입력할 수 없으므로 따로 실행명령을 해야 함
+}
+
+
+document.write("<br /><br />---------------------------- DO WHILE ----------------------------<br />");
+do {	// i 값이 6이지만 먼저 실행하고 조건을 검사하게 됨.
+	document.write(i + "번째 출력<br />");
+	i++;	// while 문은 for문 처럼 루프문 내부에서 증감식을 입력할 수 없으므로 따로 실행명령을 해야 함
+} while (i <= 5)
+
+document.write("<br /><br />---------------------------- BREAK ----------------------------<br />");
+// 100 이하의 양수에서 5와 7의 최소 공배수를 구하여 출력 - break문 이용
+for(i = 1; i <= 100; i++) {
+	if (i % 5 == 0 && i % 7 == 0) {
+		document.write("5와 7의 최소 공배수 : " + i);
+		break;	// 해당 루프문을 빠져나감
+	}
+}
+
+document.write("<br /><br />");
+
+// 100 이하의 양수에서 5와 7의 최소 공배수를 구하여 출력 - break문 이용
+for(i = 1; i <= 100; i++) {
+	if (i % 5 == 0 && i % 7 == 0) {
+		document.write("5와 7의 최소 공배수 : " + i);
+		i = 101;	// 해당 루프문을 빠져나감
+	}
+}
+
+document.write("<br /><br />");
+
+// 100 이하의 양수에서 5와 7의 최소 공배수를 구하여 출력 - break문 이용
+var k = true;
+for(i = 1; i <= 100; i++) {
+	if (k && i % 5 == 0 && i % 7 == 0) {
+		k = !k;
+		document.write("5와 7의 최소 공배수 : " + i);
+	}
+}
+
+document.write("<br /><br />---------------------------- CONTINUE ----------------------------<br />");
+for (i = 1; i <=5 ; i++ ) {
+	if (i == 3) {
+		document.write("현재 반복문 내의 다음 코드를 생략<br />");
+		continue;
+	}
+	document.write("i : " + i + "<br />");
+}
+
+document.write("<br />▶ 10 이하의 상수들 중 홀수만 출력- continue를 이용해서 ~~<br />");
+for (i = 1; i <=10 ; i++ ) {
+	if (i % 2 == 0) continue;	// i의 값이 짝수이면 아랫쪽의 명령을 실행하지 않고 다시 조건(증감식)으로 올라감
+	document.write(i + "&nbsp;&nbsp;&nbsp;");
+}
+document.write("<br /><br />");
+</script>
+<br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

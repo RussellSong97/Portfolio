@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			$("p").offsetParent().css("background", "red");
+			// p태그의 부모요소(첫번째 부모요소) 스타일을 변경
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="Set background-color" />
+<div style="border:1px solid black; width:70%; position:absolute; left:10px; top:50px;">
+	<div style="border:1px solid black; margin:50px; background:yellow;">
+		<p>Click button to set the background color of the first parent</p>
+	</div>
+</div>
+</body>
+</html>

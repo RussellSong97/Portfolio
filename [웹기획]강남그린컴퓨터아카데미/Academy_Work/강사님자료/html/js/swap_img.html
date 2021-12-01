@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Document</title>
+	<script>
+	function imgChange(img) {
+		var obj = document.getElementById("si");
+		obj.src = "../img/" + img + ".jpg";
+	}
+	function chImg(img) {
+		var obj = document.getElementById("bigImg");
+		obj.src = "../img/" + img + ".jpg";
+	}
+	</script>
+</head>
+<body>
+<table>
+<tr><td colspan="3" align="center">
+	<img src="../img/a.jpg" width="300" id="bigImg" />
+</td></tr>
+<tr>
+<td><img src="../img/a.jpg" width="90" onclick="chImg('a');" /></td>
+<td><img src="../img/b.jpg" width="90" onclick="chImg('b');" /></td>
+<td><img src="../img/c.jpg" width="90" onclick="chImg('c');" /></td>
+</tr>
+</table>
+<img src="../img/a.jpg" width="200" onmouseover="this.src='../img/b.jpg';" onmouseout="this.src='../img/a.jpg';" />
+<!-- this : 자기자신을 의미하는 키워드로 현재 이벤트를 일으킨 요소 객체를 의미 -->
+</body>
+</html>

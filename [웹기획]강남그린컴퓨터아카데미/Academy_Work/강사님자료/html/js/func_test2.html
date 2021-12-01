@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+document.write("eval(\"10 + 20 - 3\") : " + eval("10 + 20 - 3") + "<br />");	// 27
+document.write("parseInt(\"123.56\") : " + parseInt("123.56") + "<br />");		// 123
+document.write("parseInt(\"123.56a\") : " + parseInt("123.56a") + "<br />");	// 123
+document.write("parseInt(\"123.56\", 2) : " + parseInt("101.56", 2) + "<br />");
+document.write("parseInt(\"123.56\", 8) : " + parseInt("123.56", 8) + "<br />");
+document.write("parseInt(\"123.56\", 16) : " + parseInt("123.56", 16) + "<br />");
+document.write("parseFloat(\"123.56\") : " + parseFloat("123.56") + "<br />");	// 123.456
+document.write("<hr />");
+
+document.write("isFinite(10 / 3) : " + isFinite(10 / 3) + "<br />");	// true
+document.write("isNaN(\"123\") : " + isNaN("123") + "<br />");			// false
+document.write("Number(\"123\") : " + Number("123") + "<br />");		// 123
+document.write("Number(\"123a\") : " + Number("123a") + "<br />");		// NaN
+document.write("String(123) : " + String(123) + "<br />");				// 123
+document.write("<hr />");
+
+document.write("escape(\"자바 스크립트\") : " + escape("자바 스크립트") + "<br />");
+document.write("escape(\"Java Script\") : " + escape("Java Script") + "<br />");
+document.write("escape(\"1234\") : " + escape("1234") + "<br />");
+document.write("unescape(escape(\"자바 스크립트\")) : " + unescape(escape("자바 스크립트")) + "<br />");
+document.write("unescape(escape(\"Java Script\")) : " + unescape(escape("Java Script")) + "<br />");
+document.write("unescape(escape(\"1234\")) : " + unescape(escape("1234")) + "<br />");
+document.write("<hr />");
+
+</script>
+<br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

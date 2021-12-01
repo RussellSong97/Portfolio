@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>Document</title>
+	<style type="text/css">
+	* { margin:0; } /* 현 문서내의 모든 요소의 여백을 0으로 지정 */
+
+	/* type 선택자 */
+	h2 { color:red; }	/* 문서내의 모든 h2태그의 글자색을 빨간으로 지정 */
+	p  {color:blue; }	/* 문서내의 모든 p태그의 글자색을 파랑으로 지정 */
+
+	/* class 선택자 */
+	.note  { color:green; }		/* 문서내에 class명이 note인 모든 요소의 글자색을 녹색으로 지정 */
+	.note2 { font-size:20px; }	/* 문서내에 class명이 note2인 모든 요소의 글자크기를 20픽셀로 지정 */
+
+	/* id 선택자 */
+	#menu { color:purple; }		/* 문서내에 id명이 menu인 요소의 글자색을 보라색으로 지정 */
+								/* id는 문서내에서 유일해야 하지만 동일한 id가 존재하면 에러가 나지 않고 class처럼 스타일을 적용시킴 */
+	</style>
+</head>
+<body>
+<h2>type 선택자</h2>
+<p>html의 모든 요소(element or tag)는 type 선택자로 사용할 수 있다.</p>
+<p>html의 모든 요소(element or tag)는 type 선택자로 사용할 수 있다.</p>
+<hr />
+<h2>class 선택자</h2>
+<p class="note note2">문서 내에서 여러 번 사용할 수 있으며 점으로 구분</p>
+<span class="note">p태그가 아니지만 class가 note인 요소</span><br />
+<span class="note2">p태그가 아니지만 class가 note인 요소</span>
+<hr />
+<h2>id 선택자</h2>
+<ul id="menu">
+	<li>HOME</li>
+	<li>Member Join</li>
+	<li>Log-in</li>
+	<li>Site Map</li>
+</ul>
+<hr />
+<h2>스타일 인라인 적용</h2>
+<p style="color:pink;">인라인 방식을 사용하면 기존의 다른 방식으로 적용했던 스타일보다 <span style="font-size:20px;">우선순위</span>가 더 높아짐</p>
+</body>
+</html>

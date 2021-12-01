@@ -1,0 +1,24 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	a[target] { background-color:yellow; }
+	/* a태그들 중 target속성을 사용한 a태그들의 배경색을 노란색으로 지정 */
+	a[target="_blank"] { color:red; }
+	/* a태그들 중 target속성의 값을 "_blank"로 지정한 곳의 글자색을 빨간색으로 지정 */
+	a[href^="http"] { color:green; }
+	/* a태그들 중 href속성의 값이 "http"로 시작하는 곳의 글자색을 녹색으로 지정 */
+	a[href*="www"] { color:orange; }
+	/* a태그들 중 href속성의 값에 "www"가 포함된 곳의 글자색을 주황색으로 지정 */
+	</style>
+</head>
+<body>
+<h2>속성(attribute) 선택자</h2>
+<ul>
+	<li><a href="#" target="_self">_SELF</a></li>
+	<li><a href="#" target="_blank">_BLANK</a></li>
+	<li><a href="http://naver.com" target="_new">HTTP</a></li>
+	<li><a href="http://www.naver.com">WWW</a></li>
+</ul>
+</body>
+</html>

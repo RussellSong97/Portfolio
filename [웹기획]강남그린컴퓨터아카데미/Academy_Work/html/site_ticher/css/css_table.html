@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	h2 { background:silver; color:white; }
+	.table, .table th, .table td { border:1px blue solid; }
+	#sep { border-collapse:separate; }	/* 각 셀마다 보더가 적용 */
+	#col { border-collapse:collapse; }	/* 인접한 셀끼리는 하나의 보더만 적용 */
+	</style>
+</head>
+<body>
+<h2>table의 border 스타일</h2>
+<table class="table" id="sep">
+<tr><th>교재명</th><th>가격</th></tr>
+<tr><td>Java의 정석</td><td>32,000</td></tr>
+<tr><td>HTML & CSS</td><td>25,000</td></tr>
+<tr><td>DB 개론</td><td>30,000</td></tr>
+</table>
+<br />
+<table class="table" id="col">
+<tr><th>교재명</th><th>가격</th></tr>
+<tr><td>컴퓨터 구조</td><td>38,000</td></tr>
+<tr><td>자료구조</td><td>28,000</td></tr>
+<tr><td>JSP & Servlet</td><td>35,000</td></tr>
+</table>
+</body>
+</html>

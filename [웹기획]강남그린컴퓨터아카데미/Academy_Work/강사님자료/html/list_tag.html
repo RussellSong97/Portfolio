@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<!--
+ul 태그 : Unorderd List. 비순서형 목록 태그로 블록 요소
+ - 순서가 없는 목록을 표현할 때 사용하는 태그로 주로 메뉴를 표현할 때 많이 사용
+ - type="disc|circle|square" : 목록의 글머리 기호를 지정
+
+ol 태그 : Orderd List. 순서형 목록 태그로 블록 요소
+ - 순서가 있는 목록을 표현할 때 사용하는 태그로 주로 메뉴를 표현할 때 많이 사용
+ - type="1|A|a|I|i" : 목록의 글머리 기호를 지정
+
+li 태그 : List Item. 목록태그(ul, ol)에서 하나의 아이템을 의미하는 태그
+
+ul과 ol 모두 자동으로 들여쓰기가 이루어지므로 보통 css를 이용하여 들여쓰기를 없앤 후 사용
+-->
+<ul type="square">
+	<li>아이템 1</li>
+	<li>아이템 2</li>
+	<li>아이템 3</li>
+</ul>
+<br />
+<ol type="i">
+	<li>아이템 1</li>
+	<li>아이템 2</li>
+	<li>아이템 3</li>
+	<li>아이템 4</li>
+	<li>아이템 5</li>
+</ol>
+<!--
+dl 태그 : Definition List.용어 정의 목록용 태그
+dt 태그 : Definition Title.용어 제목용 태그로 하나의 dl에 여러 개의 dt가 들어가기도 함
+dd 태그 : Definition Definition.용어 설명용 태그로 하나의 dt에 여러 개의 dd가 들어가기도 함
+
+dd 태그로 입력한 데이터들은 자동으로 들여쓰기 되어 표현되는 데 보통 css를 이용하여 들여쓰기를 없앤 후 사용하게 된다.
+-->
+<dl>
+	<dt>CSS</dt>
+	<dd>Cascading Style Sheet의 약자로 마크업 요소에 스타일을 적용시켜 준다.</dd>
+	<dd>단순히 꾸미는 용도가 아닌 레이아웃을 잡기 위한 용도로도 사용된다.</dd>
+
+	<dt>JavaScript</dt>
+	<dd>정적인 웹페이지에 동적인 움직임을 부여하는 기능이다.</dd>
+	<dd>웹서버의 부담을 줄여주는 역할을 담당하기도 한다.</dd>
+</dl>
+</body>
+</html>

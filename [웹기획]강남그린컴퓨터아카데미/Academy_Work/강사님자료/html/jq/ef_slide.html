@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			$("#img1").slideDown(1000);
+		});
+		$("#btn2").click(function() {
+			$("#img1").slideUp(1000);
+		});
+		$("#btn3").click(function() {
+			$("#img1").slideToggle(1000);
+		});
+		$("#btn4").click(function() {
+			$("#img1").finish();
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="Slide Down" />
+<input type="button" id="btn2" value="Slide Up" />
+<input type="button" id="btn3" value="Slide Toggle" />
+<input type="button" id="btn4" value="finish()" /><br /><br />
+<img id="img1" src="../img/c.jpg" width="400" />
+</body>
+</html>

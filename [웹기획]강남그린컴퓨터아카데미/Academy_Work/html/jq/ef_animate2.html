@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#btn1").click(function() {
+				$("#p1").animate({ borderWidth:"+=2px" });
+				// border-width스타일을 jQuery에서 사용할 경우 borderWidth로 하이픈 없이 첫글자를 대문자로 하여 사용
+			});
+			$("#btn2").click(function() {
+				$("#p1").animate({ borderWidth:"-=2px" });
+			});
+		});
+	</script>
+</head>
+<body>
+<p id="p1" style="border:1px solid black;">This is a paragraph</p>
+<input type="button" id="btn1" value="Animate +" />
+<input type="button" id="btn2" value="Animate -" />
+</body>
+</html>

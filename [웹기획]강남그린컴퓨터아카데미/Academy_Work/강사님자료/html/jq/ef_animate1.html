@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("#btn1").click(function() {
+			$("#img1").animate({ width:300 });
+			// px 단위는 생략가능하며 입력하려면 따옴표로 묶어서 입력해야 함 - width:"300px"
+		});
+
+		$("#btn2").click(function() {
+			$("#img1").animate({ width:250, left:"100px", opacity:"0.5" });
+		});
+
+		$("#btn3").click(function() {
+			$("#img1").animate({ width:"+=5", height:"+=5", left:"+=10px", opacity:"-=0.05" });
+		});
+
+		$("#btn4").click(function() {
+			$("#img1").animate({ width:"toggle" });
+			// toggle : 100%와 0을 번갈아 가면서 지정해 주는 값(show와 hide를 합쳐놓은 값)
+		});
+
+		$("#btn5").click(function() {
+			$("#img1").animate({ width:"show" });	// show : 크기를 0에서 100으로 늘림
+		});
+
+		$("#btn6").click(function() {
+			$("#img1").animate({ width:"hide" });	// hide : 크기를 100에서 0으로 줄임
+		});
+	});
+	</script>
+</head>
+<body>
+<input type="button" value="넓이를 300으로..." id="btn1" />
+<input type="button" value="여러 스타일 변경" id="btn2" />
+<input type="button" value="스타일의 상대적 변경" id="btn3" /><br />
+<input type="button" value="Show & Hide" id="btn4" />
+<input type="button" value="Show" id="btn5" />
+<input type="button" value="Hide" id="btn6" />
+<br /><br />
+<img id="img1" src="../img/a.jpg" width="200" style="position:absolute;" />
+</body>
+</html>

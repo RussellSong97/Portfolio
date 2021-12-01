@@ -1,0 +1,98 @@
+<!-- 
+제어문 중 분기문에 대한 테스트 파일
+-->
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+var isLogin = false;
+if (isLogin == true) {
+	document.write("<a href='#'>로그아웃</a> | <a href='#'>정보수정</a>");
+} else {
+	document.write("<a href='#'>로그인</a> | <a href='#'>정보수정</a>");
+}
+document.write("<br />");
+if (!isLogin == true) {
+	document.write("<a href='#'>로그인</a> | <a href='#'>정보수정</a>");
+} else {
+	document.write("<a href='#'>로그아웃</a> | <a href='#'>정보수정</a>");
+}
+document.write("<br />");
+// score가 80이상이면 "B", 70이상이면 "C", 60이상이면 "D", 90이상이면 "A", 60미만이면 "F"로 출력
+var score = 98, grade = "";
+if (score >= 90) {
+	grade = "A";
+} else if (score >= 80) {
+	grade = "B";
+} else if (score >= 70) {
+	grade = "C";
+} else if (score >= 60) {
+	grade = "D";
+} else if (score < 60) {
+	grade = "F";
+}
+
+document.write(score + "점은 " + grade + "학점입니다.");
+document.write("<br /><br />");
+
+// score가 80이상 99이하이면 "AA", 60점 이상 75점 이하면 "BB" 라고 출력
+if ( score <=99 && score >= 80) {
+	grade = "AA";
+} else if ( score <=75 && score >= 60) {
+	grade = "BB";
+} 
+document.write(score + "점은 " + grade + "학점입니다.");
+document.write("<br /><br />");
+/*
+var tmp = parseInt(score/10);
+score = prompt("점수 입력", "0에서 100사이의 정수로 입력하세요.");
+switch ( tmp ) {
+	case 9: case 10:
+		grade = "A"; break;
+	case 8:
+		grade = "B"; break;
+	case 7:
+		grade = "C"; break;
+	case 6:
+		grade = "D"; break;
+	default:
+		grade = "F";
+}
+document.write(score + "점은 " + grade + "학점입니다.");
+document.write("<br /><br />");
+
+// propt로 정수를 입력받아 홀수인지 짝수인지 여부를 출력
+// 예) 10을 입력받으면 '10은 짝수입니다.' 라고 출력 (if와 switch 둘 다 사용)
+var number = prompt("홀수나 짝수를 입력하세요");
+if( number % 2 == 0 ) {
+	document.write(number + "은 짝수입니다.");
+} else {
+	document.write(number + "은 홀수입니다.");
+}
+
+
+document.write("<br /><br />");
+*/
+// 100 이하의 양수를 입력받아 학점을 출력 (switch문으로 작성)
+// 학점은 0~60:F, 61~70:D, 71~80:C, 81~90:B, 91~100:A
+var score = prompt("100 이하의 양수를 입력");
+switch ( parseInt(score - 1 / 10) ) {
+	case 9: case 10:
+		grade2 = "A"; break;
+	case 8:
+		grade2 = "B"; break;
+	case 7:
+		grade2 = "C"; break;
+	case 6:
+		grade2 = "D"; break;
+	default:
+		grade2 = "F";
+}
+document.write(score + "점은 " + grade2 + "학점입니다.");
+document.write("<br /><br />");
+
+</script>
+</body>
+</html>

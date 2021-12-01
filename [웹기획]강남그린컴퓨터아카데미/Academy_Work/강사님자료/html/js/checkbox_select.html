@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title>Document</title>
+	<script>
+	function chkAll(all) {
+		var chk = document.frm.chk;
+		for (var i = 0 ; i < chk.length ; i++) {
+			chk[i].checked = all.checked;
+		}
+	}
+
+	function choose(chk) {
+		if (!chk.checked) {	// 체크박스를 선택 해제 했을 경우
+			var all = document.frm.all;
+			all.checked = false;
+		}
+	}
+
+	/*
+	기본적으로 서브밋을 하지 않게 함
+	[전송]을 할 경우 선택된 체크박스가 하나도 없을 경우 '하나 이상 선택하세요' 메시지 띄우기
+	선택되었을 경우 선택된 체크박스들의 value를 alert()으로 보여주기 - 예) 1,3,5
+	*/
+	function showValues(frm) {
+		var chk = frm.chk;
+		var values = "";	// 선택된 체크박스의 값들을 저장할 변수
+		for (var i = 0 ; i < chk.length ; i++) {
+			if (chk[i].checked)	values = values + "," + chk[i].value;
+		}
+
+		if (values == "") {
+			alert("하나 이상 선택하세요.");
+		} else {
+			values = values.substring(1);
+			alert("선택된 값은 " + values);
+		}
+
+		return false;
+	}
+	</script>
+</head>
+<body>
+<form name="frm" onsubmit="return showValues(this);">
+<table width="700" cellpadding="5">
+<tr align="center">
+<td width="5%"><input type="checkbox" name="all" value="" onclick="chkAll(this);" /></td>
+<td width="20%">상품분류</td><td width="*">상품명</td><td width="10%">등록일</td>
+</tr>
+<tr align="center">
+<td><input type="checkbox" name="chk" value="1" onclick="choose(this);" /></td>
+<td>운동화</td><td>아주 좋은 운동화1</td><td>2021.03.03</td>
+</tr>
+<tr align="center">
+<td><input type="checkbox" name="chk" value="2" onclick="choose(this);" /></td>
+<td>운동화</td><td>아주 좋은 운동화2</td><td>2021.03.03</td>
+</tr>
+<tr align="center">
+<td><input type="checkbox" name="chk" value="3" onclick="choose(this);" /></td>
+<td>운동화</td><td>아주 좋은 운동화3</td><td>2021.03.03</td>
+</tr>
+<tr align="center">
+<td><input type="checkbox" name="chk" value="4" onclick="choose(this);" /></td>
+<td>구두</td><td>아주 좋은 구두1</td><td>2021.03.03</td>
+</tr>
+<tr align="center">
+<td><input type="checkbox" name="chk" value="5" onclick="choose(this);" /></td>
+<td>구두</td><td>아주 좋은 구두2</td><td>2021.03.03</td>
+</tr>
+<tr><td colspan="4" align="center"><br />
+	<input type="submit" value="전 송" />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="reset" value="취 소" />
+</td></tr>
+</table>
+</form>
+</body>
+</html>

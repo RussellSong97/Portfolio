@@ -1,0 +1,69 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	body { margin:0; }
+
+
+	/*
+	border : 요소의 바깥쪽에 테두리 선을 그어주는 속성
+	border 역시 박스의 원래 크기에 추가되는 개념으로 지정됨
+	*/
+
+	#test {
+		width:100px; height:100px;
+		border-style:solid;		/* 테두리 선의 종류 */
+		border-width:1px;		/* 테두리 선의 두께 */
+		border-color:red;		/* 테두리 선의 색상 */
+		/*
+		border-style의 종류
+		none : 선 없음 / solid : 실선 / dotted : 점선 / dashed : 파선 / double : 이중 실선 / groove / ridge / inset / outset
+		*/
+
+		/* 상단 테두리 속성 지정 */
+		border-top-style:solid;		border-top-width:2px;	border-top-color:red;
+		/* 좌측 테두리 속성 지정 */
+		border-left-style:dotted;	border-left-width:3px;	border-left-color:blue;
+		/* 우측 테두리 속성 지정 */
+		border-right-style:dashed;	border-right-width:3px;	border-right-color:green;
+		/* 하단 테두리 속성 지정 */
+		border-bottom-style:double;	border-right-width:3px;	border-right-color:purple;
+
+		border:solid 3px blue;	/* 테두리의 색, 두께, 종류를 한번에 지정 */
+		/* 들어가는 값의 순서는 상관없음(값 만으로도 속성이 구분되기 때문) */
+
+		border-top:		solid	2px red;
+		border-left:	dotted	3px blue;
+		border-right:	dashed	3px green;
+		border-bottom:	double	3px purple;
+	}
+
+	/*두께 : 10px, 색상 : blue */
+	p {
+		border-width:10px;
+		border-color:blue;
+	}
+	#box1 { border-style:none; }
+	#box2 { border-style:solid; }
+	#box3 { border-style:dotted; }
+	#box4 { border-style:dashed; }
+	#box5 { border-style:double; }
+	#box6 { border-style:groove; }
+	#box7 { border-style:ridge; }
+	#box8 { border-style:inset; }
+	#box9 { border-style:outset; }
+	</style>
+</head>
+<body>
+<div id="test">border 테스트</div>
+<p class="pBox" id="box1">none</p>
+<p class="pBox" id="box2">solid</p>
+<p class="pBox" id="box3">dotted</p>
+<p class="pBox" id="box4">dashed</p>
+<p class="pBox" id="box5">double</p>
+<p class="pBox" id="box6">groove</p>
+<p class="pBox" id="box7">ridge</p>
+<p class="pBox" id="box8">inset</p>
+<p class="pBox" id="box9">outset</p>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!--
+제어문 중 분기문에 대한 테스트 파일
+-->
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+var isLogin = false;
+if (isLogin) {	// 논리값은 조건식으로 바로 사용할 수 있음
+	document.write("<a href=\"#\">로그아웃</a> | <a href=\"#\">정보수정</a>");
+} else {
+	document.write("<a href=\"#\">로그인</a> | <a href=\"#\">회원가입</a>");
+}
+document.write("<br /><br />");
+if (!isLogin) {
+	document.write("<a href=\"#\">로그인</a> | <a href=\"#\">회원가입</a>");
+} else {
+	document.write("<a href=\"#\">로그아웃</a> | <a href=\"#\">정보수정</a>");
+}
+document.write("<br /><br />");
+// score가 90이상이면 "A", 80이상이면 "B", 70이상이면 "C", 60이상이면 "D", 60미만이면 "F"로 출력
+// 비교를 이상이나 초과로 할 경우 높은 숫자부터, 이하나 미만으로 할 경우 낮은 숫자 부터 비교해야 함
+var score = 0, grade = "";
+score = prompt("점수 입력", "0에서 100 사이의 정수로 입력하세요.");
+if (score >= 90) {
+	grade = "A";
+} else if (score >= 80) {
+	grade = "B";
+} else if (score >= 70) {
+	grade = "C";
+} else if (score >= 60) {
+	grade = "D";
+} else {
+	grade = "F";
+}
+document.write(score + "점은 " + grade + "학점입니다.");
+document.write("<br /><br />");
+score = prompt("점수 입력", "0에서 100 사이의 정수로 입력하세요.");
+// score가 80이상 99이하 이면 "AA", 60점 이상 75점 이하 이면 "BB"라고 출력
+// 숫자 범위를 조건으로 사용할 경우 그 조건은 반드시 두 개의 조건이며 &&로 묶여야 함
+// else가 없으면 경우에 따라 아무것도 실행되지 않을 수 있음
+if (score >= 80 && score <= 99) {
+	document.write("AA");
+} else if (score >= 60 && score <= 75) {
+	document.write("BB");
+}
+document.write("<br /><br />");
+score = prompt("점수 입력", "0에서 100 사이의 정수로 입력하세요.");
+var tmp = parseInt(score / 10);
+// score를 10으로 나눈 몫이 실수일 수 있으므로 parseInt()를 이용하여 정수부분만 tmp에 저장
+switch (tmp) {
+	case 9: case 10:	// 값이 9이거나 10이면 이라는 case로 작업됨
+		grade = "A";	break;
+	case 8:
+		grade = "B";	break;
+	case 7:
+		grade = "C";	break;
+	case 6:
+		grade = "D";	break;
+	default:
+		grade = "F";
+}
+document.write(score + "점은 " + grade + "학점입니다.");
+document.write("<br /><br />");
+
+// propt로 정수를 입력받아 홀수인지 짝수인지 여부를 출력
+// 예) 10을 입력받으면 '10은 짝수입니다.' 라고 출력 (if와 switch 둘 다 사용)
+tmp = prompt("정수 입력");
+if (tmp == 0) {
+	document.write(tmp + "은(는) 0입니다.");
+} else if (tmp % 2 == 0) {
+	document.write(tmp + "은(는) 짝수입니다.");
+} else {
+	document.write(tmp + "은(는) 홀수입니다.");
+}
+document.write("<br />");
+switch (tmp % 2) {
+	case 0:
+		document.write(tmp + "은(는) 짝수입니다.");		break;
+	default:
+		document.write(tmp + "은(는) 홀수입니다.");
+}
+document.write("<br /><br />");
+
+// 100이하의 양수를 입력받아 학점을 출력(switch문으로 작성)
+// 학점은 0~60:F, 61~70:D, 71~80:C, 81~90:B, 91~100:A
+score = prompt("점수 입력", "0에서 100 사이의 정수로 입력하세요.");
+var tmp = parseInt((score - 1) / 10);
+// score를 10으로 나눈 몫이 실수일 수 있으므로 parseInt()를 이용하여 정수부분만 tmp에 저장
+switch (tmp) {
+	case 9: case 10:	// 값이 9이거나 10이면 이라는 case로 작업됨
+		grade = "A";	break;
+	case 8:
+		grade = "B";	break;
+	case 7:
+		grade = "C";	break;
+	case 6:
+		grade = "D";	break;
+	default:
+		grade = "F";
+}
+document.write(score + "점은 " + grade + "학점입니다.");
+document.write("<br /><br />");
+</script>
+</body>
+</html>

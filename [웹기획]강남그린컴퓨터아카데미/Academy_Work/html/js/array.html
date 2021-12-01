@@ -1,0 +1,110 @@
+<html>
+<head>
+	<title>Document</title>
+</head>
+<body>
+<script>
+var arrFruits = ["apple", "banana", "orange", "pear"];
+document.write(arrFruits + "<br />");		// apple,banana,orange,pear
+document.write(arrFruits[0] + "<br />");	// apple
+document.write(arrFruits[1] + "<br />");	// banana
+document.write(arrFruits[2] + "<br />");	// orange
+document.write(arrFruits[3] + "<br />");	// pear
+
+var arrFriends = new Array();				// 배열의 크기를 지정하지 않고 배열을 생성
+arrFriends[1] = "홍길동";
+arrFriends[2] = "전우치";
+arrFriends[4] = "임꺽정";
+document.write(arrFriends + "<br />");		// ,홍길동,전우치,,임꺽정
+document.write(arrFriends[0] + "<br />");	// undefined
+document.write(arrFriends[1] + "<br />");	// 홍길동
+document.write(arrFriends[2] + "<br />");	// 전우치
+document.write(arrFriends[3] + "<br />");	// undefined
+document.write(arrFriends[4] + "<br />");	// 임꺽정
+arrFriends[7] = "고길동";
+document.write(arrFriends[5] + "<br />");	// undefined
+document.write(arrFriends[6] + "<br />");	// undefined
+document.write(arrFriends[7] + "<br />");	// 고길동
+
+document.write("<hr />")
+
+var arrUsers = new Array();
+arrUsers["friend1"] = "홍길동";
+arrUsers["friend2"] = "전우치";
+arrUsers["friend3"] = "임꺽정";
+// 자바 스크립트에서는 배열에 인덱스 대신 키를 사용하여 데이터를 저장할 수 있음
+document.write(arrUsers["friend1"] + "<br />");
+document.write(arrUsers["friend2"] + "<br />");
+document.write(arrUsers["friend3"] + "<br />");
+document.write(arrUsers.length + "<br />");			// 0
+// 키를 사용하면 배열의 크기(length)가 0으로 나옴
+
+var arrUsers2 = new Array();
+arrUsers2[0] = "홍길동";
+arrUsers2[1] = "전우치";
+arrUsers2[2] = "임꺽정";
+document.write(arrUsers2[0] + "<br />");
+document.write(arrUsers2[1] + "<br />");
+document.write(arrUsers2[2] + "<br />");
+document.write(arrUsers2.length + "<br />");		// 3
+// 인덱스를 사용하는 배열에서는 배열의 크기(length)
+
+document.write("<hr />")
+
+var tmpToString = arrFruits.toString(" : ");
+var tmpJoin = arrFruits.join(" : ");
+document.write("arrFruits.toString(\" : \") : " + tmpToString + "<br />");
+// apple,banana,orange,pear
+document.write("arrFruits.join(\" : \") : " + tmpJoin + "<br />");
+// apple : banana : orange : pear
+document.write("arrFruits.concat(arrUsers2) : " + arrFruits.concat(arrUsers2) + "<br />");
+// apple,banana,orange,pear,홍길동,전우치,임꺽정
+document.write("arrFruits.pop() : " + arrFruits.pop() + "<br />");	// pear
+// arrFruits.pop() : arrFruits 배열의 마지막 요소를 추출(배열에서는 삭제가 됨)
+
+arrFruits.push("banana", "melon");	// arrFruits배열의 마지막 요소 뒤에 두 개의 새로운 요소를 추가
+document.write("arrFruits.push(\"banana\", \"melon\") : " + arrFruits + "<br />");	
+// apple,banana,orange,banana,melon
+
+document.write("arrFruits.indexOf(\"banana\") : " + arrFruits.indexOf("banana") + "<br />");	// 1
+document.write("arrFruits.indexOf(\"banana\", arrFruits.indexOf(\"banana\") + 1) : " + arrFruits.indexOf("banana", arrFruits.indexOf("banana") + 1) + "<br />");	// 3
+
+document.write("<hr />")
+
+var f = arrFruits.shift();	// arrFruits 배열의 첫 요소를 추출 후 삭제
+document.write("arrFruits.shift() : " + arrFruits + " / 삭제된 요소 : " + f + "<br />");
+
+arrFruits.unshift("mango", "strawberry");	// arrFruits 배열의 첫 요소를 추출 후 삭제
+document.write("arrFruits.shift(\"mango\", \"strawberry\") : " + arrFruits + "<br />");
+
+var removeArr = arrFruits.splice(1,2);
+// arrFruits 배열의 1번 인덱스부터 2개를 추출하여 removeArr에 넣고 arrFruits에서는 삭제
+document.write("arrFruits.splice(1,2) 후 변경된 배열 : " + arrFruits + "<br />");	// mango,orange,banana,melon
+document.write("arrFruits.splice(1,2) 후 삭제된 배열 : " + removeArr + "<br />");	// strawberry,banana
+
+var newArr = arrFruits.slice(0, 3);
+// arrFruits 배열의 0번 인덱스부터 3 - 1번 인덱스 까지 추출하여 newArr에 넣고 원본은 그대로 둠
+document.write("arrFruits.slice(0, 3) 후 원본 배열 : " + arrFruits + "<br />");	// mango,orange,banana,melon
+document.write("arrFruits.slice(0, 3) 후 새 배열 : " + newArr + "<br />");			// mango,orange,banana
+
+document.write("<hr />")
+
+arrFruits.unshift("apple");		// 배열의 맨 앞에 'apple' 요소를 삽입
+arrFruits.push("Apple");		// 배열의 맨 뒤에 'Apple' 요소를 추가
+document.write("arrFruits의 정렬 전 원본 배열 : " + arrFruits + "<br />");				// apple,mango,orange,banana,melon,Apple
+document.write("arrFruits.sort()로 정렬된 배열 : " + arrFruits.sort() + "<br />");		// Apple,apple,banana,mango,melon,orange
+document.write("arrFruits의 정렬 후 원본 배열 : " + arrFruits + "<br />");				// Apple,apple,banana,mango,melon,orange
+
+document.write("<hr />")
+
+arrFruits.push("배");			// 배열의 맨 뒤에 '배' 요소를 추가
+document.write("arrFruits의 정렬 전 원본 배열 : " + arrFruits + "<br />");					// Apple,apple,banana,mango,melon,orange,배
+document.write("arrFruits.reverse()로 정렬된 배열 : " + arrFruits.reverse() + "<br />");	// 배,orange,melon,mango,banana,apple,Apple
+document.write("arrFruits의 정렬 후 원본 배열 : " + arrFruits + "<br />");					// 배,orange,melon,mango,banana,apple,Apple
+
+delete arrFruits[0];
+// arrFruits 배열의 0번 인덱스 자리에 있는 데이터를 삭제  - 요소의 자리는 유지됨(undefined)
+document.write("delete arrFruits[0] 후 배열 : " + arrFruits + "<br />");				// ,orange,melon,mango,banana,apple,Apple
+</script>
+</body>
+</html>

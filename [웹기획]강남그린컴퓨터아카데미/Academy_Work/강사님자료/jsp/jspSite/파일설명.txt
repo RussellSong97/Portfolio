@@ -1,0 +1,22 @@
+jspSite
+root 폴더
+ - index.jsp : 사이트의 메인화면으로 여러 기능으로의 링크가 있음
+ - loginForm.jsp : 로그인 폼
+ - loginProc.jsp : 로그인 처리 파일로 로그인 시 'login_info'라는 이름의 세션 속성 생성
+ - logout.jsp : 로그아웃으로 처리 후 index.jsp로 이동
+
+member 폴더
+ - joinForm.jsp : 회원 가입 폼 화면(약관 동의 포함)
+ - joinProc.jsp : 회원 가입 처리 파일
+ - mypage.jsp : 마이페이지의 첫화면으로 정보수정 폼이 보이고 주소록과 탈퇴 기능 링크
+ - infoProc.jsp : 회원 정보 수정 처리 파일
+ - 
+
+bbs 폴더 : 공지사항, 자유게시판(댓글포함)
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Document</title>
+	<script>
+		function hrefLocation() {
+			location.href = "http://www.naver.com/";
+			// 지정한 곳으로 이동하며 그 기록이 history 객체에 쌓임
+		}
+
+		function replaceLocation() {
+			location.replace("http://www.naver.com/");
+			//지정한 곳으로 이동하나 그 기록이 history 객체에 쌓이지 않음 - 뒤로 가기 불가
+			// replace()는 정확히 이동이 아닌 현재 화면의 url 을 바꾸는 기능임
+
+		}
+
+		function reloadLocation() {
+			location.relaod();
+		}
+	</script>
+</head>
+<body>
+<input type="button" value="href 속성으로 이동" onclick="hrefLocation();" />
+<input type="button" value="replace() 메소드로 이동" onclick="replaceLocation();" />
+<input type="button" value="reload() 메소드로 새로고침" onclick="reloadLocation();" />
+</body>
+</html>

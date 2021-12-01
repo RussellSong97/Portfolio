@@ -1,0 +1,68 @@
+파일 업로드
+ - 폼 태그의 enctype 속성의 값을 "multipart/form-data"로 설정해야 함
+	enctype 을 생략하면 모든 컨트롤의 값을 문자열로 받음(method속성은 "post"로 해야 됨)
+ - JSP에서의 파일 업로드는 'cos.jar' 라이브러리를 이용하는 방법과 Servlet3.0 이상 부터 제공되는 Part 인터페이스를 사용함
+
+1. cos.jar 라이브러리 이용
+ - http://servlets.com/ -> 좌측메뉴 중 'COS File Upload Library' 클릭한 후 화면 하단의 테이블에서 'cos-20.08.zip'파일을 다운로드 후 압축을 풀어줌
+ - 압축 해제 후 폴더 중에 lib폴더 안에 있는 'cos.jar'파일을 프로젝트폴더/WebjContent/WEB-INF/lib 폴더 안으로 복사
+ - 복사 후 이클립스에 '새로 고침'을 해야 사용할 수 있음
+ - 기본적으로 예외처리를 하면서 작업을 해야 함(try-catch문 사용)
+ - 파일을 업로드하면 실제로는 '워크스페이스\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\프로젝트 폴더\업로드폴더' 에 저장됨
+
+MultipartRequest 클래스
+ - cos 라이브러리에서 가장 핵심적인 역할(파일업로드 담당)을 하는 클래스
+ - 생성자
+MultipartRequest(
+	javax.servlet.http.HttpServletRequest request, 
+	String saveDirectory, 
+	int maxPostSize, 
+	String encoding, 
+	FileRenamePolicy policy)
+
+ - 생성자의 매개변수들
+	request : 사용자의 요청이 들어있는 request객체
+	saveDirectory : 업로드한 파일이 저장될 서버에서의 실제 위치(real path) 경로
+	maxPostSize : 한 번에 업로드할 수 있는 최대 파일 크기
+	encoding : 파일의 인코딩 방식(utf-8, euc-kr, ksc-5601 등)
+	policy : 파일 이름 중복 처리를 위한 클래스 객체로 기본값은 new DefaultFileRenamePolicy()
+
+ - 주요 메소드
+리턴타입		메소드명 및 설명
+Enumeration	getParameterNames() : 폼에서 전송된 파라미터들 중 file이 아닌 컨트롤들의 이름을 리턴
+String[]	getParameterValues() : 전송된 파라미터들의 값들을 배열로 리턴
+String		getParameter(String name) : 지정된 이름의 파라미터 값을 리턴
+Enumeration	getFileNames() : 파일을 여러 개 업로드할 때 file 컨트롤들의 이름을 리턴
+String		getFilesystemName() : 서버에 실제로 업로드된 파일의 이름을 리턴
+String		getOriginalFileName() : 사용자가 업로드한 파일의 원본 이름을 리턴
+String		getContentType() : 업로드된 파일의 타입을 리턴
+
+
+2. Part 인터페이스를 이용한 업로드
+ - Servlet3.0 이상부터 사용가능
+ - Part 인터페이스는 'multipart/form-data' 형태로 전송된 POST 요청의 항목 데이터를 다루는 기능들이 정의된 인터페이스임
+ - 주요 메소드
+리턴타입		메소드명 및 설명
+void		delete() : Part에 담겨있는 파일 항목에 관련된 임시 디렉토리를 포함 모두 삭제
+String		getContentType() : Part객체의 컨텐트타입을 리턴
+String		getHeader(String name) : 지정된 헤더의 정보를 리턴
+Collection	getHeaderNames() : Part객체의 헤더 정보들의 이름을 Collection<String>으로 리턴
+Collection	getHeader() : Part객체의 헤더 정보들을 Collection<String>으로 리턴
+InputStream	getInputStream() : Part의 내용을 읽어 들이는 InputStream객체 리턴
+String		getName() : Part객체의 이름을 리턴
+long		getSize() : 파일의 크기를 바이트 단위의 long형 정수로 리턴
+void		write(String fileName) : Part객체의 파일을 지정한 이름으로 디스크에 출력
+
+ - MultipartConfig의 옵션
+	fileSizeThreshold="정수(int)" : 파일이 업로드될 때 임시 디렉코리에 저장되기 시작할 파일의 바이트 크기를 지정하는 옵션으로 이 크기가 넘으면 임시 디렉토리에 저장되기 시작하며, 이 크기를 넘지 않으면 메모리에 저장됨. 기본값은 0
+	location="업로드경로" : 업로드된 파일이 저장될 위치를 문자열로 지정
+	maxFileSize="정수(long)" : 업로드되는 파일의 최대 크기를 바이트 단위로 지정
+	maxRequestSize="정수(long)" : 하나의 요청에서 업로드할 수 있는 최대 바이트 수를 지정
+
+
+
+
+
+
+
+

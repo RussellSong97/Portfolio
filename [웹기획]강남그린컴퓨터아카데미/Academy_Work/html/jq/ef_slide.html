@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#btn1").click(function() {
+				$("#img1").slideDown(1000);
+			});
+			$("#btn2").click(function() {
+				$("#img1").slideUp(1000);
+			}); 
+			$("#btn3").click(function() {
+				$("#img1").slideToggle(1000);
+			});
+			$("#btn4").click(function() {
+				$("#img1").finish();
+			});
+			
+		});
+	</script>
+</head>
+<body>
+<!-- slideDown, slideUp, slideToggle 버튼과 이미지를 넣고 각 버튼 클릭 시 기능을 실행시킴 -->
+<input type="button" id="btn1" value="slide Down" />
+<input type="button" id="btn2" value="slide Up" />
+<input type="button" id="btn3" value="slide Toggle" /><br /><br />
+<input type="button" id="btn4" value="finish()" /><br /><br />
+<img id="img1" src="../img/c.jpg" width="300" /><br /><br />
+</body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#txt").select(function() {
+			// #txt 요소의 텍스트들을 선택(드래그)했을 경우 작업
+				$("#txt").after(" Text marked!");
+				// #txt 요소의 뒤에 지정한 문자열을 출력 
+			});
+			$("#btn").click(function() {
+				$("#txt").trigger("select");
+				// #txt 요소에 'select' 이벤트를 발생시킴 - 발생시킨 'select' 이벤트의 기본기능인 선택을 해줌
+			});
+			$("#btn2").click(function() {
+				$("#txt").triggerHandler("select");
+				// #txt 요소에 'select' 이벤트를 발생시킴 - 발생시킨 'select' 이벤트의 기본기능을 실행시키지 않음
+			});
+		});
+	</script>
+</head>
+<body>
+<input type="text" id="txt" value="Hello World" /><br /><br />
+<input type="button" id="btn" value="Trigger test" />
+<input type="button" id="btn2" value="triggerHandler test" />
+</body>
+</html>

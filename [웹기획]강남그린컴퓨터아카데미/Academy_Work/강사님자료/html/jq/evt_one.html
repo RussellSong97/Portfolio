@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$("p").one("click dblclick", function() {
+		// p태그에 click과 dblclick 이벤트 각각 한 번씩만 동작하게 해줌
+			$(this).animate({fontSize:"+=6px"});
+		});
+		$("#btn1").on("click", function() {
+			$("#p1").animate({fontSize:"+=5px"});
+		});
+		$("#btn2").on("click", function() {
+			$("#p1").animate({fontSize:"-=5px"});
+		});
+	});
+	</script>
+</head>
+<body>
+<p id="p1">This is a paragraph.</p>
+<p id="p2">This is another paragraph.</p>
+<input type="button" value="p1 +5px" id="btn1" />
+<input type="button" value="p1 -5px" id="btn2" />
+</body>
+</html>

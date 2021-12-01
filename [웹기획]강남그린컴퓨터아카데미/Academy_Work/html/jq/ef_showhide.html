@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Document</title>
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#btn1").click(function(){
+				$("#img1").show(500);
+			});
+			$("#btn2").click(function(){
+				$("#img1").hide(500);
+			});
+			$("#btn3").click(function(){
+				$("#img1").toggle();
+			});
+		});
+	</script>
+</head>
+<body>
+<input type="button" id="btn1" value="show()" />
+<input type="button" id="btn2" value="hide()" />
+<input type="button" id="btn3" value="toggle()" /><br /><br />
+<img id="img1" src="../img/a.jpg" width="400" />
+</body>
+</html>
