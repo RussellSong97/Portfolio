@@ -1,0 +1,280 @@
+/* Pretendard (기본) */
+/* Thin */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 100;
+    src: local(※),  url("../fonts/Pretendard-Thin.woff2") format('woff2'),
+    url("../fonts/Pretendard-Thin.woff") format('woff'),
+    url("../fonts/Pretendard-Thin.eot") format('opentype'),
+    url("../fonts/Pretendard-Thin.otf") format('opentype'),
+    url("../fonts/Pretendard-Thin.ttf") format("truetype");
+}
+/* ExtraLight */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 200;
+    src: local(※),  url("../fonts/Pretendard-ExtraLight.woff2") format('woff2'),
+    url("../fonts/Pretendard-ExtraLight.woff") format('woff'),
+    url("../fonts/Pretendard-ExtraLight.eot") format('opentype'),
+    url("../fonts/Pretendard-ExtraLight.otf") format('opentype'),
+    url("../fonts/Pretendard-ExtraLight.ttf") format("truetype");
+}
+/* Light */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 300;
+    src: local(※),  url("../fonts/Pretendard-Light.woff2") format('woff2'),
+    url("../fonts/Pretendard-Light.woff") format('woff'),
+    url("../fonts/Pretendard-Light.eot") format('opentype'),
+    url("../fonts/Pretendard-Light.otf") format('opentype'),
+    url("../fonts/Pretendard-Light.ttf") format("truetype");
+}
+/* Regular */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    src: local(※),  url("../fonts/Pretendard-Regular.woff2") format('woff2'),
+    url("../fonts/Pretendard-Regular.woff") format('woff'),
+    url("../fonts/Pretendard-Regular.eot") format('opentype'),
+    url("../fonts/Pretendard-Regular.otf") format('opentype'),
+    url("../fonts/Pretendard-Regular.ttf") format("truetype");
+}
+/* Medium */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 500;
+    src: local(※),  url("../fonts/Pretendard-Medium.woff2") format('woff2'),
+    url("../fonts/Pretendard-Medium.woff") format('woff'),
+    url("../fonts/Pretendard-Medium.eot") format('opentype'),
+    url("../fonts/Pretendard-Medium.otf") format('opentype'),
+    url("../fonts/Pretendard-Medium.ttf") format("truetype");
+}
+/* SemiBold */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 600;
+    src: local(※),  url("../fonts/Pretendard-SemiBold.woff2") format('woff2'),
+    url("../fonts/Pretendard-SemiBold.woff") format('woff'),
+    url("../fonts/Pretendard-SemiBold.eot") format('opentype'),
+    url("../fonts/Pretendard-SemiBold.otf") format('opentype'),
+    url("../fonts/Pretendard-SemiBold.ttf") format("truetype");
+}
+/* Bold */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 700;
+    src: local(※),  url("../fonts/Pretendard-Bold.woff2") format('woff2'),
+    url("../fonts/Pretendard-Bold.woff") format('woff'),
+    url("../fonts/Pretendard-Bold.eot") format('opentype'),
+    url("../fonts/Pretendard-Bold.otf") format('opentype'),
+    url("../fonts/Pretendard-Bold.ttf") format("truetype");
+}
+/* ExtraBold */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 800;
+    src: local(※),  url("../fonts/Pretendard-ExtraBold.woff2") format('woff2'),
+    url("../fonts/Pretendard-ExtraBold.woff") format('woff'),
+    url("../fonts/Pretendard-ExtraBold.eot") format('opentype'),
+    url("../fonts/Pretendard-ExtraBold.otf") format('opentype'),
+    url("../fonts/Pretendard-ExtraBold.ttf") format("truetype");
+}
+/* Black */
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 900;
+    src: local(※),  url("../fonts/Pretendard-Black.woff2") format('woff2'),
+    url("../fonts/Pretendard-Black.woff") format('woff'),
+    url("../fonts/Pretendard-Black.eot") format('opentype'),
+    url("../fonts/Pretendard-Black.otf") format('opentype'),
+    url("../fonts/Pretendard-Black.ttf") format("truetype");
+}
+
+/* SUITE */
+/* Light */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 300;
+    src: local(※),  url("../fonts/SUITE-Light.woff2") format('woff2'),
+    url("../fonts/SUITE-Light.woff") format('woff'),
+    url("../fonts/SUITE-Light.eot") format('opentype'),
+    url("../fonts/SUITE-Light.otf") format('opentype'),
+    url("../fonts/SUITE-Light.ttf") format("truetype");
+}
+/* Regular */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 400;
+    src: local(※),  url("../fonts/SUITE-Regular.woff2") format('woff2'),
+    url("../fonts/SUITE-Regular.woff") format('woff'),
+    url("../fonts/SUITE-Regular.eot") format('opentype'),
+    url("../fonts/SUITE-Regular.otf") format('opentype'),
+    url("../fonts/SUITE-Regular.ttf") format("truetype");
+}
+/* Medium */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 500;
+    src: local(※),  url("../fonts/SUITE-Medium.woff2") format('woff2'),
+    url("../fonts/SUITE-Medium.woff") format('woff'),
+    url("../fonts/SUITE-Medium.eot") format('opentype'),
+    url("../fonts/SUITE-Medium.otf") format('opentype'),
+    url("../fonts/SUITE-Medium.ttf") format("truetype");
+}
+/* SemiBold */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 600;
+    src: local(※),  url("../fonts/SUITE-SemiBold.woff2") format('woff2'),
+    url("../fonts/SUITE-SemiBold.woff") format('woff'),
+    url("../fonts/SUITE-SemiBold.eot") format('opentype'),
+    url("../fonts/SUITE-SemiBold.otf") format('opentype'),
+    url("../fonts/SUITE-SemiBold.ttf") format("truetype");
+}
+/* Bold */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 700;
+    src: local(※),  url("../fonts/SUITE-Bold.woff2") format('woff2'),
+    url("../fonts/SUITE-Bold.woff") format('woff'),
+    url("../fonts/SUITE-Bold.eot") format('opentype'),
+    url("../fonts/SUITE-Bold.otf") format('opentype'),
+    url("../fonts/SUITE-Bold.ttf") format("truetype");
+}
+/* ExtraBold */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 800;
+    src: local(※),  url("../fonts/SUITE-ExtraBold.woff2") format('woff2'),
+    url("../fonts/SUITE-ExtraBold.woff") format('woff'),
+    url("../fonts/SUITE-ExtraBold.eot") format('opentype'),
+    url("../fonts/SUITE-ExtraBold.otf") format('opentype'),
+    url("../fonts/SUITE-ExtraBold.ttf") format("truetype");
+}
+/* Heavy */
+@font-face {
+    font-family: 'SUITE';
+    font-style: normal;
+    font-weight: 900;
+    src: local(※),  url("../fonts/SUITE-Heavy.woff2") format('woff2'),
+    url("../fonts/SUITE-Heavy.woff") format('woff'),
+    url("../fonts/SUITE-Heavy.eot") format('opentype'),
+    url("../fonts/SUITE-Heavy.otf") format('opentype'),
+    url("../fonts/SUITE-Heavy.ttf") format("truetype");
+}
+
+/* Outfit */
+/* Thin */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 100;
+    src: local(※),  url("../fonts/Outfit-Thin.woff2") format('woff2'),
+    url("../fonts/Outfit-Thin.woff") format('woff'),
+    url("../fonts/Outfit-Thin.eot") format('opentype'),
+    url("../fonts/Outfit-Thin.otf") format('opentype'),
+    url("../fonts/Outfit-Thin.ttf") format("truetype");
+}
+/* ExtraLight */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 200;
+    src: local(※),  url("../fonts/Outfit-ExtraLight.woff2") format('woff2'),
+    url("../fonts/Outfit-ExtraLight.woff") format('woff'),
+    url("../fonts/Outfit-ExtraLight.eot") format('opentype'),
+    url("../fonts/Outfit-ExtraLight.otf") format('opentype'),
+    url("../fonts/Outfit-ExtraLight.ttf") format("truetype");
+}
+/* Light */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 300;
+    src: local(※),  url("../fonts/Outfit-Light.woff2") format('woff2'),
+    url("../fonts/Outfit-Light.woff") format('woff'),
+    url("../fonts/Outfit-Light.eot") format('opentype'),
+    url("../fonts/Outfit-Light.otf") format('opentype'),
+    url("../fonts/Outfit-Light.ttf") format("truetype");
+}
+/* Regular */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    src: local(※),  url("../fonts/Outfit-Regular.woff2") format('woff2'),
+    url("../fonts/Outfit-Regular.woff") format('woff'),
+    url("../fonts/Outfit-Regular.eot") format('opentype'),
+    url("../fonts/Outfit-Regular.otf") format('opentype'),
+    url("../fonts/Outfit-Regular.ttf") format("truetype");
+}
+/* Medium */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 500;
+    src: local(※),  url("../fonts/Outfit-Medium.woff2") format('woff2'),
+    url("../fonts/Outfit-Medium.woff") format('woff'),
+    url("../fonts/Outfit-Medium.eot") format('opentype'),
+    url("../fonts/Outfit-Medium.otf") format('opentype'),
+    url("../fonts/Outfit-Medium.ttf") format("truetype");
+}
+/* SemiBold */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    src: local(※),  url("../fonts/Outfit-SemiBold.woff2") format('woff2'),
+    url("../fonts/Outfit-SemiBold.woff") format('woff'),
+    url("../fonts/Outfit-SemiBold.eot") format('opentype'),
+    url("../fonts/Outfit-SemiBold.otf") format('opentype'),
+    url("../fonts/Outfit-SemiBold.ttf") format("truetype");
+}
+/* Bold */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    src: local(※),  url("../fonts/Outfit-Bold.woff2") format('woff2'),
+    url("../fonts/Outfit-Bold.woff") format('woff'),
+    url("../fonts/Outfit-Bold.eot") format('opentype'),
+    url("../fonts/Outfit-Bold.otf") format('opentype'),
+    url("../fonts/Outfit-Bold.ttf") format("truetype");
+}
+/* ExtraBold */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 800;
+    src: local(※),  url("../fonts/Outfit-ExtraBold.woff2") format('woff2'),
+    url("../fonts/Outfit-ExtraBold.woff") format('woff'),
+    url("../fonts/Outfit-ExtraBold.eot") format('opentype'),
+    url("../fonts/Outfit-ExtraBold.otf") format('opentype'),
+    url("../fonts/Outfit-ExtraBold.ttf") format("truetype");
+}
+/* ExtraBold */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 900;
+    src: local(※),  url("../fonts/Outfit-Black.woff2") format('woff2'),
+    url("../fonts/Outfit-Black.woff") format('woff'),
+    url("../fonts/Outfit-Black.eot") format('opentype'),
+    url("../fonts/Outfit-Black.otf") format('opentype'),
+    url("../fonts/Outfit-Black.ttf") format("truetype");
+}

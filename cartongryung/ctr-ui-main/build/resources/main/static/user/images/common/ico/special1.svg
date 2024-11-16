@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+  <g id="car_use_img_01" data-name="car use_img 01" transform="translate(-729.478 -240.791)">
+    <rect id="사각형_5904" data-name="사각형 5904" width="26" height="26" transform="translate(729.478 240.791)" fill="none"/>
+    <rect id="사각형_5393" data-name="사각형 5393" width="21.396" height="8.753" rx="3.75" transform="translate(731.779 251.9)" fill="none" stroke="#b9252b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="패스_39529" data-name="패스 39529" d="M759.427,260.228H744.137l-.648,7.348h16.587Z" transform="translate(-9.305 -15.676)" fill="none" stroke="#b9252b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <g id="그룹_32682" data-name="그룹 32682" transform="translate(735.183 260.653)">
+      <line id="선_832" data-name="선 832" y2="2.377" fill="none" stroke="#b9252b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <line id="선_833" data-name="선 833" y2="2.377" transform="translate(14.588)" fill="none" stroke="#b9252b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+    <g id="그룹_32683" data-name="그룹 32683" transform="translate(734.049 255.141)">
+      <path id="패스_39530" data-name="패스 39530" d="M746.089,277.966a1.4,1.4,0,1,1-1.4-1.405A1.4,1.4,0,0,1,746.089,277.966Z" transform="translate(-743.28 -276.561)" fill="#b9252b"/>
+      <circle id="타원_1802" data-name="타원 1802" cx="1.405" cy="1.405" r="1.405" transform="translate(14.048 0)" fill="#b9252b"/>
+    </g>
+  </g>
+</svg>

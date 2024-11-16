@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_mobile}">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="search-wrap">
+            <div class="search-box">
+                <form action="">
+                    <input type="text" name="searchMobileKeyword" id="searchBox" value="" placeholder="모델, 차량번호 검색">
+                    <label for="searchBox" class="is-blind">검색어 입력</label>
+                    <button type="button" class="btn-search" id="searchMobileKeyword" onclick="searchMobileKeywordApi()">검색</button>
+                </form>
+            </div>
+            <div class="cont is-recent">
+                <div class="tit-area">
+                    <span class="tit">최근 본 차량</span>
+                    <button type="button" class="btn-more">더보기</button>
+                </div>
+                <ul class="recent-list">
+                    <li th:each="recent : ${recentList}">
+                        <a href="javascript:;" onclick="deleteRecentCar(this)" th:attr="data-id=${recent.id}" th:text="${recent.makerName + ' ' + recent.modelName + ' ' + recent.detailGradeName}">디젤 2.0 4WD 익스클루시브 스페셜디젤 2.0 4WD 익스클루시브 스페셜디젤 2.0 4WD 익스클루시브 스페셜</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="cont">
+                <div class="tit-area">
+                    <span class="tit">인기 검색어</span>
+                    <span class="date" th:text="${#temporals.format(popularKeywordLists[0].createdAt, 'yyyy-MM-dd')}">2024.05.05 기준</span>
+                </div>
+                <ul class="popular-list">
+                    <li th:each="popular, i : ${popularKeywordLists}">
+                        <a href="javascript:;"><span class="rank">[[${i.index + 1}]]</span>[[${popular.makerName + ' ' + popular.modelName + ' ' + popular.detailModelName}]]</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+	var hdNm = "검색";
+
+	// 최근 본 차량 더보기
+	document.addEventListener("DOMContentLoaded", function() {
+		var btnMore = document.querySelector('.is-recent .btn-more');
+		var hiddenItems = document.querySelectorAll('.recent-list li:not(:first-child)');
+
+		btnMore.addEventListener('click', function() {
+			hiddenItems.forEach(function(item) {
+				item.style.display = (btnMore.classList.contains('on')) ? 'none' : 'block';
+			});
+			btnMore.classList.toggle('on');
+		});
+	});
+
+    function deleteRecentCar(_this) {
+        console.log(_this.getAttribute("data-id"))
+    }
+
+
+    function searchMobileKeywordApi(_this) {
+        let searchBox = document.getElementById("searchBox").value;
+
+        fetch("/api/search/product", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                keyword: searchBox,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+
+                sessionStorage.setItem("searchResults", JSON.stringify(data.data))
+                location.href = "/search/product"
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+        })
+    }
+</script>
+</body>
+
+</html>

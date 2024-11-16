@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="tit-area">
+            <h2 class="tit hide-m">중고차 가이드</h2>
+        </div>
+        <div class="guide-wrap">
+            <ul class="guide-list">
+                <li th:each="guide : ${boardGuideLists}">
+                    <a th:href="@{/board/guide/__${guide.id}__}">
+                        <div class="txt-area">
+                            <span class="state" th:text="${guide.boardGuideType.detail}">분류명</span>
+                            <p class="tit" th:text="${guide.title}">중고차 가이드 제목 노출. 길면 2줄 출력 너무 길면 말 줄임 …중고차 가이드 제목 노출. 길면 2줄 출력 너무 길면 말
+                                줄임</p>
+                            <div class="txt">
+                                <th:block th:utext="${guide.content}"></th:block>
+                            </div>
+                        </div>
+                        <div class="img">
+                            <img th:src="@{/api/file/view/__${guide.attachment.uuid}__?size=200}" alt="이미지">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "중고차 가이드";
+    
+    document.addEventListener("DOMContentLoaded", function() {
+		var paragraphs = document.querySelectorAll('.guide-list .txt p');
+		
+		paragraphs.forEach(function(paragraph) {
+			if (paragraph.innerHTML.trim() === '<br>&nbsp;') {
+				paragraph.remove();
+			}
+		});
+	});
+</script>
+</html>

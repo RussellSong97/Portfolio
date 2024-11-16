@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="description" content="CUV">
+	<link rel="icon" href="../images/favicon/favicon_48x48.svg" sizes="48x48">
+	<link rel="icon" href="../images/favicon/favicon_96x96.svg" sizes="96x96">
+	<link rel="icon" href="../images/favicon/favicon_144x144.svg" sizes="144x144">
+	<link rel="icon" href="../images/favicon/favicon_196x196.svg" sizes="196x196">
+	<meta property="og:image" content="../images/favicon/ogi.png" />
+	<meta property="og:image:width" content="270" />
+	<meta property="og:image:height" content="270" />
+	<meta property="og:title" content="" />
+	<meta property="og:description" content="" />
+	<title>카통령</title>
+	<!-- css -->
+	<link rel="stylesheet" href="../css/general.css">
+	<link rel="stylesheet" href="../css/swiper-bundle.min.css">
+	<!-- js -->
+	<script src="../js/jquery-1.12.4.min.js"></script>
+	<script src="../js/jquery-ui.js"></script>
+	<script src="../js/layout.js"></script>
+	<script src="../js/swiper-bundle.min.js"></script>
+	<script src="../js/wbz-popup.v1.js"></script>
+	<script src="../js/datepicker-ko.js"></script>
+</head>
+
+<body>
+	<!-- 본문 바로가기 -->
+	<div id="skipNav"><a href="#contents" onclick="document.getElementById('contents').tabIndex = -1;document.getElementById('contents').focus();return false;">본문 바로가기</a></div>
+	<div id="container">
+		<div class="js-include" data-include="../outline/header.html" data-event="header"></div>
+		<div class="js-include" data-include="../outline/aside.html" data-event="aside"></div>
+
+		<main id="contents">
+			<div class="main-content">
+				<div class="main-top">
+					<div class="main-visual">
+						<div class="swiper-control">
+							<div class="swiper-count">
+								<span class="active-num"></span>
+							</div>
+							<div class="pagination"></div>
+							<div class="swiper-count">
+								<span class="all-num"></span>
+							</div>
+							<a href="javascript:;" class="pause">정지</a>
+							<a href="javascript:;" class="play">재생</a>
+						</div>
+						<div class="swiper-navi">
+							<button type="button" class="swiper-button prev">이전</button>
+							<button type="button" class="swiper-button next">다음</button>
+						</div>
+						<div class="swiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<a href="#" class="img">
+										<!-- pc용 이미지 -->
+										<img src="../images/dummy/main_visual_slide_1.png" alt="" class="hide-m">
+										<!-- 모바일용 이미지 -->
+										<img src="../images/dummy/main_visual_slide_1_m.png" alt="" class="hide-pc">
+									</a>
+								</div>
+								<div class="swiper-slide">
+									<a href="#" class="img">
+										<img src="../images/dummy/main_visual_slide_1.png" alt="" class="hide-m">
+										<img src="../images/dummy/main_visual_slide_1_m.png" alt="" class="hide-pc">
+									</a>
+								</div>
+								<div class="swiper-slide">
+									<a href="#" class="img">
+										<img src="../images/dummy/main_visual_slide_1.png" alt="" class="hide-m">
+										<img src="../images/dummy/main_visual_slide_1_m.png" alt="" class="hide-pc">
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="w-set">				
+						<div class="main-cont">
+							<div class="search-wrap">
+								<div class="tit-area">
+									<h2 class="tit hide-m">나에게 맞는 차량을 찾아보세요.</h2>
+									<div class="search-area">
+										<div class="search-box">
+											<p class="total"><strong>139,671</strong>대</p>
+											<input type="text" name="searchBox" id="searchBox">
+											<label for="searchBox" class="is-blind">검색창</label>
+											<button type="button" class="btn-search">검색</button>
+										</div>
+										<div class="search-list hide-m">
+											<div class="swiper">
+												<div class="swiper-wrapper">
+													<div class="swiper-slide">
+														<a href="javascript:;">뉴카니발</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">소나타</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">아반떼</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">아이오닉</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">산타페</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">뉴카니발</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">소나타</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">아반떼</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">아이오닉</a>
+													</div>
+													<div class="swiper-slide">
+														<a href="javascript:;">산타페</a>
+													</div>
+												</div>
+											</div>
+											<div class="swiper-navi">
+												<button type="button" class="swiper-button prev">이전</button>
+												<button type="button" class="swiper-button next">다음</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="select-wrap hide-m">
+									<!-- 값 선택 후 on 추가 -->
+									<div class="select-box on">
+										<button type="button" class="select">기아</button>
+										<ul class="option-list">
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+											<li>
+												<a href="javascript:;">제조사</a>
+											</li>
+										</ul>
+									</div>
+									<!-- 이전 단계 선택 후 disabled => on 변경 -->
+									<div class="select-box disabled">
+										<button type="button" class="select">모델</button>
+										<ul class="option-list">
+											<li>
+												<a href="javascript:;">모델</a>
+											</li>
+										</ul>
+									</div>
+									<div class="select-box disabled">
+										<button type="button" class="select">세부모델</button>
+										<ul class="option-list">
+											<li>
+												<a href="javascript:;">세부모델</a>
+											</li>
+										</ul>
+									</div>
+									<button type="button" class="btn">Search</button>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div class="w-set">
+					<div class="link-wrap hide-pc">
+						<a href="" class="link">
+							<i class="i-link1"></i>
+							<span class="txt">평생책임<br>서비스</span>
+						</a>
+						<a href="" class="link">
+							<i class="i-link2"></i>
+							<span class="txt">이벤트</span>
+						</a>
+						<a href="" class="link">
+							<i class="i-link3"></i>
+							<span class="txt">고객후기</span>
+						</a>
+						<a href="" class="link">
+							<i class="i-link4"></i>
+							<span class="txt">오시는 길</span>
+						</a>
+					</div>
+					<div class="main-cont">
+						<div class="new-wrap">
+							<div class="tit-area">
+								<h2 class="tit">올라 온 지 얼마 안된 매물</h2>
+							</div>
+							<div class="swiper-wrap new-slide">
+								<div class="swiper-control">
+									<div class="pagination"></div>
+								</div>
+								<div class="swiper-navi">
+									<button type="button" class="swiper-button prev">이전</button>
+									<button type="button" class="swiper-button next">다음</button>
+								</div>
+								<div class="swiper">
+									<div class="swiper-wrapper">
+										<div class="swiper-slide">
+											<!-- 선착순 특가 badge -->
+											<div class="prd-box badge">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">KIA 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-sale">13,800만원</span>
+														<span class="num-price">13,700만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">13,700만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">13,700만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">13,700만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">13,700만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">13,700만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="main-cont type-bg">
+					<div class="w-set">
+						<div class="recommend-wrap">
+							<div class="tit-area">
+								<h2 class="tit">카통령 추천 차량</h2>
+							</div>
+							<div>
+								<div class="recommend-cont">
+									<div class="main-area">
+										<div class="prd-box badge">
+											<div class="prd-thumb">
+												<a href="javascript:;">
+													<img src="../images/dummy/sample01.png" alt="">
+												</a>
+											</div>
+											<a href="javascript:;" class="prd-info">
+												<p class="prd-name">기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승) 길면</p>
+												<p class="price-info">
+													<span class="sale-price">11,500만원</span>
+													<span class="num-price">11,400만원</span>
+												</p>
+												<p class="detail-info">
+													<span>2019/04(2019)</span>
+													<span>11,179 km</span>
+													<span>서울</span>
+												</p>
+											</a>
+											<label class="btn-like">
+												<input type="checkbox">
+												<span class="like-visual">좋아요</span>
+											</label>
+										</div>
+									</div>
+									<div class="cont-area">
+										<ul class="prd-list prd-row">
+											<li>
+												<div class="prd-box badge">
+													<div class="prd-thumb">
+														<a href="javascript:;">
+															<img src="../images/dummy/sample01.png" alt="">
+														</a>
+													</div>
+													<a href="javascript:;" class="prd-info">
+														<p class="prd-name">기아 더 뉴 쏘렌토</p>
+														<p class="price-info">
+															<span class="num-sale">11,500만원</span>
+															<span class="num-price">11,400만원</span>
+														</p>
+														<p class="detail-info">
+															<span>2019/04(2019)</span>
+															<span>11,179 km</span>
+															<span>서울</span>
+														</p>
+													</a>
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+												</div>
+											</li>
+											<li>
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<a href="javascript:;">
+															<img src="../images/dummy/sample01.png" alt="">
+														</a>
+													</div>
+													<a href="javascript:;" class="prd-info">
+														<p class="prd-name">기아 더 뉴 쏘렌토</p>
+														<p class="price-info">
+															<span class="num-price">11,400만원</span>
+														</p>
+														<p class="detail-info">
+															<span>2019/04(2019)</span>
+															<span>11,179 km</span>
+															<span>서울</span>
+														</p>
+													</a>
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+												</div>
+											</li>
+											<li>
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<a href="javascript:;">
+															<img src="../images/dummy/sample01.png" alt="">
+														</a>
+													</div>
+													<a href="javascript:;" class="prd-info">
+														<p class="prd-name">기아 더 뉴 쏘렌토</p>
+														<p class="price-info">
+															<span class="num-price">11,400만원</span>
+														</p>
+														<p class="detail-info">
+															<span>2019/04(2019)</span>
+															<span>11,179 km</span>
+															<span>서울</span>
+														</p>
+													</a>
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="w-set">
+					<div class="main-cont">
+						<div class="sub-visual">
+							<div class="swiper-count"></div>
+							<div class="swiper">
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<a href="javascript:;">
+											<!-- pc용 이미지 -->
+											<img src="../images/dummy/sub_banner.png" alt="" class="for-pc">
+											<!-- 모바일용 이미지 -->
+											<img src="../images/dummy/sub_banner_m.png" alt="" class="for-t">
+										</a>
+									</div>
+									<div class="swiper-slide">
+										<a href="javascript:;">
+											<img src="../images/dummy/sub_banner.png" alt="">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="main-cont">
+						<div class="efficient-wrap">
+							<div class="tit-area">
+								<h2 class="tit">가성비 추천 차량</h2>
+							</div>
+							<div class="swiper-wrap efficient-slide">
+								<div class="swiper-control">
+									<div class="pagination"></div>
+								</div>
+								<div class="swiper-navi">
+									<button type="button" class="swiper-button prev">이전</button>
+									<button type="button" class="swiper-button next">다음</button>
+								</div>
+								<div class="swiper">
+									<div class="swiper-wrapper">
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">11,400만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">11,400만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">11,400만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">11,400만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+										<div class="swiper-slide">
+											<div class="prd-box">
+												<div class="prd-thumb">
+													<label class="btn-like">
+														<input type="checkbox">
+														<span class="like-visual">좋아요</span>
+													</label>
+													<a href="javascript:;">
+														<img src="../images/dummy/sample01.png" alt="">
+													</a>
+												</div>
+												<a href="javascript:;" class="prd-info">
+													<p class="prd-name">아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+														쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+													<p class="price-info">
+														<span class="num-price">11,400만원</span>
+													</p>
+													<p class="detail-info">
+														<span>2019/04(2019)</span>
+														<span>11,179 km</span>
+														<span>서울</span>
+													</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="main-cont">
+						<div class="event-wrap">
+							<div class="tit-area">
+								<h2 class="tit">카통령 이벤트</h2>
+								<a href="javascript:;" class="btn-more">더보기</a>
+							</div>
+							<div class="swiper-wrap event-slide">
+								<div class="swiper-control">
+									<div class="pagination"></div>
+								</div>
+								<div class="swiper-navi">
+									<button type="button" class="swiper-button prev">이전</button>
+									<button type="button" class="swiper-button next">다음</button>
+								</div>
+								<div class="swiper">
+									<div class="swiper-wrapper">
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="event-img">
+													<!-- pc용 이미지 -->
+													<img src="../images/dummy/event01.png" alt="" class="hide-m">
+													<!-- 모바일용 이미지 -->
+													<img src="../images/dummy/event02.png" alt="" class="hide-pc">
+												</div>
+											</a>
+										</div>
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="event-img">
+													<!-- pc용 이미지 -->
+													<img src="../images/dummy/event02.png" alt="" class="hide-m">
+													<!-- 모바일용 이미지 -->
+													<img src="../images/dummy/event01.png" alt="" class="hide-pc">
+												</div>
+											</a>
+										</div>
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="event-img">
+													<!-- pc용 이미지 -->
+													<img src="../images/dummy/event01.png" alt="" class="hide-m">
+													<!-- 모바일용 이미지 -->
+													<img src="../images/dummy/event02.png" alt="" class="hide-pc">
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="main-cont">
+						<div class="review-wrap">
+							<div class="tit-area">
+								<h2 class="tit">이용후기</h2>
+								<a href="javascript:;" class="btn-more">더보기</a>
+							</div>
+							<div class="swiper-wrap review-slide">
+								<div class="swiper-control">
+									<div class="pagination"></div>
+								</div>
+								<div class="swiper-navi">
+									<button type="button" class="swiper-button prev">이전</button>
+									<button type="button" class="swiper-button next">다음</button>
+								</div>
+								<div class="swiper">
+									<div class="swiper-wrapper">
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<img src="../images/dummy/sample03.png" alt="">
+													</div>
+													<div class="prd-info">
+														<div class="profile">
+															<!-- 기본이미지 profile_default.png -->
+															<img src="../images/common/img/profile_default.png" alt="">
+														</div>
+														<p class="review-tit">기아 봉고3 EV 후기 올립니다 길면 한줄 말줄임</p>
+														<p class="review-txt">상담부터 구매까지 엄청 친절하시고 사 소한 부분까지 체크해 주시며 많이 도와 주셨습니다!! CUV 믿고 주변 사람들 길면 세줄 말줄임하기</p>
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<img src="../images/dummy/sample03.png" alt="">
+													</div>
+													<div class="prd-info">
+														<div class="profile">
+															<img src="../images/dummy/profile01.png" alt="">
+														</div>
+														<p class="review-tit">기아 봉고3 EV 후기 올립니다 길면 한줄 말줄임</p>
+														<p class="review-txt">상담부터 구매까지 엄청 친절하시고 사 소한 부분까지 체크해 주시며 많이 도와 주셨습니다!! CUV 믿고 주변 사람들 길면 세줄 말줄임하기</p>
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<img src="../images/dummy/sample03.png" alt="">
+													</div>
+													<div class="prd-info">
+														<div class="profile">
+															<img src="../images/dummy/profile02.png" alt="">
+														</div>
+														<p class="review-tit">기아 봉고3 EV 후기 올립니다 길면 한줄 말줄임</p>
+														<p class="review-txt">상담부터 구매까지 엄청 친절하시고 사 소한 부분까지 체크해 주시며 많이 도와 주셨습니다!! CUV 믿고 주변 사람들 길면 세줄 말줄임하기</p>
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<img src="../images/dummy/sample03.png" alt="">
+													</div>
+													<div class="prd-info">
+														<div class="profile">
+															<img src="../images/common/img/profile_default.png" alt="">
+														</div>
+														<p class="review-tit">기아 봉고3 EV 후기 올립니다 길면 한줄 말줄임</p>
+														<p class="review-txt">상담부터 구매까지 엄청 친절하시고 사 소한 부분까지 체크해 주시며 많이 도와 주셨습니다!! CUV 믿고 주변 사람들 길면 세줄 말줄임하기</p>
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="swiper-slide">
+											<a href="javascript:;">
+												<div class="prd-box">
+													<div class="prd-thumb">
+														<img src="../images/dummy/sample03.png" alt="">
+													</div>
+													<div class="prd-info">
+														<div class="profile">
+															<img src="../images/common/img/profile_default.png" alt="">
+														</div>
+														<p class="review-tit">기아 봉고3 EV 후기 올립니다 길면 한줄 말줄임</p>
+														<p class="review-txt">상담부터 구매까지 엄청 친절하시고 사 소한 부분까지 체크해 주시며 많이 도와 주셨습니다!! CUV 믿고 주변 사람들 길면 세줄 말줄임하기</p>
+													</div>
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>				
+				<div class="notice-wrap">
+					<div class="w-set">
+						<span class="tit">공지사항</span>
+						<a href="javascript:;" class="txt-area"><p class="txt">홈페이지가 오픈 되었습니다</p><span class="date">24-04-04</span></a>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<div class="js-include" data-include="../outline/footer.html" data-event="footer"></div>
+
+		<!-- 메인팝업 -->
+		<div id="mainPopupBg" style="display: none;"></div>
+		<div id="mainPopup" style="display: none;">
+			<div class="swiper-navi">
+				<button type="button" class="swiper-button prev">이전</button>
+				<button type="button" class="swiper-button next">다음</button>
+			</div>
+			<div class="swiper-count"></div>
+			<div class="swiper">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<a href="#">
+							<img src="../images/dummy/main_popup.jpg" alt="">
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="#">
+							<img src="../images/dummy/main_popup.jpg" alt="">
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="#">
+							<img src="../images/dummy/main_popup.jpg" alt="">
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="#">
+							<img src="../images/dummy/main_popup.jpg" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="mainpop-menu">
+				<button type="button" class="mp-close mp-close-day">오늘 하루 보지 않기</button>
+				<button type="button" class="mp-close mp-close-x">닫기</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// 메인 팝업
+		var handleStorage = {
+			// 스토리지에 데이터 쓰기(이름, 만료일)
+			setStorage: function (name, exp) {
+				// 만료 시간 구하기(exp를 ms단위로 변경)
+				var date = new Date();
+				date = date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+
+				// 로컬 스토리지에 저장하기
+					// (값을 따로 저장하지 않고 만료 시간을 저장)
+				localStorage.setItem(name, date)
+			},
+			// 스토리지 읽어오기
+			getStorage: function (name) {
+				var now = new Date();
+				now = now.setTime(now.getTime());
+				// 현재 시각과 스토리지에 저장된 시각을 각각 비교하여
+				// 시간이 남아 있으면 true, 아니면 false 리턴
+				return parseInt(localStorage.getItem(name)) > now
+			}
+		};
+
+		// Check if the user has chosen not to see the popup again
+		if (!handleStorage.getStorage('promoshowtime')) {
+			// Display the popup
+			document.querySelector('#mainPopupBg').style.display = '';
+			document.querySelector('#mainPopup').style.display = '';
+
+			const mainpopSwiper = new Swiper('#mainPopup .swiper', {
+				autoplay: true,
+				speed: 800,
+				loop : true,
+				autoHeight : true,
+				pagination: {
+					el: '#mainPopup .swiper-count',
+					type: 'fraction',
+					// 갯수 표현 마크업
+					renderFraction: function (currentClass, totalClass) {
+						return `<span class="${currentClass}"></span>` +
+								`<em>/</em>` +
+								`<span class="${totalClass}"></span>`;
+					}
+				},
+				navigation: {
+					nextEl: '#mainPopup .swiper-navi .next',
+					prevEl: '#mainPopup .swiper-navi .prev',
+				},
+			});
+
+			// 일반 닫기 이벤트
+			document.querySelectorAll('.mp-close').forEach(($el) => {
+				$el.addEventListener('click', (e) => {
+					document.querySelector('#mainPopupBg').remove();
+					document.querySelector('#mainPopup').remove();
+				});
+			});
+
+			// 그만보기 체크
+			document.querySelector('.mp-close.mp-close-day').addEventListener('click', () => {
+				// 하루동안 보지 않게 세팅
+				handleStorage.setStorage('promoshowtime', 1);
+			});
+		}
+
+		// 메인비쥬얼 슬라이드
+		const mainSlide = new Swiper('.main-visual .swiper', {
+			slidesPerView: 1,
+			loop: true,
+			speed: 800,
+			autoplay: {
+			    delay: 3000,
+			    disableOnInteraction: false,
+			},
+			pagination: {
+				el: ".main-visual .pagination",
+				type: "progressbar"
+			},
+			on: {
+				beforeInit: function () {
+					var slideCnt = this.wrapperEl.querySelectorAll(".main-visual .swiper-slide").length;
+					$('.main-visual .active-num').text(pad(1, 2));
+					$('.main-visual .all-num').text(pad(slideCnt, 2));
+				},
+				init: function () {
+					var swiper = this;
+					$(".main-visual .play").on("click", function () {
+						swiper.autoplay.start();
+					});
+					$(".main-visual .pause").on("click", function () {
+						swiper.autoplay.stop();
+					});
+				},
+				activeIndexChange: function () {
+					$('.main-visual .active-num').text(pad((this.realIndex + 1), 2));
+				},
+			},
+			navigation: {
+				nextEl: '.main-visual .swiper-navi .next',
+				prevEl: '.main-visual .swiper-navi .prev',
+			}
+		});
+
+		function pad(num, size) {
+			var s = num + "";
+			while (s.length < size) s = "0" + s;
+			return s;
+		}
+
+
+		// 나에게 맞는 차량
+		const searchSlide = new Swiper('.search-list .swiper', {
+			slidesPerView: 4.6,
+			speed: 800,
+			spaceBetween: 10,
+			autoplay: {
+			    delay: 3000,
+			},
+			navigation: {
+				nextEl: '.search-list .swiper-navi .next',
+				prevEl: '.search-list .swiper-navi .prev',
+			},
+		});
+
+		// 올라 온 지 얼마 안된 매물 슬라이드
+		const newSlide = new Swiper('.new-wrap .new-slide .swiper', {
+			slidesPerView: 1.65,
+			slidesPerGroup: 1,
+			speed: 800,
+			spaceBetween: 12,
+			slidesOffsetAfter: 16,
+			autoplay: {
+			    delay: 3000,
+			},
+			pagination: {
+				el: ".new-wrap .new-slide .pagination",
+				type: "progressbar"
+			},
+			navigation: {
+				nextEl: '.new-wrap .new-slide .swiper-navi .next',
+				prevEl: '.new-wrap .new-slide .swiper-navi .prev',
+			},
+			breakpoints: {
+				768: {
+					slidesPerView: 3,
+					slidesPerGroup: 3,
+					slidesOffsetAfter: 0,
+				},
+				1024: {
+					slidesPerView: 4,
+					slidesPerGroup: 4,
+					spaceBetween: 16,
+					slidesOffsetAfter: 0,
+				}
+			}
+		});
+
+		const newContainer = document.querySelector('.new-wrap .new-slide');
+
+		newContainer.addEventListener('mouseenter', () => {
+			newSlide.autoplay.stop();
+		});
+
+		newContainer.addEventListener('mouseleave', () => {
+			newSlide.autoplay.start();
+		});
+	
+		// 서브배너 슬라이드
+		const subSlide = new Swiper('.sub-visual .swiper', {
+			slidesPerView: 1,
+			speed: 800,
+			autoplay: {
+			    delay: 3000,
+			},
+			pagination: {
+				el: '.sub-visual .swiper-count',
+				type: 'fraction',
+				// 갯수 표현 마크업
+				renderFraction: function (currentClass, totalClass) {
+					return `<span class="${currentClass}"></span>` +
+							`<em>/</em>` +
+							`<span class="${totalClass}"></span>`;
+				}
+			},
+			
+		});
+
+		// 가성비 추천 차량 슬라이드
+		const efficientSlide = new Swiper('.efficient-wrap .efficient-slide .swiper', {
+			slidesPerView: 1.65,
+			slidesPerGroup: 1,
+			speed: 800,
+			spaceBetween: 14,
+			slidesOffsetAfter: 16,
+			autoplay: {
+			    delay: 3000,
+			},
+			pagination: {
+				el: ".efficient-wrap .efficient-slide .pagination",
+				type: "progressbar"
+			},
+			navigation: {
+				nextEl: '.efficient-wrap .efficient-slide .swiper-navi .next',
+				prevEl: '.efficient-wrap .efficient-slide .swiper-navi .prev',
+			},
+			breakpoints: {
+				768: {
+					slidesPerView: 3,
+					slidesPerGroup: 3,
+					slidesOffsetAfter: 0,
+				},
+				1024: {
+					slidesPerView: 4,
+					slidesPerGroup: 4,
+					spaceBetween: 16,
+					slidesOffsetAfter: 0,
+				},
+				1400: {
+					slidesPerView: 4,
+					slidesPerGroup: 4,
+					spaceBetween: 24,
+					slidesOffsetAfter: 0,
+				}
+			}
+		});
+
+		const efficientContainer = document.querySelector('.efficient-wrap .efficient-slide');
+
+		efficientContainer.addEventListener('mouseenter', () => {
+			efficientSlide.autoplay.stop();
+		});
+
+		efficientContainer.addEventListener('mouseleave', () => {
+			efficientSlide.autoplay.start();
+		});
+
+		// 이벤트 슬라이드
+		const eventSlide = new Swiper('.event-wrap .event-slide .swiper', {
+			slidesPerView: 1,
+			slidesPerGroup: 1,
+			speed: 800,
+			spaceBetween: 0,
+			autoplay: {
+			    delay: 3000,
+			},
+			pagination: {
+				el: ".event-wrap .event-slide .pagination",
+				type: "progressbar"
+			},
+			navigation: {
+				nextEl: '.event-wrap .event-slide .swiper-navi .next',
+				prevEl: '.event-wrap .event-slide .swiper-navi .prev',
+			},
+			breakpoints: {
+				1024: {
+					slidesPerView: 2,
+					slidesPerGroup: 2,
+					spaceBetween: 24,
+				}
+			}
+		});
+
+		// 이용후기 슬라이드
+		const reviewSlide = new Swiper('.review-wrap .review-slide .swiper', {
+			slidesPerView: 2.1,
+			slidesPerGroup: 1,
+			speed: 800,
+			spaceBetween: 10,
+			slidesOffsetAfter: 16,
+			autoplay: {
+			    delay: 3000,
+			},
+			pagination: {
+				el: ".review-wrap .review-slide .pagination",
+				type: "progressbar"
+			},
+			navigation: {
+				nextEl: '.review-wrap .review-slide .swiper-navi .next',
+				prevEl: '.review-wrap .review-slide .swiper-navi .prev',
+			},
+			breakpoints: {
+				768: {
+					slidesPerView: 3,
+					slidesPerGroup: 3,
+					spaceBetween: 20,
+					slidesOffsetAfter: 0,
+				},
+				1024: {
+					slidesPerView: 4,
+					slidesPerGroup: 4,
+					spaceBetween: 24,
+					slidesOffsetAfter: 0,
+				}
+			}
+		});		
+
+		$(document).on("click", function(event){
+			// .search-box 내에서 클릭된 경우에는 total을 숨깁니다.
+			if ($(event.target).closest('.search-box').length) {
+				$('.search-box .total').css('display','none');
+			} else {
+				// .search-box 외의 영역 클릭 시에는 total을 보여줍니다.
+				// 그리고 입력란에 텍스트가 있는 경우에는 total을 숨깁니다.
+				if ($('.search-box input').val().trim() === '') {
+					$('.search-box .total').css('display','block');
+				} else {
+					$('.search-box .total').css('display','none');
+				}
+			}
+		});
+
+		$('.search-box input').on("click", function(){
+			// input을 클릭하면 total을 숨깁니다.
+			$(this).parent().find('.total').css('display','none');
+		}); 
+		
+	</script>
+</body>
+
+</html>

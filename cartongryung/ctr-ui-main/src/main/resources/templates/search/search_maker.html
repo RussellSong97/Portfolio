@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_mobile}">
+
+<th:block layout:fragment="content">
+    <div class="m-find">
+        <div class="m-filter-wrap">
+            <div class="link-wrap">
+                <a href="/search/product/mobile/filter/maker" class="btn-link on">제조사 검색</a>
+                <a href="/search/product/mobile/filter/kind" class="btn-link">차종 검색</a>
+            </div>
+<!--            <div class="tab-list">-->
+<!--                <a href="#" class="tab on">국산차</a>-->
+<!--                <a href="#" class="tab">수입차</a>-->
+<!--            </div>-->
+            <div class="tab-content">
+                <div class="tab-box on">
+                    <div class="select-wrap">
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">제조사</span>
+                                    <span class="result" style="display: none;" id="selectCategoryName">현대</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list" id="selectFirst">
+                                    <li th:each="first : ${firstCategoryList}">
+                                        <a href="#" onclick="selectCategory(this)" th:attr="data-id=${first.id},data-categoryName=${first.linkDataNm}, data-depth=${first.depth}">
+                                            <i class="i-maker" style="background-image: url('/user/images/dummy/maker01.png');"></i>
+                                            <span class="txt" th:text="${first.linkDataNm}">현대</span>
+                                            <span class="num" th:text="${first.count}">40,249</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">모델</span>
+                                    <span class="result" style="display: none;" id="selectSecondCategoryName">아반떼</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list" id="secondCategoryTag">
+<!--                                    <li>-->
+<!--                                        <a href="#">-->
+<!--                                            <span class="txt">아반떼</span>-->
+<!--                                            <span class="num">40,249</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">세부모델</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list" id="thirdCategoryTag">
+<!--                                    <li>-->
+<!--                                        <a href="#">-->
+<!--                                            <div class="checkbox">-->
+<!--                                                <input type="checkbox" name="detailModel" id="detailModel_01" disabled>-->
+<!--                                                <label for="detailModel_01">더 뉴 아반떼 (23년~현재)</label>-->
+<!--                                            </div>-->
+<!--                                            <span class="num">0</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a href="#">-->
+<!--                                            <div class="checkbox">-->
+<!--                                                <input type="checkbox" name="detailModel" id="detailModel_02">-->
+<!--                                                <label for="detailModel_02">더 뉴 아반떼 하이브리드 (CN7)</label>-->
+<!--                                            </div>-->
+<!--                                            <span class="num">40,249</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="tab-box">
+                    <div class="select-wrap">
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">제조사</span>
+                                    <span class="result" style="display: none;" id="selectThirdCategoryName">BMW</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="#">
+                                            <i class="i-maker" style="background-image: url('/user/images/dummy/maker01.png');"></i>
+                                            <span class="txt">BMW</span>
+                                            <span class="num">40,249</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">모델</span>
+                                    <span class="result" style="display: none;">BMW</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="#">
+                                            <span class="txt">BMW</span>
+                                            <span class="num">40,249</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">세부모델</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="#">
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="detailModel" id="detailModel_01">
+                                                <label for="detailModel_01">BMW</label>
+                                            </div>
+                                            <span class="num">0</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-wrap type-fixed">
+                <button type="button" class="btn is-reset">초기화</button>
+                <button type="button" class="btn" onclick="searchData()"><span>8,001</span>대 매물보기</button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<script layout:fragment="script" th:inline="javascript">
+
+    //서브 페이지 제목
+    var hdNm = "제조사 / 모델";
+    let selectedSearchData = {
+        category1 : '',
+        category2 : '',
+        category3 : []
+    }
+
+    // 탭버튼
+    document.querySelectorAll('.tab-list .tab').forEach(function (btn, idx) {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.tab-list .tab').forEach(function (btn, idx) {
+            btn.classList.remove('on');
+            });
+            btn.classList.add('on');
+            document.querySelectorAll('.tab-box').forEach(function (cbox) {
+            cbox.classList.remove('on');
+            })
+            document.querySelectorAll('.tab-box')[idx].classList.add('on');
+        });
+    });
+
+    // 선택 toggle
+    $('.btn-toggle').on("click", function(){
+        $(this).toggleClass('on');
+        $(this).parent().next().find('.select-list').slideToggle();
+    });
+
+    function drawCategory(data) {
+        console.log(data);
+        data.forEach(item => {
+            let html = `
+            <li>
+                <a href="#" onclick="selectCategory(this)" data-id="${item.id}" data-depth="${item.depth}" data-categoryName="${item.linkDataNm}">
+                    <span class="txt">${item.linkDataNm}</span>
+                    <span class="num">${item.count}</span>
+                </a>
+            </li>`;
+
+            if (item.depth === 1) {
+                document.getElementById("secondCategoryTag").innerHTML += html;
+            } else {
+                let html = `
+                <li>
+                    <a href="#">
+                        <div class="checkbox">
+                            <input type="checkbox" name="detailModel" id="detailModel_${item.id}" data-id="${item.id}" data-name="${item.linkDataNm}">
+                            <label for="detailModel_${item.id}">${item.linkDataNm}</label>
+                        </div>
+                        <span class="num">40,249</span>
+                    </a>
+                </li>`;
+                document.getElementById("thirdCategoryTag").innerHTML += html;
+            }
+        });
+
+        document.querySelectorAll("input[name='detailModel']").forEach(checkBox => {
+            checkBox.addEventListener("change", () => {
+                console.log(checkBox)
+                let categoryId = checkBox.getAttribute("data-id");
+                if(checkBox.checked) {
+                    selectedSearchData.category3.push(categoryId);
+                } else {
+                    selectedSearchData.category3 = selectedSearchData.category3.filter(item => item !== categoryId);
+                }
+            })
+        })
+    }
+
+    function selectCategory(_this) {
+        let categoryId = _this.getAttribute("data-id");
+        let depth = _this.getAttribute("data-depth");
+        let categoryName = _this.getAttribute("data-categoryName");
+        let selectCategoryName = document.getElementById("selectCategoryName");
+        let selectFirst = document.getElementById("selectFirst");
+        let parseDepth = parseInt(depth);
+
+        fetch("/api/search/category", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                categoryId: categoryId,
+                depth: parseDepth + 1
+            })
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code === 200) {
+                    if (result.data[0].depth === 1) {
+                        selectedSearchData.category1 = categoryId;
+                        selectCategoryName.parentElement.classList.remove("on");
+                        selectCategoryName.textContent = categoryName;
+                        selectCategoryName.style.display = '';
+                        selectFirst.style.display = 'none';
+
+                        let secondCategoryTag = document.getElementById("secondCategoryTag");
+                        secondCategoryTag.innerHTML = ''; // 2차 카테고리 목록 초기화
+
+                        let thirdCategoryTag = document.getElementById("thirdCategoryTag");
+                        thirdCategoryTag.innerHTML = ''; // 3차 카테고리 목록 초기화
+
+                        let selectSecondCategoryName = document.getElementById("selectSecondCategoryName");
+                        selectSecondCategoryName.textContent = '';
+                        selectSecondCategoryName.style.display = 'none';
+                        selectSecondCategoryName.parentElement.classList.add("on");
+
+                        drawCategory(result.data);
+                    } else if (result.data[0].depth === 2) {
+                        selectedSearchData.category2 = categoryId;
+                        let selectSecondCategoryName = document.getElementById("selectSecondCategoryName");
+                        let secondCategoryTag = document.getElementById("secondCategoryTag");
+                        selectSecondCategoryName.parentElement.classList.remove("on");
+                        selectSecondCategoryName.textContent = categoryName;
+                        selectSecondCategoryName.style.display = '';
+                        secondCategoryTag.style.display = 'none';
+
+                        let thirdCategoryTag = document.getElementById("thirdCategoryTag");
+                        thirdCategoryTag.innerHTML = ''; // 3차 카테고리 목록 초기화
+
+                        drawCategory(result.data);
+                    }
+                }
+            });
+    }
+
+    function searchData() {
+        fetch("/api/search/product", {
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(selectedSearchData)
+        })
+            .then(res => res.json())
+            .then(result => {
+                if(result.code === 200) {
+                    console.log(result)
+                    sessionStorage.setItem("searchResults", JSON.stringify(result.data))
+                    location.href = "/search/product"
+                }
+            })
+    }
+</script>
+</html>

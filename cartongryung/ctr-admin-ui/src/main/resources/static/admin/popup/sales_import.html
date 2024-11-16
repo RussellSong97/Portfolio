@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>카통령 관리자시스템</title>
+		<link rel="stylesheet" href="../css/general.css?v=1656408363">
+		<link rel="stylesheet" href="../css/jquery-ui.css">
+		<script src="../js/jquery-1.12.4.min.js"></script>
+		<script src="../js/jquery-ui.js"></script>
+		<script src="../js/layout.js"></script>
+	</head>
+	
+	<body style="background-color:#fff">
+		<div class="pop_wrap">
+			<div class="pop_header">
+				<h1>1. 매물정보 가져오기</h1>
+				<button class="pop_close" onclick="closeTabClick()">닫기</button>
+			</div>
+			<div class="pop_body">
+				<div style="height:400px;">
+					<div class="con_box">
+						<div class="view_wrap">
+							<p class="align_r"><span class="asta">*</span> 필수 입력</p>
+							<div class="note_area">
+								<p class="note">
+									<span class="c_red">금일 이전 날짜</span>를 입력해주세요.
+								</p>
+							</div>
+							<div class="view_table mt10">
+								<form action="" method="post">
+									<table>
+										<caption>매물정보 가져오기</caption>
+										<colgroup>
+											<col style="width:20%;">
+											<col style="width:auto;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">일자<span class="c_red">*</span></th>
+												<td>
+													<input type="text" id="datepicker1" class="ico_date" name="period01"  placeholder="">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="btn_area">
+										<button type="button" class="btn btn_form2">매물정보 가져오기</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function closeTabClick() {
+                window.close();
+            }
+		</script>
+	</body>
+</html>

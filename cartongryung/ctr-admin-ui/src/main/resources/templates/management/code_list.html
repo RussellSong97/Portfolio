@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>차량관리 &gt; 코드 관리 &gt; 차량 등급 설정 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_management :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>코드 관리</h3>
+    </div>
+    <div class="content_body">
+        <div class="management">
+            <div class="view_wrap flex scroll_x">
+                <div class="code_box company_box">
+                    <form name="primaryForm">
+                        <div class="view_table">
+                            <div class="flex_m">
+                                <div class="tit_wrap mb0">
+                                    <h3>제조사</h3>
+                                </div>
+<!--                                <a class="btn_m btn_form2 add_code">추가</a>-->
+                            </div>
+                            <table class="mt10 category_list" id="manufacturer" data-depth="0" data-id="0">
+                                <caption>제조사</caption>
+                                <colgroup>
+                                    <col style="width:120px">
+                                    <col style="width:auto">
+                                    <col style="width:20%">
+                                    <col style="width:30%;">
+                                </colgroup>
+                                <tbody>
+                                <tr th:if="${linkCodeLists.isEmpty()}">
+                                    <td colspan="4" id="noData0">등록된 데이터가 없습니다.</td>
+                                </tr>
+                                <tr th:each="code : ${linkCodeLists}" class="code_category manufacturer" th:id="${code.id}">
+                                    <td>
+                                        <a href="#" class="imgbox">
+                                            <th:block th:if="${code.attachment ne null}">
+                                                <img th:src="@{/api/file/download/{uuid}(uuid = ${code.attachment.uuid})}"
+                                                     alt="이미지">
+                                            </th:block>
+                                        </a>
+                                    </td>
+                                    <td class="align_c" th:text="${code.linkDataNm}">기아</td>
+                                    <td class="align_c" th:text="${code.viewYn.yn eq 'Y' ? '노출' : '미노출'}">노출</td>
+                                    <td class="align_c chk_box" onclick="event.stopPropagation()">
+                                        <input type="hidden" class="id" name="id[]" th:value="${code.id}">
+                                        <button type="button" class="btn btn_up" onclick="moveUp(this)">↑</button>
+                                        <button type="button" class="btn btn_down" onclick="moveDown(this)">↓</button>
+                                        <button type="button" class="btn_s"
+                                                th:onclick="'editPopup(0, ' + ${code.id} + ')'">수정
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="align_r mt10">
+                            <button type="submit" class="btn btn_form5">노출순서 변경</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="code_box">
+                    <form name="secondaryForm">
+                        <div class="view_table">
+                            <div class="flex_m">
+                                <div class="tit_wrap mb0">
+                                    <h3>모델</h3>
+                                </div>
+<!--                                <a class="btn_m btn_form2 add_code">추가</a>-->
+                            </div>
+                            <table class="mt10 category_list" id="model">
+                                <caption>모델</caption>
+                                <colgroup>
+                                    <col style="width:30%">
+                                    <col style="width:14%">
+                                    <col style="width:26%;">
+                                </colgroup>
+                                <tbody>
+                                <tr class="code_category model">
+                                    <td colspan="3" class="align_c">제조사를 선택해주세요.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="align_r mt10">
+                            <button type="submit" class="btn btn_form5">노출순서 변경</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="code_box">
+                    <form name="thirdForm">
+                        <div class="view_table">
+                            <div class="flex_m">
+                                <div class="tit_wrap mb0">
+                                    <h3>상세모델</h3>
+                                </div>
+<!--                                <a class="btn_m btn_form2 add_code">추가</a>-->
+                            </div>
+                            <table class="mt10 category_list" id="detail_model">
+                                <caption>상세모델</caption>
+                                <colgroup>
+                                    <col style="width:30%">
+                                    <col style="width:14%">
+                                    <col style="width:26%;">
+                                </colgroup>
+                                <tbody>
+                                <tr class="code_category detail_model">
+                                    <td colspan="3" class="align_c">모델을 선택해주세요.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="align_r mt10">
+                            <button type="submit" class="btn btn_form5">노출순서 변경</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="code_box">
+                    <form name="fourthForm">
+                        <div class="view_table">
+                            <div class="flex_m">
+                                <div class="tit_wrap mb0">
+                                    <h3>등급</h3>
+                                </div>
+<!--                                <a class="btn_m btn_form2 add_code">추가</a>-->
+                            </div>
+                            <table class="mt10 category_list" id="grade">
+                                <caption>등급</caption>
+                                <colgroup>
+                                    <col style="width:30%">
+                                    <col style="width:14%">
+                                    <col style="width:26%;">
+                                </colgroup>
+                                <tbody>
+                                <tr class="code_category grade">
+                                    <td colspan="3" class="align_c">상세모델을 선택해주세요.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <div class="align_r mt10">
+                                <button type="submit" class="btn btn_form5">노출순서 변경</button>
+                            </div>
+                    </form>
+                </div>
+<!--                <div class="code_box">-->
+<!--                    <form name="fifthForm">-->
+<!--                        <div class="view_table">-->
+<!--                            <div class="flex_m">-->
+<!--                                <div class="tit_wrap mb0">-->
+<!--                                    <h3>상세등급</h3>-->
+<!--                                </div>-->
+<!--                                <a class="btn_m btn_form2 add_code">추가</a>-->
+<!--                            </div>-->
+<!--                            <table class="mt10 category_list" id="detail_grade">-->
+<!--                                <caption>상세등급</caption>-->
+<!--                                <colgroup>-->
+<!--                                    <col style="width:30%">-->
+<!--                                    <col style="width:14%">-->
+<!--                                    <col style="width:26%;">-->
+<!--                                </colgroup>-->
+<!--                                <tbody>-->
+<!--                                <tr class="code_category detail_grade">-->
+<!--                                    <td colspan="3" class="align_c">등급을 선택해주세요.</td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                        <div class="align_r mt10">-->
+<!--                            <button type="submit" class="btn btn_form5">노출순서 변경</button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    // 추가 버튼 눌렀을 때
+    document.querySelectorAll('.add_code').forEach(button => {
+        button.addEventListener('click', event => {
+            let optionTable = event.currentTarget.closest('.view_table').querySelector('table');
+            let id = optionTable.dataset.id;
+            let depth = optionTable.dataset.depth;
+
+            if (!id || id === 'null') {
+                alert('상위 분류를 선택해주세요.');
+            } else {
+                window.open('/admin/management/code/class/write/' + depth + '/' + id, '팝업창','width=800, height=600');
+            }
+        });
+    });
+
+    // 수정 팝업
+    function editPopup(depth, id) {
+        window.open('/admin/management/code/' + depth + '/' + id, '팝업창', 'width=800, height=600')
+    }
+
+    // 데이터 행 눌렀을 떄
+    document.addEventListener('click', event => {
+        let target = event.target.closest('.code_category');
+        if (!target) return;
+
+        let id = target.id;
+        let depth = "";
+        let className = "";
+
+        if (target.classList.contains('manufacturer')) { // 제조사
+            depth = 1;
+            className = 'model';
+        } else if(target.classList.contains('model')) { // 모델
+            depth = 2;
+            className = 'detail_model';
+        } else if(target.classList.contains('detail_model')) { // 상세 모델
+            depth = 3;
+            className = 'grade';
+        }
+        // else if(target.classList.contains('grade')) { // 등급
+        //     depth = 4;
+        //     className = 'detail_grade';
+        // }
+
+        const formData = new FormData();
+        formData.append('parentLinkNbrId', id);
+        formData.append('depth', depth);
+
+        // 데이터가 존재할 때
+        if (id.trim().length > 0) {
+            fetch('/admin/management/code/class/list/', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    let html = "";
+                    let imgBox = "";
+
+                    if(result.data.length > 0) {
+                        result.data.forEach(item => {
+                            if (item.attachment !== null) {
+                                imgBox = `<td>
+                                                    <a href="#" class="imgbox">
+                                                        <img src="/api/file/view/${item.attachment.uuid}?size=300" alt="이미지">
+                                                    </a>
+                                                </td>`;
+                            }
+
+                            html += `<tr class="code_category ${className}" id="${item.id}">
+                                                ${imgBox}
+                                                <td class="align_c">${item.linkDataNm}</td>
+                                                <td class="align_c">${item.viewYn === "Y" ? "노출" : "미노출"}</td>
+                                                <td class="align_c chk_box" onclick="event.stopPropagation()">
+                                                    <input type="hidden" name="id[]" value="${item.id}">
+                                                    <button type="button" class="btn btn_up" onclick="moveUp(this)">↑</button>
+                                                    <button type="button" class="btn btn_down" onclick="moveDown(this)">↓</button>
+                                                    <button type="button" class="btn_s" onclick="editPopup(${depth}, ${item.id})">수정
+                                                    </button>
+                                                </td>
+                                            </tr>`;
+                        });
+                    } else {
+                        html = `<tr>
+                                    <td colspan="4" class="align_c" id="noData${depth}">데이터가 없습니다.</td>
+                                </tr>`;
+                    }
+
+                    if (target.classList.contains('manufacturer')) { // 제조사
+                        document.querySelector("#model tbody").innerHTML = html;
+                        document.querySelector("#model").dataset.id = id;
+                        document.querySelector("#model").dataset.depth = '1';
+
+                        document.querySelector("#detail_model tbody").innerHTML = "<tr><td colspan=\"3\" class=\"align_c\" id=\"noData2\">데이터가 없습니다.</td></tr>";
+                        document.querySelector("#detail_model").dataset.id = null;
+                        document.querySelector("#detail_model").dataset.depth = null;
+
+                        document.querySelector("#grade tbody").innerHTML = "<tr><td colspan=\"3\" class=\"align_c\" id=\"noData3\">데이터가 없습니다.</td></tr>";
+                        document.querySelector("#grade").dataset.id = null;
+                        document.querySelector("#grade").dataset.depth = null;
+
+                        // document.querySelector("#detail_grade tbody").innerHTML = "<tr><td colspan=\"3\" class=\"align_c\" id=\"noData4\">데이터가 없습니다.</td></tr>";
+                        // document.querySelector("#detail_grade").dataset.id = null;
+                        // document.querySelector("#detail_grade").dataset.depth = null;
+                    } else if (target.classList.contains('model')) { // 모델
+                        document.querySelector("#detail_model tbody").innerHTML = html;
+                        document.querySelector("#detail_model").dataset.id = id;
+                        document.querySelector("#detail_model").dataset.depth = '2';
+
+                        document.querySelector("#grade tbody").innerHTML = "<tr><td colspan=\"3\" class=\"align_c\" id=\"noData3\">데이터가 없습니다.</td></tr>";
+                        document.querySelector("#grade").dataset.id = null;
+                        document.querySelector("#grade").dataset.depth = null;
+
+                        // document.querySelector("#detail_grade tbody").innerHTML = "<tr><td colspan=\"3\" class=\"align_c\" id=\"noData4\">데이터가 없습니다.</td></tr>";
+                        // document.querySelector("#detail_grade").dataset.id = null;
+                        // document.querySelector("#detail_grade").dataset.depth = null;
+                    } else if (target.classList.contains('detail_model')) { // 상세모델
+                        document.querySelector("#grade tbody").innerHTML = html;
+                        document.querySelector("#grade").dataset.id = id;
+                        document.querySelector("#grade").dataset.depth = '3';
+
+                        // document.querySelector("#detail_grade tbody").innerHTML = "<tr><td colspan=\"3\" class=\"align_c\" id=\"noData4\">데이터가 없습니다.</td></tr>";
+                        // document.querySelector("#detail_grade").dataset.id = null;
+                        // document.querySelector("#detail_grade").dataset.depth = null;
+                    }
+                    // else if (target.classList.contains('grade')) { // 등급
+                    //     document.querySelector("#detail_grade tbody").innerHTML = html;
+                    //     document.querySelector("#detail_grade").dataset.id = id;
+                    //     document.querySelector("#detail_grade").dataset.depth = '4';
+                    // }
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
+        }
+    });
+
+    // 위로 이동
+    function moveUp(row) {
+        const tr = row.parentNode.parentNode;
+        const prevTr = tr.previousElementSibling;
+
+        if (prevTr) {
+            tr.parentNode.insertBefore(tr, prevTr);
+        }
+    }
+
+    // 아래로 이동
+    function moveDown(row) {
+        const tr = row.parentNode.parentNode;
+        const nextTr = tr.nextElementSibling;
+
+        if (nextTr) {
+            nextTr.parentNode.insertBefore(tr, nextTr.nextSibling);
+        }
+    }
+
+    // 제조사 노출 순서 변경
+    document.querySelector('form[name="primaryForm"]').addEventListener('submit', event => {
+        orderChange(event);
+    });
+
+    // 모델 노출 순서 변경
+    document.querySelector('form[name="secondaryForm"]').addEventListener('submit', event => {
+        orderChange(event);
+    });
+
+    // 상세모델 노출 순서 변경
+    document.querySelector('form[name="thirdForm"]').addEventListener('submit', event => {
+        orderChange(event);
+    });
+
+    // 등급 노출 순서 변경
+    document.querySelector('form[name="fourthForm"]').addEventListener('submit', event => {
+        orderChange(event);
+    });
+
+    // 상세등급 노출 순서 변경
+    // document.querySelector('form[name="fifthForm"]').addEventListener('submit', event => {
+    //     orderChange(event);
+    // });
+
+    // 노출 순서 변경
+    function orderChange(event) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        if (!confirm('노출순서를 변경하시겠습니까?')) return;
+
+        fetch('/admin/management/code/change', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    }
+
+</script>
+</html>

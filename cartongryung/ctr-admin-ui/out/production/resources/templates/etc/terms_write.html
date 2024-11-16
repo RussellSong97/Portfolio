@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>기타 &gt; 서비스 약관 관리 </title>
+    <style>
+        .ck-editor__editable {
+            min-height: 300px;
+            max-height: 450px;
+        }
+    </style>
+    <script src="/admin/js/ckeditor-webbizz.js"></script>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_etc :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>서비스 약관 관리</h3>
+    </div>
+    <div class="content_body">
+        <div class="admin">
+            <div class="tab_menu">
+                <th:block th:each="list : ${T(com.cuv.admin.domain.terms.enumset.TermsType).values()}"
+                          th:if="${list.value ne 0}">
+                    <a th:href="@{/admin/etc/terms(type = ${list.code})}" class="tab_list01"
+                       th:classappend="${list.code eq condition.type ? 'on' : ''}">
+                        <th:block th:text="${list.detail}"></th:block>
+                    </a>
+                </th:block>
+            </div>
+            <div class="view_wrap">
+                <div class="view_table mt10">
+                    <form>
+                        <input type="hidden" name="type" th:value="${condition.type eq
+                           T(com.cuv.admin.domain.terms.enumset.TermsType).SERVICE.code ?
+                           T(com.cuv.admin.domain.terms.enumset.TermsType).SERVICE.code :
+                           T(com.cuv.admin.domain.terms.enumset.TermsType).PRIVACY.code}">
+                        <input type="hidden" name="id" th:value="${terms.id}">
+                        <div class="term_wrap">
+                            <textarea id="content" name="content" th:text="${terms.content}" title="내용 입력"></textarea>
+                            <label for="content" class="blind">이용약관</label>
+                        </div>
+                        <div class="btn_area align_c mt20">
+                            <button type="submit" class="btn">저장</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    ClassicEditor.create(document.getElementById('content'));
+
+    const conditionType = document.querySelector('input[name="type"]').value;
+
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        const content = document.getElementById('content');
+        if (content.value.trim().length < 1) {
+            alert("내용을 입력해주세요.");
+            content.focus();
+            return false;
+        }
+
+        fetch('/admin/etc/terms/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                location.href = '/admin/etc/terms?type=' + conditionType;
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="tit-area">
+            <h2 class="tit hide-m">중고차 가이드</h2>
+        </div>
+        <div class="guide-wrap">
+            <ul class="guide-list">
+                <li th:data-href="@{/board/guide/__${guide.id}__}" th:each="guide : ${boardGuideLists}">
+                    <div class="txt-area">
+                        <span class="state" th:text="${guide.boardGuideType.detail}">분류명</span>
+                        <p class="tit" th:text="${guide.title}">중고차 가이드 제목 노출. 길면 2줄 출력 너무 길면 말 줄임 …중고차 가이드 제목 노출. 길면 2줄
+                            출력 너무 길면 말
+                            줄임</p>
+                        <div class="txt">
+                            <th:block th:utext="${guide.content}"></th:block>
+                        </div>
+                    </div>
+                    <div class="img">
+                        <img th:src="@{/api/file/view/__${guide.attachment.uuid}__?size=200}" alt="이미지">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "중고차 가이드";
+
+    function fnBack() {
+        location.href = "/";
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+        // 모든 li 요소를 찾아서 처리
+        var listItems = document.querySelectorAll('li[data-href]');
+
+        listItems.forEach(function (li) {
+            // li 요소에 클릭 이벤트 추가
+            li.addEventListener('click', function () {
+                // data-href 속성에서 URL을 가져와서 이동
+                var url = li.getAttribute('data-href');
+                if (url) {
+                    window.location.href = url;
+                }
+            });
+        });
+
+
+        var txtDivs = document.querySelectorAll('.guide-list .txt');
+
+        txtDivs.forEach(function (txtDiv) {
+            // div 내부의 모든 텍스트를 하나로 합침
+            var allText = txtDiv.textContent;
+
+            // &nbsp;를 공백으로 대체
+            allText = allText.replace(/\u00A0/g, ' ');
+
+            // .txt 요소의 내용을 합친 텍스트로 대체
+            txtDiv.textContent = allText;
+        });
+    });
+</script>
+</html>

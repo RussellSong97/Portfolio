@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_without_lnb}">
+
+<head>
+    <title>내 차 팔기 &gt; 상세/수정 </title>
+</head>
+
+<div class="content_body" layout:fragment="content">
+    <div class="mycar">
+        <div class="view_wrap">
+            <div class="flex">
+                <div class="left_wrap">
+                    <div class="view_table">
+                        <div class="table_top">
+                            <h3>상담 기록</h3>
+                            <form>
+                                <input type="hidden" name="inquiryId" th:value="${saleInquiry.id}">
+                                <input type="hidden" name="tradeTypeCode" th:value="${T(com.cuv.admin.domain.inquirydetail.enumset.TradeType).SELL.code}">
+                                <div class="search_wrap flex mt10">
+                                    <label for="consultationStatus">
+                                        <select name="consultationStatus" id="consultationStatus" style="width: 150px;">
+                                            <option value="">상담 상태 선택</option>
+                                            <th:block
+                                                th:each="list : ${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationStatus).values()}"
+                                                th:if="${(list.value ne 0 and list.value ne 5 and list.value ne 6)}">
+                                                <option th:value="${list.code}" th:text="${list.detail}"></option>
+                                            </th:block>
+                                        </select>
+                                    </label>
+                                    <div class="input_wrap">
+                                        <label for="content">
+                                            <input type="text" id="content" name="content" placeholder="상담 기록을 입력해주세요">
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn_m">입력</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table_btm mt10">
+                            <table>
+                                <caption>검색 결과</caption>
+                                <colgroup>
+                                    <col style="width:8%;">
+                                    <col style="width:12%;">
+                                    <col style="width:12%;">
+                                    <col style="width:16%;">
+                                    <col style="width:20%;">
+                                    <col style="width:auto;">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">등록자</th>
+                                    <th scope="col">권한</th>
+                                    <th scope="col">상태</th>
+                                    <th scope="col">등록일시</th>
+                                    <th scope="col">내용</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${inquiryDetailLists.isEmpty()}">
+                                    <td colspan="6">등록된 상담이 없습니다.</td>
+                                </tr>
+                                <tr th:each="detail, detailStat : ${inquiryDetailLists}">
+                                    <td th:text="${#numbers.formatInteger(inquiryDetailLists.size() - detailStat.index, 1, 'COMMA')}">1</td>
+                                    <td th:text="${detail.realName}">정호연</td>
+                                    <td th:text="${detail.role.name}">딜러</td>
+                                    <td class="state" th:text="${detail.consultationStatus.detail}">상담접수완료</td>
+                                    <td th:text="${#temporals.format(detail.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-02 12:33:11</td>
+                                    <td>
+                                        <div class="align_l" th:text="${detail.content}">승인취소</div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="right_wrap">
+                    <div class="view_table">
+                        <div class="table_top">
+                            <h3>문의 내용</h3>
+                        </div>
+                        <div class="table_btm mt10">
+                            <table>
+                                <caption>상세</caption>
+                                <colgroup>
+                                    <col style="width:20%;">
+                                    <col style="width:80%;">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">문의 No.</th>
+                                    <td th:text="${saleInquiry.inquiryNumber}">240501-001</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">차량번호</th>
+                                    <td th:text="${saleInquiry.carPlateNumber}">00가 0000</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">상담 상태</th>
+                                    <td class="state"
+                                        th:text="${saleInquiry.consultationStatus.code eq null ? '-' :
+                                            saleInquiry.consultationStatus.detail}">상담접수완료</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">회원정보</th>
+                                    <td>
+                                        <a th:href="@{/admin/member/member/__${saleInquiry.memberId}__}" class="btn_link"
+                                           th:text="${saleInquiry.realName}">홍길동</a>
+                                        <a th:href="@{/admin/member/member/__${saleInquiry.memberId}__}" class="btn_link ml10"
+                                           th:text="${saleInquiry.email}">010-8823-1242</a>
+                                        <a th:href="@{/admin/member/member/__${saleInquiry.memberId}__}" class="btn_link ml10"
+                                           th:text="${saleInquiry.mobileNumber}">seosoo@nate.com</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">등록일시</th>
+                                    <td th:text="${#temporals.format(saleInquiry.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2023-12-29 09:57:44</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">배정 딜러</th>
+                                    <td>
+                                        <select name="dealer" style="width: 150px;">
+                                            <option value="" selected>딜러 선택</option>
+                                            <th:block th:each="list : ${memberDealerLists}">
+                                                <option th:value="${list.id}" th:text="${list.realName}"
+                                                        th:selected="${saleInquiry.memberDealerId eq list.id}">등록된 딜러 명</option>
+                                            </th:block>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">방문 예약 일시</th>
+                                    <td>
+                                        <div class="input_wrap">
+                                            <label for="datepicker1">
+                                                <input type="text" id="datepicker1" class="ico_date" autocomplete="off"
+                                                       th:value="${#temporals.format(saleInquiry.visitReservationAt, 'yyyy-MM-dd')}">
+                                            </label>
+                                            <label for="hour">
+                                                <input type="text" id="hour" placeholder="시 입력" style="width: 100px;"
+                                                       th:value="${#temporals.format(saleInquiry.visitReservationAt, 'HH')}">
+                                            </label>
+                                            <span>:</span>
+                                            <label for="minute">
+                                                <input type="text" id="minute" placeholder="분 입력" style="width: 100px;"
+                                                       th:value="${#temporals.format(saleInquiry.visitReservationAt, 'mm')}">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="btn_area align_r mt20">
+                        <button type="button" id="saveBtn" class="btn">저장</button>
+                        <a href="/admin/sale/inquiry" class="btn btn_form4">목록</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    // 상담 기록 저장
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        const consultationStatus = document.getElementById('consultationStatus');
+        if (consultationStatus.value.trim().length < 1) {
+            alert("상담 상태를 선택해주세요.");
+            consultationStatus.focus();
+            return;
+        }
+
+        const content = document.getElementById('content');
+        if (content.value.trim().length < 1) {
+            alert("상담 기록을 입력해주세요.");
+            content.focus();
+            return;
+        }
+
+        fetch('/admin/purchase/inquiry/detail/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+    // 상담 상세 저장
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        const dealer = document.querySelector('select[name="dealer"]');
+        const date = document.getElementById('datepicker1');
+        const hour = document.getElementById('hour');
+        const minute = document.getElementById('minute');
+
+        if (dealer.value.trim().length < 1) {
+            alert("배정 딜러를 선택해주세요.");
+            dealer.focus();
+            return;
+        }
+
+        if (date.value.trim().length > 1 || hour.value.trim().length > 1 || minute.value.trim().length > 1) {
+            if (date.value.trim().length < 1) {
+                alert("날짜를 입력해 주세요.");
+                date.focus();
+                return;
+            }
+            if (hour.value.trim().length < 1) {
+                alert("시를 입력해 주세요.");
+                hour.focus();
+                return;
+            }
+            if (minute.value.trim().length < 1) {
+                alert("분을 입력해 주세요.");
+                minute.focus();
+                return;
+            }
+        }
+
+        const formData = new FormData();
+
+        formData.append('id', document.querySelector('input[name="inquiryId"]').value);
+        formData.append('memberDealerId', document.querySelector('select[name="dealer"]').value);
+        formData.append('date', date.value);
+        formData.append('hour', hour.value);
+        formData.append('minute', minute.value);
+
+        fetch('/admin/sale/inquiry/edit', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

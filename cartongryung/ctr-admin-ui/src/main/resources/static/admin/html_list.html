@@ -1,0 +1,1132 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+	<title>카통령 관리자 마크업리스트</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<style>
+		*{-webkit-text-size-adjust:none;}
+		html,body{width:100%;height:100%; min-width:800px;}
+		html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, ul, li, fieldset, form, label, leging, table, caption, tbody, tfoot, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video{margin:0; padding:0; outline:0; font-family:NanumGothic,'나눔고딕',Dotum,'돋움',applegothic,sans-serif; font-size:13px; color:#555; /*vertical-align:baseline;*/}
+		body{line-height:1.2em; border:0;}
+		strong, em, span, wbr, a{display:inline-block;}
+		span{margin:0; padding:0; outline:0;}
+		hr{display:none}
+		ol, ul, dl, dt, dd{list-style:none outside none; padding:0; margin:0;}
+		fieldset, img, table, caption, tbody, tfoot, thead, tr, th, td, button, hr{border:0;}
+		address, caption, cite, code, dfn, em, strong, th, var{font-style: normal;}
+		img{vertical-align:middle;}
+		a{cursor:pointer; text-decoration:none; color:#666;}
+		table{border-collapse:collapse;}
+		#wrap{padding:12px;}
+		#header{margin-bottom:20px;position: relative;}
+		#header::after{content:''; clear:both; display:block;}
+		#header>h1{float:left; font-size:28px; color:#1a1a1a; padding-top:15px;}
+		#header>div{float:right;}
+		#header>div>p{font-size:11px; color:#888; text-align:right;}
+		div.box{border:1px solid #dedede; background:#f1f1f1; padding:12px 14px; margin-bottom:10px;}
+		h3{font-size:14px; color:#333; margin-bottom:13px;}
+		h4{font-size:14px; color:#333; margin:25px 0 8px 5px;}
+		ol.atten>li{margin-bottom:8px; padding:0; line-height:160%;}
+		ol.atten>li:last-child{margin-bottom:0;}
+		table.htmllist th,table.htmllist td{border:1px solid #ccc;}
+		table.htmllist tr:first-child td{text-align:center; font-weight:bold; border-bottom:1px solid #111 !important; height:30px; color:#000 !important; font-size:13px !important;}
+		table.htmllist th{padding:5px 6px; text-align:left; border-bottom:2px solid #c10000 !important; height:32px; background-color:#f3f4f8;}
+		table.htmllist th.depth2{padding: 2px 18px; text-align:left; border-bottom:1px solid #333 !important; height:30px; font-size: 12px; background-color: #fff}
+		table.htmllist td{padding:5px 6px;}
+		table.htmllist td:first-child{text-align:center;}
+		table.htmllist td:last-child{color:#888; font-size:12px;}
+		table.htmllist td:nth-child(4),table.htmllist td:nth-child(6),table.htmllist td:nth-child(7){text-align:center;}
+		table.htmllist td:nth-child(7){color:#5bcdda; font-size:11px; font-weight:bold;}
+		table.htmllist td > a{display:block; width:100%; height:26px; line-height:26px; margin: 1px 0;text-align:center; color:#fff; font-size:11px; font-weight:bold; background-color:#f24048; border:1px solid #f24048; border-radius:3px;}
+		table.htmllist td>a:hover{background-color:#f24048; line-height:28px;}
+		table.htmllist tr:hover>td{background-color:#fffad2;}
+		table.htmllist td.ing{text-align:center; font-size:12px;}
+		table.htmllist td.end{text-align:center; font-size:12px; font-weight:bold; background-color:#b8bbbf; color:#1a1a1a;}
+		/* .total{padding:10px 5px 20px} */
+		.total .tit_txt{padding-left:10px;margin-left:10px;border-left:1px solid #ddd;}
+		.total h3 + .tit_txt{padding-left:0;margin-left:0;border-left:none;}
+		.total_page_num{font-size:18px;color:#5bcdda;}
+		.m_link{position: absolute;top: 63px;right: 13px;color: #fff;background-color: #00bcd4;font-size: 20px;height: 40px;line-height: 40px;float: right;-webkit-border-radius: 5px;font-weight: 600;padding: 0 20px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;}
+	</style>
+</head>
+
+<body>
+	<div id="wrap" style="padding-bottom: 100px;">
+		<div id="header">
+			<h1>카통령 관리자 - 공통</h1>
+			<div>
+				<p>Version: <b>0.0.01</b></p>
+				<p>Last Update: <b>2024.03.14</b></p>
+				<p>Coding: <b>HTML5&amp;CSS3</b></p>
+			</div>
+		</div>
+		<h4>코딩 목록</h4>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="htmllist">
+			<thead>
+				<tr class="head">
+					<td>No</td>
+					<td>Path</td>
+					<td>FileName</td>
+					<td>State</td>
+					<td>View</td>
+					<td>Update</td>
+					<td>Author</td>
+					<td>Remark</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="8">에러페이지</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/error/</td>
+					<td>403.html</td>
+					<td class="ing">ing</td>
+					<td><a href="./error/403.html" target="_blank">View</a></td>
+					<td>2024-02-14</td>
+					<td></td>
+					<td>에러 403</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/error/</td>
+					<td>404.html</td>
+					<td class="ing">ing</td>
+					<td><a href="./error/404.html" target="_blank">View</a></td>
+					<td>2024-02-14</td>
+					<td></td>
+					<td>에러 404</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/error/</td>
+					<td>500.html</td>
+					<td class="ing">ing</td>
+					<td><a href="./error/500.html" target="_blank">View</a></td>
+					<td>2024-02-14</td>
+					<td></td>
+					<td>에러 500</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/error/</td>
+					<td>503.html</td>
+					<td class="ing">ing</td>
+					<td><a href="./error/503.html" target="_blank">View</a></td>
+					<td>2024-02-14</td>
+					<td></td>
+					<td>에러 503</td>
+				</tr>
+				<tr>
+					<th colspan="8">로그인</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/login/</td>
+					<td>login.html</td>
+					<td class="end">end</td>
+					<td><a href="./login/login.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>로그인</td>
+				</tr>
+				<tr>
+					<th colspan="8">메인</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/main/</td>
+					<td>index.html</td>
+					<td class="end">end</td>
+					<td><a href="./main/index.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈</td>
+				</tr>
+				<tr>
+					<th colspan="8">회원</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/member/</td>
+					<td>member_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./member/member_list.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 회원 > 활동 회원 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/member/</td>
+					<td>member_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./member/member_view.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 회원 > 활동 회원 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/member/</td>
+					<td>withdraw_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./member/withdraw_list.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 회원 > 탈퇴 회원 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/member/</td>
+					<td>push_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./member/push_list.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 회원 > 푸시 관리 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/member/</td>
+					<td>push_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./member/push_write.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 회원 > 푸시 관리 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/member/</td>
+					<td>push_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./member/push_view.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 회원 > 푸시 관리 > 상세/수정</td>
+				</tr>
+				<tr>
+					<th colspan="8">내차 구입</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/purchase/</td>
+					<td>purchase_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./purchase/purchase_list_able.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>홈 > 내차 구입 > 연락가능문의 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/purchase/</td>
+					<td>purchase_view_able.html</td>
+					<td class="end">end</td>
+					<td><a href="./purchase/purchase_view_able.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>홈 > 내차 구입 > 연락가능문의 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/purchase/</td>
+					<td>purchase_list_unable.html</td>
+					<td class="end">end</td>
+					<td><a href="./purchase/purchase_list_unable.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>홈 > 내차 구입 > 연락없는문의 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/purchase/</td>
+					<td>visit_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./purchase/visit_list.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>홈 > 내차 구입 > 방문 예약</td>
+				</tr>
+				<tr>
+					<th colspan="8">내차 팔기</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/sale/</td>
+					<td>sale_list_able.html</td>
+					<td class="end">end</td>
+					<td><a href="./sale/sale_list_able.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 내차 팔기 > 연락가능문의 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/sale/</td>
+					<td>sale_view_able.html</td>
+					<td class="end">end</td>
+					<td><a href="./sale/sale_view_able.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 내차 팔기 > 연락가능문의 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/sale/</td>
+					<td>sale_list_unable.html</td>
+					<td class="end">end</td>
+					<td><a href="./sale/sale_list_unable.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 내차 팔기 > 연락없는문의 > 목록</td>
+				</tr>
+				<tr>
+					<th colspan="8">차량 관리</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/management/</td>
+					<td>sale_vehicle_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./management/sale_vehicle_list.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>홈 > 차량 관리 > 판매 차량</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/management/</td>
+					<td>linkup_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./management/linkup_list.html" target="_blank">View</a></td>
+					<td>2024-03-20</td>
+					<td></td>
+					<td>홈 > 차량 관리 > 매물 연동 관리</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/management/</td>
+					<td>code_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./management/code_list.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 차량 관리 > 코드 관리</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/management/</td>
+					<td>option_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./management/option_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 차량 관리 > 옵션 설정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/management/</td>
+					<td>recommend_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./management/recommend_list.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 차량 관리 > 추천 차량</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/management/</td>
+					<td>vehicle_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./management/vehicle_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 차량 상세(임시 페이지)</td>
+				</tr>
+				<tr>
+					<th colspan="8">게시판</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>notice_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/notice_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 공지사항 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>notice_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/notice_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 공지사항 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>notice_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/notice_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 공지사항 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>faq_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/faq_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 자주 묻는 질문 > 목록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>faq_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/faq_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 자주 묻는 질문 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>faq_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/faq_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 자주 묻는 질문 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>guide_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/guide_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 중고차 가이드 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>guide_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/guide_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 중고차 가이드 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>guide_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/guide_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 중고차 가이드 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>review_lst.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/review_lst.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 게시판 > 리뷰 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>review_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/review_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 리뷰 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/board/</td>
+					<td>review_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./board/review_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 게시판 > 리뷰 > 상세/수정</td>
+				</tr>
+				<tr>
+					<th colspan="8">프로모션</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>event_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/event_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 이벤트 관리 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>event_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/event_write.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 이벤트 관리 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>event_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/event_view.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 이벤트 관리 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>popup_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/popup_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 팝업 관리 > 목록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>popup_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/popup_write.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 팝업 관리 > 등록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>popup_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/popup_view.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>홈 > 프로모션 > 팝업 관리 > 수정/삭제 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>top_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/top_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 상단 띠 배너 관리 > 목록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>top_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/top_write.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 상단 띠 배너 관리 > 등록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>top_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/top_view.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 상단 띠 배너 관리 > 수정/삭제 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_main_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_main_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 메인 상단배너 > 목록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_main_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_main_write.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 메인 상단배너 > 등록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_main_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_main_view.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 메인 상단배너 > 수정/삭제 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_sub_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_sub_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 메인 서브배너 > 목록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_sub_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_sub_write.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 메인 서브배너 > 등록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_sub_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_sub_view.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 메인 서브배너 > 수정/삭제 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_login_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_login_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 로그인 배너 > 목록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_login_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_login_write.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 로그인 배너 > 등록 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>banner_login_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/banner_login_view.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 배너 관리 > 로그인 배너 > 수정/삭제 </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>recommend_cuv_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/recommend_cuv_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 메인 상품 진열 > 카통령 추천차량</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/promotion/</td>
+					<td>recommend_cost_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./promotion/recommend_cost_list.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 프로모션 > 메인 상품 진열 > 가성비 추천차량</td>
+				</tr>
+				<tr>
+					<th colspan="8">통계/분석</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_member.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_member.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 회원 통계 > 일별</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_member_m.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_member_m.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 회원 통계 > 월별</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_member_y.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_member_y.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 회원 통계 > 년별</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_counselor.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_counselor.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 상담원 통계</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_dealer.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_dealer.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 딜러 통계</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_consult.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_consult.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 상담 현황</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/stats/</td>
+					<td>stats_google.html</td>
+					<td class="end">end</td>
+					<td><a href="./stats/stats_google.html" target="_blank">View</a></td>
+					<td>2024-04-30</td>
+					<td></td>
+					<td>홈 > 통계/분석 > 구글 애널리틱스</td>
+				</tr>
+				<tr>
+					<th colspan="8">기타</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>dealer_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/dealer_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 딜러 관리 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>dealer_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/dealer_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 딜러 관리 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>dealer_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/dealer_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 딜러 관리 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>counselor_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/counselor_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 상담사 관리 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>counselor_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/counselor_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 상담사 관리 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>counselor_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/counselor_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 상담사 관리 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>admin_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/admin_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 운영자 관리 > 목록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>admin_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/admin_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 운영자 관리 > 등록</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>admin_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/admin_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 운영자 관리 > 상세/수정</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>terms_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/terms_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 서비스 약관 관리 > 사용자 이용약관</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>terms_list02.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/terms_list02.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 서비스 약관 관리 > 개인정보처리방침</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/etc/</td>
+					<td>popular_list.html</td>
+					<td class="end">end</td>
+					<td><a href="./etc/popular_list.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>홈 > 기타 > 인기 검색어 관리</td>
+				</tr>
+				<tr>
+					<th colspan="8">팝업</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>withdraw_reason.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/withdraw_reason.html" target="_blank">View</a></td>
+					<td>2024-03-14</td>
+					<td></td>
+					<td>탈퇴 사유보기 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>member_search.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/member_search.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>회원조회 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>vehicle_search.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/vehicle_search.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>차량조회 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>dealer_allocation.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/dealer_allocation.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>딜러 배정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>able_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/able_write.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>연락가능문의 등록 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>stop_reason_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/stop_reason_write.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>게시중지 사유 등록 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>stop_reason_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/stop_reason_view.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>게시중지 사유 보기 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>sales_import.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/sales_import.html" target="_blank">View</a></td>
+					<td>2024-03-18</td>
+					<td></td>
+					<td>매물정보가져오기 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_company_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_company_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 제조사 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_company_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_company_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 제조사 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_model_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_model_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 모델 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_model_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_model_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 모델 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_demodel_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_demodel_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 상세 모델 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_demodel_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_demodel_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 상세 모델 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_grade_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_grade_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 등급 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_grade_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_grade_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 등급 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_degrade_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_degrade_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 상세 등급 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_degrade_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_degrade_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>코드관리 상세 등급 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_option01_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_option01_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>옵션설정 1차 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_option01_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_option01_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>옵션설정 1차 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_option02_write.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_option02_write.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>옵션설정 2차 추가 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>code_option02_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/code_option02_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>옵션설정 2차 수정 팝업</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>/popup/</td>
+					<td>vehicle_view.html</td>
+					<td class="end">end</td>
+					<td><a href="./popup/vehicle_view.html" target="_blank">View</a></td>
+					<td>2024-03-25</td>
+					<td></td>
+					<td>차량 상세 보기 팝업</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		var totalPageNum = 0;
+		$('tbody').each(function (idx) {
+			var titTxt = $('tbody').eq(idx).find('th').text();
+			$('.total').append('<span class="tit_txt">' + titTxt + ': </span>')
+			$(this).find('tr').each(function (i) {
+				$(this).find('td:first-child').text(i);
+				num = $(this).filter(':last-child').find('td:first-child').text();
+			});
+			$('.total').append('<strong>' + num + '</strong>');
+			totalPageNum += parseInt(num);
+		});
+		$('.total h3').append('<strong class="total_page_num">' + totalPageNum + '</strong>');
+		console.log($('tbody tr').length)
+	</script>
+</body>
+
+</html>

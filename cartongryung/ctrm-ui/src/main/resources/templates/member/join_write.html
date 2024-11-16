@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel, HtmlFormInputWithoutLabel -->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_member}">
+<th:block layout:fragment="content">
+    <div class="member-wrap">
+        <div class="join-wrap">
+            <div class="w-set">
+                <div class="tit-area hide-m">
+                    <h2 class="tit">회원가입</h2>
+                </div>
+                <form id="frmForm">
+                    <div class="input-wrap">
+                        <div class="input-item">
+                            <p class="input-tit required">성명</p>
+                            <input type="text" name="realName" id="realName" placeholder="" oninput="validateName()">
+                            <label for="realName" class="is-blind">성명</label>
+                        </div>
+                        <div class="input-item">
+                            <p class="input-tit required">이메일</p>
+                            <div class="email-ui">
+                                <input type="text" name="emailId" id="emailId" placeholder="이메일">
+                                <span class="at">@</span>
+                                <select name="domainSelect" id="domainSelect" onchange="toggleDomainField()">
+                                    <option value="">직접입력</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                </select>
+                                <input type="text" id="domainInput" class="input-direct" style="display: block;" placeholder="도메인 직접 입력">
+                            </div>
+                        </div>
+                        <div class="input-item">
+                            <p class="input-tit required">휴대폰 번호</p>
+                            <div class="add-btn">
+                                <input type="text" name="phoneNumber" id="phoneNumber" placeholder="01000000000(입력 시 “-”제외)" pattern="\d*" maxlength="11" oninput="validatePhoneNumber()">
+                                <label for="phoneNumber" class="is-blind">휴대폰 번호</label>
+                                <button type="button" class="btn" id="phoneCheckBtn">인증</button>
+                            </div>
+                            <div class="add-btn">
+                                <input type="text" name="authNumber" id="numberCheck" placeholder="인증번호 입력">
+                                <label for="numberCheck" class="is-blind">휴대폰 번호</label>
+                                <button type="button" class="btn color2" id="numberCheckBtn" onclick="checkNumber()" disabled>확인</button>
+                            </div>
+                            <p class="error-txt" style="display: none">00:00</p>
+                        </div>
+
+                        <div class="input-item">
+                            <p class="input-tit required">비밀번호</p>
+                            <input type="password" name="password" id="password"
+                                   placeholder="8-12자로 구성 (대, 소문자, 숫자, 특수문자 포함)">
+                            <label for="password" class="is-blind">비밀번호</label>
+                        </div>
+                        <div class="input-item">
+                            <p class="input-tit required">비밀번호 확인</p>
+                            <input type="password" name="checkPassword" id="checkPassword"
+                                   placeholder="8-12자로 구성 (대, 소문자, 숫자, 특수문자 포함)">
+                            <label for="checkPassword" class="is-blind">비밀번호</label>
+                        </div>
+                    </div>
+                    <div class="terms-wrap">
+                        <div class="checkbox all">
+                            <input type="checkbox" id="allCheck">
+                            <label for="allCheck" class="chk">약관 전체 동의</label>
+                        </div>
+                        <div class="chk-list">
+                            <div class="checkbox">
+                                <input type="checkbox" name="agreeChk" id="agreeChk_1">
+                                <label for="agreeChk_1" class="chk">만 14세 이상입니다. (필수)</label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" name="agreeChk" id="agreeChk_2">
+                                <label for="agreeChk_2" class="chk">서비스 이용약관에 동의 (필수)</label>
+                                <button type="button" class="btn-more" onclick="$popup.template('#termsPopup')">
+                                    더보기
+                                </button>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" name="agreeChk" id="agreeChk_3">
+                                <label for="agreeChk_3" class="chk">개인정보 수집 및 이용에 동의 (필수)</label>
+                                <button type="button" class="btn-more"
+                                        onclick="$popup.template('#policyPopup')">
+                                    더보기
+                                </button>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" name="marketingYn" value="Y" id="agreeChk_4">
+                                <label for="agreeChk_4" class="chk">마케팅 수신 정보 동의 (선택)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn is-disabled" id="saveBtn">확인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이용약관 팝업 -->
+    <div class="wbz-popup-cont is-template" id="termsPopup">
+        <div class="popup-header">
+            <strong class="popup-title">이용약관</strong>
+            <button type="button" class="popup-close" onclick="$popup.close();">✕</button>
+        </div>
+        <div class="popup-cont">
+            <div class="popup-text" th:utext="${service}">
+                약관 내용입니다
+            </div>
+        </div>
+    </div>
+    <!-- //이용약관 팝업 -->
+    <!-- 개인정보 팝업 -->
+    <div class="wbz-popup-cont is-template" id="policyPopup">
+        <div class="popup-header">
+            <strong class="popup-title">개인정보</strong>
+            <button type="button" class="popup-close" onclick="$popup.close();">✕</button>
+        </div>
+        <div class="popup-cont">
+            <div class="popup-text" th:utext="${privacy}">
+                약관 내용입니다
+            </div>
+        </div>
+    </div>
+    <!-- //개인정보 팝업 -->
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "회원가입";
+
+    function fnBack() {
+        location.href = "/login/email";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const inputs = document.querySelectorAll('.input-item input');
+        const checkboxes = document.querySelectorAll('.chk-list .checkbox input[type="checkbox"]');
+        const marketingCheckbox = document.getElementById('marketingCheckbox'); // 마케팅 수신 동의 체크박스의 ID를 추가하세요.
+        const allCheck = document.getElementById('allCheck');
+        const saveBtn = document.getElementById('saveBtn');
+
+        function validateForm() {
+            // 모든 필수 입력 필드 검증
+            let allInputsFilled = true;
+            inputs.forEach(input => {
+                if (input.type !== 'checkbox' && input.value.trim() === '') {
+                    allInputsFilled = false;
+                }
+            });
+
+            // 이메일 필드 특별 처리
+            const emailId = document.getElementById('emailId').value.trim();
+            const domainSelect = document.getElementById('domainSelect');
+            const domainInput = document.getElementById('domainInput').value.trim();
+            let emailComplete = emailId.length > 0 && ((domainSelect.value !== '' && domainSelect.value) || domainInput.length > 0);
+
+            // 필수 체크박스 검증 (마케팅 수신 동의 체크박스 제외)
+            const marketingCheckbox = document.getElementById('agreeChk_4'); // 마케팅 수신 동의 체크박스 ID 변경
+            const allRequiredChecked = Array.from(checkboxes).filter(checkbox => checkbox !== marketingCheckbox).every(checkbox => checkbox.checked);
+
+            // 버튼 활성화/비활성화
+            saveBtn.disabled = !(allInputsFilled && allRequiredChecked && emailComplete);
+            saveBtn.classList.toggle('is-disabled', saveBtn.disabled);
+        }
+
+        // 전체 동의 체크박스 로직 수정
+        allCheck.addEventListener('change', function () {
+            const checked = this.checked;
+            checkboxes.forEach(checkbox => {
+                if (checkbox !== marketingCheckbox) {
+                    checkbox.checked = checked;
+                }
+            });
+            validateForm();
+        });
+
+        inputs.forEach(input => input.addEventListener('input', validateForm));
+        checkboxes.forEach(checkbox => checkbox.addEventListener('change', validateForm));
+
+        // 이메일 주소
+        document.getElementById('domainSelect').addEventListener('change', function () {
+            const domainInput = document.getElementById('domainInput');
+            if (this.value === '') {
+                domainInput.style.display = '';
+                domainInput.value = '';
+            } else {
+                domainInput.style.display = 'none';
+                domainInput.value = this.value;
+            }
+            validateForm();
+        });
+
+        // 폼 초기 검증
+        validateForm();
+    });
+
+    function validateName() {
+        let input = document.getElementById('realName');
+        let validName = input.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z\s]/g, '');
+
+        input.value = validName;
+    }
+
+    // 이메일 직접 입력 이벤트
+    function toggleDomainField() {
+        let select = document.getElementById('domainSelect');
+        let input = document.getElementById('domainInput');
+
+        if (select.value === '') {
+            input.style.display = ''; // input 필드 보여주기
+        }
+    }
+
+    document.getElementById('domainInput').addEventListener('blur', function () {
+        let select = document.getElementById('domainSelect');
+        let input = document.getElementById('domainInput');
+
+        if (input.value.trim() === '') {
+            input.style.display = 'none';
+            select.style.display = 'inline';
+            select.value = 'naver.com';
+        }
+    });
+
+    // 전화 번호 숫자 입력 및 자리수 제한
+    function validatePhoneNumber() {
+        let input = document.getElementById('phoneNumber');
+        let validPhoneNumber = input.value.replace(/[^\d]/g, ''); // 숫자만 추출
+
+        // 최대 11자리로 제한
+        if (validPhoneNumber.length > 11) {
+            validPhoneNumber = validPhoneNumber.substring(0, 11);
+        }
+
+        input.value = validPhoneNumber;
+    }
+
+
+    //약관동의
+    const providerAll = document.querySelector('input[id="allCheck"]');
+    const agreeCheckboxes = document.querySelectorAll('input[name="agreeChk"]');
+
+    providerAll.addEventListener('change', function () {
+        agreeCheckboxes.forEach(function (item) {
+            item.checked = providerAll.checked;
+        });
+    });
+
+    document.querySelectorAll('input[name="agreeChk"]').forEach(function (item) {
+        item.addEventListener('change', function () {
+            providerAll.checked = Array.from(document.querySelectorAll('input[name="agreeChk"]')).every(function (checkbox) {
+                return checkbox.checked;
+            });
+        });
+    });
+
+    document.getElementById("saveBtn").onclick = () => {
+        let domainSelect = document.getElementById("domainSelect");
+        let name = document.getElementById('realName');
+
+        if (name.value.trim() === "") {
+            $popup.alert('이름을 입력해주세요.');
+            name.focus();
+            return ;
+        }
+
+        let email = document.getElementById("emailId")
+
+        if (email.value.trim() === "") {
+            $popup.alert('이메일을 입력해주세요.');
+            email.focus();
+            return ;
+        }
+
+        if(document.getElementById('domainSelect').value === '' && document.getElementById("domainInput").value.trim() === '') {
+            $popup.alert("이메일 도메인을 입력해주세요.");
+            document.getElementById("domainSelect").focus();
+            return;
+        }
+
+        let phoneNumber = document.getElementById("phoneNumber")
+
+        if (phoneNumber.value.trim() === "") {
+            $popup.alert('휴대폰 번호를 입력해주세요.');
+            phoneNumber.focus();
+            return ;
+        }
+
+        let password = document.getElementById("password")
+        let passwordCheck = document.getElementById("checkPassword")
+
+        if (password.value.trim() === "") {
+            $popup.alert('비밀번호를 입력해주세요.');
+            password.focus();
+            return ;
+        }
+
+        if (passwordCheck.value.trim() === "") {
+            $popup.alert('비밀번호 확인을 입력해주세요.');
+            passwordCheck.focus();
+            return ;
+        }
+
+        if (password.value.trim() !== passwordCheck.value.trim()) {
+            $popup.alert('비밀번호가 일치하지 않습니다.');
+            password.focus();
+            return ;
+        }
+
+        if(checkBoolean == false) {
+            $popup.alert('휴대폰 인증을 해주세요');
+            return;
+        }
+
+        let agreeChk_1 = document.getElementById("agreeChk_1")
+        let agreeChk_2 = document.getElementById("agreeChk_2")
+        let agreeChk_3 = document.getElementById("agreeChk_3")
+        if (!agreeChk_1.checked || !agreeChk_2.checked || !agreeChk_3.checked) {
+            $popup.alert("모든 필수 항목을 선택해 주세요.");
+
+        }
+        let formData = new FormData(document.getElementById("frmForm"));
+        formData.append("phoneNumber", phoneNumber.value)
+         if (domainSelect.value === '') {
+            formData.append("domainSelect", document.getElementById("domainInput").value.trim());
+        }
+
+        // return false;
+
+        fetch("/join/save", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code === 200) {
+                    // $popup.alert(result.message, {
+                    //     modal: true,
+                    //     confirm: () => {
+                    //         location.href = '/join/complete'
+                    //     },
+                    //     close: () => {
+                    //         location.href = '/join/complete'
+                    //     }
+                    // })
+                    location.href = '/join/complete'
+                } else if (result.code === 500) {
+                    $popup.alert(result.message)
+                } else {
+                    $popup.alert(result.message)
+                }
+            })
+    }
+
+
+    let checkBoolean = false;
+    document.getElementById("phoneCheckBtn").onclick = async () => {
+        checkBoolean = false;
+        let phoneNumber = document.getElementById("phoneNumber").value;
+        if(phoneNumber.trim() === "") {
+            $popup.alert("휴대폰 번호를 입력해주세요");
+            return;
+        }
+        fetch("/api/join/check/phone", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                phoneNumber: phoneNumber,
+                type: "CR001"
+            })
+        })
+            .then(res => res.json())
+            .then(result => {
+                if(result.code === 200) {
+                    document.getElementById("phoneCheckBtn").style.display = 'none';
+                    document.getElementById("phoneNumber").disabled = true;
+                    document.getElementById("numberCheckBtn").disabled = false;
+                    $popup.alert("인증번호가 발송되었습니다.");
+                    document.querySelector('.error-txt').style.display = 'block'; // 타이머 표시
+                    startTimer(3 * 60); // 3분 타이머 시작
+                } else {
+                    // 실패 시 알림 (옵션)
+                    $popup.alert(result.message)
+                }
+            })
+            .catch(error => {
+                document.getElementById("phoneCheckBtn").style.display = 'block';
+                document.getElementById("phoneNumber").disabled = false;
+                document.getElementById("numberCheckBtn").disabled = true;
+                console.error('Error:', error);
+                $popup.alert("인증번호 발송 중 오류가 발생했습니다. 다시 시도해주세요.");
+            });
+    }
+
+    function startTimer(duration) {
+        let timer = duration, minutes, seconds;
+        const display = document.querySelector('.error-txt');
+        const interval = setInterval(() => {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                display.textContent = "00:00";
+                if(!document.getElementById("numberCheck").disabled){
+                    $popup.alert("인증 시간이 만료되었습니다. 다시 시도해주세요.");
+                    document.getElementById("phoneCheckBtn").style.display = 'block';
+                    document.getElementById("phoneNumber").disabled = false;
+                    document.getElementById("numberCheckBtn").disabled = true;
+                }
+                document.getElementById("phoneCheckBtn").textContent = '인증 요청';
+                document.getElementById("checkNumberBtn").classList.add("is-disabled");
+                display.style.display = 'none'; // 타이머 숨기기
+            }
+        }, 1000);
+    }
+
+    // 확인 버튼 클릭
+    function checkNumber() {
+        let numberCheck = document.getElementById("numberCheck").value;
+        let phoneNumber = document.getElementById("phoneNumber").value;
+
+        if(numberCheck.trim() === "") {
+            $popup.alert("인증번호를 입력해주세요");
+            return false;
+        }
+
+        fetch("/api/join/number/check", {
+            method : "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                numberCheck: numberCheck,
+                phoneNumber :phoneNumber
+            })
+        })
+            .then(res => res.json())
+            .then(result => {
+                if(result.code === 200) {
+                    $popup.alert(result.message)
+                    checkBoolean = true;
+                    document.getElementById("phoneNumber").disabled = true;
+                    document.getElementById("numberCheck").disabled = true;
+                    document.getElementById("phoneCheckBtn").disabled = true;
+                    document.getElementById("phoneCheckBtn").style.display = 'none';
+                    document.getElementById("numberCheckBtn").disabled = true;
+                    document.getElementById("numberCheckBtn").style.display = 'none';
+                    document.querySelector('.error-txt').style.display = 'none';
+                } else {
+                    $popup.alert(result.message)
+                }
+            })
+    }
+
+    const inputField = document.getElementById('domainInput');
+
+    inputField.addEventListener('input', function(e) {
+        const value = e.target.value;
+
+        // 한글을 입력하지 못하게 하도록 한글만을 제거하는 정규식 적용
+        e.target.value = value.replace(/[\u3131-\u318E\uAC00-\uD7A3]/g, '');
+    });
+
+</script>
+</html>

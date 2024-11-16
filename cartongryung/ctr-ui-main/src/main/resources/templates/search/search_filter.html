@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_mobile}">
+
+<th:block layout:fragment="content">
+    <div class="m-find">
+        <div class="m-filter-wrap">
+            <div class="link-wrap">
+                <a href="/search/product/mobile/filter/maker" class="btn-link on">제조사 / 모델로 검색</a>
+            </div>
+            <div class="filter-list">
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">정렬</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="sort-list">
+                            <li>
+                                <input type="radio" name="sort2" data-type="sort" id="sort2_1" value="pick">
+                                <label for="sort2_1" class="sort">인기순</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort2" data-type="sort" id="sort2_2" value="recent">
+                                <label for="sort2_2" class="sort">최신순</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort2" data-type="sort" id="sort2_3" value="downPrice">
+                                <label for="sort2_3" class="sort">저가순</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort2" data-type="sort" id="sort2_4" value="upPrice">
+                                <label for="sort2_4" class="sort">고가순</label>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">가격</span>
+                            <button type="button" class="btn-input" onclick="$popup.template('#priceDirectPopup')">직접 입력</button>
+                        </div>
+                    </dt>
+                    <dd>
+                        <div class="slider" id="slider3">
+                            <!-- 값 표시 -->
+                            <div class="value-area">
+                                <div class="value-label left" id="slider3-left-value">1</div>
+                                <span class="to">~</span>
+                                <div class="value-label right" id="slider3-right-value">9000</div>
+                                <span class="unit">만원</span>
+                            </div>
+                            <input type="range" id="slider3-left" min="1" max="9000" value="1" />
+                            <input type="range" id="slider3-right" min="1" max="9000" value="9000" />
+                            <div class="track">
+                                <div class="range" id="slider3-range"></div>
+                                <div class="thumb left"></div>
+                                <div class="thumb right"></div>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">주행거리</span>
+                            <button type="button" class="btn-input" onclick="$popup.template('#kmDirectPopup')">직접 입력</button>
+                        </div>
+                    </dt>
+                    <dd>
+                        <div class="slider" id="slider4">
+                            <!-- 값 표시 -->
+                            <div class="value-area">
+                                <!-- <span class="all">전체</span> -->
+                                <!-- 선택값 -->
+                                <div class="value-label left">1</div>
+                                <span class="to">~</span>
+                                <div class="value-label right">9000</div>
+                                <span class="unit">km</span>
+                            </div>
+                            <input type="range" id="slider4-left" min="1" max="9000" value="1" />
+                            <input type="range" id="slider4-right" min="1" max="9000" value="9000" />
+                            <div class="track">
+                                <div class="range"></div>
+                                <div class="thumb left"></div>
+                                <div class="thumb right"></div>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">연식</span>
+                            <button type="button" class="btn-input" onclick="$popup.template('#yearDirectPopup')">직접 입력</button>
+                        </div>
+                    </dt>
+                    <dd>
+                        <div class="slider" id="slider5">
+                            <!-- 값 표시 -->
+                            <div class="value-area">
+                                <!-- <span class="all">전체</span> -->
+                                <!-- 선택값 -->
+                                <div class="value-label left">1980</div>
+                                <span class="to">~</span>
+                                <div class="value-label right">2500</div>
+                                <span class="unit">년</span>
+                            </div>
+                            <input type="range" id="slider5-left" min="1" max="1980" value="1" />
+                            <input type="range" id="slider5-right" min="1" max="2500" value="2500" />
+                            <div class="track">
+                                <div class="range"></div>
+                                <div class="thumb left"></div>
+                                <div class="thumb right"></div>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">연료</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="chk-list">
+                            <li th:each="fuel : ${carFuel}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="searchClass" data-type="fuel" name="fuel" th:value="${fuel.carFuel}" th:id="'fuel' + ${fuel.id}">
+                                    <label th:for="'fuel' + ${fuel.id}" th:text="${fuel.carFuel}">가솔린</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">변속기</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="chk-list col-3">
+                            <li th:each="trans : ${carIstdTrans}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="searchClass" data-type="trans" name="trans2" th:value="${trans.carMission}" th:id="'trans' + ${trans.id}">
+                                    <label th:for="'trans' + ${trans.id}" th:text="${trans.carMission}">오토</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">색상</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="color-list">
+                            <li class="color_0">
+                            <input type="checkbox" name="colorSelect" id="colorSelect_0">
+                              <span class="txt">흰색</span>
+                            </li>
+                            <li class="color_1">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_1">
+                                <label for="colorSelect_1">
+                                  <span class="color">검정색</span>
+                                </label>
+                              </div>
+                              <span class="txt">검정색</span>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">지역</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="location-list">
+                            <li th:each="sido : ${carSido}">
+                                <input type="checkbox" name="location" class="searchClass" data-type="sido" th:value="${sido.sido}" th:id="'sido' + ${sido.id}">
+                                <label th:for="'sido' + ${sido.id}" class="location" th:text="${sido.sido}">서울</label>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">옵션</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="chk-list">
+                            <li th:each="option : ${carOption}">
+                                <div class="checkbox">
+                                    <input type="checkbox" name="option" th:id="'option' + ${option.id}">
+                                    <label th:for="'option' + ${option.id}" th:text="${option.optionName}">썬팅</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="btn-wrap type-fixed">
+                <button type="button" class="btn is-reset">초기화</button>
+                <button type="button" class="btn" onclick="submitSearch()">
+                    <span id="totalCarCount" th:text="${totalCount}" th:data-initial-count="${totalCount}">8,001</span>대 매물보기
+                </button>
+
+            </div>
+        </div>
+        <div class="wbz-popup-cont is-template size-s" id="priceDirectPopup">
+            <div class="popup-header">
+                <button class="popup-close popup-close-just" onclick="$popup.close();">닫기</button>
+            </div>
+            <div class="popup-cont">
+                <div class="input-wrap range">
+                    <div class="input-box">
+                        <h4 class="tit">최소 가격</h4>
+                        <label for="rangeDownPrice">만원</label>
+                        <input type="text" name="range" id="rangeDownPrice" placeholder="">
+                    </div>
+                    <span>~</span>
+                    <div class="input-box">
+                        <h4 class="tit">최대 가격</h4>
+                        <label for="rangeUpPrice">만원</label>
+                        <input type="text" name="range" id="rangeUpPrice" placeholder="">
+                    </div>
+                </div>
+                <div class="popup-button">
+                    <button type="button" class="cr_1" id="checkPriceBtn">확인</button>
+                </div>
+            </div>
+        </div>
+        <!-- // 가격 직접입력 팝업 -->
+
+        <!-- 거리 직접입력 팝업 -->
+        <div class="wbz-popup-cont is-template size-s" id="kmDirectPopup">
+            <div class="popup-header">
+                <button class="popup-close popup-close-just" onclick="$popup.close();">닫기</button>
+            </div>
+            <div class="popup-cont">
+                <div class="input-wrap range">
+                    <div class="input-box">
+                        <h4 class="tit">최소 거리</h4>
+                        <label for="startRange">Km</label>
+                        <input type="text" name="range" id="startRange" placeholder="">
+                    </div>
+                    <span>~</span>
+                    <div class="input-box">
+                        <h4 class="tit">최대 거리</h4>
+                        <label for="endRange">Km</label>
+                        <input type="text" name="range" id="endRange" placeholder="">
+                    </div>
+                </div>
+                <div class="popup-button">
+                    <button type="button" class="cr_1">확인</button>
+                </div>
+            </div>
+        </div>
+        <!-- // 거리 직접입력 팝업 -->
+
+        <!-- 연식 직접입력 팝업 -->
+        <div class="wbz-popup-cont is-template size-s" id="yearDirectPopup">
+            <div class="popup-header">
+                <button class="popup-close popup-close-just" onclick="$popup.close();">닫기</button>
+            </div>
+            <div class="popup-cont">
+                <div class="input-wrap range">
+                    <div class="input-box">
+                        <h4 class="tit">최소 연식</h4>
+                        <label for="range">부터</label>
+                        <select name="" id="" required="">
+                            <option value="" disabled="" selected="">YYYY</option>
+                            <option value="">2023</option>
+                            <option value="">2022</option>
+                            <option value="">2021</option>
+                            <option value="">2020</option>
+                        </select>
+                    </div>
+                    <span>~</span>
+                    <div class="input-box">
+                        <h4 class="tit">최대 연식</h4>
+                        <label for="range">까지</label>
+                        <select name="" id="" required="">
+                            <option value="" disabled="" selected="">YYYY</option>
+                            <option value="">2023</option>
+                            <option value="">2022</option>
+                            <option value="">2021</option>
+                            <option value="">2020</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="popup-button">
+                    <button type="button" class="cr_1">확인</button>
+                </div>
+            </div>
+        </div>
+        <!-- // 연식 직접입력 팝업 -->
+    </div>
+</th:block>
+<script layout:fragment="script" th:inline="javascript">
+    var hdNm = "필터";
+    let data = {
+        fuel: [],
+        trans: [],
+        sido:[],
+        startPrice: '',
+        endPrice : '',
+        startKm : '',
+        endKm : '',
+        startYear : '',
+        endYear : ''
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const totalCarCountElement = document.getElementById("totalCarCount");
+        const initialTotalCount = totalCarCountElement.getAttribute("data-initial-count");
+
+        const sliderLeft = document.getElementById("slider3-left");
+        const sliderLeftKm = document.getElementById("slider4-left");
+        const sliderRightKm = document.getElementById("slider4-right");
+        const sliderLeftYear = document.getElementById("slider5-left");
+        const sliderRightYear = document.getElementById("slider5-right");
+        const sliderRight = document.getElementById("slider3-right");
+        const sliderLeftValue = document.getElementById("slider3-left-value");
+        const sliderRightValue = document.getElementById("slider3-right-value");
+
+        function updateSliderValuesAndSearch() {
+            sliderLeftValue.textContent = sliderLeft.value;
+            sliderRightValue.textContent = sliderRight.value;
+
+            performSearch();
+        }
+        // 검색을 위한 전체 데이터
+        // 검색 수행 함수
+        function performSearch() {
+            let selectedTags = document.querySelectorAll(".searchClass:checked"); // 선택된 모든 요소를 가져옴
+
+            selectedTags.forEach(selectedTag => {
+                let type = selectedTag.getAttribute("data-type");
+
+                if (type === 'fuel') {
+                    data.fuel.push(selectedTag.value); // 배열에 선택된 값 추가
+                }
+                if (type === 'trans') {
+                    data.trans.push(selectedTag.value);
+                }
+                if (type === 'sido') {
+                    data.sido.push(selectedTag.value);
+                }
+            });
+
+            data.startPrice = sliderLeft.value
+            data.endPrice = sliderRight.value
+            data.startKm = sliderLeftKm.value
+            data.endKm = sliderRightKm.value
+            data.startYear = sliderLeftYear.value
+            data.endYear = sliderRightYear.value
+
+            fetch("/api/search/mobile/count", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code === 200) {
+                        console.log(result);
+                        totalCarCountElement.innerText = result.data;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            if (selectedTags.length === 0) { // 선택된 요소가 없을 때 초기 totalCount 값을 다시 설정
+                totalCarCountElement.innerText = initialTotalCount;
+            }
+        }
+
+        sliderLeft.addEventListener("input", updateSliderValuesAndSearch);
+        sliderRight.addEventListener("input", updateSliderValuesAndSearch);
+
+        // 기존의 searchClass 변경 이벤트 리스너 추가
+        document.querySelectorAll(".searchClass").forEach(tag => {
+            tag.addEventListener("change", performSearch);
+        });
+    });
+
+    document.getElementById("checkPriceBtn").onclick = () => {
+        const downPrice = document.getElementById("rangeDownPrice").value;
+        const upPrice = document.getElementById("rangeUpPrice").value;
+        console.log("downPrice : " + downPrice)
+        console.log("upPrice : " + upPrice)
+
+        const sliderLeft = document.getElementById("slider3-left");
+        const sliderRight = document.getElementById("slider3-right");
+
+        sliderLeft.value = downPrice;
+        sliderRight.value = upPrice;
+
+        document.getElementById("slider3-left-value").textContent = downPrice;
+        document.getElementById("slider3-right-value").textContent = upPrice;
+
+        updateSliderTrack();
+
+        $popup.close();
+    }
+
+    function updateSliderTrack() {
+        const sliderLeft = document.getElementById("slider3-left");
+        const sliderRight = document.getElementById("slider3-right");
+        const range = document.getElementById("slider3-range");
+
+        const min = sliderLeft.min;
+        const max = sliderLeft.max;
+
+        const leftValue = (sliderLeft.value - min) / (max - min) * 100;
+        const rightValue = (sliderRight.value - min) / (max - min) * 100;
+
+        range.style.left = leftValue + "%";
+        range.style.right = (100 - rightValue) + "%";
+    }
+
+    updateSliderTrack();
+
+    // 슬라이더 값 변경 시 트랙 업데이트
+    document.getElementById("slider3-left").addEventListener("input", updateSliderTrack);
+    document.getElementById("slider3-right").addEventListener("input", updateSliderTrack);
+
+    function submitSearch() {
+        console.log(data)
+        fetch('/api/search/product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data: data})
+        })
+            .then(response => response.json())
+            .then(data => {
+                sessionStorage.setItem('searchResults', JSON.stringify(data.data));
+                location.href = '/search/product';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+</html>

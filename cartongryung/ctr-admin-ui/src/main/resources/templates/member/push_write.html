@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>회원 &gt; 푸시 관리 &gt; 등록 </title>
+
+</head>
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_member :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>푸시 관리</h3>
+    </div>
+    <div class="content_body">
+        <div class="member">
+            <!-- View Start -->
+            <div class="view_wrap">
+                <p class="align_r"><span class="asta">*</span> 필수 입력</p>
+                <div class="view_table mt10">
+                    <form id="pushForm">
+                        <table class="search">
+                            <caption>푸시 작성</caption>
+                            <colgroup>
+                                <col style="width:20%;">
+                                <col style="width:80%;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>수신 대상 <span class="asta">*</span></th>
+                                <td>
+                                    <div class="radiobox" id="who">
+                                        <input id="type01" name="target" type="radio" value="all">
+                                        <!--나중에 value 값 넣기  -->
+                                        <label for="type01">전체회원</label>
+                                        <input id="type02" name="target" type="radio" value="personal">
+                                        <label for="type02">개별회원</label>
+                                        <input id="type03" name="target" type="radio" value="marketingAll">
+                                        <label for="type03">광고수신 동의회원 전체</label>
+                                    </div>
+                                    <a class="btn_m btn_form2"
+                                       href="javascript: window.open('/admin/member/push/write/findMember', '팝업창','width=600, height=700');">회원
+                                        조회</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>수신대상자</th>
+                                <td class="target">
+                                    <p class="placeholder" id="placeholder">수신대상자를 입력해주세요.</p>
+                                    <div class="target_wrap">
+                                        <div class="member_list">
+                                            <span class="name" id="realName"></span>
+                                            <span class="memberId" id="memberId"></span>
+                                            <button class="btn_del" id="carDelButton" style="display: none"
+                                                    th:onclick="isReallyDelete()" type="button">삭제
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>발송 일시 <span class="asta">*</span></th>
+                                <td>
+                                    <div class="radiobox">
+                                        <input id="right" name="sendStatus" type="radio" value="right">
+                                        <label for="right">즉시 발송</label>
+                                        <input id="reserve" name="sendStatus" type="radio" value="reserve">
+                                        <label for="reserve">예약 발송</label>
+                                    </div>
+                                    <div id="reserveOptions" style="display: none;">
+                                        <div class="input_wrap">
+                                            <input type="text" id="datepicker1" class="ico_date" name="date"
+                                                   placeholder="">
+                                            <select name="hour" id="hourSelect" style="width: 100px;">
+                                                <option th:each="num : ${#numbers.sequence(0,23)}"
+                                                        th:text="${#numbers.formatDecimal(num, 2, 0)}">
+                                                </option>
+                                            </select>
+                                            <select name="minute" id="minuteSelect" style="width: 100px;">
+                                                <option value="00">00</option>
+                                                <option value="30">30</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">제목 <span class="asta">*</span></th>
+                                <td>
+                                    <input id="title" name="title" placeholder="" type="text" maxlength="60">
+                                    <label class="blind" for="title">제목</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>메시지 <span class="asta">*</span></th>
+                                <td>
+                                    <textarea cols="30" id="content" name="content" rows="10"
+                                              maxlength="175"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>푸시 이미지 등록</th>
+                                <td>
+                                    <div class="file_area">
+                                        <input id="attachFile" name="attachFile" type="file">
+                                        <label for="attachFile">
+                                            <span class="btn_s" style="cursor: pointer;">찾아보기</span>
+                                        </label>
+                                        <span>&#40;파일형식 : jpg, jpeg,.png, gif&#41; 1:1 비율 또는 2:1 비율로</span>
+                                    </div>
+                                    <div class="files" id="infoDiv"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>링크 URL</th>
+                                <td>
+                                    <div class="link_url">
+                                        <input id="link" name="linkUrl" type="text">
+                                        <label class="blind" for="link">링크 URL 입력</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn_area align_c mt20">
+                            <button class="btn" type="submit">발송</button>
+                            <a class="btn btn_form4" href="/admin/member/push">취소</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- //View End -->
+        </div>
+    </div>
+    <!-- //List Start -->
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    document.getElementById("attachFile").addEventListener("change", event => {
+        const inputFile = event.currentTarget;
+        uploadFiles(inputFile, "push-editor");
+        inputFile.value = "";
+    });
+
+    function uploadFiles(inputFile, source) {
+        if (inputFile.files.length === 0) return;
+        const maxFileSize = 1 * 1024 * 1024;
+        let fileExceedsLimit = false;
+        const formData = new FormData();
+        if (source != null) formData.append("source", source);
+        Array.prototype.forEach.call(inputFile.files, file => {
+            if (file.size > maxFileSize) {
+                fileExceedsLimit = true;
+                alert(`${file.name} 이미지가 너무 큽니다. 1MB이하 파일을 업로드해주세요.`);
+            } else {
+                formData.append("files", file);
+            }
+        });
+        if (fileExceedsLimit) return;
+
+        fetch("/api/file/uploads", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+                uploadFilesAfterTrigger(inputFile, result.data);
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    }
+
+    function uploadFilesAfterTrigger(inputFile, data) {
+        const infoDiv = document.getElementById("infoDiv");
+
+        infoDiv.innerHTML = data.map(file => {
+            return `
+                    <div class="file" id="file_${file.uuid}">
+                        <div class="imgbox">
+                            <img src="/api/file/view/${file.uuid}?size=300" alt="리스트 이미지">
+                        </div>
+                        <span class="name">${file.originalName}</span>
+                        <input type="hidden" name="fileUUID" value="${file.uuid}">
+                        <button type="button" class="btn_del" onclick="deleteFile(this.dataset.uuid, true);" data-uuid="${file.uuid}">삭제</button>
+                    </div>
+                    `;
+        }).join("");
+    }
+
+    function deleteFile(uuid, isReal) {
+        if (isReal === undefined) isReal = false;
+
+        const element = document.getElementById(`file_${uuid}`);
+        if (element === null) return;
+        if (isReal === false) return element.remove();
+
+        fetch(`/api/file/delete/${uuid}`, {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                element.remove();
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    }
+
+    document.getElementById("pushForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        // 수신 대상 확인
+        const target = document.querySelector("input[name=\"target\"]:checked");
+        if (!target) {
+            alert("수신 대상을 골라주세요.");
+            return;
+        }
+
+        // 발송 일시 확인
+        const sendStatus = document.querySelector("input[name=\"sendStatus\"]:checked");
+        if (!sendStatus) {
+            alert("발송 일시를 골라주세요.");
+            return;
+        }
+
+        // 개별 회원인 경우 memberId 추가
+        if (target.value === "personal") {
+            const memberIds = document.querySelectorAll(".memberId");
+
+            if (memberIds.length === 0) {
+                alert("수신 대상자를 추가해주세요.");
+                return;
+            }
+
+            const uniqueMemberIds = new Set();
+            memberIds.forEach(span => {
+                uniqueMemberIds.add(span.textContent);
+            });
+
+            formData.delete("memberId");  // 기존의 memberId 값들을 모두 삭제
+            uniqueMemberIds.forEach(id => {
+                formData.append("memberId", id);
+            });
+        }
+
+        if (sendStatus.value === "reserve") {
+            const datepicker = document.getElementById("datepicker1");
+            const hour = document.getElementById("hourSelect");
+            const minute = document.getElementById("minuteSelect");
+
+            if (!datepicker.value || !hour.value || !minute.value) {
+                alert("예약 발송 시 날짜와 시간을 모두 선택해주세요.");
+                return;
+            }
+            // formData.append('sendAt', `${datepicker.value} ${hour.value}:${minute.value}`);
+        }
+
+        const title = document.getElementById("title");
+        if (title.value.trim().length < 1) {
+            alert("제목을 입력해주세요.");
+            title.focus();
+            return;
+        }
+
+        const contents = document.getElementById("content");
+        if (contents.value.trim().length < 1) {
+            alert("메시지를 입력해주세요.");
+            contents.focus();
+            return;
+        }
+
+        console.log("전송할 데이터:");
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
+
+        if (!confirm("저장하시겠습니까?")) return;
+
+        fetch("/admin/member/push/write", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert("저장되었습니다.");
+                location.href = "/admin/member/push";
+            })
+            .catch(error => {
+                alert("오류가 발생했습니다: " + error.message);
+            });
+    });
+
+    // member 조회창에서 데이터 받아서 회원 추가
+    function addMemberList(member) {
+        let targetWrap = document.querySelector(".target_wrap");
+
+        // 이미 추가된 멤버인지 확인
+        let existingMember = Array.from(targetWrap.querySelectorAll(".member")).find(el => {
+            return el.querySelector(".memberId").textContent === member.memberId;
+        });
+
+        if (existingMember) {
+            alert("동일한 회원이 이미 추가되어 있습니다.");
+            return;
+        }
+
+        // 새로운 멤버 추가
+        let newMemberDiv = document.createElement("div");
+        newMemberDiv.classList.add("member");
+
+        let nameSpan = document.createElement("span");
+        nameSpan.classList.add("name");
+        nameSpan.textContent = member.realName;
+
+        // memberId를 span으로 추가 (hidden input 대신)
+        let memberIdSpan = document.createElement("span");
+        memberIdSpan.classList.add("memberId");
+        memberIdSpan.textContent = member.memberId;
+        memberIdSpan.style.display = "none";  // 화면에 표시하지 않음
+
+        let deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.classList.add("btn_del");
+        deleteButton.textContent = "삭제";
+        deleteButton.addEventListener("click", () => {
+            targetWrap.removeChild(newMemberDiv);
+        });
+
+        newMemberDiv.appendChild(nameSpan);
+        newMemberDiv.appendChild(memberIdSpan);
+        newMemberDiv.appendChild(deleteButton);
+
+        targetWrap.appendChild(newMemberDiv);
+    }
+
+
+    function isReallyDelete() {
+        if (!confirm("삭제하시겠습니까?")) ;
+    }
+
+    document.getElementById("type01").addEventListener("click", function () {
+        // 수신대상자 안내 문구를 삭제
+        let placeholderElement = document.getElementById("placeholder");
+        if (placeholderElement) {
+            placeholderElement.remove();
+        }
+
+        // 수신 대상자 영역을 초기화
+        let targetWrap = document.querySelector(".target_wrap");
+        targetWrap.innerHTML = "";
+
+        // "전체"라는 텍스트를 표시
+        let allMemberDiv = document.createElement("div");
+        allMemberDiv.classList.add("member");
+        allMemberDiv.textContent = "전체";
+
+        targetWrap.appendChild(allMemberDiv);
+    });
+
+    document.getElementById("type02").addEventListener("click", function () {
+        // 수신대상자 안내 문구를 삭제
+        let placeholderElement = document.getElementById("placeholder");
+        if (placeholderElement) {
+            placeholderElement.remove();
+        }
+
+        // 수신 대상자 영역을 초기화
+        let targetWrap = document.querySelector(".target_wrap");
+        targetWrap.innerHTML = "";
+    });
+
+    document.getElementById("type03").addEventListener("click", function () {
+        // 수신대상자 안내 문구를 삭제
+        let placeholderElement = document.getElementById("placeholder");
+        if (placeholderElement) {
+            placeholderElement.remove();
+        }
+
+        // 수신 대상자 영역을 초기화
+        let targetWrap = document.querySelector(".target_wrap");
+        targetWrap.innerHTML = "";
+
+        // "전체"라는 텍스트를 표시
+        let allMemberDiv = document.createElement("div");
+        allMemberDiv.classList.add("member");
+        allMemberDiv.textContent = "광고수신 동의회원 전체";
+
+        targetWrap.appendChild(allMemberDiv);
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const reserveRadio = document.getElementById("reserve");
+        const rightNowRadio = document.getElementById("right");
+        const reserveOptions = document.getElementById("reserveOptions");
+
+        function toggleReserveOptions() {
+            reserveOptions.style.display = reserveRadio.checked ? "block" : "none";
+        }
+
+        reserveRadio.addEventListener("change", toggleReserveOptions);
+        rightNowRadio.addEventListener("change", toggleReserveOptions);
+    });
+
+
+</script>
+</html>

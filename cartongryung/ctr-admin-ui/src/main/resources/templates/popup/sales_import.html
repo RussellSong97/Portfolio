@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1>1. 매물정보 가져오기</h1>
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+<div layout:fragment="pop_body" class="pop_body">
+    <div style="height:400px;">
+        <div class="con_box">
+            <div class="view_wrap">
+                <p class="align_r"><span class="asta">*</span> 필수 입력</p>
+                <div class="note_area">
+                    <p class="note">
+                        <span class="c_red">금일 이전 날짜</span>를 입력해주세요.
+                    </p>
+                </div>
+                <div class="view_table mt10">
+                    <form>
+                        <table>
+                            <caption>매물정보 가져오기</caption>
+                            <colgroup>
+                                <col style="width:20%;">
+                                <col style="width:auto;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th scope="row">일자<span class="c_red">*</span></th>
+                                <td>
+                                    <label for="datepicker3">
+                                        <input type="text" id="datepicker3" class="ico_date" name="sdate" autocomplete="off">
+                                    </label>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn_area">
+                            <button type="submit" class="btn btn_form2">매물정보 가져오기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="load_wrap" style="display: none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="103" height="112.999"
+                     viewBox="0 0 103 112.999" class="spinner-svg">
+                    <g id="loading" transform="translate(-198.073 -280.45)">
+                        <circle id="타원_152" data-name="타원 152" cx="12" cy="12" r="12"
+                                transform="translate(240.073 280.45)" fill="#1954DB"
+                                opacity="0.9"/>
+                        <circle id="타원_153" data-name="타원 153" cx="5" cy="5" r="5"
+                                transform="translate(247.073 383.45)" fill="#1954DB"
+                                opacity="0.4"/>
+                        <path id="패스_3252" data-name="패스 3252"
+                              d="M210.507,299.592a9.5,9.5,0,1,1-11.967,6.1A9.5,9.5,0,0,1,210.507,299.592Z"
+                              transform="translate(0 16.325)" fill="#1954DB" opacity="0.7"/>
+                        <path id="패스_3253" data-name="패스 3253"
+                              d="M252.4,318.2a2.5,2.5,0,1,1-3.151,1.6A2.495,2.495,0,0,1,252.4,318.2Z"
+                              transform="translate(46.946 34.373)" fill="#1954DB"
+                              opacity="0.2"/>
+                        <path id="패스_3254" data-name="패스 3254"
+                              d="M209.8,331.155a6.5,6.5,0,1,1,1.436,9.079A6.492,6.492,0,0,1,209.8,331.155Z"
+                              transform="translate(9.518 43.975)" fill="#1954DB" opacity="0.5"/>
+                        <path id="패스_3255" data-name="패스 3255"
+                              d="M237.026,290.092a13.5,13.5,0,1,1,2.983,18.853A13.5,13.5,0,0,1,237.026,290.092Z"
+                              transform="translate(34.629 2.927)" fill="#1954DB"/>
+                        <path id="패스_3256" data-name="패스 3256"
+                              d="M240.11,336.227a4,4,0,1,1,5.587.884A4,4,0,0,1,240.11,336.227Z"
+                              transform="translate(37.728 45.573)" fill="#1954DB"
+                              opacity="0.3"/>
+                        <path id="패스_3257" data-name="패스 3257"
+                              d="M208.463,302.6a10.5,10.5,0,1,1,14.666,2.323A10.5,10.5,0,0,1,208.463,302.6Z"
+                              transform="translate(5.617 5.524)" fill="#1954DB" opacity="0.8"/>
+                        <path id="패스_3258" data-name="패스 3258"
+                              d="M251.136,305.276a1,1,0,1,1,.641-1.261A1,1,0,0,1,251.136,305.276Z"
+                              transform="translate(47.246 21.124)" fill="#1954DB"
+                              opacity="0.1"/>
+                        <path id="패스_3259" data-name="패스 3259"
+                              d="M209.243,330.882A8,8,0,1,1,214.38,320.8,8,8,0,0,1,209.243,330.882Z"
+                              transform="translate(0.299 32.173)" fill="#1954DB" opacity="0.6"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+
+        const date = document.getElementById('datepicker3');
+
+        if (date.value.trim().length < 1) {
+            alert("일자를 선택해주세요.");
+            date.focus();
+            return;
+        }
+
+        const formData = new FormData(event.currentTarget);
+        const intervalId = setInterval(getRunningStatus, 2000); // 세션 체크
+
+        document.querySelector('.load_wrap').style.display = '';
+
+        fetch('/admin/management/get/linkage', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+            })
+            .catch(error => {
+                window.close();
+                console.error(error);
+                alert(error);
+            });
+
+        // 상태 체크
+        function getRunningStatus() {
+            fetch('/admin/management/get/status', {
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    if (result.info === 'complete') {
+                        clearInterval(intervalId);
+                        alert("카매니저에서 " + result.data + "건의 매물을 가져왔습니다.");
+                        opener.location.reload();
+                        window.close();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
+        }
+    });
+
+</script>
+</html>

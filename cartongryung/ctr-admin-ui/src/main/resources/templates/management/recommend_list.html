@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>차량관리 &gt; 추천 차량 &gt; 목록 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_management :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>추천 차량</h3>
+    </div>
+    <div class="content_body">
+        <div class="management">
+            <form>
+                <div class="search_wrap">
+                    <table>
+                        <caption>검색</caption>
+                        <colgroup>
+                            <col style="width:10%;">
+                            <col style="width:auto;">
+                            <col style="width:10%;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">키워드</th>
+                            <td>
+                                <select name="field" id="field" style="width: 150px;">
+                                    <option value="all">전체</option>
+                                    <option value="productUniqueNumber" th:selected="${condition.field eq 'productUniqueNumber'}">차량 NO</option>
+                                    <option value="carPlateNumber" th:selected="${condition.field eq 'carPlateNumber'}">차량 번호</option>
+                                    <option value="carName" th:selected="${condition.field eq 'carName'}">차량명</option>
+                                </select>
+                                <input type="text" name="s" th:value="${condition.s}" title="키워드" style="width: 60%;">
+                            </td>
+                            <th scope="row">딜러</th>
+                            <td>
+                                <select name="dealer" style="width: 200px;">
+                                    <option value="">전체</option>
+                                    <th:block th:each="list : ${memberDealerLists}">
+                                        <option th:value="${list.id}" th:text="${list.realName}"
+                                                th:selected="${condition.dealer eq list.id}">등록된 딜러 명</option>
+                                    </th:block>
+                                </select>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_area align_c mt20">
+                        <button type="submit" class="btn">검색</button>
+                    </div>
+                </div>
+            </form>
+            <div class="list_wrap">
+                <div class="list_top">
+                    <div class="txt_area">
+                        <p>총
+                            <em th:text="${#numbers.formatInteger(recommendLists.totalElements, 1, 'COMMA')}">0,000</em>건
+                        </p>
+                    </div>
+                    <div class="util_area">
+                        <button type="button" class="btn btn_form1" id="btnExcelDownload">엑셀 다운로드</button>
+                    </div>
+                </div>
+                <div class="list_table">
+                    <table>
+                        <caption>검색 결과</caption>
+                        <colgroup>
+                            <col style="width:3%;">
+                            <col style="width:8%;">
+                            <col style="width:8%;">
+                            <col style="width:6%;">
+                            <col style="width:10%;">
+                            <col style="width:6%;">
+                            <col style="width:6%;">
+                            <col style="width:6%;">
+                            <col style="width:6%;">
+                            <col style="width:6%;">
+                            <col style="width:6%;">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                <input type="checkbox" id="allChk">
+                                <label for="allChk" class="blind">전체선택</label>
+                            </th>
+                            <th scope="col">차량 NO</th>
+                            <th scope="col">차량 번호</th>
+                            <th scope="col">이미지</th>
+                            <th scope="col">차량명</th>
+                            <th scope="col">연식</th>
+                            <th scope="col">주행거리</th>
+                            <th scope="col">가격</th>
+                            <th scope="col">등록일</th>
+                            <th scope="col">딜러명</th>
+                            <th scope="col">지역</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${recommendLists.isEmpty()}">
+                            <td colspan="11">등록된 차량이 없습니다. 추천차량을 설정해주세요.</td>
+                        </tr>
+                        <tr th:each="recommend : ${recommendLists}">
+                            <td>
+                                <input type="checkbox" th:id="|recommend_${recommend.productId}|" name="id" th:value="${recommend.productId}">
+                                <label th:for="|recommend_${recommend.productId}|" class="blind">선택</label>
+                            </td>
+                            <td>
+                                <a th:href="@{https://ctrm.co.kr/product/__${recommend.productId}__}" class="btn_link" target="_blank"
+                                   th:text="${recommend.productUniqueNumber}">C240506-001</a>
+                            </td>
+                            <td th:text="${recommend.carPlateNumber}">00가0000</td>
+                            <td>
+                                <a th:href="@{https://ctrm.co.kr/product/__${recommend.productId}__}" class="imgbox" target="_blank">
+                                    <img th:src="${recommend.carImageUrl[0].realUrl}" alt="이미지">
+                                </a>
+                            </td>
+                            <td th:text="${recommend.makerName + ' ' + recommend.modelName + ' ' + recommend.detailGradeName}">현대 아반떼 MD</td>
+                            <td th:text="${recommend.carRegYear}">2007</td>
+                            <td th:text="${#numbers.formatInteger(recommend.carUseKm, 1, 'COMMA') + 'km'}">120,513km</td>
+                            <td>
+                                <p class="align_r" th:text="${#numbers.formatInteger(recommend.carAmountSale, 1, 'COMMA')}">102,000</p>
+                            </td>
+                            <td th:text="${#temporals.format(recommend.createdAt, 'yyyy-MM-dd')}">2024-01-03</td>
+                            <td th:text="${recommend.realName}">홍길동</td>
+                            <td th:text="${recommend.city}">서울</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:replace="~{fragments/pagination :: pagination (${recommendLists})}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    let allCheckBox = document.getElementById('allChk');
+    let checkboxes = document.querySelectorAll('input[name="id"]');
+
+    // 체크박스 조작
+    allCheckBox.addEventListener('click', () => {
+        checkboxes.forEach(chk => chk.checked = allCheckBox.checked);
+    });
+
+    checkboxes.forEach(chk => {
+        chk.addEventListener('click', () => {
+            if (!chk.checked) {
+                allCheckBox.checked = false;
+            } else {
+                allCheckBox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            }
+        });
+    });
+
+    // 엑셀 다운로드
+    document.getElementById('btnExcelDownload').addEventListener('click', () => {
+        console.log("추천 차량");
+        const form = document.forms[0];
+        form.append();
+        form.action = '/admin/management/recommend/excel';
+        form.submit();
+        form.action = '';
+    });
+
+</script>
+</html>

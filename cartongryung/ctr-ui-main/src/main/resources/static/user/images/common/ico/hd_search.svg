@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g id="검색" transform="translate(-254 -8)">
+    <rect id="사각형_4111" data-name="사각형 4111" width="36" height="36" transform="translate(254 8)" fill="#fff"/>
+    <g id="검색-2" data-name="검색" transform="translate(263 17)">
+      <g id="그룹_3" data-name="그룹 3" transform="translate(0 0)">
+        <line id="선_1" data-name="선 1" x2="4" y2="4" transform="translate(14 14)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="패스_11" data-name="패스 11" d="M492.44,172.863a7.838,7.838,0,1,1-7.84-7.795A7.822,7.822,0,0,1,492.44,172.863Z" transform="translate(-476.765 -165.069)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

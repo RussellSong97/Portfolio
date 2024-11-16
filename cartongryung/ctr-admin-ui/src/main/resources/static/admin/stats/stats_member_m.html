@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>통계/분석 > 회원 통계 > 월별</title>
+		<link rel="stylesheet" href="../css/general.css?v=1656408363">
+		<link rel="stylesheet" href="../css/jquery-ui.css">
+		<script src="../js/jquery-1.12.4.min.js"></script>
+		<script src="../js/jquery-ui.js"></script>
+		<script src="../js/layout.js"></script>
+
+		<!-- chart.js -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<!-- Header Start-->
+			<header id="header">
+				<div class="header_top">
+					<div class="header_info">
+						<h1 class="admin_title">ADMINISTRATOR</h1>
+					</div>
+					<div class="header_util">
+						<div class="user_info">
+							<i class="ico_profile"></i>
+							<span class="user_name"><span>OOO</span> 님 로그인 하였습니다.</span>
+						</div>
+						<a href="javascript:;" class="btn_u"><i class="ico_logout"></i>LOGOUT</a>
+					</div>
+				</div>
+				<div class="header_btm">
+					<nav id="gnb" class="gnb">
+						<ul>
+							<li><a href="../main/index.html">홈</a></li>
+							<li><a href="../member/member_list.html">회원</a></li>
+							<li><a href="../purchase/purchase_list_able.html">내차 구입</a></li>
+							<li><a href="../sale/sale_list_able.html">내차 팔기</a></li>
+							<li><a href="../management/sale_vehicle_list.html">차량관리</a></li>
+							<li><a href="../board/notice_list.html">게시판</a></li>
+							<li><a href="../promotion/event_list.html">프로모션</a></li>
+							<li><a href="../stats/stats_member.html">통계/분석</a></li>
+							<li><a href="../etc/dealer_list.html">기타</a></li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+			<!-- //Header End-->
+
+			<div id="container">
+				<h2 class="blind">리스트 페이지</h2>
+				<section class="sub_section">
+					<div class="content_wrap">
+						<!--Lnb Start-->
+						<div id="lnb">
+							<button type="button" class="openBtn">&lt;</button>
+							<h2 class="tit">
+								<span>통계/분석</span>
+							</h2>
+							<ul class="menu">
+								<li class="btn_sub">
+									<a href="./stats_member.html">회원 통계</a>
+								</li>
+								<li class="btn_sub">
+									<a href="./stats_counselor.html">상담원 통계</a>
+								</li>
+								<li class="btn_sub">
+									<a href="./stats_dealer.html">딜러 통계</a>
+								</li>
+                                <li class="btn_sub">
+									<a href="./stats_consult.html">상담 현황</a>
+								</li>
+                                <li class="btn_sub">
+									<a href="./stats_google.html">구글애널리틱스</a>
+								</li>
+							</ul>
+						</div>
+						<!--//Lnb End-->
+
+						<!--Content Start-->
+						<div class="content">
+							<div class="content_head">
+								<h3>회원 통계</h3>
+                                <div class="list_count">
+                                    <a href="./stats_member.html" class="tab_list01 ">일별</a>
+                                    <a href="./stats_member_m.html" class="tab_list02 on">월별</a>
+                                    <a href="./stats_member_y.html" class="tab_list03">년별</a>
+                                </div>
+							</div>
+							<div class="content_body">
+								<div class="stats">
+
+									<!-- Search Start -->
+									<div class="search_wrap">
+										<table>
+											<caption>검색</caption>
+											<colgroup>
+												<col style="width:10%;">
+												<col style="width:auto;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기간</th>
+													<td>
+														<input type="text" id="datepicker1" class="ico_date" name="period01"  placeholder="시작일">
+														<span class="tilde">~</span>
+														<input type="text" id="datepicker2" class="ico_date" name="period01"  placeholder="종료일">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="btn_area align_c mt20">
+											<button type="button" class="btn">검색</button>
+										</div>
+									</div>
+									<!-- //Search End -->
+	
+                                    <!-- Chart Start -->
+                                    <div class="chart_wrap">
+                                        <canvas id="memberMonth"></canvas>
+                                    </div>
+                                    <!-- Chart End -->
+
+									<!-- List Start -->
+									<div class="list_wrap">
+										<div class="list_top">
+											<div class="txt_area">
+												<p>2024년 01월부터 2024년 05월까지의 검색결과</p>
+											</div>
+											<div class="util_area">
+												<a href="javascript:;" class="btn btn_form1">엑셀 다운로드</a>
+											</div>
+										</div>
+										<div class="list_table">
+											<table>
+												<caption>검색 결과</caption>
+												<colgroup>
+													<col style="width:50%;">
+													<col style="width:50%;">
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col">날짜</th>
+														<th scope="col">회원수</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td colspan="2">통계 결과가 없습니다.</td>
+													</tr>
+													<tr>
+														<td>2024-01</td>
+														<td>0</td>
+													</tr>
+                                                    <tr>
+														<td>2024-02</td>
+														<td>0</td>
+													</tr>
+                                                    <tr>
+														<td>2024-05</td>
+														<td>0</td>
+													</tr>
+                                                    <tr class="total">
+                                                        <td>합계</td>
+                                                        <td>0</td>
+                                                    </tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!-- //List Start -->
+								</div>
+							</div>
+						</div>
+						<!--//Content End-->
+					</div>
+				</section>
+			</div>
+		</div>
+		<script>
+			// 페이지에서만 사용하는 스크립트
+			$('#gnb ul li').eq(7).addClass('on');
+			$('#lnb ul.menu > li').eq(0).find(' > a ').addClass('skin_bg');
+
+			//차트
+            new Chart(document.getElementById("memberMonth"), {
+                type: 'line',
+                data: {
+                    labels: ['2024.01', '2024.02', '2024.03', '2024.04', '2024.05'],
+                    datasets: [{
+                        label: '',
+                        data: [10,3,30,23,10],
+                        borderColor: "rgba(185,37,43, 0.6)",
+                        backgroundColor: "rgba(185,37,43)",
+                        fill: false,
+                        lineTension: 0
+                    }],
+                },
+                options: {
+                    plugins: {
+						legend: {
+							display: false
+						},
+                    },
+                    maintainAspectRatio :false,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: false,
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                align: 'end',
+                                color: '#222',
+                                font: {
+                                    size: 14,
+                                    weight: 400,
+                                },
+                                text: '명 수'
+                            },
+                        }
+                    }
+                }
+            });
+		</script>
+	</body>
+
+</html>

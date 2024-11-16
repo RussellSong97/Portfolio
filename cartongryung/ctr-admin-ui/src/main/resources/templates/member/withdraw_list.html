@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>회원 > 탈퇴 회원 > 목록 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_member :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>탈퇴 회원</h3>
+    </div>
+    <div class="content_body">
+        <div class="member">
+            <form th:object="${condition}">
+            <!-- Search Start -->
+                <div class="search_wrap">
+                    <table>
+                        <caption>검색</caption>
+                        <colgroup>
+                            <col style="width:10%;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th scope="row">키워드</th>
+                                <td>
+                                    <select name="type" id="type" style="width: 150px;" th:field="*{type}">
+                                        <option value="all">전체</option>
+                                        <option value="name">이름</option>
+                                        <option value="email">이메일</option>
+                                        <option value="phone">휴대폰번호</option>
+                                    </select>
+                                    <input type="text" name="s" th:field="*{s}" title="키워드" placeholder="" style="width: 40%;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">가입일</th>
+                                <td>
+                                    <input type="text" id="datepicker1" class="ico_date" name="startDate" th:field="*{startDate}" placeholder="시작일">
+                                    <span class="tilde">~</span>
+                                    <input type="text" id="datepicker2" class="ico_date" name="endDate" th:field="*{endDate}"  placeholder="종료일">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_area align_c mt20">
+                        <button type="submit" class="btn">검색</button>
+                    </div>
+                </div>
+            </form>
+            <!-- //Search End -->
+
+            <!-- List Start -->
+            <div class="list_wrap">
+                <div class="list_top">
+                    <div class="txt_area">
+                        <p>총 <em th:text="${#numbers.formatInteger(withdrawList.totalElements, 1, 'COMMA')}">0,000</em>건</p>
+                    </div>
+                    <div class="util_area">
+                        <button type="button" class="btn btn_form1" id="btnExcelDownload">엑셀 다운로드</button>
+                    </div>
+                </div>
+                <div class="list_table">
+                    <table>
+                        <caption>검색 결과</caption>
+                        <colgroup>
+                            <col style="width:5%;">
+                            <col style="width:8%;">
+                            <col style="width:12%;">
+                            <col style="width:10%;">
+                            <col style="width:10%;">
+                            <col style="width:8%;">
+                            <col style="width:16%;">
+                            <col style="width:6%;">
+                            <col style="width:6%;">
+                            <col style="width:8%;">
+                            <col style="width:10%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">번호</th>
+                                <th scope="col">이름</th>
+                                <th scope="col">이메일(아이디)</th>
+                                <th scope="col">휴대폰번호</th>
+                                <th scope="col">가입일자</th>
+                                <th scope="col">가입 구분</th>
+                                <th scope="col">최근방문일시</th>
+                                <th scope="col">내 차 구입</th>
+                                <th scope="col">내 차 팔기</th>
+                                <th scope="col">탈퇴 일시</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="11" th:if="${withdrawList.isEmpty()}">등록된 회원이 없습니다.</td>
+                            </tr>
+                            <tr th:each="list : ${withdrawList}">
+                                <td th:text="${#numbers.formatInteger(withdrawList.totalElements - withdrawList.number * withdrawList.size - listStat.index, 1, 'COMMA')}">50</td>
+                                <td><a th:href="@{/admin/member/member/__${list.id}__}" class="btn_link" th:text="${list.realName}">홍길동</a></td>
+                                <td><a th:href="@{/admin/member/member/__${list.id}__}" class="btn_link" th:text="${list.email}">000@test.com</a></td>
+                                <td><a th:href="@{/admin/member/member/__${list.id}__}" class="btn_link" th:text="${list.mobileNumber}">010-0000-0000</a></td>
+                                <td th:text="${#temporals.format(list.memberCreatedAt, 'yyyy-MM-dd')}">YYYY-MM-DD</td>
+                                <td th:text="${list.regCode.detail}">이메일</td>
+                                <td th:text="${#temporals.format(list.lastLoginAt, 'yyyy-MM-dd HH:mm:ss')}">YYYY-MM-DD 15:00:00</td>
+                                <td th:text="${#numbers.formatInteger(list.purchaseCount, 1, 'COMMA')}">1회</td>
+                                <td th:text="${#numbers.formatInteger(list.saleCount, 1, 'COMMA')}">0회</td>
+                                <td th:text="${#temporals.format(list.withdrawAt, 'yyyy-MM-dd HH:mm:ss')}">탈퇴 24-05-06</td>
+                                <td>
+                                    <button type="button" class="btn_s" onclick="remove_check()" th:if="${list.statusCode.code ne 'MST003'}">탈퇴</button>
+                                    <a href="#" th:if="${list.statusCode.code}" class="btn_link ml20" th:onclick="'openPopup(' + ${list.id} + ')'">사유</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:replace="~{fragments/pagination :: pagination (${withdrawList})}"></div>
+            </div>
+            <!-- //List Start -->
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+    // 페이지에서만 사용하는 스크립트
+    $('#gnb ul li').eq(1).addClass('on');
+    $('#lnb ul.menu > li').eq(1).find(' > a ').addClass('skin_bg');
+
+    function openPopup(id) {
+        console.log(id)
+        const popupUrl = `/admin/member/withdraw/popup/${id}`;
+        window.open(popupUrl, '팝업창', 'width=500, height=500');
+    }
+
+    // 엑셀 다운로드
+    document.getElementById('btnExcelDownload').addEventListener('click', () => {
+        console.log("철회");
+        const form = document.forms[0];
+        form.append();
+        form.action = '/admin/member/withdraw/excel';
+        form.submit();
+        form.action = '';
+    });
+</script>
+</html>

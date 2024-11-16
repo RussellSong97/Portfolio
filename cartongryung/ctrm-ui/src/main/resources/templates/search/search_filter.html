@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel, HtmlFormInputWithoutLabel -->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_mobile}">
+<th:block layout:fragment="content">
+    <div class="m-find">
+        <div class="m-filter-wrap">
+            <div class="link-wrap">
+                <a href="/search/product/mobile/filter/maker" class="btn-link on">제조사 / 모델로 검색</a>
+            </div>
+            <div class="filter-list">
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">정렬</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="sort-list">
+                            <li>
+                                <input type="radio" name="sort2" data-type="pick" id="sort2_1" value="pick" class="orderByClass">
+                                <label for="sort2_1" class="sort">인기순</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort2" data-type="recent" id="sort2_2" value="recent" class="orderByClass">
+                                <label for="sort2_2" class="sort">최신순</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort2" data-type="downPrice" id="sort2_3" value="downPrice" class="orderByClass">
+                                <label for="sort2_3" class="sort">저가순</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort2" data-type="upPrice" id="sort2_4" value="upPrice" class="orderByClass">
+                                <label for="sort2_4" class="sort">고가순</label>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">가격</span>
+                            <button type="button" class="btn-input" onclick="$popup.template('#priceDirectPopup')">직접 입력</button>
+                        </div>
+                    </dt>
+                    <dd>
+                        <div class="range-slider">
+                            <div class="slider-labels">
+                                <span id="price-range-text" class="range-text">
+                                    <span id="price-min-value" class="value">0</span>
+                                    <span class="to">~</span>
+                                    <span id="price-max-value" class="value">1000</span>
+                                    <span class="unit">원</span>
+                                </span>
+                                <span id="full-price-range" class="all" style="display: none;">전체</span>
+                            </div>
+                            <p class="range-value">
+                                <input type="text" id="price-amount" readonly>
+                            </p>
+                            <div id="price-slider-range" class="range-bar"></div>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">주행거리</span>
+                            <button type="button" class="btn-input" onclick="$popup.template('#kmDirectPopup')">직접 입력</button>
+                        </div>
+                    </dt>
+                    <dd>
+                        <div class="range-slider">
+                            <div class="slider-labels">
+                            <span id="km-range-text" class="range-text">
+                                <span id="km-min-value" class="value">0</span>
+                                <span class="to">~</span>
+                                <span id="km-max-value" class="value">2000000</span>
+                                <span class="unit">km</span>
+                            </span>
+                                <span id="full-km-range" class="all" style="display: none;">전체</span>
+                            </div>
+                            <p class="range-value">
+                                <input type="text" id="km-amount" readonly>
+                            </p>
+                            <div id="km-slider-range" class="range-bar"></div>
+                        </div>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">연식</span>
+                            <button type="button" class="btn-input" onclick="$popup.template('#yearDirectPopup')">직접 입력</button>
+                        </div>
+                    </dt>
+                    <dd>
+                        <div class="range-slider">
+                            <div class="slider-labels">
+                            <span id="year-range-text" class="range-text">
+                                <span id="year-min-value" class="value">0</span>
+                                <span class="to">~</span>
+                                <span id="year-max-value" class="value">2500</span>
+                                <span class="unit">년</span>
+                            </span>
+                                <span id="full-year-range" class="all" style="display: none;">전체</span>
+                            </div>
+                            <p class="range-value">
+                                <input type="text" id="year-amount" readonly>
+                            </p>
+                            <div id="year-slider-range" class="range-bar"></div>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">연료</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="chk-list">
+                            <li th:each="fuel : ${carFuel}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="searchClass" data-type="fuel" name="fuel" th:value="${fuel.carFuel}" th:id="'fuel' + ${fuel.id}">
+                                    <label th:for="'fuel' + ${fuel.id}" th:text="${fuel.carFuel}">가솔린</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">변속기</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="chk-list col-3">
+                            <li th:each="trans : ${carIstdTrans}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="searchClass" data-type="trans" name="carMission" th:value="${trans.carMission}" th:id="'carMission' + ${trans.id}">
+                                    <label th:for="'carMission' + ${trans.id}" th:text="${trans.carMission}">오토</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <div class="tit-area">
+                            <span class="tit">색상</span>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="color-list" id="carColorUlTag">
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="btn-wrap type-fixed">
+                <button type="button" class="btn is-reset" onclick="resetbtn()">초기화</button>
+                <button type="button" class="btn" onclick="submitSearch()">
+<!--                    <span id="totalCarCount" th:text="${totalCount}" th:data-initial-count="${totalCount}">8,001</span>-->
+                    확인
+                </button>
+            </div>
+        </div>
+        <div class="wbz-popup-cont is-template size-s" id="priceDirectPopup">
+            <div class="popup-header">
+                <button class="popup-close popup-close-just" onclick="$popup.close();">닫기</button>
+            </div>
+            <div class="popup-cont">
+                <div class="input-wrap range">
+                    <div class="input-box">
+                        <h4 class="tit">최소 가격</h4>
+                        <label for="rangeDownPrice">만원</label>
+                        <input type="text" name="range" id="rangeDownPrice" placeholder="" oninput="formatNumber(this)">
+                    </div>
+                    <span>~</span>
+                    <div class="input-box">
+                        <h4 class="tit">최대 가격</h4>
+                        <label for="rangeUpPrice">만원</label>
+                        <input type="text" name="range" id="rangeUpPrice" placeholder="" oninput="formatNumber(this)">
+                    </div>
+                </div>
+                <div class="popup-button">
+                    <button type="button" class="cr_1 popup-confirm" id="checkPriceBtn">확인</button>
+                </div>
+            </div>
+            <div id="priceToast" class="toast">
+                <div class="toast-content">
+                    <p id="toast-message">최소 가격이 최대 가격보다 클 수 없습니다.</p>
+                </div>
+            </div>
+        </div>
+        <!-- // 가격 직접입력 팝업 -->
+
+        <!-- 거리 직접입력 팝업 -->
+        <div class="wbz-popup-cont is-template size-s" id="kmDirectPopup">
+            <div class="popup-header">
+                <button class="popup-close popup-close-just" onclick="$popup.close();">닫기</button>
+            </div>
+            <div class="popup-cont">
+                <div class="input-wrap range">
+                    <div class="input-box">
+                        <h4 class="tit">최소 거리</h4>
+                        <label for="startRange">Km</label>
+                        <input type="text" name="range" id="startRange" placeholder="" oninput="formatNumber(this)">
+                    </div>
+                    <span>~</span>
+                    <div class="input-box">
+                        <h4 class="tit">최대 거리</h4>
+                        <label for="endRange">Km</label>
+                        <input type="text" name="range" id="endRange" placeholder="" oninput="formatNumber(this)">
+                    </div>
+                </div>
+                <div class="popup-button">
+                    <button type="button" class="cr_1 popup-confirm" id="checkKmBtn">확인</button>
+                </div>
+            </div>
+            <div id="kmToast" class="toast">
+                <div class="toast-content">
+                    <p id="kmToastMessage">최소 거리가 최대 거리보다 클 수 없습니다.</p>
+                </div>
+            </div>
+        </div>
+        <!-- // 거리 직접입력 팝업 -->
+
+        <!-- 연식 직접입력 팝업 -->
+        <div class="wbz-popup-cont is-template size-s" id="yearDirectPopup">
+            <div class="popup-header">
+                <button class="popup-close popup-close-just" onclick="$popup.close();">닫기</button>
+            </div>
+            <div class="popup-cont">
+                <div class="input-wrap range">
+                    <div class="input-box">
+                        <h4 class="tit">최소 연식</h4>
+                        <label for="startYear">부터</label>
+                        <select name="range" id="startYear" required>
+                            <option value="">전체</option>
+                            <option th:value="${year}" th:each="year : ${yearList}"
+                                    th:text="${year + '년'}">2023
+                            </option>
+                        </select>
+                    </div>
+                    <span>~</span>
+                    <div class="input-box">
+                        <h4 class="tit">최대 연식</h4>
+                        <label for="endYear">까지</label>
+                        <select name="range" id="endYear" required>
+                            <option value="">전체</option>
+                            <option th:value="${year}" th:each="year : ${yearList}"
+                                    th:text="${year + '년'}">2023
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="popup-button">
+                    <button type="button" class="cr_1 popup-confirm" id="checkYearBtn">확인</button>
+                </div>
+            </div>
+            <div id="yearToast" class="toast">
+                <div class="toast-content">
+                    <p id="yearToastMessage">최소 연식이 최대 연식보다 클 수 없습니다.</p>
+                </div>
+            </div>
+        </div>
+        <!-- // 연식 직접입력 팝업 -->
+    </div>
+    <div class="loading-wrap" style="display:none">
+        <div class="progress-wrap">
+            <div class="pw-bar">
+                <div class="pw-bar-inner" id="loadingStyle" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+<script layout:fragment="script" th:inline="javascript">
+    var hdNm = "필터";
+    const searchParams = new URLSearchParams();
+    let data = {
+        selectedFuels: [],
+        transmissions: [],
+        selectSidos:[],
+        selectedOptions : [],
+        selectedColors : [],
+        startPrice: '',
+        endPrice : '',
+        startKm : '',
+        endKm : '',
+        startYear : '',
+        endYear : '',
+        sortBy : ''
+    };
+    let isOptionLoaded = false;  // 옵션 데이터가 이미 로드되었는지 여부를 추적
+    let isOptionVisible = false; // 옵션이 현재 보이는지 여부를 추적
+
+    function fnBack() {
+        location.href = "/search/product";
+    }
+
+    function toggleOptionTag() {
+        const optionTag = document.getElementById("mobileOptionTag");
+
+        if (!isOptionVisible) {
+            // 옵션이 보이지 않는 상태일 때
+            if (!isOptionLoaded) {
+                // 데이터가 로드되지 않은 경우
+                changeOptionTag();
+            } else {
+                // 데이터가 이미 로드된 경우, 그냥 보여줍니다.
+                optionTag.style.display = '';
+            }
+            isOptionVisible = true;
+        } else {
+            // 옵션이 보이는 상태일 때
+            optionTag.style.display = 'none';
+            isOptionVisible = false;
+        }
+    }
+
+    function changeOptionTag() {
+        fetch("/api/search/mobile/option", {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code == 200) {
+                    const optionTagElement = document.getElementById("mobileOptionTag");
+                    optionTagElement.style.display = '';
+                    optionTagElement.innerHTML = ''; // 기존 내용을 비웁니다.
+
+                    result.data.forEach(option => {
+                        let html = `
+                    <li>
+                        <div class="checkbox">
+                            <input type="checkbox" value="${option.carGradeNbr}" data-type="option" name="${option.id}" id="option_${option.id}" class="searchClass">
+                            <label for="option_${option.id}">${option.optionName}</label>
+                        </div>
+                    </li>`;
+                        optionTagElement.innerHTML += html;
+                    });
+
+                    // 체크박스에 대한 이벤트 리스너를 등록합니다.
+                    registerCheckboxEventListeners();
+
+                    isOptionLoaded = true; // 데이터 로드 완료
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // 데이터 로드 실패 시 처리
+            });
+    }
+
+    // 기존의 체크박스 이벤트 리스너를 등록하는 부분
+    function registerCheckboxEventListeners() {
+        document.querySelectorAll(".searchClass").forEach(tag => {
+            tag.addEventListener("change", performSearch);
+        });
+    }
+
+    function performSearch() {
+        data.selectedFuels = [];
+        data.transmissions = [];
+        data.selectSidos = [];
+        data.selectedOptions = [];
+        data.selectedColors = [];
+
+        let selectedTags = document.querySelectorAll(".searchClass:checked"); // 선택된 모든 요소를 가져옴
+
+        selectedTags.forEach(selectedTag => {
+            let type = selectedTag.getAttribute("data-type");
+
+            if (type === 'fuel') {
+                data.selectedFuels.push(selectedTag.value);
+            }
+            if (type === 'trans') {
+                data.transmissions.push(selectedTag.value);
+            }
+            if (type === 'sido') {
+                data.selectSidos.push(selectedTag.value);
+            }
+            if (type === 'option') {
+                data.selectedOptions.push(selectedTag.value);
+            }
+            if(type === 'color') {
+                data.selectedColors.push(selectedTag.value);
+            }
+        });
+
+        // 각 배열을 쿼리 파라미터로 추가
+        if (data.selectedFuels.length > 0) {
+            searchParams.set('fuel', data.selectedFuels.join(','));
+        }
+        if (data.transmissions.length > 0) {
+            searchParams.set('transmissions', data.transmissions.join(','));
+        }
+        if (data.selectSidos.length > 0) {
+            searchParams.set('sido', data.selectSidos.join(','));
+        }
+        if (data.selectedOptions.length > 0) {
+            searchParams.set('option', data.selectedOptions.join(','));
+        }
+        if (data.selectedColors.length > 0) {
+            searchParams.set('color', data.selectedColors.join(','));
+        }
+    }
+
+
+    // 옵션 태그 클릭하면 옵션 정보 가져오기
+    const colorMappings = {
+        "선택": "background: #fff;color: #222;border: 1px solid #222;",
+        "미선택": "background: #fff;color: #222;border: 1px solid #222;",
+        "흰색": "background : #fff",
+        "검정색": "background : #000",
+        "갈색": "background : #9F6335",
+        "청색": "background : #124280",
+        "빨간색": "background : #EF1717",
+        "검정투톤": "background : linear-gradient(to right, #474747 0%, #474747 50%, #000000 50%, #000000 100%)",
+        "진주색": "background : #F8F8E2",
+        "연금색": "background : #8E8574",
+        "하늘색": "background : #96E3E9",
+        "주황색": "background : #FF7F00",
+        "쥐색": "background : #616161",
+        "흰색투톤": "background : linear-gradient(to right, #ffffff 0%, #ffffff 50%, #D7D7D7 50%, #D7D7D7 100%)",
+        "담녹색": "background : #4b654b",
+        "자주색": "background : #7D255B",
+        "은색": "background: linear-gradient(to bottom, #C0C0C0 0%,#fff 50%,#C0C0C0 100%)",
+        "진주투톤": "background : linear-gradient(to right, #F8F8E2 0%, #F8F8E2 50%, #DDDDC9 50%, #DDDDC9 100%)",
+        "갈색투톤": "background : linear-gradient(to right, #685A35 0%, #685A35 50%, #464741 50%, #464741 100%)",
+        "녹색": "background : #008000",
+        "보라색": "background : #8F4496",
+        "은회색": "background : #BCBCBC",
+        "은하색": "background : #A6B2B0",
+        "금색": "background: linear-gradient(to bottom, #C8A51D 0%,#F8E7AF 50%,#C8A51D 100%)",
+        '회색': 'background: #EEEEEE;',
+        "연두색": "background : #9AB95C",
+        "분홍색": "background : #FFC3D8",
+        '파란색': 'background: #0466FA;',
+        "은색투톤": "background : linear-gradient(to right, #C0C0C0 0%, #C0C0C0 50%, #464741 50%, #464741 100%)",
+        "명은색": "background : #CFD8E7",
+        "금색투톤": "background : linear-gradient(to right, #837538 0%, #837538 50%, #464741 50%, #464741 100%)",
+        "청록색": "background : #1F7D7C",
+        "노란색": "background : #FFDD00"
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        let colorList = /*[[${carColors}]]*/ [];
+        let html = ``;
+        colorList.forEach((item, index) => {
+            const colorStyle = colorMappings[item.carColor] || '';
+
+            html +=
+                `<li class="color_${index}">
+                    <div class="checkbox">
+                        <input type="checkbox" class="searchClass" data-type="color" name="color" value="${item.carColor}" id="colorSelect_${index}">
+                        <label for="colorSelect_${index}">
+                            <span class="color" style="${colorStyle}">${item.carColor}</span>
+                        </label>
+                    </div>
+                    <span class="txt">${item.carColor}</span>
+                </li>`;
+        })
+
+        document.getElementById("carColorUlTag").innerHTML = html;
+        registerCheckboxEventListeners();
+    });
+
+    // orderBy 조건 선택후
+    document.querySelectorAll(".orderByClass").forEach(tag => {
+        tag.addEventListener("change", function () {
+            let orderBy = tag.value;
+
+            searchParams.set('sortBy', orderBy)
+        });
+    });
+
+    // 슬라이더 움직일때 마다 변경
+    function updateSliderTrack() {
+        const sliderLeft = document.getElementById("slider3-left");
+        const sliderRight = document.getElementById("slider3-right");
+        const range = document.getElementById("slider3-range");
+
+        const min = sliderLeft.min;
+        const max = sliderLeft.max;
+
+        const leftValue = (sliderLeft.value - min) / (max - min) * 100;
+        const rightValue = (sliderRight.value - min) / (max - min) * 100;
+
+        range.style.left = leftValue + "%";
+        range.style.right = (100 - rightValue) + "%";
+    }
+
+
+    // 검색 이벤트
+    let isLoading = false;
+    let progressBarInterval;
+
+    // 게이지 채우는 함수
+    function updateProgressBar() {
+        let progressBar = document.getElementById('loadingStyle');
+        let width = 0;
+        progressBar.style.width = width + '%';
+
+        progressBarInterval = setInterval(() => {
+            if (width >= 100) {
+                // clearInterval(progressBarInterval);
+            } else {
+                width += 10; // 진행 상태를 1%씩 증가
+                progressBar.style.width = width + '%';
+            }
+        }, 60); // 30ms 간격으로 1%씩 증가
+    }
+
+    // 검색 (확인 버튼 클릭 후)
+
+    function submitSearch() {
+        if (isLoading) return;
+        isLoading = true;
+
+        // 로딩 바를 화면에 표시
+        let loadingWrap = document.querySelector(".loading-wrap");
+        loadingWrap.style.display = 'block'; // 로딩 바 DOM 요소를 표시
+
+        // 검색 파라미터 설정
+        searchParams.set('page', 1); // 예시로 'page' 파라미터를 설정
+
+        // API 요청을 보낼 URL
+        const apiUrl = '/api/search/product?' + searchParams.toString();
+
+        // API 요청 보내기
+        // fetch(apiUrl)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log('검색 결과:', data);
+
+                // 페이지를 이동할 경로를 설정
+                window.location.href = '/search/product?' + searchParams.toString();
+
+                // 로딩 바 숨기기
+                loadingWrap.style.display = 'none';
+                isLoading = false;
+            // })
+            // .catch(error => {
+            //     console.error('검색 중 오류 발생:', error);
+            //
+            //     // 에러 처리
+            //     loadingWrap.style.display = 'none';
+            //     isLoading = false;
+            // });
+    }
+
+
+    $(function() {
+        // 주행거리 슬라이더 초기화
+        $("#km-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 300000,
+            values: [0, 300000],
+            step: 100, // 100단위로 움직이게 설정
+            slide: function(event, ui) {
+                updateKmDisplay(ui.values);
+                searchParams.set('startKm', ui.values[0])
+                searchParams.set('endKm', ui.values[1])
+                // data.startKm = ui.values[0];
+                // data.endKm = ui.values[1];
+            },
+            create: function() {
+                // 초기 로드 시 주행 거리 표시 업데이트
+                updateKmDisplay($(this).slider("values"));
+            }
+        });
+
+          // 초기 스텝 값 설정
+
+        $("#price-slider-range").slider({
+            range: true,
+            min: 0,  // 최솟값 0원
+            max: 1000000000,  // 최댓값 10억 원
+            values: [0, 1000000000],  // 초기값 설정
+            step: 1000000,  // 기본 100만 원 단위
+            slide: function(event, ui) {
+                // 슬라이더 값이 1억 이상인 경우 step 값 변경
+                if (ui.values[0] >= 100000000 || ui.values[1] >= 100000000) {
+                    $(this).slider('option', 'step', 50000000);
+                } else {
+                    $(this).slider('option', 'step', 1000000);
+                }
+
+                updatePriceDisplay(ui.values);
+                searchParams.set('startPrice', ui.values[0]);
+                searchParams.set('endPrice', ui.values[1]);
+            },
+            create: function() {
+                updatePriceDisplay($(this).slider("values"));
+            }
+        });
+
+
+        function updatePriceDisplay(values) {
+            // console.log(values); // 필터 - 가격 조정시 나오는 것
+            let minPrice, maxPrice;
+            let minDisplay, maxDisplay;
+
+            // 최소값에 대한 표시
+            if (values[0] >= 1000000000) {
+                minPrice = values[0] / 1000000000;
+                minDisplay = minPrice.toFixed(0) + '억';
+            } else if (values[0] >= 100000000) {
+                minPrice = Math.floor(values[0] / 100000000);
+                let remainder = values[0] % 100000000;
+                if (remainder >= 50000000) {
+                    minDisplay = minPrice.toFixed(0) + '억 5천만';
+                } else if (remainder === 0) {
+                    minDisplay = minPrice.toFixed(0) + '억';
+                } else {
+                    minDisplay = minPrice.toFixed(0) + '억';
+                }
+            } else if (values[0] >= 10000000) {
+                minPrice = values[0] / 10000000;
+                let remainder = values[0] % 10000000;
+                if (remainder === 0) {
+                    minDisplay = minPrice.toFixed(0) + '천만';
+                } else {
+                    let millionPart = Math.floor(remainder / 1000000);
+                    minDisplay = Math.floor(minPrice) + '천' + millionPart + '백만';
+                }
+            } else {
+                minPrice = values[0] / 1000000;
+                minDisplay = minPrice.toFixed(0) + '백만';
+            }
+
+            // 최대값에 대한 표시
+            if (values[1] === 1000000000) {
+                maxDisplay = '10억';
+            } else if (values[1] >= 100000000) {
+                maxPrice = Math.floor(values[1] / 100000000);
+                let remainder = values[1] % 100000000;
+                if (remainder >= 50000000) {
+                    maxDisplay = maxPrice.toFixed(0) + '억 5천만';
+                } else if (remainder === 0) {
+                    maxDisplay = maxPrice.toFixed(0) + '억';
+                } else {
+                    maxDisplay = maxPrice.toFixed(0) + '억';
+                }
+            } else if (values[1] >= 10000000) {
+                maxPrice = values[1] / 10000000;
+                let remainder = values[1] % 10000000;
+                if (remainder === 0) {
+                    maxDisplay = maxPrice.toFixed(0) + '천만';
+                } else {
+                    let millionPart = Math.floor(remainder / 1000000);
+                    maxDisplay = Math.floor(maxPrice) + '천' + millionPart + '백만';
+                }
+            } else {
+                maxPrice = values[1] / 1000000;
+                maxDisplay = maxPrice.toFixed(0) + '백만';
+            }
+
+            // 가격 범위 텍스트 처리
+            if (values[0] === 0 && values[1] === 1000000000) {
+                document.getElementById("price-range-text").style.display = 'none';
+                document.getElementById("full-price-range").style.display = '';
+            } else {
+                let priceRangeText = document.getElementById('price-range-text');
+                document.getElementById("full-price-range").style.display = 'none';
+                document.getElementById("price-min-value").innerText = minDisplay;
+                document.getElementById("price-max-value").innerText = maxDisplay;
+                priceRangeText.style.display = 'flex';
+            }
+        }
+
+
+        let currentYear = new Date().getFullYear();
+
+        $("#year-slider-range").slider({
+            range: true,
+            min: 1980,
+            max: currentYear,
+            values: [1980, currentYear],
+            step: 1, // 1단위로 움직이게 설정
+            slide: function(event, ui) {
+                updateYearDisplay(ui.values);
+                searchParams.set('startYear', ui.values[0]);
+                searchParams.set('endYear', ui.values[1]);
+                // data.startYear = ui.values[0];
+                // data.endYear = ui.values[1];
+            },
+            create: function() {
+                // 초기 로드 시 연도 표시 업데이트
+                updateYearDisplay($(this).slider("values"));
+            }
+        });
+
+        // 주행거리 초기 설정값 검사 및 표시
+        updateKmDisplay($("#km-slider-range").slider("values"));
+
+        // 가격 초기 설정값 검사 및 표시
+        updateYearDisplay($("#year-slider-range").slider("values"));
+
+        // 주행거리 게이지
+
+        function updateKmDisplay(values) {
+            function formatNumber(number) {
+                // 숫자에 콤마 추가
+                return number.toLocaleString();
+            }
+
+            // 슬라이더 범위에 따라 표시 조정
+            if (values[0] === 0 && values[1] === 300000) {
+                // 전체 범위일 때
+                document.getElementById("km-range-text").style.display = 'none';
+                document.getElementById("full-km-range").style.display = '';
+                document.getElementById("full-km-range").innerText = '전체';
+            } else {
+                let kmRangeText = document.getElementById('km-range-text');
+                document.getElementById("full-km-range").style.display = 'none';
+                document.getElementById("km-min-value").innerText = formatNumber(values[0]);
+                document.getElementById("km-max-value").innerText = formatNumber(values[1]);
+                kmRangeText.style.display = 'flex';
+            }
+        }
+
+        // 연식 게이지
+
+        function updateYearDisplay(values) {
+            // 슬라이더 범위에 따라 표시 조정
+            if (values[0] === 1980 && values[1] === currentYear) {
+                // 전체 범위일 때
+                document.getElementById("year-range-text").style.display = 'none';
+                document.getElementById("full-year-range").style.display = '';
+                document.getElementById("full-year-range").innerText = '전체';
+            } else {
+                let yearRangeText = document.getElementById('year-range-text');
+                document.getElementById("full-year-range").style.display = 'none';
+                document.getElementById("year-min-value").innerText = values[0];
+                document.getElementById("year-max-value").innerText = values[1];
+                yearRangeText.style.display = 'flex';
+            }
+        }
+
+// 초기 값 설정
+        // 초기 값 설정
+        function initializeSlider() {
+            const initialValues = $("#price-slider-range").slider("values");
+            updatePriceDisplay(initialValues);
+        }
+        initializeSlider();
+    });
+
+    // 초기 값 설정
+
+
+    // 팝업 확인 버튼 클릭 후 데이터 노출
+    $(".popup-confirm").on("click", () => {
+        // 입력 필드에서 값 추출
+        let minPrice = getNumberFromString($("#priceDirectPopup input[name='range']").eq(0).val()) * 10000; // 만 원을 원으로 변환
+        let maxPrice = getNumberFromString($("#priceDirectPopup input[name='range']").eq(1).val()) * 10000; // 만 원을 원으로 변환
+        let minKm = getNumberFromString($("#kmDirectPopup input[name='range']").eq(0).val());
+        let maxKm = getNumberFromString($("#kmDirectPopup input[name='range']").eq(1).val());
+        let minYear = getNumberFromString($("#yearDirectPopup select[name='range']").eq(0).val());
+        let maxYear = getNumberFromString($("#yearDirectPopup select[name='range']").eq(1).val());
+
+        // 가격이 빈 값인지 체크
+        if ($("#priceDirectPopup input[name='range']").eq(0).val().trim() === "") minPrice = null;
+        if ($("#priceDirectPopup input[name='range']").eq(1).val().trim() === "") maxPrice = null;
+
+        // 조건 검증
+        if (minPrice !== null && maxPrice !== null && minPrice > maxPrice) {
+            document.getElementById("checkPriceBtn").classList.add('btn-toast');
+            document.getElementById("priceToast").classList.add('show');
+            return; // 유효성 검사 실패 시 함수 종료
+        }
+
+        if (minKm > maxKm) {
+            document.getElementById("checkKmBtn").classList.add('btn-toast');
+            document.getElementById("kmToast").classList.add('show');
+            return; // 유효성 검사 실패 시 함수 종료
+        }
+
+        if (minYear > maxYear) {
+            document.getElementById("checkYearBtn").classList.add('btn-toast');
+            document.getElementById("yearToast").classList.add('show');
+            return; // 유효성 검사 실패 시 함수 종료
+        }
+
+        // 가격 슬라이더 값 업데이트
+        if (minPrice !== null && maxPrice !== null) {
+            $("#price-slider-range").slider("values", [minPrice, maxPrice]);
+            $("#price-min-value").text(formatPrice(minPrice));
+            $("#price-max-value").text(formatPrice(maxPrice));
+            $("#price-range-text").css("display", "flex");
+            document.getElementById("full-price-range").style.display = 'none';
+
+            if (minPrice === 1000000 && maxPrice === 10000000000) {
+                $("#price-range-text").hide();
+                $("#price-full-range").show();
+            } else {
+                $("#price-range-text").css("display", "flex");
+                $("#price-full-range").hide();
+            }
+
+            searchParams.set('startPrice', minPrice);
+            searchParams.set('endPrice', maxPrice);
+            $popup.close(); // 조건이 유효할 때만 팝업 닫기
+        }
+
+        // 주행거리 슬라이더 값 업데이트
+        if (!isNaN(minKm) && !isNaN(maxKm)) {
+            if (minKm !== 0 || maxKm !== 0) {  // 최소나 최대값이 0이 아니면 업데이트
+                let formattedMinKm = formatKilometers(minKm);
+                let formattedMaxKm = formatKilometers(maxKm);
+
+                $("#km-slider-range").slider("values", [minKm, maxKm]);
+                $("#km-min-value").text(formattedMinKm);
+                $("#km-max-value").text(formattedMaxKm);
+                $("#km-range-text").css("display", "flex");
+                document.getElementById("full-km-range").style.display = 'none';
+
+                if (minKm === 0 && maxKm === 2000) {
+                    $("#km-range-text").hide();
+                    $("#km-full-range").show();
+                } else {
+                    $("#km-range-text").css("display", "flex");
+                    $("#km-full-range").hide();
+                }
+                searchParams.set('startKm', minKm);
+                searchParams.set('endKm', maxKm);
+            }
+            $popup.close(); // 조건이 유효할 때만 팝업 닫기
+        }
+
+        // 연도 슬라이더 값 업데이트
+        if (!isNaN(minYear) && !isNaN(maxYear)) {
+            if (minYear !== 0 || maxYear !== 0) {  // 최소나 최대값이 0이 아니면 업데이트
+                $("#year-slider-range").slider("values", [minYear, maxYear]);
+                $("#year-min-value").text(minYear);
+                $("#year-max-value").text(maxYear);
+                $("#year-range-text").css("display", "flex");
+                document.getElementById("full-year-range").style.display = 'none';
+
+                if (minYear === 0 && maxYear === 2030) {
+                    $("#year-range-text").hide();
+                    $("#year-full-range").show();
+                } else {
+                    $("#year-range-text").css("display", "flex");
+                    $("#year-full-range").hide();
+                    $("#year-slider-range").slider("values", [minYear, maxYear]);
+                }
+                searchParams.set('startYear', minYear);
+                searchParams.set('endYear', maxYear);
+                data.startYear = minYear;
+                data.endYear = maxYear;
+            }
+            $popup.close(); // 조건이 유효할 때만 팝업 닫기
+        }
+    });
+
+    function formatPrice(value) {
+        if (value >= 100000000) {
+            // 억 단위로 표시
+            let displayValue = value / 100000000; // 억 단위
+            return displayValue.toFixed(0) + '억';
+        } else if (value >= 10000000) {
+            // 천만원 단위로 표시
+            let displayValue = value / 10000000; // 천만원 단위
+            let remainder = value % 10000000; // 천만원 단위 이하의 나머지
+            if (remainder === 0) {
+                return displayValue.toFixed(0) + '천만';
+            } else {
+                let millionPart = Math.floor(remainder / 1000000);
+                return Math.floor(displayValue) + '천' + millionPart + '백만';
+            }
+        } else {
+            // 백만원 단위로 표시
+            let displayValue = value / 1000000; // 백만원 단위
+            return displayValue.toFixed(0) + '백만';
+        }
+    }
+
+    function formatKilometers(number) {
+        return new Intl.NumberFormat().format(number);
+    }
+    // 숫자 포맷팅 함수
+    function formatNumber(input) {
+        let value = input.value;
+        let formattedValue = value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
+        if (formattedValue) {
+            formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 콤마 추가
+        }
+        input.value = formattedValue;
+    }
+
+    // 문자 숫자로 추출
+    function getNumberFromString(str, defaultValue = 0) {
+        if (str === undefined || str === null || str.trim() === '') {
+            return defaultValue;
+        }
+        let number = parseInt(str.replace(/,/g, ''), 10);
+        return isNaN(number) ? defaultValue : number;
+    }
+
+    function resetbtn() {
+        location.reload();
+    }
+</script>
+</html>

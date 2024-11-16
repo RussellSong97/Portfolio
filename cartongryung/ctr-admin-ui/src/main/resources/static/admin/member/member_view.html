@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>회원 > 활동 회원 > 상세</title>
+		<link rel="stylesheet" href="../css/general.css?v=1656408363">
+		<link rel="stylesheet" href="../css/jquery-ui.css">
+		<script src="../js/jquery-1.12.4.min.js"></script>
+		<script src="../js/jquery-ui.js"></script>
+		<script src="../js/layout.js"></script>
+	</head>
+	
+	<body>
+		<div id="wrap">
+			<!-- Header Start-->
+			<header id="header">
+				<div class="header_top">
+					<div class="header_info">
+						<h1 class="admin_title">ADMINISTRATOR</h1>
+					</div>
+					<div class="header_util">
+						<div class="user_info">
+							<i class="ico_profile"></i>
+							<span class="user_name"><span>OOO</span> 님 로그인 하였습니다.</span>
+						</div>
+						<a href="javascript:;" class="btn_u"><i class="ico_logout"></i>LOGOUT</a>
+					</div>
+				</div>
+				<div class="header_btm">
+					<nav id="gnb" class="gnb">
+						<ul>
+							<li><a href="../main/index.html">홈</a></li>
+							<li><a href="../member/member_list.html">회원</a></li>
+							<li><a href="../purchase/purchase_list_able.html">내차 구입</a></li>
+							<li><a href="../sale/sale_list_able.html">내차 팔기</a></li>
+							<li><a href="../management/sale_vehicle_list.html">차량관리</a></li>
+							<li><a href="../board/notice_list.html">게시판</a></li>
+							<li><a href="../promotion/event_list.html">프로모션</a></li>
+							<li><a href="../stats/stats_member.html">통계/분석</a></li>
+							<li><a href="../etc/dealer_list.html">기타</a></li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+			<!-- //Header End-->
+
+			<div id="container">
+				<h2 class="blind">상세 페이지</h2>
+				<section class="sub_section">
+					<div class="content_wrap">
+						<!--Lnb Start-->
+						<div id="lnb">
+							<button type="button" class="openBtn">&lt;</button>
+							<h2 class="tit">
+								<span>회원</span>
+							</h2>
+							<ul class="menu">
+								<li class="btn_sub">
+									<a href="./member_list.html">활동 회원</a>
+								</li>
+								<li class="btn_sub">
+									<a href="./withdraw_list.html">탈퇴 회원</a>
+								</li>
+								<li class="btn_sub">
+									<a href="./push_list.html">푸시 관리</a>
+								</li>
+							</ul>
+						</div>
+						<!--//Lnb End-->
+
+						<!--Content Start-->
+						<div class="content">
+							<div class="content_head">
+								<h3>활동 회원</h3>
+							</div>
+							<div class="content_body">
+								<div class="member">
+
+									<!-- View Start -->
+									<div class="view_wrap">
+										<div class="flex">
+											<div class="left_wrap">
+												<div class="account_wrap flex">
+													<div class="imgbox"><img src="../images/common/profile_basic.png" alt="회원 이미지"></div>
+													<div class="account">
+														<div class="cate">카카오계정</div>
+														<p><strong>홍길동</strong> gir@daum.net</p>
+													</div>
+												</div>
+												<div class="view_table mt20">
+													<form action="" method="post">
+														<table>
+															<caption>상세</caption>
+															<colgroup>
+																<col style="width:20%;">
+																<col style="width:80%;">
+															</colgroup>
+															<tbody>
+																<tr>
+																	<th scope="row">휴대폰번호 <span class="asta">*</span></th>
+																	<td><label for=""><input type="text" value="010-0000-0000"></label></td>
+																</tr>
+																<tr>
+																	<th scope="row">비밀번호 <span class="asta">*</span></th>
+																	<td><label for=""><input type="password" value="0000"></label></td>
+																</tr>
+																<tr>
+																	<th scope="row">마케팅 수신여부</th>
+																	<td>
+																		<div class="checkbox">
+																			<input type="checkbox" id="agree">
+																			<label for="agree">수신</label>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<th scope="row">가입일자</th>
+																	<td>YYYY-MM-DD</td>
+																</tr>
+																<tr>
+																	<th scope="row">최근방문일시</th>
+																	<td>YYYY-MM-DD 15:00:00</td>
+																</tr>
+																<tr>
+																	<th scope="row">상태 변경 <span class="asta">*</span></th>
+																	<td>
+																		<div class="radiobox">
+																			<input type="radio" id="state01" name="state" value="" checked>
+																			<label for="state01">정상</label>
+																			<input type="radio" id="state02" name="state" value="">
+																			<label for="state02">정지</label>
+																			<input type="radio" id="state03" name="state" value="">
+																			<label for="state03">탈퇴</label>
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+														<div class="btn_area align_r mt10"><button type="button" class="btn_m">저장</button></div>
+													</form>
+												</div>
+												<div class="view_table mt20">
+													<div class="table_top">
+														<h3>관리자 메모</h3>
+														<form action="" class="flex mt10">
+															<div class="input_wrap">
+																<label for=""><input type="text" placeholder="사유입력"></label>
+															</div>
+															<button type="button" class="btn_m">입력</button>
+														</form>
+													</div>
+													<div class="table_btm mt10">
+														<p class="empty">등록된 관리자 메모가 없습니다.</p>
+														<table>
+															<caption>상세</caption>
+															<colgroup>
+																<col style="width:80%;">
+																<col style="width:20%;">
+															</colgroup>
+															<tbody>
+																<tr>
+																	<td>이 고객은 vip 고객입니다. 친절하고 구매 방식이 나이스 합니다.</td>
+																	<td class="align_r">2024.06.08</td>
+																</tr>
+																<tr>
+																	<td>회원이 탈퇴를 요청했습니다.</td>
+																	<td class="align_r">2024.06.07</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="right_wrap">
+												<div class="view_table">
+													<div class="table_top">
+														<h3>내차 구입</h3>
+													</div>
+													<div class="table_btm mt10">
+														<p class="empty">구매 이력이 없습니다.</p>
+														<table>
+															<caption>상세</caption>
+															<colgroup>
+																<col style="width:5%;">
+																<col style="width:20%;">
+																<col style="width:20%;">
+																<col style="width:10%;">
+															</colgroup>
+															<tbody>
+																<tr>
+																	<td class="align_c">3</td>
+																	<td><a href="../purchase/purchase_view_able.html" class="btn_link">Q240506-001</a></td>
+																	<td><a href="../management/sale_vehicle_view.html" class="btn_link">52가 0000</a></td>
+																	<td class="align_r">2024.06.07</td>
+																</tr>
+																<tr>
+																	<td class="align_c">2</td>
+																	<td><a href="../purchase/purchase_view_able.html" class="btn_link">Q240506-001</a></td>
+																	<td><a href="../management/sale_vehicle_view.html" class="btn_link">52가 0000</a></td>
+																	<td class="align_r">2024.06.03</td>
+																</tr>
+																<tr>
+																	<td class="align_c">2</td>
+																	<td><a href="../purchase/purchase_view_able.html" class="btn_link">QYYMMDD-001</a></td>
+																	<td><a href="../management/sale_vehicle_view.html" class="btn_link">00나 0000</a></td>
+																	<td class="align_r">2024.06.03</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="view_table mt20">
+													<div class="table_top">
+														<h3>내차 팔기</h3>
+													</div>
+													<div class="table_btm mt10">
+														<p class="empty">판매 이력이 없습니다.</p>
+														<table>
+															<caption>상세</caption>
+															<colgroup>
+																<col style="width:5%;">
+																<col style="width:20%;">
+																<col style="width:20%;">
+																<col style="width:10%;">
+															</colgroup>
+															<tbody>
+																<tr>
+																	<td class="align_c">3</td>
+																	<td><a href="../sale/sale_view_able.html" class="btn_link">Q240506-001</a></td>
+																	<td><a href="../management/sale_vehicle_view.html" class="btn_link">52가 0000</a></td>
+																	<td class="align_r">2024.06.07</td>
+																</tr>
+																<tr>
+																	<td class="align_c">2</td>
+																	<td><a href="../sale/sale_view_able.html" class="btn_link">Q240506-001</a></td>
+																	<td><a href="../management/sale_vehicle_view.html" class="btn_link">52가 0000</a></td>
+																	<td class="align_r">2024.06.03</td>
+																</tr>
+																<tr>
+																	<td class="align_c">2</td>
+																	<td><a href="../sale/sale_view_able.html" class="btn_link">QYYMMDD-001</a></td>
+																	<td><a href="../management/sale_vehicle_view.html" class="btn_link">00나 0000</a></td>
+																	<td class="align_r">2024.06.03</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="btn_area align_r mt20"><a href="./member_list.html" class="btn btn_form4">목록</a></div>
+											</div>
+										</div>
+									</div>
+									<!-- //View Start -->
+								</div>
+							</div>
+						</div>
+						<!--//Content End-->
+					</div>
+				</section>
+			</div>
+		</div>
+		<script>
+			// 페이지에서만 사용하는 스크립트
+			$('#gnb ul li').eq(1).addClass('on');
+			$('#lnb ul.menu > li').eq(0).find(' > a ').addClass('skin_bg');
+		</script>
+	</body>
+
+</html>

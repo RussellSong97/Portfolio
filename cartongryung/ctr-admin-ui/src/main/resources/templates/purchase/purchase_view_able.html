@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_without_lnb}">
+
+<head>
+    <title>내 차 구입 &gt; 연락가능문의 &gt; 상세/수정 </title>
+</head>
+
+<div class="content_body" layout:fragment="content">
+    <div class="mycar">
+        <div class="view_wrap">
+            <div class="flex">
+                <div class="left_wrap">
+                    <div class="view_table">
+                        <div class="table_top">
+                            <h3>상담 기록</h3>
+                            <form>
+                                <input type="hidden" name="inquiryId" th:value="${purchaseInquiry.id}">
+                                <input type="hidden" name="tradeTypeCode" th:value="${T(com.cuv.admin.domain.inquirydetail.enumset.TradeType).BUY.code}">
+                                <div class="search_wrap flex mt10">
+                                    <label for="consultationStatus">
+                                        <select name="consultationStatus" id="consultationStatus" style="width: 150px;">
+                                            <option value="">상담 상태 선택</option>
+                                            <th:block
+                                                th:each="list : ${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationStatus).values()}"
+                                                th:if="${list.value ne 0 and list.value ne 4 and list.value ne 10}">
+                                                <option th:value="${list.code}" th:text="${list.detail}"></option>
+                                            </th:block>
+                                        </select>
+                                    </label>
+                                    <div class="input_wrap">
+                                        <label for="content">
+                                            <input type="text" id="content" name="content" placeholder="상담 기록을 입력해주세요">
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn_m">입력</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table_btm mt10">
+                            <table>
+                                <caption>검색 결과</caption>
+                                <colgroup>
+                                    <col style="width:8%;">
+                                    <col style="width:12%;">
+                                    <col style="width:12%;">
+                                    <col style="width:16%;">
+                                    <col style="width:20%;">
+                                    <col style="width:auto;">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">등록자</th>
+                                    <th scope="col">권한</th>
+                                    <th scope="col">상태</th>
+                                    <th scope="col">등록일시</th>
+                                    <th scope="col">내용</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${inquiryDetailLists.isEmpty()}">
+                                    <td colspan="6">등록된 상담이 없습니다.</td>
+                                </tr>
+                                <tr th:each="detail, detailStat : ${inquiryDetailLists}">
+                                    <td th:text="${#numbers.formatInteger(inquiryDetailLists.size() - detailStat.index, 1, 'COMMA')}">1</td>
+                                    <td th:text="${detail.realName}">정호연</td>
+                                    <td th:text="${detail.role.name}">정호연</td>
+                                    <td class="state" th:text="${detail.consultationStatus.detail}">상담접수완료</td>
+                                    <td th:text="${#temporals.format(detail.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-02 12:33:11</td>
+                                    <td>
+                                        <div class="align_l" th:text="${detail.content}">승인취소</div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="right_wrap">
+                    <div class="view_table">
+                        <div class="table_top">
+                            <h3>문의 내용</h3>
+                        </div>
+                        <div class="table_btm mt10">
+                            <table>
+                                <caption>상세</caption>
+                                <colgroup>
+                                    <col style="width:20%;">
+                                    <col style="width:80%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">문의 No.</th>
+                                        <td th:text="${purchaseInquiry.inquiryNumber}">240501-001</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">상담 상태</th>
+                                        <td class="state"
+                                            th:text="${purchaseInquiry.consultationStatus.code eq null ? '-' :
+                                            purchaseInquiry.consultationStatus.detail}">상담접수완료
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">상담 구분</th>
+                                        <td>
+                                            <div class="radiobox">
+                                                <input type="radio" id="consultationTypeCode_call" name="consultationTypeCode"
+                                                       th:value="${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CALL}"
+                                                       th:checked="${purchaseInquiry.consultationTypeCode != null &&
+                                                                    purchaseInquiry.consultationTypeCode ==
+                                                                    T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CALL}">
+                                                <label for="consultationTypeCode_call">전화</label>
+                                            </div>
+                                            <div class="radiobox">
+                                                <input type="radio" id="consultationTypeCode_chat" name="consultationTypeCode"
+                                                       th:value="${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CHATTING}"
+                                                       th:checked="${purchaseInquiry.consultationTypeCode != null &&
+                                                                    purchaseInquiry.consultationTypeCode ==
+                                                                    T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CHATTING}">
+                                                <label for="consultationTypeCode_chat">채팅</label>
+                                            </div>
+                                            <div class="radiobox">
+                                                <input type="radio" id="consultationTypeCode_visit" name="consultationTypeCode"
+                                                       th:value="${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).VISIT}"
+                                                       th:checked="${purchaseInquiry.consultationTypeCode != null &&
+                                                                    purchaseInquiry.consultationTypeCode ==
+                                                                    T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).VISIT}">
+                                                <label for="consultationTypeCode_visit">방문예약</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">회원정보</th>
+                                        <td>
+                                            <a th:href="${purchaseInquiry.memberId != null} ? @{/admin/member/member/__${purchaseInquiry.memberId}__} : '#'"
+                                               class="btn_link"
+                                               th:classappend="${purchaseInquiry.memberId eq null} ? 'none'">
+                                                <span th:if="${#strings.isEmpty(purchaseInquiry.memberId)}"
+                                                      th:text="${purchaseInquiry.realName}">홍길동</span>
+                                                <span th:unless="${#strings.isEmpty(purchaseInquiry.memberId)}"
+                                                      th:text="${purchaseInquiry.memberRealName}">홍길동</span>
+                                                <span th:if="${#strings.isEmpty(purchaseInquiry.memberId) &&
+                                                      #strings.isEmpty(purchaseInquiry.realName)}">-</span>
+                                            </a>
+                                            <a th:href="${purchaseInquiry.memberId != null} ? @{/admin/member/member/__${purchaseInquiry.memberId}__} : '#'"
+                                               class="btn_link ml10"
+                                               th:classappend="${purchaseInquiry.memberId eq null} ? 'none'">
+                                                <span th:if="${#strings.isEmpty(purchaseInquiry.memberId)}"
+                                                      th:text="${purchaseInquiry.email}">000@naver.com</span>
+                                                <span th:unless="${#strings.isEmpty(purchaseInquiry.memberId)}"
+                                                      th:text="${purchaseInquiry.memberEmail}">000@naver.com</span>
+                                                <span th:if="${#strings.isEmpty(purchaseInquiry.memberId) &&
+                                                      #strings.isEmpty(purchaseInquiry.email)}">-</span>
+                                            </a>
+                                            <a th:href="${purchaseInquiry.memberId != null} ? @{/admin/member/member/__${purchaseInquiry.memberId}__} : '#'"
+                                               class="btn_link ml10"
+                                               th:classappend="${purchaseInquiry.memberId eq null} ? 'none'">
+                                                <span th:if="${#strings.isEmpty(purchaseInquiry.memberId)}"
+                                                      th:text="${purchaseInquiry.mobileNumber}">010-0000-0000</span>
+                                                <span th:unless="${#strings.isEmpty(purchaseInquiry.memberId)}"
+                                                      th:text="${purchaseInquiry.memberMobileNumber}">010-0000-0000</span>
+                                                <span th:if="${#strings.isEmpty(purchaseInquiry.memberId) &&
+                                                      #strings.isEmpty(purchaseInquiry.mobileNumber)}">-</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">등록일시</th>
+                                        <td th:text="${#temporals.format(purchaseInquiry.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2023-12-29 09:57:44</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">방문 예약 일시</th>
+                                        <td>
+                                            <div class="input_wrap">
+                                                <label for="datepicker1">
+                                                    <input type="text" id="datepicker1" class="ico_date" autocomplete="off"
+                                                           th:value="${#temporals.format(purchaseInquiry.visitReservationAt, 'yyyy-MM-dd')}">
+                                                </label>
+                                                <label for="hour">
+                                                    <input type="text" id="hour" placeholder="시 입력" style="width: 100px;"
+                                                    th:value="${#temporals.format(purchaseInquiry.visitReservationAt, 'HH')}">
+                                                </label>
+                                                <span>:</span>
+                                                <label for="minute">
+                                                    <input type="text" id="minute" placeholder="분 입력" style="width: 100px;"
+                                                    th:value="${#temporals.format(purchaseInquiry.visitReservationAt, 'mm')}">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="view_table mt20">
+                        <div class="table_top flex">
+                            <h3>구매희망 차량번호</h3>
+                            <div class="btn_area align_r">
+                                <a th:href="|javascript: window.open('/admin/purchase/product', '팝업창', 'width=600, height=700');|"
+                                   class="btn_m btn_form2">차량 조회</a>
+                                <button type="button" class="btn_m btn_form3" onclick="soldOut();">판매 완료</button>
+                            </div>
+                        </div>
+                        <!-- purchaseInquiryId hidden field 추가 -->
+                        <input type="hidden" name="purchaseInquiryId" th:value="${purchaseInquiry.id}">
+                        <div class="table_btm mt10">
+                            <table>
+                                <caption>상세</caption>
+                                <colgroup>
+                                    <col style="width:8%;">
+                                    <col style="width:40%;">
+                                    <col style="width:40%;">
+                                    <col style="width:12%;">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th scope="row">
+                                        <input type="checkbox" id="allChk">
+                                        <label for="allChk" class="blind">전체선택</label>
+                                    </th>
+                                    <th scope="row">구매희망 차량번호</th>
+                                    <th scope="row">딜러명</th>
+                                    <th scope="row"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="productArea">
+                                    <tr th:if="${wishlists.isEmpty()}" class="align_c no">
+                                        <td colspan="4">등록된 구매희망 차량이 없습니다.</td>
+                                    </tr>
+                                    <tr th:each="wish : ${wishlists}" class="align_c" th:id="|wish_${wish.productUniqueNumber}|">
+                                        <input type="hidden" name="productId" th:value="${wish.productId}">
+                                        <td>
+                                            <th:block th:if="${wish.postStatus ne T(com.cuv.admin.domain.product.enumset.PostStatus).SOLDOUT}">
+                                                <input type="checkbox" th:id="|purchase_${wish.id}|" name="id" th:value="${wish.id}">
+                                                <label th:for="|purchase_${wish.id}|" class="blind">선택</label>
+                                            </th:block>
+                                        </td>
+                                        <td th:class="${wish.postStatus eq T(com.cuv.admin.domain.product.enumset.PostStatus).SOLDOUT} ? 'state'"
+                                            th:text="${wish.carPlateNumber}">00가 0000</td>
+                                        <td th:text="${wish.realName}">홍길동</td>
+                                        <td th:class="${wish.postStatus eq T(com.cuv.admin.domain.product.enumset.PostStatus).SOLDOUT} ? 'state'">
+                                            <th:block th:if="${wish.postStatus eq T(com.cuv.admin.domain.product.enumset.PostStatus).SOLDOUT}">
+                                                판매완료
+                                            </th:block>
+                                            <th:block th:unless="${wish.postStatus eq T(com.cuv.admin.domain.product.enumset.PostStatus).SOLDOUT}">
+                                                <button type="button" onclick="deleteProduct(this.dataset.id);" th:data-id="${wish.productUniqueNumber}" class="btn_del">삭제</button>
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="btn_area align_r mt20">
+                        <button type="button" id="saveBtn" class="btn">저장</button>
+                        <a href="/admin/purchase/inquiry" class="btn btn_form4">목록</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    // 상담 기록 저장
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        const consultationStatus = document.getElementById('consultationStatus');
+        if (consultationStatus.value.trim().length < 1) {
+            alert("상담 상태를 선택해주세요.");
+            consultationStatus.focus();
+            return;
+        }
+
+        const content = document.getElementById('content');
+        if (content.value.trim().length < 1) {
+            alert("상담 기록을 입력해주세요.");
+            content.focus();
+            return;
+        }
+
+        fetch('/admin/purchase/inquiry/detail/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+    let allCheckBox = document.getElementById('allChk');
+    let checkboxes = document.querySelectorAll('input[name="id"]');
+
+    // 체크박스 조작
+    allCheckBox.addEventListener('click', () => {
+        checkboxes.forEach(chk => chk.checked = allCheckBox.checked);
+    });
+
+    checkboxes.forEach(chk => {
+        chk.addEventListener('click', () => {
+            if (!chk.checked) {
+                allCheckBox.checked = false;
+            } else {
+                allCheckBox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            }
+        });
+    });
+
+    // 차량 조회 팝업의 상품 반영
+    let productLists = document.getElementById('productArea');
+    function addProductList(product) {
+        let buttons = productLists.getElementsByClassName('btn_del');
+
+        for (let button of buttons) {
+            if (button.dataset.id === product.productUniqueNumber) {
+                alert("동일한 상품이 존재합니다.");
+                return;
+            }
+        }
+
+        // 새로운 행
+        let newRow = document.createElement('tr');
+        newRow.className = 'align_c';
+        newRow.id = `wish_${product.productUniqueNumber}`
+
+        newRow.innerHTML = `
+                            <input type="hidden" name="productId" value="${product.productId}">
+                            <td>
+                                <input type="checkbox" name="id">
+                                <label class="blind">선택</label>
+                            </td>
+                            <td>${product.carPlateNumber}</td>
+                            <td>${product.realName}</td>
+                            <td>
+                                <button type="button" data-id="${product.productUniqueNumber}" class="btn_del"
+                                onclick="deleteProduct(this.dataset.id);">삭제</button>
+                            </td>
+                            `;
+
+        // 초기에 데이터 없을 때 행 삭제
+        let placeholderRow = productLists.querySelector('tr.no');
+        if (placeholderRow) {
+            productLists.removeChild(placeholderRow);
+        }
+
+        // 새로운 행 추가
+        productLists.appendChild(newRow);
+    }
+
+    // 구매희망 차량번호 목록 삭제
+    function deleteProduct(id) {
+        const element = document.getElementById(`wish_${id}`);
+        if (element === null) return;
+
+        element.remove();
+
+        const remainingRows = productLists.querySelectorAll('tr.align_c');
+        if (remainingRows.length === 0) {
+            let newFirstRow = document.createElement('tr');
+            newFirstRow.className = 'align_c no';
+            newFirstRow.innerHTML = `<td colspan="4">등록된 구매희망 차량이 없습니다.</td>`;
+            productLists.appendChild(newFirstRow);
+        }
+    }
+
+    // 판매 완료
+    function soldOut() {
+        let checkedIdLists = document.querySelectorAll('input[name="id"]:checked');
+        if (checkedIdLists.length < 1) {
+            alert('구매희망 차량번호를 선택해주세요.');
+            return;
+        }
+
+        const productIds = Array.from(checkedIdLists).map(chk => {
+            return chk.closest('tr').querySelector('input[name="productId"]').value;
+        });
+
+        let productIdList = [];
+        productIds.forEach(productId => {
+            productIdList.push(productId);
+        });
+
+        // purchaseInquiryId 값을 가져옴
+        const purchaseInquiryInput = document.querySelector('input[name="purchaseInquiryId"]');
+        if (!purchaseInquiryInput) {
+            alert('문의 ID를 찾을 수 없습니다.');
+            return;
+        }
+        const purchaseInquiryId = purchaseInquiryInput.value;
+
+        const formData = new FormData();
+        productIdList.forEach(value => {
+            formData.append('id', value);
+        });
+
+        formData.append('postStatus', /*[[ ${T(com.cuv.admin.domain.product.enumset.PostStatus).SOLDOUT.code} ]]*/ '');
+        formData.append('purchaseInquiryId', purchaseInquiryId);
+
+        fetch('/admin/management/product/change', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('판매완료 처리되었습니다.');
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    }
+
+    // 상담 상세 저장
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        const addedProductIds = document.querySelectorAll('input[name="productId"]');
+        let productIds = [];
+
+        addedProductIds.forEach(product => {
+            productIds.push(product.value);
+        });
+
+        const formData = new FormData();
+
+        productIds.forEach(value => {
+            formData.append('productId', value);
+        });
+
+        const date = document.getElementById('datepicker1');
+        const hour = document.getElementById('hour');
+        const minute = document.getElementById('minute');
+
+        if (date.value.trim().length > 1 || hour.value.trim().length > 1 || minute.value.trim().length > 1) {
+            if (date.value.trim().length < 1) {
+                alert("날짜를 입력해 주세요.");
+                date.focus();
+                return;
+            }
+            if (hour.value.trim().length < 1) {
+                alert("시를 입력해 주세요.");
+                hour.focus();
+                return;
+            }
+            if (minute.value.trim().length < 1) {
+                alert("분을 입력해 주세요.");
+                minute.focus();
+                return;
+            }
+        }
+
+        formData.append('id', document.querySelector('input[name="inquiryId"]').value);
+        formData.append('saveConsultationTypeCode', document.querySelector('input[name="consultationTypeCode"]:checked').value);
+        formData.append('date', date.value);
+        formData.append('hour', hour.value);
+        formData.append('minute', minute.value);
+
+        fetch('/admin/purchase/inquiry/edit', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

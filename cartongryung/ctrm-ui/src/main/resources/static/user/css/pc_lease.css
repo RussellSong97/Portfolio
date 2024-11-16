@@ -1,0 +1,172 @@
+@charset "utf-8";
+
+/* 초기화 */
+html {overflow-y:scroll}
+.hide-m.lease-wrap {margin:0;padding:0;font-size:0.75em;font-family: 'Pretendard', dotum, sans-serif;background:#fff}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family: 'Pretendard', dotum, sans-serif}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+ul, dl,dt,dd {margin:0;padding:0;list-style:none}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, button, select, img {vertical-align:middle;font-size:1em}
+input, button {margin:0;padding:0;font-family: 'Pretendard', dotum, sans-serif;font-size:1em}
+input[type="submit"] {cursor:pointer}
+button {cursor:pointer}
+textarea, select {font-family: 'Pretendard', dotum, sans-serif;font-size:1em}
+select {margin:0}
+p {margin:0;padding:0;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size:1.1em}
+a {color:#222;text-decoration:none}
+a:hover {color:#B82927;
+    -webkit-transition:all 0.30s ease-in-out;
+    -moz-transition:all 0.30s ease-in-out;
+    -ms-transition:all 0.30s ease-in-out;
+    -o-transition:all 0.30s ease-in-out;
+}
+*, :after, :before {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+input[type=text],input[type=password], textarea {
+    -webkit-transition:all 0.30s ease-in-out;
+    -moz-transition:all 0.30s ease-in-out;
+    -ms-transition:all 0.30s ease-in-out;
+    -o-transition:all 0.30s ease-in-out;
+    outline:none;
+}
+
+input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
+    -webkit-box-shadow:0 0 5px #9ed4ff;
+    -moz-box-shadow:0 0 5px #9ed4ff;
+    box-shadow:0 0 5px #9ed4ff;
+    border:1px solid #558ab7 !important;
+}
+
+.area {width:1200px; position:relative; margin:0 auto}
+.area:after {display:block;visibility:hidden;clear:both;content:""}
+.ulct {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+.flex {
+    display:flex;
+    align-items: center;
+}
+
+#visual {position:relative; width:1200px; margin:0 auto; background:url('../images/common/img/lease/visual_bg.jpg') center no-repeat; background-size:cover; padding:150px 0;  border-radius:20px}
+#visual:after {display:block;visibility:hidden;clear:both;content:""}
+#visual .copy {float:left; padding-left:80px}
+#visual .copy h1 {font-size:50px; color:#fff; font-family: 'SUITE', sans-serif; font-weight:800}
+#visual .copy h2 {display:inline-block; background:#fff; border-radius:50px; font-size:20px; color:#B82927; font-weight:600; padding:10px 30px}
+#visual .copy p {font-size:30px; color:#fff; font-weight:400; letter-spacing:-1px}
+#visual .copy .cp2 {margin:10px 0}
+#visual .object {position:absolute; right:0; top:50%; transform: translateY(-50%)}
+
+#mct_01 {position:relative; padding:150px 0; z-index:9}
+#mct_01:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_01 .title {margin-bottom:50px}
+#mct_01 .title h1 {font-size:34px; color:#222; font-family: 'SUITE', sans-serif; font-weight:800}
+#mct_01 .title span {color:#B82927}
+#mct_01 .box .sop {display: flex}
+#mct_01 .box .sop:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_01 .box .sop .cp1 {float:left; flex: 1; width:50%}
+#mct_01 .box .sop .cp2 {float:left; flex: 1; width:50%;
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#mct_01 .box .sop .cp2 h2 {font-size:24px; color:#222;  font-weight:700; margin-bottom:20px}
+#mct_01 .box .sop .cp2 p {font-size:18px; color:#555; line-height:23px; font-weight:400}
+
+#mct_02 {position:relative; z-index:9}
+#mct_02:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_02 .title {margin-bottom:50px}
+#mct_02 .title h1 {font-size:34px; color:#222; font-family: 'SUITE', sans-serif; font-weight:800}
+#mct_02 .box .sop:first-child {margin-bottom:50px}
+#mct_02 .box .sop .cp1 {margin-bottom:20px}
+#mct_02 .box .sop h2 {font-size:20px; color:#222; font-weight:800}
+#mct_02 .box .sop span {color:#B82927}
+#mct_02 .box .sop p {font-size:16px; color:#555; font-weight:400; line-height:26px}
+
+#mct_03 {position:relative; padding:150px 0; margin-top:150px; background:url('../images/common/img/lease/main_bg.jpg') center no-repeat; background-size:cover; z-index:9}
+#mct_03:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_03 .title {text-align:center; margin-bottom:50px}
+#mct_03 .title h1 {font-size:34px; color:#fff; font-family: 'SUITE', sans-serif; font-weight:800}
+#mct_03 .box {display: flex; justify-content: center}
+#mct_03 .box a {
+    margin-right:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 100px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 5px;
+    text-align: center;
+}
+#mct_03 .box a:first-child {background:#B82927; color:#fff}
+#mct_03 .box a:last-child {margin-right:0; background:#fff; color:#222}
+
+#mct_04 {position:relative; text-align:center; padding:150px 0; z-index:9}
+#mct_04:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_04 .title {margin-bottom:50px}
+#mct_04 .title h1 {font-size:34px; color:#222; font-family: 'SUITE', sans-serif; font-weight:800}
+#mct_04 .btn a {display:inline-block; padding:20px 60px; background:#222; font-weight:600; color:#fff; font-size:18px; border-radius:5px}
+
+#mct_05 {position:relative; background:#f4f4f4; padding:150px 0 140px; z-index:9}
+#mct_05:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_05 .title {margin-bottom:50px}
+#mct_05 .title h1 {font-size:34px; color:#222; font-family: 'SUITE', sans-serif; font-weight:800; margin-bottom:10px}
+#mct_05 .title p {font-size:20px; color:#555; font-weight:400}
+#mct_05 .box ul:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_05 .box li {float:left; width:162.8px; text-align:center; line-height:100px; margin-right:10px; border:1px solid #ddd; background:#fff; margin-bottom:10px;}
+#mct_05 .box li:last-child {margin-right:0}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    width: 460px;
+    background: #fff;
+    position: relative;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.popup-content .title {margin-bottom:10px; line-height:50px; position:relative}
+.popup-content .title h1 {Font-size:20px; color:#222; font-family: 'SUITE', sans-serif; font-weight:800}
+.popup-content .sop {margin-bottom:10px}
+.popup-content .ipfull {display:inline-block; width:100%; height:50px; line-height:50px; padding:0 20px; font-size:15px; font-weight:400; border:1px solid #ddd}
+.popup-content textarea {display:inline-block; width:100%; height:150px; padding: 20px; font-size:15px; font-weight:400; border:1px solid #ddd}
+.popup-content .agree input {width:15px;height:15px; margin-top:-2px}
+.popup-content .agree span {font-size:15px; color:#222; font-weight:300}
+.popup-content input {color: #222; font-size: 15px}
+.popup-content input::placeholder {color: #999; font-size: 15px}
+.popup-content .btn {margin-top:10px}
+.popup-content .btn button {display:inline-block; width:100%; height:50px; line-height:50px; font-size:15px; font-weight:400; border:0; background:#222; color:#fff; border-radius:5px}
+.popup-close {
+    position: absolute;
+    top:50%;
+    right: 0;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    transform: translateY(-50%);
+}

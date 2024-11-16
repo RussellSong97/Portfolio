@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1>차량 조회</h1>
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+
+<div layout:fragment="pop_body" class="pop_body">
+    <div class="con_box">
+        <div class="search_wrap">
+            <form>
+                <div class="search">
+                    <div class="input_wrap">
+                        <input type="text" id="s" name="s" title="차량검색" placeholder="차량번호 입력 ex-5612">
+                        <label for="s" class="blind">차량검색</label>
+                    </div>
+                    <button type="submit" class="btn_m">검색</button>
+                </div>
+            </form>
+            <div class="list_wrap">
+                <div class="list_table">
+                    <table>
+                        <caption>검색 결과</caption>
+                        <colgroup>
+                            <col style="width:20%;">
+                            <col style="width:30%;">
+                            <col style="width:40%;">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col">차량번호</th>
+                            <th scope="col">차량 명</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${productLists.isEmpty()}" class="empty">
+                            <td colspan="3">등록된 데이터가 없습니다.</td>
+                        </tr>
+                        <tr th:each="product : ${productLists}" class="link">
+                            <input type="hidden" name="productId" th:value="${product.productId}">
+                            <input type="hidden" name="productUniqueNumber" th:value="${product.productUniqueNumber}">
+                            <input type="hidden" name="realName" th:value="${product.realName}">
+                            <td th:text="${#numbers.formatInteger(productLists.totalElements - productLists.number * productLists.size - productStat.index, 1, 'COMMA')}">
+                                5
+                            </td>
+                            <td th:text="${product.carPlateNumber}">00가0000</td>
+                            <td th:text="${product.makerName + ' ' + product.modelName + ' ' + product.detailGradeName}">현대 아반떼 (CN7) 2.0N</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:replace="~{fragments/pagination :: pagination (${productLists})}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    // 차량 번호 검색
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+
+        const s = document.getElementById('s');
+        if (s.value.trim().length < 1) {
+            alert("검색어를 입력해주세요.");
+            s.focus();
+            return;
+        }
+
+        event.target.submit();
+    });
+
+    // 클릭한 행 부모창에 보내기
+    let productLists = document.querySelector('.list_table tbody');
+    document.addEventListener('DOMContentLoaded', () => {
+        productLists.addEventListener('click', event => {
+            const targetTr = event.target.closest('tr');
+            if (targetTr && targetTr.classList.contains('link')) {
+                const tds = targetTr.querySelectorAll('td');
+
+                let product = {
+                    productId: targetTr.querySelector('input[name="productId"]').value,
+                    productUniqueNumber: targetTr.querySelector('input[name="productUniqueNumber"]').value,
+                    realName: targetTr.querySelector('input[name="realName"]').value,
+                    carPlateNumber: tds[1].textContent
+                };
+
+                opener.addProductList(product);
+            }
+        });
+    });
+
+</script>
+</html>

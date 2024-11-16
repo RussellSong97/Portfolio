@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="tit-area">
+            <h2 class="tit hide-m">관심차량</h2>
+        </div>
+        <div class="wish-wrap">
+            <div class="board-top">
+                <p class="total"><strong>[[${#lists.size(pickList)}]]</strong>개의 상품</p>
+                <button class="btn type-round" id="editBtn" type="button">편집</button>
+            </div>
+
+            <ul class="result-list" id="resultList">
+                <li th:each="pick, iterStat : ${pickList}">
+                    <!-- 선착순 특가 badge -->
+                    <div class="prd-box badge">
+                        <!-- 체크박스 -->
+                        <div class="checkbox" style="display: none">
+                            <input class="wishChk" name="wishChk" th:id="'wishChk' + ${pick.pickId}" type="checkbox">
+                            <label th:for="'wishChk' + ${pick.pickId}">선택</label>
+                        </div>
+
+                        <!-- 이미지 -->
+                        <div class="prd-thumb">
+                            <a th:href="@{/product/__${pick.productId}__}">
+                                <img alt="이미지"
+                                     th:each="image, imageStat : ${pick.carImageUrl}" th:if="${imageStat.index == 0}"
+                                     th:src="${image.realUrl}">
+                            </a>
+                        </div>
+
+                        <a class="prd-info" th:href="@{/product/__${pick.productId}__}">
+                            <p class="prd-name"
+                               th:text="${pick.makerName + ' ' + pick.modelName +' '+ pick.detailGradeName}"></p>
+                            <p class="price-info">
+                                    <span class="num-price"
+                                          th:text="${pick.getFormattedCarAmountSale()}">13,700만원</span>
+                            </p>
+                            <p class="detail-info">
+                                <span th:text="${pick.carRegYear}">2019/04(2019)</span>
+                                <span th:text="${#numbers.formatInteger(pick.carUseKm, 1 , 'COMMA') + ' km'}"></span>
+                                <span th:text="${pick.city}">서울</span>
+                            </p>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="btn-wrap type-fixed">
+                <!-- 활성화시 is-disabled 클래스 삭제 -->
+                <button class="btn is-disabled" disabled id="deleteBtn" type="button">상품삭제</button>
+            </div>
+
+            <!-- toast alert -->
+            <div class="toast" id="toast" style="display: none;">
+                <div class="toast-content">
+                    <p id="toast-message">상품이 삭제되었습니다.</p>
+                </div>
+            </div>
+            <button class="btn btn-toast" style="display: none" id="btn-toast">상품이 삭제되었습니다.</button>
+            <!-- // toast alert -->
+
+        </div>
+    </div>
+</th:block>
+
+
+<script layout:fragment="script" th:inline="javascript">
+    // 서브 페이지 제목
+    var hdNm = "관심차량";
+
+    var pickIds = [];
+
+    function toggleDeleteButton() {
+        var checkboxes = document.getElementsByName('wishChk');
+        var deleteButton = document.getElementById('deleteBtn');
+
+        pickIds = [];
+
+        // 1개 이상 체크되었는지 확인 후 체크된 것의 pickId 푸시하기
+        var atLeastOneChecked = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                atLeastOneChecked = true;
+                var numericId = checkboxes[i].id.replace(/\D/g, '');
+                pickIds.push(numericId);
+            }
+        }
+
+        if (atLeastOneChecked) {
+            deleteButton.classList.remove('is-disabled');
+            deleteButton.removeAttribute('disabled');
+        } else {
+            deleteButton.classList.add('is-disabled');
+            deleteButton.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    document.querySelectorAll('input[name="wishChk"]').forEach(checkbox => {
+        checkbox.addEventListener('change', toggleDeleteButton);
+    });
+
+    // 선택된 아이템 제거 및 제거 후 알림창 띄우기
+    function deleteSelectedPick() {
+        $popup.confirm('정말 삭제하시겠습니까?', {
+            confirm: () => {
+                fetch("/api/sub/delete", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({"pickIds": pickIds})
+                })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (data.code === 200) {
+                            // 세션에 showToast 넣기
+                            sessionStorage.setItem('showToast', 'true');
+
+                            // 리로드
+                            location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }, close: () => {
+                $popup.closeAll();
+                location.reload();
+            }
+        });
+    }
+
+    // 상품삭제 버튼 누르면 제거 함수 호출
+    document.getElementById('deleteBtn').addEventListener('click', deleteSelectedPick);
+
+    // 편집 버튼
+    document.addEventListener('DOMContentLoaded', function () {
+        var editMode = false; // 편집 모드 상태를 저장하는 변수
+
+        document.getElementById('editBtn').addEventListener('click', function () {
+            editMode = !editMode; // 편집 모드 상태를 토글
+
+            document.querySelectorAll('.checkbox').forEach(function (checkbox) {
+                if (editMode) {
+                    checkbox.style.display = ''; // 체크박스를 보이게 함
+                } else {
+                    checkbox.style.display = 'none'; // 체크박스를 숨김
+                    checkbox.querySelector('input').checked = false; // 체크 상태 초기화
+                }
+            });
+
+            // 편집 모드가 비활성화되면 삭제 버튼도 비활성화
+            if (!editMode) {
+                var deleteButton = document.getElementById('deleteBtn');
+                deleteButton.classList.add('is-disabled');
+                deleteButton.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        // 관심차량이 없는 경우 메시지 표시
+        var totalElement = document.querySelector('.total strong');
+        var resultList = document.getElementById('resultList');
+        if (totalElement && parseInt(totalElement.textContent) === 0) {
+            var emptyMessage = document.createElement('div');
+            emptyMessage.className = 'empty';
+            emptyMessage.innerHTML = '<p>관심차량이 없습니다.</p>';
+            resultList.parentNode.insertBefore(emptyMessage, resultList);
+            resultList.style.display = 'none'; // 결과 목록 숨기기
+        }
+        // sessionStorage에 showToast있는지 확인
+        if (sessionStorage.getItem('showToast') === 'true') {
+            // toast alert 조작을 위한 선언
+            var toast = document.getElementById('toast');
+            var toastBtn = document.getElementById('btn-toast');
+
+            // toast alert 조작
+            toast.style.display = 'block';
+            toastBtn.style.display = 'block';
+
+            // sessionStorage showToast 제거
+            sessionStorage.removeItem('showToast');
+
+            // 3초뒤 toast 숨기기
+            setTimeout(() => {
+                toast.style.display = 'none';
+                toastBtn.style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
+</html>

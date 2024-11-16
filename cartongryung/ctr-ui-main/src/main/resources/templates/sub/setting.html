@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="setting-wrap">
+            <a href="/setting/push" class="link">알림 설정</a>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "설정";
+</script>
+</html>

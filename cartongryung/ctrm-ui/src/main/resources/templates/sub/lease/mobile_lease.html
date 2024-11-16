@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<div id="mobile-leaseWrap" class="hide-pc lease-wrap" th:fragment="mobileContents">
+		<div id="header">
+			<div class="gnb">
+				<ul>
+					<li><a href="/installments">할부</a></li>
+					<li><a href="#" class="on">리스</a></li>
+				</ul>
+			</div>
+		</div><!-- END header -->
+		<div id="visual">
+			<div class="copy">
+				<div class="cp1">
+					<h2>리스</h2>
+				</div>
+				<div class="cp2">
+					<h1>카통령에서 리스 상담</h1>
+				</div>
+				<div class="cp3">
+					<p>받으시고 초기 금액 부담을 줄여보세요.</p>
+				</div>
+				<div class="object">
+					<img src="/user/images/common/img/lease/visual_car.png" alt="카통령에서 리스 상담 받으시고 초기 금액 부담을 줄여보세요." />
+				</div>
+			</div>
+		</div><!-- END visual -->
+
+		<div id="mct_01">
+			<div class="area">
+				<div class="title">
+					<h1>카통령에서 <span>리스</span>를 이용해야 하는 이유</h1>
+				</div>
+				<div class="box">
+					<div class="sop">
+						<div class="cp1"><img src="/user/images/common/img/lease/mask1.jpg" alt="" /></div>
+						<div class="cp2">
+							<h2>사업자라면 필수</h2>
+							<p>매월 발생하는 리스비는 비용 처리 하여 절세 혜택도 받으시고,  세금 · 보험료 등 번거로운 비용도 한 번에 처리하실 수 있습니다.</p>
+						</div>
+					</div>
+					<div class="sop">
+						<div class="cp1"><img src="/user/images/common/img/lease/mask2.jpg" alt="" /></div>
+						<div class="cp2">
+							<h2>저렴한 비용과 자산가치 보존</h2>
+							<p>초기에 부담하셔야 할 금액이 적고, 리스비는 할부에 비해 상대적으로 저렴합니다. 또한, 잔존가치가 보장되기 때문 에 중고차 시세가 떨어져도 걱정하실 필요가 없습니다.</p>
+						</div>
+					</div>
+					<div class="sop">
+						<div class="cp1"><img src="/user/images/common/img/lease/mask3.jpg" alt="" /></div>
+						<div class="cp2">
+							<h2>간편하고 깔끔한 회계처리</h2>
+							<p>리스에 관한 금액이 대차대조표 상 자산과 부채로 계상되지 않으므로, 현금 또는 차입을 통해 구입하는 것보다 재무 구조의 건전성을 유지할 수 있습니다. 매월 정해진 리스비만 비용처리 할 수 있어 회계처리가 간편합니다.</p>
+						</div>
+					</div>
+				</div>
+			</div><!-- END area -->
+		</div><!-- END mct_01 -->
+
+		<div id="mct_02">
+			<div class="area">
+				<div class="title">
+					<h1>필요 서류 안내</h1>
+				</div>
+				<div class="box">
+					<div class="sop">
+						<div class="cp1">
+							<h2><span>01</span> 필요서류 안내</h2>
+						</div>
+						<div class="cp2">
+							<p>· 개인: 인감증명서 3통, 인감도장, 주민등록등본 2통, 운전면허증, 통장사본(추가서류) 소득증빙서류, (추가서류) 재산세과세증명서</p>
+							<p>· 법인: 법인인감증명서 3통, 법인인감도장 (사용인감의 경우 사용인감계 첨부), 사업 자등록증, 등기부등본, 법인재무제표, (추가서류) 법인대표연대보증서</p>
+						</div>
+					</div>
+					<div class="sop">
+						<div class="cp1">
+							<h2><span>02</span> 소득증빙서류 안내</h2>
+						</div>
+						<div class="cp2">
+							<p>· 직장인: 재직증명서 + 근로소득원천징수영수증 (재직회사 또는 세무사확인 날인 된 것)</p>
+							<p>· 자영업자/개인사업자: 종합소득세납부증명서 또는 사업자등록증 (종합소득세 납부증명서는 관할세무서에서 발급)</p>
+							<p>· 부동산임대사업자: 임대소득대상 부동산등기부등본 원본, 임대소득금액증명원 원본</p>
+							<p>· 기타 소득자: 통장 사본 (6개월 이상 소득 또는 100만원 이상의 소득)</p>
+						</div>
+					</div>
+				</div><!-- END box -->
+			</div><!-- END area -->
+		</div><!-- END mct_02 -->
+
+		<div id="mct_03">
+			<div class="title">
+				<h1>지금 바로 상담 받아 보세요!</h1>
+			</div>
+			<div class="box">
+				<a href="tel:1800-0892">
+					<h2>1800-0892</h2>
+					<h2>전화상담</h2>
+				</a>
+				<a href="#" id="contact-btn" onclick="$popup.template('#quickAskPopup')">
+					<h2>연락처 남기기</h2>
+				</a>
+			</div>
+		</div><!-- END mct_03 -->
+
+		<div id="mct_04">
+			<div class="title">
+				<h1>아직 어떤 차량을 구매하실지</h1>
+				<h1>결정하지 못하셨나요?</h1>
+			</div>
+			<div class="btn not-common">
+				<a href="#">할부 차량 목록 바로가기</a>
+			</div>
+		</div><!-- END mct_04 -->
+
+		<div id="mct_05">
+			<div class="area">
+				<div class="title">
+					<h1>제휴 금융사</h1>
+					<p>방문, 서류 제출 없이 전화상담만으로 금융상품을 비교하고 차량 구입을 진행해 드려요</p>
+				</div>
+				<div class="box">
+					<ul>
+						<li><img src="/user/images/common/img/capital/partner_logo1.png" alt="KB캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo2.png" alt="im캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo3.png" alt="현대캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo4.png" alt="하나캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo5.png" alt="우리금융캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo6.png" alt="JB우리캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo7.png" alt="BNK캐피탈" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo8.png" alt="Renault Capital" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo9.png" alt="ORIX" /></li>
+						<li><img src="/user/images/common/img/capital/partner_logo10.png" alt="한국캐피탈" /></li>
+					</ul>
+				</div>
+			</div>
+		</div><!-- END mct_05 -->
+	</div>
+	<script>
+		document.getElementById("contact-btn").addEventListener("click", function(event) {
+			event.preventDefault();
+			document.getElementById("popup").style.display = "flex";
+		});
+		document.getElementById("popup-close").addEventListener("click", function() {
+			document.getElementById("popup").style.display = "none";
+		});
+		document.getElementById("popup").addEventListener("click", function(event) {
+			if (event.target === this) {
+				this.style.display = "none";
+			}
+		});
+	</script>
+</html>

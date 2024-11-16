@@ -1,0 +1,228 @@
+@charset "utf-8";
+
+/* 초기화 */
+html {overflow-y:scroll}
+.rent-wrap.hide-pc {margin:0 auto;padding:0;font-size:0.75em;font-family: 'Pretendard', dotum, sans-serif;background:#fff; max-width:375px;}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size:14px;font-family: 'Pretendard', dotum, sans-serif}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+ul, dl,dt,dd {margin:0;padding:0;list-style:none}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, button, select, img {vertical-align:middle;font-size:14px}
+input, button {margin:0;padding:0;font-family: 'Pretendard', dotum, sans-serif;font-size:14px}
+input[type="submit"] {cursor:pointer}
+button {cursor:pointer}
+textarea, select {font-family: 'Pretendard', dotum, sans-serif;font-size:14px}
+select {margin:0}
+p {margin:0;padding:0;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size:1.1em}
+a {color:#222;text-decoration:none}
+a:hover {color:#B82927;
+    -webkit-transition:all 0.30s ease-in-out;
+    -moz-transition:all 0.30s ease-in-out;
+    -ms-transition:all 0.30s ease-in-out;
+    -o-transition:all 0.30s ease-in-out;
+}
+*, :after, :before {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+input[type=text],input[type=password], textarea {
+    -webkit-transition:all 0.30s ease-in-out;
+    -moz-transition:all 0.30s ease-in-out;
+    -ms-transition:all 0.30s ease-in-out;
+    -o-transition:all 0.30s ease-in-out;
+    outline:none;
+}
+
+input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
+    -webkit-box-shadow:0 0 5px #9ed4ff;
+    -moz-box-shadow:0 0 5px #9ed4ff;
+    box-shadow:0 0 5px #9ed4ff;
+    border:1px solid #558ab7 !important;
+}
+
+.placeholdersjs {color:#aaa !important}
+
+.hide-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.area {width:100%; position:relative; margin:0 auto}
+.area:after {display:block;visibility:hidden;clear:both;content:""}
+img {width:100%; height:auto}
+
+#m-quick-ask-btn{
+    display: none;
+}
+
+#visual {position:relative; width:100%; background:url('../images/common/img/rent/visual_bg.jpg') 85% center no-repeat; background-size:cover; min-height:320px;}
+#visual:after {display:block;visibility:hidden;clear:both;content:""}
+#visual::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(34, 34, 34, 0.6), rgba(255, 255, 255, 0));
+    z-index: 1;
+}
+
+#visual .copy {position:absolute; left:20px; top:50%; transform: translateY(-50%); z-index:9}
+#visual .copy h1 {font-size:36px; color:#fff; font-family: 'SUITE', sans-serif; font-weight:800; letter-spacing:-1px}
+#visual .copy h2 {font-size:15px; color:#fff; font-weight:600}
+#visual .copy .cp2 {margin:10px 0 30px}
+#visual .copy .btns a {display:inline-block; padding:10px 40px; background:#B82927; font-size:15px; font-weight:500; border-radius:5px; color:#fff; border:1px solid #B82927}
+#visual .tel {position:absolute; right:20px; top:20px; line-height:26px; z-index:9}
+#visual .tel li {float:left; margin-right:10px}
+#visual .tel li img {height:15px; width:auto}
+#visual .tel h3 {font-size:1.5em; color:#222; font-weight:900}
+
+#mct_01 {position:relative; padding:50px 0}
+#mct_01:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_01 .content .tx1, #mct_01 .content .tx2 {display: none}
+#mct_01 .nav:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_01 .nav li {float:left; width:50%}
+#mct_01 .nav a {display:inline-block; padding:20px 0; text-align:center; width:100%; font-size:15px; color:#999; font-weight:700; background:#F4F4F4; border-bottom:1px solid #B82927}
+#mct_01 .nav .on {color:#B82927; background:#fff; border:1px solid #B82927; border-bottom:0}
+#mct_01 .content {padding:50px 20px 0; text-align:center}
+#mct_01 .content .title h1 {font-size:24px; letter-spacing:-0.5px; color:#222; line-height:30px; font-weight:800; font-family: 'SUITE', sans-serif}
+#mct_01 .content .title p {font-size:15px; color:#222; font-weight:400}
+#mct_01 .content .title .cp2 {margin-top:20px}
+#mct_01 .content .object {margin-top:50px}
+
+#mct_02 {position:relative; padding:50px 0; background:#F4F4F4}
+#mct_02:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_02 .title {text-align:center; margin-bottom:30px}
+#mct_02 .title h1 {font-size:24px; color:#222; font-weight:800; font-family: 'SUITE', sans-serif}
+
+#mct_03 {position:relative; padding:50px 20px}
+#mct_03:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_03 .title {text-align:center; margin-bottom:30px}
+#mct_03 .title h1 {font-size:24px; color:#222; font-weight:800; font-family: 'SUITE', sans-serif}
+#mct_03 .box:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_03 .box li {float:left; width:49%; margin-right:2%; margin-bottom:2%; padding:30px 0; text-align:center; border:1px solid #ddd; border-radius:10px}
+#mct_03 .box li:nth-child(2n) {margin-right:0}
+#mct_03 .box li img {height:50px; width:auto}
+#mct_03 .box .stitle {margin:20px 0 10px}
+#mct_03 .box h2 {font-size:15px; color:#222; font-weight:800}
+#mct_03 .box p {font-size:12.6px; color:#777; font-weight:400; line-height:15px; letter-spacing:-0.5px}
+#mct_03 .btns {width:75%; margin:30px auto 0}
+#mct_03 .btns a {display:inline-block; width:100%; padding:20px 0; background:#B82927; border-radius:5px; text-align:center; font-size:15px; color:#fff; font-weight:600}
+#mct_03 .btns a:hover {background:#222}
+
+#mct_04 {position:relative; padding:50px 0 200px; background:#f9f9f9}
+#mct_04:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_04 .title {text-align:center; margin-bottom:30px}
+#mct_04 .title h1 {font-size:24px; color:#222; font-weight:800; font-family: 'SUITE', sans-serif}
+#mct_04 .box {border-top:1px solid #222}
+#mct_04 .box:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_04 .box .dos.active {border: 2px solid #B82927}
+#mct_04 .box .dos .dos_q {border-bottom:1px solid #ccc; cursor:pointer; padding:20px}
+#mct_04 .box .dos .dos_q:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_04 .box .dos .dos_a:after {display:block;visibility:hidden;clear:both;content:""}
+#mct_04 .box .dos .dos_a {max-height: 0; overflow: hidden; transition: max-height 0.2s ease, padding 0.2s ease; padding:0}
+#mct_04 .box .dos.active .dos_a {display: block; border-bottom:1px solid #ccc; background:#fff; padding:20px; max-height: 500px}
+#mct_04 .box .dos.active h3 {font-weight: 800}
+#mct_04 .box .dos h2 {font-size:15px; color:#B82927; font-weight:800; display:inline-block}
+#mct_04 .box .dos h3 {transition: font-weight 0.3s ease; font-size:15px; color:#222; font-weight:500; display:inline-block}
+#mct_04 .box .dos p {font-size:15px; color:#222; font-weight:400; display:inline-block}
+#mct_04 .box .dos li {float:left; width:5%;}
+#mct_04 .box .dos li:last-child {margin-right:0; width:95%}
+
+
+#m-rent-footer #quick {position:fixed; background:#FFD8D9; left:0; bottom:50px; width:100%; padding:20px; z-index:999}
+#m-rent-footer #quick .sop {text-align:center; margin-bottom:10px}
+#m-rent-footer #quick .sop h1 {font-size:18px; color:#222; font-weight:400}
+#m-rent-footer #quick .ref li {float:left; width:49%; margin-right:2%}
+#m-rent-footer #quick .ref li:last-child {margin-right:0}
+#m-rent-footer #quick .ref a {display:inline-block; width:100%; padding:15px 0; text-align:center; font-size:15px; border-radius:5px}
+#m-rent-footer #quick .ref li:first-child a {background:#fff; border:1px solid #B82927; color:#222; font-weight:600}
+#m-rent-footer #quick .ref li:last-child a {background:#B82927; border:1px solid #B82927; color:#fff; font-weight:600}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+.comparison-table th, .comparison-table td {
+    border: 1px solid #ccc;
+    padding: 15px 0;
+}
+.comparison-table thead th {
+    font-size:15px;
+    font-weight:600;
+    border-top:1px solid #222
+}
+.comparison-table td {
+    font-size: 15px;
+    font-weight:400
+}
+.comparison-table .highlight {
+    background-color: white;
+    border: 2px solid #B82927;
+    border-bottom:0;
+    border-top:1px solid #ccc;
+    color:#B82927;
+    font-weight:700
+}
+.comparison-table .bx {border-bottom:2px solid #B82927}
+.comparison-table th.highlight {
+    background-color: white;
+    border: 2px solid #B82927;
+    border-bottom:0;
+    color:#222
+}
+
+/*.popup-overlay {*/
+/*    display: none;*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100vw;*/
+/*    height: 100vh;*/
+/*    background: rgba(0, 0, 0, 0.25);*/
+/*    z-index: 999;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.popup-content {*/
+/*    width: 90%;*/
+/*    background: #fff;*/
+/*    position: relative;*/
+/*    padding: 20px;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+/*.popup-content .title {margin-bottom:10px; line-height:50px; position:relative}*/
+/*.popup-content .title h1 {Font-size:24px; color:#222; font-family: 'SUITE', sans-serif; font-weight:800}*/
+/*.popup-content .sop {margin-bottom:10px}*/
+/*.popup-content .ipfull {display:inline-block; width:100%; height:50px; line-height:50px; padding:0 20px; font-size:15px; font-weight:400; border:1px solid #ddd}*/
+/*.popup-content textarea {display:inline-block; width:100%; height:150px; padding: 20px; font-size:15px; font-weight:400; border:1px solid #ddd}*/
+/*.popup-content .agree input {width:15px;height:15px; margin-top:-2px}*/
+/*.popup-content .agree span {font-size:12.6px; color:#222; font-weight:300}*/
+/*.popup-content input {color: #222; font-size: 15px}*/
+/*.popup-content input::placeholder {color: #999; font-size: 15px}*/
+/*.popup-content .btn {margin-top:10px}*/
+/*.popup-content .btn button {display:inline-block; width:100%; height:50px; line-height:50px; font-size:15px; font-weight:400; border:0; background:#222; color:#fff; border-radius:5px}*/
+/*.popup-close {*/
+/*    position: absolute;*/
+/*    top:50%;*/
+/*    right: 0;*/
+/*    cursor: pointer;*/
+/*    width: 44px;*/
+/*    height: 44px;*/
+/*    transform: translateY(-50%);*/
+/*}*/

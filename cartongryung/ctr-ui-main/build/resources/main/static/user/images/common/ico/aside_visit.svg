@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="menu_calendar_icon" data-name="menu_calendar icon" transform="translate(-1838.686 -187.686)">
+    <g id="그룹_32830" data-name="그룹 32830" transform="translate(1846.169 193.581)">
+      <rect id="사각형_5498" data-name="사각형 5498" width="17.031" height="15.689" rx="2" transform="translate(0 2.986)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="사각형_5499" data-name="사각형 5499" d="M2,0H15.031a2,2,0,0,1,2,2V5.991a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V2A2,2,0,0,1,2,0Z" transform="translate(0 2.986)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <g id="그룹_32829" data-name="그룹 32829" transform="translate(4.306 0)">
+        <line id="선_855" data-name="선 855" y2="5" transform="translate(0.21 0.105)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <line id="선_856" data-name="선 856" y2="5" transform="translate(8.21 0.105)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+    <rect id="사각형_5500" data-name="사각형 5500" width="32" height="32" transform="translate(1838.686 187.686)" fill="none"/>
+  </g>
+</svg>

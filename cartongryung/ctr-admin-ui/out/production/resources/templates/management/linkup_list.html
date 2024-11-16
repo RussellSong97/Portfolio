@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>차량관리 &gt; 매물 연동 관리 &gt; 목록 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_management :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>매물연동관리</h3>
+    </div>
+    <div class="content_body">
+        <div class="management">
+            <form>
+                <div class="search_wrap">
+                    <table>
+                        <caption>검색</caption>
+                        <colgroup>
+                            <col style="width:10%;">
+                            <col style="width:auto;">
+                            <col style="width:10%;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">키워드</th>
+                            <td>
+                                <select name="field" id="field" style="width: 150px;">
+                                    <option value="all">전체</option>
+                                    <option value="carPlateNumber" th:selected="${condition.field eq 'carPlateNumber'}">차량 번호</option>
+                                    <option value="carFrameNo" th:selected="${condition.field eq 'carFrameNo'}">차대 번호</option>
+                                </select>
+                                <input type="text" name="s" th:value="${condition.s}" title="키워드" style="width: 60%;">
+                            </td>
+                            <th scope="row">등록일</th>
+                            <td>
+                                <input type="text" id="datepicker1" class="ico_date" name="sdate" th:value="${condition.sdate}" autocomplete="off"
+                                       placeholder="시작일">
+                                <span class="tilde">~</span>
+                                <input type="text" id="datepicker2" class="ico_date" name="edate" th:value="${condition.edate}" autocomplete="off"
+                                       placeholder="종료일">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">차량 매물</th>
+                            <td colspan="3">
+                                <label>
+                                    <select name="maker" class="category" style="width: 150px;">
+                                        <option value="">제조사</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <select name="model" class="category" style="width: 150px;">
+                                        <option value="">모델</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <select name="detailModel" class="category" style="width: 150px;">
+                                        <option value="">상세 모델</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <select name="detailGrade" class="category" style="width: 150px;">
+                                        <option value="">상세 등급</option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_area align_c mt20">
+                        <button type="submit" class="btn">검색</button>
+                    </div>
+                </div>
+            </form>
+            <div class="list_wrap">
+                <form>
+                    <div class="note_area">
+                        <p class="note">
+                            ‘카매니저 가져오기’ → ‘카이즈유 가져오기＇ 순으로 버튼을 클릭해주세요! <br>연동 완료된 차량(파란색표시)을
+                            중복 선택 후 ‘차량 등록’을 클릭하시면 판매차량으로 등록되며 판매 차랑 리스트에서 이용할 수 있습니다.
+                        </p>
+                    </div>
+                    <div class="list_top">
+                        <div class="txt_area">
+                            <p>총 <em th:text="${#numbers.formatInteger(linkageLists.totalElements, 1, 'COMMA')}">0,000</em>건</p>
+                        </div>
+                        <div class="util_area">
+                            <a href="javascript: window.open('/admin/management/calendar','팝업창','width=600, height=600');"
+                               class="btn btn_form10_r">&#9312; 카매니저 가져오기</a>
+                            <button type="button" id="optionBtn" class="btn btn_form10_r import_btn">&#9313; 카이즈유 가져오기
+                            </button>
+                            <button type="submit" class="btn btn_form10">차량등록</button>
+                        </div>
+                    </div>
+                    <div class="list_table">
+                        <div class="load_wrap" style="display: none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="103" height="112.999"
+                                 viewBox="0 0 103 112.999" class="spinner-svg">
+                                <g id="loading" transform="translate(-198.073 -280.45)">
+                                    <circle id="타원_152" data-name="타원 152" cx="12" cy="12" r="12"
+                                            transform="translate(240.073 280.45)" fill="#1954DB"
+                                            opacity="0.9"/>
+                                    <circle id="타원_153" data-name="타원 153" cx="5" cy="5" r="5"
+                                            transform="translate(247.073 383.45)" fill="#1954DB"
+                                            opacity="0.4"/>
+                                    <path id="패스_3252" data-name="패스 3252"
+                                          d="M210.507,299.592a9.5,9.5,0,1,1-11.967,6.1A9.5,9.5,0,0,1,210.507,299.592Z"
+                                          transform="translate(0 16.325)" fill="#1954DB" opacity="0.7"/>
+                                    <path id="패스_3253" data-name="패스 3253"
+                                          d="M252.4,318.2a2.5,2.5,0,1,1-3.151,1.6A2.495,2.495,0,0,1,252.4,318.2Z"
+                                          transform="translate(46.946 34.373)" fill="#1954DB"
+                                          opacity="0.2"/>
+                                    <path id="패스_3254" data-name="패스 3254"
+                                          d="M209.8,331.155a6.5,6.5,0,1,1,1.436,9.079A6.492,6.492,0,0,1,209.8,331.155Z"
+                                          transform="translate(9.518 43.975)" fill="#1954DB" opacity="0.5"/>
+                                    <path id="패스_3255" data-name="패스 3255"
+                                          d="M237.026,290.092a13.5,13.5,0,1,1,2.983,18.853A13.5,13.5,0,0,1,237.026,290.092Z"
+                                          transform="translate(34.629 2.927)" fill="#1954DB"/>
+                                    <path id="패스_3256" data-name="패스 3256"
+                                          d="M240.11,336.227a4,4,0,1,1,5.587.884A4,4,0,0,1,240.11,336.227Z"
+                                          transform="translate(37.728 45.573)" fill="#1954DB"
+                                          opacity="0.3"/>
+                                    <path id="패스_3257" data-name="패스 3257"
+                                          d="M208.463,302.6a10.5,10.5,0,1,1,14.666,2.323A10.5,10.5,0,0,1,208.463,302.6Z"
+                                          transform="translate(5.617 5.524)" fill="#1954DB" opacity="0.8"/>
+                                    <path id="패스_3258" data-name="패스 3258"
+                                          d="M251.136,305.276a1,1,0,1,1,.641-1.261A1,1,0,0,1,251.136,305.276Z"
+                                          transform="translate(47.246 21.124)" fill="#1954DB"
+                                          opacity="0.1"/>
+                                    <path id="패스_3259" data-name="패스 3259"
+                                          d="M209.243,330.882A8,8,0,1,1,214.38,320.8,8,8,0,0,1,209.243,330.882Z"
+                                          transform="translate(0.299 32.173)" fill="#1954DB" opacity="0.6"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <table>
+                            <caption>검색 결과</caption>
+                            <colgroup>
+                                <col style="width:2%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                                <col style="width:8%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                                <col style="width:6%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col">
+                                    <input type="checkbox" id="allChk">
+                                    <label for="allChk" class="blind">전체선택</label>
+                                </th>
+                                <th scope="col">차량 번호</th>
+                                <th scope="col">차대 번호</th>
+                                <th scope="col">제조사</th>
+                                <th scope="col">모델</th>
+                                <th scope="col">상세 모델</th>
+                                <th scope="col">상세 등급</th>
+                                <th scope="col">연식</th>
+                                <th scope="col">주행거리</th>
+                                <th scope="col">가격</th>
+                                <th scope="col">등록일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${linkageLists.isEmpty()}">
+                                <td colspan="11">등록된 차량이 없습니다.</td>
+                            </tr>
+                            <!-- 전체 연동 완료 시 tr에 completed 클래스 추가 -->
+                            <tr th:each="linkListing : ${linkageLists}" th:classappend="${linkListing.isCompleted} ? 'completed' : ''">
+                                <td>
+                                    <input type="checkbox" th:id="|linkage_${linkListing.id}|" name="id" th:value="${linkListing.id}">
+                                    <label th:for="|linkage_${linkListing.id}|" class="blind">선택</label>
+                                </td>
+                                <td th:text="${linkListing.carPlateNumber}">00가0000</td>
+                                <td th:text="${linkListing.carFrameNo}">KNAJDKWFEF</td>
+                                <td th:text="${linkListing.brandNm eq null ? '-' : linkListing.brandNm}">현대</td>
+                                <td th:text="${linkListing.repCarClassNm eq null ? '-' : linkListing.repCarClassNm}">투싼</td>
+                                <td th:text="${linkListing.carClassNm eq null ? '-' : linkListing.carClassNm}">뉴 투싼 IX</td>
+                                <td th:text="${linkListing.carGradeNm eq null ? '-' : linkListing.carGradeNm}">2WD VGT X20 Style</td>
+                                <td th:text="${linkListing.carRegYear}">yyyy-mm</td>
+                                <td th:text="${#numbers.formatInteger(linkListing.carUseKm, 1, 'COMMA') + 'km'}">120.513km</td>
+                                <td th:text="${#numbers.formatInteger(linkListing.carAmountSale, 1, 'COMMA')}">102,000</td>
+                                <td th:text="${#temporals.format(linkListing.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:replace="~{fragments/pagination :: pagination (${linkageLists})}"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    const linkCodeLists = /*[[ ${linkCodeLists} ]]*/ [];
+
+    // 제조사, 모델, 상세 모델, 상세 등급
+    document.addEventListener('DOMContentLoaded', () => {
+        if (/*[[ ${condition.model} ]]*/ ''
+            === null) {
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.maker} ]]*/ '');
+        } else if(/*[[ ${condition.detailModel} ]]*/ ''
+            === null) {
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.model} ]]*/ '');
+        } else if(/*[[ ${condition.detailGrade} ]]*/ ''
+            === null){
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.detailModel} ]]*/ '');
+        } else {
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.detailGrade} ]]*/ '');
+        }
+    });
+
+    // 클래스, 리스트, 값 고정시켜 줄 id
+    function initProductCategory(selector, categories, initId) {
+        // X차 카테고리 값 구하기
+        const selectIds = [];
+        for (let findCategory; (findCategory = categories.find(category => category.id === initId)) !== undefined;) {
+            selectIds.push(findCategory);
+            initId = findCategory.parentLinkNbrId;
+        }
+
+        // ${selector} 자식 SELECT 선택
+        const selectElements = Array.prototype
+            .filter
+            .call(document.querySelectorAll('select' + selector), childElement => childElement.nodeName === 'SELECT');
+
+        Array.prototype.forEach.call(selectElements, (select, index) => {
+            // 첫 번째 엘리먼트는 값에 상관없이 항상 출력해야함
+            if (index === 0) {
+                let optionHtml = '';
+
+                categories
+                    .filter(category => category.depth === 0)
+                    .forEach(category => optionHtml += `<option value="${category.id}">${category.linkDataNm}</option>`);
+                select.innerHTML = select.options[0].outerHTML + optionHtml;
+            }
+
+            // 이벤트 리스너 등록
+            select.addEventListener('change', event => {
+                // 마지막 엘리먼트는 change 이벤트 처리하지 않음
+                if (event.currentTarget === selectElements[selectElements.length - 1])
+                    return;
+
+                // 루프를 돌기위한 변수 선택
+                let currentElement = event.currentTarget;
+                let nextElement = event.currentTarget;
+
+                // SELECT 엘리먼트가 없을때까지 반복
+                for (let i = index; (nextElement = selectElements[i + 1]) != null; i++) {
+                    let optionHtml = '';
+
+                    categories
+                        .filter(category => ('' + category.parentLinkNbrId) === currentElement.value)
+                        .forEach(category => optionHtml += `<option value="${category.id}">${category.linkDataNm}</option>`);
+                    nextElement.innerHTML = nextElement.options[0].outerHTML + optionHtml;
+
+                    currentElement = nextElement; // 다음 요소로 전환
+                }
+            });
+
+            // 초기 값이 지정되어 있다면 SELECT 값 지정
+            selectIds.forEach(category => {
+                if (category.depth === index) {
+                    select.value = category.id;
+                    select.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+    }
+
+    let allCheckBox = document.getElementById('allChk');
+    let checkboxes = document.querySelectorAll('input[name="id"]');
+
+    // 체크박스 조작
+    allCheckBox.addEventListener('click', () => {
+        checkboxes.forEach(chk => chk.checked = allCheckBox.checked);
+    });
+
+    checkboxes.forEach(chk => {
+        chk.addEventListener('click', () => {
+            if (!chk.checked) {
+                allCheckBox.checked = false;
+            } else {
+                allCheckBox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            }
+        });
+    });
+
+    // 카이즈유 가져오기
+    document.getElementById('optionBtn').addEventListener('click', () => {
+        const linkageData = document.querySelectorAll('input[name="id"]:checked');
+
+        if (linkageData.length < 1) {
+            alert("매물을 선택해주세요.");
+            return;
+        }
+
+        let linkageIds = [];
+
+        linkageData.forEach(linkListing => {
+            linkageIds.push(linkListing.value);
+        });
+
+        const formData = new FormData();
+        linkageIds.forEach(value => {
+            formData.append('id[]', value);
+        });
+
+        document.querySelector('.load_wrap').style.display = 'block';
+        document.getElementById('optionBtn').disabled = true;
+
+        fetch('/admin/management/getCarInfo', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert("카이즈유 가져오기를 완료했습니다.");
+                location.reload();
+            })
+            .catch(error => {
+                document.querySelector('.load_wrap').style.display = 'none';
+                console.error(error);
+                alert(error);
+            });
+    });
+
+    // 차량 등록
+    document.forms[1].addEventListener('submit', event => {
+        event.preventDefault();
+
+        let linkListingIds = [];
+
+        document.querySelectorAll('input[type=checkbox]:checked').forEach(linkListing => {
+            linkListingIds.push(linkListing.value);
+        });
+
+        const formData = new FormData();
+        linkListingIds.forEach(value => {
+            formData.append('id[]', value);
+        });
+
+        if (!formData.has("id[]")) {
+            alert('등록할 차량을 선택해주세요.')
+            return;
+        }
+
+        fetch('/admin/management/linkage/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('차량 등록을 완료했습니다.');
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

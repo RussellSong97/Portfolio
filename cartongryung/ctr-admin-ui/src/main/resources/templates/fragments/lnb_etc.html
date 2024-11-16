@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div id="lnb" th:fragment="lnb">
+    <button type="button" class="openBtn">&lt;</button>
+    <h2 class="tit">
+        <span>기타</span>
+    </h2>
+    <ul class="menu">
+        <li class="btn_sub">
+            <a th:href="@{/admin/etc/management('role' = ${T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role})}"
+            th:classappend="${requestValue.getRequestURI().startsWith('/admin/etc/management')
+            and condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role} ? 'skin_bg'">딜러 관리</a>
+        </li>
+        <li class="btn_sub">
+            <a th:href="@{/admin/etc/management('role' = ${T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role})}"
+               th:classappend="${requestValue.getRequestURI().startsWith('/admin/etc/management')
+            and condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role} ? 'skin_bg'">상담사 관리</a>
+        </li>
+        <li class="btn_sub">
+            <a th:href="@{/admin/etc/management('role' = ${T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.role})}"
+               th:classappend="${requestValue.getRequestURI().startsWith('/admin/etc/management')
+            and condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.role} ? 'skin_bg'">운영자 관리</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/etc/terms" th:classappend="${requestValue.getRequestURI().startsWith('/admin/etc/terms')} ? 'skin_bg'">서비스 약관 관리</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/etc/keyword" th:classappend="${requestValue.getRequestURI().startsWith('/admin/etc/keyword')} ? 'skin_bg'">인기 검색어 관리</a>
+        </li>
+    </ul>
+</div>
+</html>

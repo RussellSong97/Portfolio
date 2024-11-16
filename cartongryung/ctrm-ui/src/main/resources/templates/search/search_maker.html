@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_mobile}">
+
+<th:block layout:fragment="content">
+    <div class="m-find">
+        <div class="m-filter-wrap">
+            <div class="link-wrap">
+                <a href="/search/product/mobile/filter/maker" class="btn-link on">제조사 검색</a>
+                <a href="/search/product/mobile/filter/kind" class="btn-link">차종 검색</a>
+            </div>
+<!--            <div class="tab-list">-->
+<!--                <a href="#" class="tab on">국산차</a>-->
+<!--                <a href="#" class="tab">수입차</a>-->
+<!--            </div>-->
+            <div class="tab-content">
+                <div class="tab-box on">
+                    <div class="select-wrap">
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">제조사</span>
+                                    <span class="result" style="display: none;" id="selectCategoryName">현대</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list" id="selectFirst">
+                                    <li th:each="first : ${firstCategoryList}">
+                                        <a href="#" onclick="selectCategory(this)" th:attr="data-id=${first.id},data-categoryName=${first.linkDataNm}, data-count=${first.count}, data-depth=${first.depth}">
+                                            <i class="i-maker" th:if="${first.carImage != null}" th:style="'background-image: url(/api/file/view/' + ${first.carImage.uuid} + '?size1500);'"></i>
+                                            <th:block th:unless="${first.carImage != null}"
+                                                      th:style="'background-image: url(/path/to/default/image.png);'">
+                                            </th:block>
+                                            <span class="txt" id="categoryName1" th:text="${first.linkDataNm}">현대</span>
+                                            <span class="num" th:text="${#numbers.formatInteger(first.count,1,'COMMA')}">40,249</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">모델</span>
+                                    <span class="result" style="display: none;" id="selectSecondCategoryName">아반떼</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list" id="secondCategoryTag">
+<!--                                    <li>-->
+<!--                                        <a href="#">-->
+<!--                                            <span class="txt">아반떼</span>-->
+<!--                                            <span class="num">40,249</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">세부모델</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list" id="thirdCategoryTag">
+<!--                                    <li>-->
+<!--                                        <a href="#">-->
+<!--                                            <div class="checkbox">-->
+<!--                                                <input type="checkbox" name="detailModel" id="detailModel_01" disabled>-->
+<!--                                                <label for="detailModel_01">더 뉴 아반떼 (23년~현재)</label>-->
+<!--                                            </div>-->
+<!--                                            <span class="num">0</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a href="#">-->
+<!--                                            <div class="checkbox">-->
+<!--                                                <input type="checkbox" name="detailModel" id="detailModel_02">-->
+<!--                                                <label for="detailModel_02">더 뉴 아반떼 하이브리드 (CN7)</label>-->
+<!--                                            </div>-->
+<!--                                            <span class="num">40,249</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="tab-box">
+                    <div class="select-wrap">
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">제조사</span>
+                                    <span class="result" style="display: none;" id="selectThirdCategoryName">BMW</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="#">
+                                            <i class="i-maker" style="background-image: url('/user/images/dummy/maker01.png');"></i>
+                                            <span class="txt">BMW</span>
+                                            <span class="num">40,249</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">모델</span>
+                                    <span class="result" style="display: none;">BMW</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="#">
+                                            <span class="txt">BMW</span>
+                                            <span class="num">40,249</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <a href="javascript:;" class="btn-toggle">
+                                    <span class="tit">세부모델</span>
+                                </a>
+                            </dt>
+                            <dd>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="#">
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="detailModel" id="detailModel_01">
+                                                <label for="detailModel_01">BMW</label>
+                                            </div>
+                                            <span class="num">0</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-wrap type-fixed">
+                <button type="button" class="btn is-reset" onclick="resetSearchKind()">초기화</button>
+                <button type="button" class="btn" onclick="searchData()">
+                    확인</button>
+            </div>
+        </div>
+    </div>
+    <div class="loading-wrap" style="display:none">
+        <div class="progress-wrap">
+            <div class="pw-bar">
+                <div class="pw-bar-inner" id="loadingStyle" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<script layout:fragment="script" th:inline="javascript">
+
+    //서브 페이지 제목
+    var hdNm = "제조사 / 모델";
+    const searchParams = new URLSearchParams();
+    let selectedSearchData = {
+        category1 : '',
+        category2 : '',
+        category3 : []
+    }
+
+    function fnBack() {
+        location.href = "/search/product/mobile/filter";
+    }
+
+    // 탭버튼
+    document.querySelectorAll('.tab-list .tab').forEach(function (btn, idx) {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.tab-list .tab').forEach(function (btn, idx) {
+            btn.classList.remove('on');
+            });
+            btn.classList.add('on');
+            document.querySelectorAll('.tab-box').forEach(function (cbox) {
+            cbox.classList.remove('on');
+            })
+            document.querySelectorAll('.tab-box')[idx].classList.add('on');
+        });
+    });
+
+    // 선택 toggle
+    $('.btn-toggle').on("click", function(){
+        $(this).toggleClass('on');
+        $(this).parent().next().find('.select-list').slideToggle();
+    });
+
+    // 카테고리 선택후 html 그리기
+    function drawCategory(data) {
+        console.log(data);
+        data.forEach(item => {
+            let html = `
+            <li>
+                <a href="#" onclick="selectCategory(this)" data-id="${item.id}" data-depth="${item.depth}" data-categoryName="${item.linkDataNm}">
+                    <span class="txt">${item.linkDataNm}</span>
+                    <span class="num">${item.count.toLocaleString()}</span>
+                </a>
+            </li>`;
+
+            if (item.depth === 1) {
+                document.getElementById("secondCategoryTag").innerHTML += html;
+            } else {
+                let html = `
+                <li>
+                    <a href="#">
+                        <div class="checkbox">
+                            <input type="checkbox" name="detailModel" id="detailModel_${item.id}" data-id="${item.id}" data-name="${item.linkDataNm}">
+                            <label for="detailModel_${item.id}">${item.linkDataNm}</label>
+                        </div>
+                        <span class="num">${item.count.toLocaleString()}</span>
+                    </a>
+                </li>`;
+                document.getElementById("thirdCategoryTag").innerHTML += html;
+            }
+        });
+
+        document.querySelectorAll("input[name='detailModel']").forEach(checkBox => {
+            checkBox.addEventListener("change", () => {
+                let categoryId = checkBox.getAttribute("data-id");
+
+                let selectedCategories = searchParams.get('category3');
+                selectedCategories = selectedCategories ? selectedCategories.split(',') : [];
+
+                if (checkBox.checked) {
+                    // 체크된 경우, categoryId를 추가
+                    if (!selectedCategories.includes(categoryId)) {
+                        selectedCategories.push(categoryId);
+                    }
+                } else {
+                    // 체크 해제된 경우, categoryId를 제거
+                    selectedCategories = selectedCategories.filter(item => item !== categoryId);
+                }
+                searchParams.set('category3', selectedCategories.join(','));
+            });
+        });
+    }
+
+    // 카테고리 선택
+    function selectCategory(_this) {
+        let categoryId = _this.getAttribute("data-id");
+        let depth = _this.getAttribute("data-depth");
+        let categoryName = _this.getAttribute("data-categoryName");
+        let selectCategoryName = document.getElementById("selectCategoryName");
+        let selectFirst = document.getElementById("selectFirst");
+        let parseDepth = parseInt(depth);
+
+        fetch("/api/search/category", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                categoryId: categoryId,
+                depth: parseDepth + 1
+            })
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code === 200) {
+                    if (result.data[0].depth === 1) {
+
+                        // selectedSearchData.category1 = categoryId;
+                        searchParams.set('category1', categoryId)
+                        selectCategoryName.parentElement.classList.remove("on");
+                        selectCategoryName.textContent = categoryName;
+                        selectCategoryName.style.display = '';
+                        selectFirst.style.display = 'none';
+
+                        let secondCategoryTag = document.getElementById("secondCategoryTag");
+                        secondCategoryTag.innerHTML = '';
+
+                        let thirdCategoryTag = document.getElementById("thirdCategoryTag");
+                        thirdCategoryTag.innerHTML = '';
+
+                        let selectSecondCategoryName = document.getElementById("selectSecondCategoryName");
+                        selectSecondCategoryName.textContent = '';
+                        selectSecondCategoryName.style.display = 'none';
+                        selectSecondCategoryName.parentElement.classList.add("on");
+
+                        drawCategory(result.data);
+
+                    } else if (result.data[0].depth === 2) {
+                        // selectedSearchData.category2 = categoryId;
+                        searchParams.set('category2',categoryId)
+                        let selectSecondCategoryName = document.getElementById("selectSecondCategoryName");
+                        let secondCategoryTag = document.getElementById("secondCategoryTag");
+                        selectSecondCategoryName.parentElement.classList.remove("on");
+                        selectSecondCategoryName.textContent = categoryName;
+                        selectSecondCategoryName.style.display = '';
+                        secondCategoryTag.style.display = 'none';
+
+                        let thirdCategoryTag = document.getElementById("thirdCategoryTag");
+                        thirdCategoryTag.innerHTML = ''; // 3차 카테고리 목록 초기화
+
+                        drawCategory(result.data);
+                    }
+                }
+            });
+    }
+    let isLoading = false;
+    // 검색 버튼
+    function searchData() {
+        if (isLoading) return;
+        isLoading = true;
+
+        // 로딩 바를 화면에 표시
+        let loadingWrap = document.querySelector(".loading-wrap");
+        loadingWrap.style.display = 'block'; // 로딩 바 DOM 요소를 표시
+
+        // 검색 파라미터 설정
+        searchParams.set('page', 1); // 예시로 'page' 파라미터를 설정
+        window.location.href = '/search/product?' + searchParams.toString();
+
+        // 로딩 바 숨기기
+        loadingWrap.style.display = 'none';
+        isLoading = false;
+    }
+
+    // 초기화 버튼 클릭시
+    function resetSearchKind() {
+        location.reload();
+    }
+
+
+</script>
+</html>

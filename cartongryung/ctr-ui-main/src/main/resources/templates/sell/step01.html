@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="sell-wrap">
+        <div class="member-wrap">
+            <div class="w-set">
+                <div class="tit-area">
+                    <h2 class="tit hide-m">내 차 팔기</h2>
+                </div>
+                <div class="step-wrap">
+                    <ul class="step-list">
+                        <li class="on">
+                            <i class="i-step01"></i>
+                            <span class="txt">차량정보</span>
+                        </li>
+                        <li class="step-arrow on">다음단계</li>
+                        <li>
+                            <i class="i-step02"></i>
+                            <span class="txt">사진업로드</span>
+                        </li>
+                        <li class="step-arrow">다음단계</li>
+                        <li>
+                            <i class="i-step03"></i>
+                            <span class="txt">약관동의</span>
+                        </li>
+                        <li class="step-arrow">다음단계</li>
+                        <li>
+                            <i class="i-step04"></i>
+                            <span class="txt">신청완료</span>
+                        </li>
+                    </ul>
+                </div>
+                <div id="inputArea"  style="display: block;">
+                    <div class="info-txt">
+                        <p class="txt">판매 원하시는 <strong>차량번호와 소유주 명</strong>을<br class="hide-pc"> 입력해주세요.</p>
+                        <p class="txt-ex">(차량번호 예:12머1234)</p>
+                    </div>
+                    <form>
+                        <div class="input-wrap">
+                            <div class="input-item">
+                                <p class="input-tit">차량번호</p>
+                                <input type="text" name="carPlateNumber" id="carPlateNumber" placeholder="12머1234" maxlength="8">
+                                <label for="carPlateNumber" class="is-blind">차량번호</label>
+                            </div>
+                            <div class="input-item">
+                                <p class="input-tit">소유자명</p>
+                                <input type="text" name="ownerName" id="ownerName" placeholder="홍길동" maxlength="20">
+                                <label for="ownerName" class="is-blind">소유자명</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="btn-wrap">
+                        <!-- 활성화시 is-disabled 클래스 삭제 -->
+                        <button type="button" id="checkBtn" class="btn is-disabled" disabled>확인하기</button>
+                    </div>
+                </div>
+                <div class="car-res-pop" id="progressArea" style="display: none;">
+                    <div class="car-res-search">
+                        <div class="crs-title">차량정보를 조회하고 있습니다.</div>
+                        <div class="progress-wrap">
+                            <div class="pw-image-ani">
+                                <div class="inner-ico"></div>
+                            </div>
+                            <p class="pw-txt">조금만 기다려주세요.</p>
+                            <div class="pw-bar">
+                                <div class="pw-bar-inner" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="car-res-pop" id="infoArea" style="display: none;">
+                    <div class="car-res-messenger" id="typing-container">
+                        <div class="message-wrap">
+                            <div class="car-no-box ani-event" id="carNumberArea">
+                            </div>
+                        </div>
+                        <div class="message-wrap">
+                            <div class="message-box ani-event" id="carNameArea">
+                            </div>
+                        </div>
+                        <div class="message-wrap">
+                            <div class="message-box ani-event" id="carRegisterDateArea">
+                            </div>
+                        </div>
+                        <div class="message-wrap">
+                            <div class="message-box ani-event" id="distanceArea">
+                            </div>
+                        </div>
+                        <div class="message-wrap">
+                            <div class="message-box ani-event">
+                                <p>타이어 사이즈는 <span class="fc-po" id="tireSizeArea"></span> <u>1년에 한 번 이상은</u> 타이어 마모도를 꼭 확인해보세요.</p>
+                                <p class="sub-t">타이어를 바꾼 적이 있다면 사이즈가 다를 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 차량정보 확인 팝업 -->
+    <div class="wbz-popup-cont is-template type-alert" id="vehiclePopup">
+        <div class="popup-header">
+        </div>
+        <div class="popup-cont">
+            <div class="vehicle-wrap">
+                <p class="txt" id="carNumber"></p>
+                <div class="vehicle-box" id="carName"></div>
+                <div class="popup-button">
+                    <a href="/sale/vehicle/first" class="cr_2 popup-close">취소</a>
+                    <a href="/sale/vehicle/second" class="cr_1 popup-confirm-event">맞습니다</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //차량정보 확인 팝업 -->
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "내 차 팔기";
+
+    const carPlateNumberArea = document.querySelector('input[name="carPlateNumber"]');
+    const ownerNameArea = document.querySelector('input[name="ownerName"]');
+    const checkButton = document.getElementById('checkBtn');
+    const inputArea = document.getElementById('inputArea');
+    const progressArea = document.getElementById('progressArea');
+    const progressBar = document.querySelector('.pw-bar-inner');
+    const infoArea = document.getElementById('infoArea');
+    const carNumberArea = document.getElementById('carNumberArea');
+    const carNameArea = document.getElementById('carNameArea');
+    const carRegisterDateArea = document.getElementById('carRegisterDateArea');
+    const distanceArea = document.getElementById('distanceArea');
+    const tireSizeArea = document.getElementById('tireSizeArea');
+    const popCarNumber = document.getElementById('carNumber');
+    const popCarName = document.getElementById('carName');
+
+    carPlateNumberArea.addEventListener('input', () => {
+        if (carPlateNumberArea.value.trim().length > 0 && ownerNameArea.value.trim().length > 0) {
+            checkButton.classList.remove('is-disabled');
+            checkButton.disabled = false;
+        } else {
+            checkButton.classList.add('is-disabled');
+            checkButton.disabled = true;
+        }
+    });
+
+    ownerNameArea.addEventListener('input', () => {
+        if (carPlateNumberArea.value.trim().length > 0 && ownerNameArea.value.trim().length > 0) {
+            checkButton.classList.remove('is-disabled');
+            checkButton.disabled = false;
+        } else {
+            checkButton.classList.add('is-disabled');
+            checkButton.disabled = true;
+        }
+    });
+
+    let progressTimer;
+    checkButton.addEventListener('click', () => {
+        inputArea.style.display = 'none';
+        progressArea.style.display = 'block';
+
+        progressTimer = setInterval(() => progress(), 50);
+        callApi();
+    });
+
+    let currCnt = 0;
+    const maxCnt = 50;
+    let percent = 1;
+    const addPercent = 2;
+
+    // 로딩바
+    function progress() {
+        if (currCnt < maxCnt) {
+            progressBar.style.width = percent + '%';
+        } else {
+            clearInterval(progressTimer);
+        }
+
+        percent = percent + addPercent;
+        currCnt++;
+    }
+
+    // 차량 정보 조회
+    function callApi() {
+        const formData = new FormData();
+        formData.append('carPlateNumber', carPlateNumberArea.value);
+        formData.append('ownerName', ownerNameArea.value);
+
+        fetch('/api/get/carInfo', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200) {
+                    clearInterval(progressTimer);
+                    $popup.alert(result.message, {
+                        modal: true,
+                        close: () => {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    progressArea.style.display = 'none'
+                    infoArea.style.display = 'block';
+
+                    let carData = result.data;
+                    let carNumber = carData.vhrno.match(/(\d+)([가-힣])(\d{4})/);
+                    let dateStr = carData.frstRegistDe;
+                    let year = dateStr.substring(0, 4);
+                    let month = dateStr.substring(4, 6);
+                    let day = dateStr.substring(6, 8);
+                    let currentYear = new Date().getFullYear();
+
+                    carNumberArea.innerHTML = `<p>${carNumber[1]}<span class="ko">${carNumber[2]}</span>${carNumber[3]}</p>`;
+                    carNameArea.innerHTML = `<p><span class="fc-po">${carData.carClassNm} 차량</span>을 확인했어요.</p>`;
+                    carRegisterDateArea.innerHTML = `<p>차량 최초 등록일은 <span class="fc-po">${year}.${month}.${day}</span> ${currentYear - year}년차 이네요.</p>`;
+                    distanceArea.innerHTML = `<p>예상 주행거리 <span class="fc-po">${carData.trvlDstnc.toLocaleString()}km</span></p>`
+                    tireSizeArea.innerHTML = `${carData.tireSizeFront}`;
+                    popCarNumber.innerHTML = `등록된 <span>${carData.vhrno}</span> 차량 정보를<br>확인해 주세요.`;
+                    popCarName.innerHTML = `${carData.brandNm} ${carData.carClassNm}`;
+
+                    loadInfoData();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    }
+
+    // 20230714 타이핑 효과
+    function splitStringByTags(inputString) {
+        let resultArray = [];
+
+        while (inputString.length > 0) {
+            let startIndex = inputString.indexOf("<");
+            let endIndex = inputString.indexOf(">");
+
+            if (startIndex === -1 || endIndex === -1) {
+                for (let char of inputString) {
+                    resultArray.push(char);
+                }
+                break; // 태그가 없을 경우 종료
+            }
+
+            if (startIndex > 0) {
+                let text = inputString.substring(0, startIndex);
+                for (let char of text) {
+                    resultArray.push(char);
+                }
+            }
+
+            let tag = inputString.substring(startIndex, endIndex + 1);
+            resultArray.push(tag); // 태그 저장
+
+            inputString = inputString.substring(endIndex + 1);
+        }
+        return resultArray;
+    }
+
+    function wait(ms) {
+        return new Promise(res => setTimeout(res, ms))
+    }
+
+    const textAni = async (selector) => {
+        // 타이핑 속도 간격
+        let speed = 60;
+        let searchPattern = /</;
+        let searchPattern2 = /<\/+/;
+
+        // 텍스트 정보 저장 후 빈값 만들기
+        let input = selector.querySelector('p').innerHTML;
+        let tagsArray = splitStringByTags(input);
+        selector.querySelector('p').innerHTML = '';
+        // 박스 보이기
+        selector.classList.add('show');
+        // 타이핑 효과 실행
+        let isInner = false;
+        let isInnerTag = '';
+        let isSkip = false;
+        while (tagsArray.length) {
+            await wait(speed);
+            if (tagsArray.length == 0) {
+            } else if (searchPattern2.test(tagsArray[0])) {
+                isInner = false;
+                isSkip = true;
+                isInnerTag = '';
+            } else if (searchPattern.test(tagsArray[0])) {
+                if (/span/.test(tagsArray[0])) {
+                    isInnerTag = 'span';
+                } else if (/u/.test(tagsArray[0])) {
+                    isInnerTag = 'u';
+                }
+            }
+
+            if (isSkip) {
+                isSkip = false;
+            } else if (isInner && isInnerTag != '') {
+                selector.querySelector('p').querySelector(isInnerTag).innerHTML += tagsArray[0];
+            } else {
+                if (isInnerTag != '') {
+                    isInner = true;
+                } else {
+                    isInner = false;
+                }
+                selector.querySelector('p').innerHTML += tagsArray[0];
+            }
+            tagsArray.shift();
+        }
+    };
+
+    function loadInfoData() {
+        // 말풍선 애니메이션 간격
+        let aniSec = 1000;
+        let messegeWraps = document.querySelectorAll('.message-wrap');
+        let mwCount = 0;
+
+        const messegeWrapLoop = async () => {
+            let loopParent = messegeWraps[mwCount];
+            if (!loopParent) {
+                return false;
+            }
+            let boxMessage = loopParent.querySelectorAll('.message-box');
+            loopParent.classList.add('show');
+            if (boxMessage.length > 0) {
+                for (let i=0; i<boxMessage.length;i++) {
+                    await textAni(boxMessage[i]);
+                }
+                setTimeout(messegeWrapLoop, aniSec);
+            } else if (loopParent.querySelector('.car-no-box')) {
+                loopParent.querySelector('.car-no-box').classList.add('show');
+                setTimeout(messegeWrapLoop, aniSec);
+            }
+            mwCount++;
+        }
+        // 최초 실행
+        setTimeout(messegeWrapLoop, 900);
+        setTimeout(function () {$popup.template('#vehiclePopup')}, 14000);
+    }
+    // 20230714 타이핑 효과 end
+
+</script>
+</html>

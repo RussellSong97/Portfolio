@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1>광고 수신 동의 회원 조회</h1>
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+
+<div layout:fragment="pop_body" class="pop_body">
+    <div class="con_box">
+        <div class="search_wrap">
+            <form>
+                <div class="search">
+                    <div class="input_wrap">
+                        <input type="text" name="s" id="s" title="회원 이름 검색" placeholder="이름">
+                        <label for="s" class="blind">회원이름검색</label>
+                    </div>
+                    <button type="submit" class="btn_m">검색</button>
+                </div>
+            </form>
+            <div class="list_wrap">
+                <div class="list_table">
+                    <table>
+                        <caption>검색 결과</caption>
+                        <colgroup>
+                            <col style="width:20%;">
+                            <col style="width:40%;">
+                            <col style="width:40%;">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col" class="sortable">이름</th>
+                            <th scope="col">휴대폰번호</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${memberList.isEmpty()}" class="empty">
+                            <td colspan="3">등록된 데이터가 없습니다.</td>
+                        </tr>
+                        <tr th:each="member, stat : ${memberList}" class="link">
+                            <input type="hidden" name="memberId" th:value="${member.id}">
+                            <td th:text="${#numbers.formatInteger(memberList.totalElements - memberList.number * memberList.size - stat.index, 1, 'COMMA')}">
+                                5
+                            </td>
+                            <td th:text="${member.realName}">박성민</td>
+                            <td th:text="${member.mobileNumber}">010-2222-3333</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:replace="~{fragments/pagination :: pagination (${memberList})}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    // 차량 번호 검색
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+
+        const s = document.getElementById('s');
+        if (s.value.trim().length < 1) {
+            alert("검색어를 입력해주세요.");
+            s.focus();
+            return;
+        }
+
+        event.target.submit();
+    });
+
+    // DOMContentLoaded 이벤트 시 기본 이름 정렬
+    document.addEventListener('DOMContentLoaded', () => {
+        const table = document.querySelector('.list_table table');
+        const tbody = table.querySelector('tbody');
+        const nameHeader = document.querySelector('th.sortable');
+
+        const sortRows = (isAscending) => {
+            const rows = Array.from(tbody.querySelectorAll('tr.link')).sort((a, b) => {
+                const aText = a.querySelectorAll('td')[1].textContent.trim();
+                const bText = b.querySelectorAll('td')[1].textContent.trim();
+                return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+            });
+            rows.forEach(row => tbody.appendChild(row));
+        };
+
+        // 기본 이름 오름차순 정렬
+        sortRows(true);
+
+        // 이름 열을 클릭할 때 정렬
+        nameHeader.addEventListener('click', () => {
+            const isAscending = nameHeader.classList.toggle('desc');
+            sortRows(!isAscending);
+        });
+    });
+
+    // 클릭한 행 부모창에 보내고 팝업 닫기
+    document.addEventListener('DOMContentLoaded', () => {
+        const memberLists = document.querySelector('.list_table tbody');
+        memberLists.addEventListener('click', event => {
+            const targetTr = event.target.closest('tr');
+            if (targetTr && targetTr.classList.contains('link')) {
+                const tds = targetTr.querySelectorAll('td');
+
+                let member = {
+                    memberId: targetTr.querySelector('input[name="memberId"]').value,
+                    realName: tds[1].textContent,
+                };
+
+                opener.addMarketingMemberList(member);
+                window.close(); // 클릭 후 창 닫기
+            }
+        });
+    });
+</script>
+</html>

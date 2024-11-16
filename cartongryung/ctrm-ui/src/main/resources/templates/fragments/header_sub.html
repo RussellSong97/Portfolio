@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- 분류 main: gnb,logo,pc그림자X | sub: back,title,pc그림자O | hide-m: 모바일X-->
+<header id="header" th:fragment="header_sub" class="sub">
+    <th:block th:if="${!topStripBanner.isEmpty()}">
+        <th:block th:each="banner : ${topStripBanner}">
+            <a th:href="${'https://' + banner.linkUrl}" class="banner-top" th:classappend="${banner.backgroundColorType.className}" th:target="${banner.linkType.target}">
+                <p class="txt" th:text="${banner.content}">신규가입 시 <strong>5천원</strong> 웰컴 쿠폰 증정</p>
+            </a>
+        </th:block>
+    </th:block>
+    <div class="inner">
+        <div class="hd-top">
+            <h1 class="hd-logo">
+                <a href="/" class="logo-link">
+                    <span class="is-blind">카통령</span>
+                </a>
+            </h1>
+            <div class="gnb-wrap">
+                <!-- fragments/header_sub.html -->
+                <ul class="gnb">
+                    <li class="is-buy">
+                        <a href="/search/product">내 차 구입</a>
+                    </li>
+                    <li>
+                        <a href="/sale/intro">내 차 팔기</a>
+                    </li>
+                    <li>
+                        <a href="/rent/list">렌트</a>
+                    </li>
+                    <li>
+                        <!--<a href="/product/recommend">특가차량</a>-->
+                        <a href="/installments">금융</a>
+                        <ul class="depth2 gnb-depth gnb-depth2">
+                            <li>
+                                <a href="/installments">할부</a>
+                            </li>
+                            <li>
+                                <a href="/lease">리스</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="gnb-sub">
+                    <li>
+                        <a href="/warranty">워런티</a>
+                    </li>
+                    <li>
+                        <a class="community" href="/review">커뮤니티</a>
+                        <ul class="depth2 gnb-depth gnb-sub-depth2">
+                            <li>
+                                <a href="/review">고객후기</a>
+                            </li>
+                            <li>
+                                <a href="/event">이벤트</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="is-map">
+                        <a href="/map01">오시는 길</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hd-utils">
+                <th:block sec:authorize="!isAnonymous()">
+                    <ul class="justify-content-end">
+                        <li class="is-search hide-pc">
+                            <a href="#" class="link">검색</a>
+                        </li>
+                        <li class="is-like">
+                            <!--suppress XmlDuplicatedId -->
+                            <a href="/mypage/pick"  id="picksCheck" th:class="${picksCheck > 0 ? 'link on' : 'link'}">찜</a>
+                        </li>
+                        <li class="is-notification">
+                            <!--suppress XmlDuplicatedId -->
+                            <a href="/mypage/notification" id="notificationCheck" th:class="${notificationsCheck > 0 ? 'link on' : 'link'}">알림</a>
+                        </li>
+                        <li class="is-menu hide-m">
+                            <a href="#" class="link">전체메뉴</a>
+                        </li>
+                    </ul>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <ul>
+                        <li class="hide-m">
+                            <a href="/login" class="btn-login">로그인/회원가입</a>
+                        </li>
+                        <li class="is-search hide-pc">
+                            <a href="#" class="link">검색</a>
+                        </li>
+                        <li class="is-like">
+                            <!--suppress XmlDuplicatedId -->
+                            <a href="/mypage/pick"  id="picksCheck" th:class="${picksCheck > 0 ? 'link on' : 'link'}">찜</a>
+                        </li>
+                        <li class="is-notification">
+                            <!--suppress XmlDuplicatedId -->
+                            <a href="/mypage/notification" id="notificationCheck" th:class="${notificationsCheck > 0 ? 'link on' : 'link'}">알림</a>
+                        </li>
+                        <li class="is-menu hide-m">
+                            <a href="#" class="link">전체메뉴</a>
+                        </li>
+                    </ul>
+                </th:block>
+            </div>
+        </div>
+        <div class="header-mobile">
+            <button type="button" class="btn-back" onclick="fnBack()" id="checkAsideOpen">뒤로가기</button>
+            <div class="hd-center">
+                <span class="title"></span>
+            </div>
+            <!-- 해당페이지 : login -->
+            <!-- <a href="../main/index.html" class="btn-home">홈</a> -->
+        </div>
+    </div>
+    <script type="text/javascript">
+    </script>
+</header>
+</html>

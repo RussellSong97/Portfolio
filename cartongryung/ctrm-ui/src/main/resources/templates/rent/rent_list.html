@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" content="렌트">
+
+
+    <!-- SEO용 메타 태그 -->
+    <meta name="description" content="카통령 렌트 구간">
+    <meta name="keywords" content="키워드1, 키워드2, 키워드3">
+    <meta name="author" content="작성자 이름">
+    <meta name="robots" content="index, follow">
+
+    <!-- 트위터 카드 메타 태그 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="페이지 제목">
+    <meta name="twitter:description" content="페이지 설명">
+    <meta name="twitter:image" content="이미지 경로">
+
+    <link rel="icon" href="/user/images/favicon/favicon_48x48.svg" sizes="48x48">
+    <link rel="icon" href="/user/images/favicon/favicon_96x96.svg" sizes="96x96">
+    <link rel="icon" href="/user/images/favicon/favicon_144x144.svg" sizes="144x144">
+    <link rel="icon" href="/user/images/favicon/favicon_196x196.svg" sizes="196x196">
+
+    <!-- Open Graph 메타 태그 (SNS 공유 시에 사용) -->
+    <meta property="og:image" content="/user/images/favicon/ogi.png"/>
+    <meta property="og:image:width" content="270"/>
+    <meta property="og:image:height" content="270"/>
+    <meta property="og:title" content=""/>
+    <meta property="og:description" content=""/>
+
+    <title>카통령 렌트</title>
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/user/css/general.css(ver=${#temporals.createNow()})}"/>
+    <link rel="stylesheet" th:href="@{/user/css/swiper-bundle.min.css(ver=${#temporals.createNow()})}"/>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE@2/fonts/static/woff2/SUITE.css" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- js -->
+    <script src="/user/js/jquery-3.6.0.js"></script>
+    <script src="/user/js/jquery-1.12.4.min.js"></script>
+    <script src="/user/js/jquery-ui.js"></script>
+    <script th:src="@{/user/js/mobile-layout.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/layout.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/swiper-bundle.min.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/wbz-popup.v1.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/aside.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/common.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/common-quick.js(ver=${#temporals.createNow()})}"></script>
+    <script th:src="@{/user/js/appCheck.js(ver=${#temporals.createNow()})}"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+<!-- 본문 바로가기 -->
+    <div id="skipNav">
+        <a href="#contents" onclick="document.getElementById('contents').tabIndex = -1;
+            document.getElementById('contents').focus(); return false;">본문 바로가기</a>
+    </div>
+    <div id="container">
+        <header th:replace="~{fragments/header :: header}"></header>
+        <aside th:replace="~{fragments/aside :: aside}"></aside>
+        <main id="contents">
+            <th:block th:if="${isMobile}">
+                <link rel="stylesheet" th:href="@{/user/css/rent-mobile.css(ver=${#temporals.createNow()})}"/>
+                <div th:replace="~{rent/rent_mobile :: rentMobileContents}"></div>
+            </th:block>
+            <th:block th:if="${!isMobile}">
+                <link rel="stylesheet" th:href="@{/user/css/rent-style.css(ver=${#temporals.createNow()})}"/>
+                <div th:replace="~{rent/rent_pc :: rentPcContents}"></div>
+            </th:block>
+        </main>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabs = document.querySelectorAll('#mct_01 .nav ul li a');
+            const contents = document.querySelectorAll('#mct_01 .content .tx1, #mct_01 .content .tx2');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    tabs.forEach(item => item.classList.remove('on'));
+                    contents.forEach(content => content.style.display = 'none');
+                    this.classList.add('on');
+                    const targetClass = this.id;
+                    document.querySelector('#mct_01 .' + targetClass).style.display = 'block';
+                });
+            });
+            document.querySelector('#mct_01 .tx1').style.display = 'block';
+            document.querySelector('#mct_01 .tx2').style.display = 'none';
+        });
+
+        document.querySelectorAll('#mct_04 .dos_q').forEach(function(question) {
+            question.addEventListener('click', function() {
+                const parent = this.parentElement;
+                if (parent.classList.contains('active')) {
+                    parent.classList.remove('active');
+                } else {
+                    document.querySelectorAll('#mct_04 .dos.active').forEach(function(item) {
+                        item.classList.remove('active');
+                    });
+                    parent.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

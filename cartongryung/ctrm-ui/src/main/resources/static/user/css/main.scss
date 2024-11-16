@@ -1,0 +1,1192 @@
+@import "./utility.scss";
+
+.main-content {
+    .tit-area {
+        margin-bottom: 36px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        .btn-more {
+            font-size: 14px;
+            &::after {
+                content: "";
+                display: inline-block;
+                width: 11px;
+                height: 11px;
+                background: url("../images/common/ico/btn_more.svg");
+                vertical-align: middle;
+                margin: -2px 0 0 6px;
+                transition: all 0.2s;
+            }
+            &:hover {
+                &::after {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+    }
+    // 메인배너
+    .main-visual {
+        position: relative;
+        max-width: 1840px;
+        margin: 0 auto;
+        .swiper-control {
+            max-width: 310px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+            font-size: 0;
+            .swiper-count {
+                font-family: $outfit;
+                font-size: 14px;
+                font-weight: 900;
+                line-height: 18px;
+                span {
+                    padding: 0 4px;
+                    &.all-num {
+                        color: rgba(#000, 0.3);
+                    }
+                }
+            }
+            .pagination:not(.bullet) {
+                position: relative;
+                flex: 0 0 auto;
+                max-width: 200px;
+                height: 1px;
+                z-index: 11;
+                background: rgba(#000, 0.2);
+                .swiper-pagination-progressbar-fill {
+                    background-color: #000;
+                }
+            }
+            .pause {
+                flex: 0 0 auto;
+                margin-left: 24px;
+                display: block;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: rgba(#000, 0.26) url("../images/common/ico/swiper_pause.svg") no-repeat center;
+            }
+            .play {
+                @extend .pause;
+                background-image: url("../images/common/ico/swiper_play.svg");
+            }
+        }
+        .swiper-navi {
+            max-width: 1680px;
+            margin: -34px auto 0;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            .swiper-button {
+                font-size: 0;
+                width: 68px;
+                height: 68px;
+                border-radius: 50%;
+                background-color: rgba(#000, 0.14);
+                background-repeat: no-repeat;
+                background-position: center;
+                position: absolute;
+                z-index: 10;
+                &.prev {
+                    background-image: url("../images/common/ico/swiper_prev_w.svg");
+                }
+                &.next {
+                    background-image: url("../images/common/ico/swiper_next_w.svg");
+                    right: 0;
+                }
+            }
+        }
+        .img {
+            @include imgbox(35%);
+            border-radius: 46px 0px 46px 46px;
+            overflow: hidden;
+            background-color: #e9e9e9;
+        }
+    }
+    .main-cont {
+        margin: 80px 0;
+        &.type-bg {
+            padding: 60px 0;
+            background: #f8f8f8;
+        }
+        .tab-list {
+            margin: 40px 0 44px;
+        }
+    }
+    // 슬라이드 공통
+    .swiper-wrap {
+        position: relative;
+        padding-bottom: 62px;
+        .swiper-control {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 11;
+            .swiper-count {
+                font-family: $outfit;
+                font-size: 14px;
+                font-weight: 900;
+                line-height: 18px;
+                span {
+                    padding: 0 4px;
+                    &.all-num {
+                        color: rgba(#000, 0.3);
+                    }
+                }
+                em {
+                    color: rgba(#000, 0.3);
+                }
+            }
+            .pagination {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+                max-width: 440px;
+                height: 2px;
+                background: #e2e2e2;
+                .swiper-pagination-progressbar-fill {
+                    background-color: #636569;
+                }
+            }
+        }
+        .swiper-navi {
+            max-width: 1560px;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            margin-top: -50px;
+            left: -88px;
+            right: -88px;
+            z-index: 10;
+            .swiper-button {
+                font-size: 0;
+                width: 36px;
+                height: 36px;
+                background-color: #fff;
+                background-repeat: no-repeat;
+                background-position: center;
+                position: absolute;
+                z-index: 10;
+                box-shadow: 0px 0px 9px #0000001c;
+                border-radius: 50%;
+                &.prev {
+                    background-image: url("../images/common/ico/swiper_prev.svg");
+                }
+                &.next {
+                    background-image: url("../images/common/ico/swiper_next.svg");
+                    right: 0;
+                }
+                &.swiper-button-disabled {
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+    // 나에게 맞는 차량
+    .search-wrap {
+        box-shadow: 0px 0px 12px #00000014;
+        border-radius: 6px;
+        padding: 32px;
+        .tit-area {
+            align-items: center;
+            margin-bottom: 32px;
+            h2.tit {
+                font-weight: 700;
+                font-size: 32px;
+            }
+        }
+        .search-box {
+            .total {
+                top: 14px;
+                font-size: 16px;
+                strong {
+                    font-size: 18px;
+                }
+            }
+            input {
+                padding-right: 60px;
+            }
+        }
+        .search-area {
+            width: 100%;
+            max-width: 500px;
+            .search-list {
+                display: flex;
+                margin: 8px 0 0 24px;
+                max-width: calc(100% - 24px);
+                a {
+                    display: block;
+                    text-align: center;
+                    font-size: 14px;
+                    color: #555555;
+                    &::before {
+                        content: "#";
+                    }
+                }
+                .swiper {
+                    margin-left: 0;
+                    .swiper-slide {
+                        width: auto;
+                    }
+                }
+                .swiper-navi {
+                    display: flex;
+                    margin-left: 10px;
+                    .swiper-button {
+                        width: 16px;
+                        height: 16px;
+                        font-size: 0;
+                        background: url("../images/common/ico/search_prev.svg") no-repeat center/cover;
+                        &.next {
+                            background-image: url("../images/common/ico/search_next.svg");
+                        }
+                        &.swiper-button-disabled {
+                            opacity: 0.5;
+                        }
+                    }
+                }
+            }
+        }
+        .select-wrap {
+            position: relative;
+            display: flex;
+            .select-box {
+                flex: 1;
+                & + .select-box {
+                    margin-left: 10px;
+                }
+                &.disabled {
+                    cursor: default;
+                    pointer-events: none;
+                    .select {
+                        background-color: #f5f5f5;
+                    }
+                }
+                &.selected {
+                    .select {
+                        font-weight: 600;
+                        color: #000;
+                    }
+                }
+                &.on {
+                    .select {
+                        font-weight: 600;
+                        color: $primary-color1;
+                        border-color: $primary-color1;
+                        &::after {
+                            background-image: url("../images/common/ico/select_arrow_on.svg");
+                            transform: translateY(-50%) scaleY(-1) !important;
+                        }
+                    }
+                }
+                .select {
+                    height: 62px;
+                    line-height: 60px;
+                    border-radius: 6px;
+                    padding: 0 40px 0 24px;
+                    color: #636569;
+                    border-color: #dddddd;
+                    &::after {
+                        position: absolute;
+                        right: 18px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                    &.on {
+                        font-weight: 600;
+                        color: $primary-color1;
+                        border-color: $primary-color1;
+                    }
+                }
+            }
+            .btn {
+                margin-left: 12px;
+                width: 90px;
+                height: 62px;
+                line-height: 60px;
+                font-weight: 400;
+                font-size: 18px;
+            }
+            .option-box {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                background-color: #fff;
+                box-shadow: 0px 0px 12px #00000014;
+                border-radius: 6px;
+                margin-top: 20px;
+                padding: 16px 10px 12px;
+                width: calc(100% - 102px);
+                // &::after {
+                //     content: "";
+                //     display: block;
+                //     width: 100%;
+                //     height: 40px;
+                //     background: linear-gradient(1turn, #fff, hsla(0, 0%, 100%, 0));
+                //     position: absolute;
+                //     bottom: 12px;
+                //     left: 0;
+                //     z-index: 10;
+                // }
+                // &.no-gradient::after {
+                //     display: none; /* 스크롤이 하단에 도달하면 그라데이션 효과를 숨김 */
+                // }
+                .option-list {
+                    padding: 0;
+                    height: 234px;
+                    overflow: auto;
+                    @include scroll;
+                    overscroll-behavior: contain;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-content: flex-start;
+                    li {
+                        width: calc(100% / 5);
+                        height: auto;
+                        &.type-detail {
+                            li {
+                                width: calc(100% / 3);
+                            }
+                        }
+                        a {
+                            display: block;
+                            padding: 10px;
+                            font-size: 15px;
+                            color: $text-color1;
+                            transition: all 0.35s;
+                        }
+                        &:hover,
+                        &.on {
+                            a {
+                                color: $primary-color1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // 올라 온 지 얼마 안된 매물
+    .new-wrap {
+        .swiper-wrap {
+            .swiper-navi {
+                top: 40%;
+            }
+        }
+    }
+    // 카통령 추천 차량
+    .recommend-wrap {
+        .recommend-cont {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            .main-area {
+                width: 49.334%;
+                border-radius: 12px;
+                overflow: hidden;
+                .prd-box {
+                    &:hover {
+                        .btn-like {
+                            right: 30px;
+                        }
+                    }
+                    .prd-thumb {
+                        @include imgbox(85.813%);
+                        & > a {
+                            &::after {
+                                content: "";
+                                display: block;
+                                background: transparent
+                                    linear-gradient(
+                                        0deg,
+                                        rgba(0, 0, 0, 0.6) 0%,
+                                        rgba(0, 0, 0, 0.3137254902) 48%,
+                                        rgba(0, 0, 0, 0) 100%
+                                    )
+                                    0% 0% no-repeat padding-box;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                z-index: 10;
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+                    .prd-info {
+                        position: absolute;
+                        bottom: 30px;
+                        left: 30px;
+                        right: 30px;
+                        z-index: 20;
+                        color: #fff;
+                        .prd-name {
+                            color: #fff;
+                            min-height: auto;
+                            font-size: 24px;
+                        }
+                        .price-info {
+                            .sale-price {
+                                font-size: 20px;
+                                text-decoration: line-through;
+                                padding-right: 8px;
+                                color: #bbb;
+                                font-weight: 700;
+                            }
+                            .num-price {
+                                font-size: 24px;
+                            }
+                        }
+                        .detail-info {
+                            padding-top: 20px;
+                            span {
+                                color: #bbb;
+                            }
+                        }
+                    }
+                }
+                .btn-like {
+                    // right: 30px;
+                    bottom: 30px;
+                }
+            }
+            .cont-area {
+                flex: 1;
+                .prd-list {
+                    li {
+                        & + li {
+                            margin-top: 26px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // 서브 배너
+    .sub-visual {
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        .swiper-count {
+            position: absolute;
+            left: auto;
+            right: 20px;
+            bottom: 20px;
+            background: rgba(#000, 0.26);
+            text-align: center;
+            width: 86px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+            font-family: $suite;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            z-index: 10;
+            display: inline-block;
+            em {
+                margin: 0 4px;
+            }
+        }
+        a {
+            display: block;
+            @include imgbox(12%);
+        }
+    }
+    // 가성비 추천 차량
+    .efficient-wrap {
+        .swiper {
+            padding-bottom: 10px;
+            padding: 0 10px 10px;
+            margin: 0 -10px;
+        }
+        .prd-box {
+            box-shadow: 2px 4px 9px #1717170f;
+            border-radius: 12px;
+            .prd-thumb {
+                border-radius: 12px 12px 0 0;
+            }
+            .prd-info {
+                padding: 20px 16px 24px;
+            }
+        }
+    }
+    // 카통령 이벤트
+    .event-wrap {
+        .event-img {
+            border-radius: 12px;
+            @include imgbox(65.8%);
+        }
+    }
+    // 이용후기
+    .review-wrap {
+        @extend .efficient-wrap;
+        .prd-box {
+            &:hover {
+                .prd-thumb img {
+                    transform: scale(1.1);
+                }
+            }
+            .prd-info {
+                min-height: 164px;
+                padding-top: 48px;
+            }
+        }
+    }
+    // 최신공지
+    .notice-wrap {
+        margin-top: 120px;
+        padding: 20px 0;
+        border-top: 1px solid #eee;
+        .w-set {
+            display: flex;
+            align-items: center;
+        }
+        .tit {
+            flex: 0 0 auto;
+            width: 118px;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .txt-area {
+            padding-right: 180px;
+            flex: 1;
+            font-size: 18px;
+            line-height: 1.2;
+            .txt {
+                display: inline;
+            }
+            .date {
+                flex: 0 0 auto;
+                margin-left: 23px;
+                color: #aaa;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+// 메인팝업
+#mainPopupBg {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #222222;
+    opacity: 0.4;
+}
+#mainPopup {
+    position: fixed;
+    z-index: 9999 + 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 500px;
+    .swiper-navi {
+        margin: -30px auto 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        .swiper-button {
+            width: 60px;
+            height: 60px;
+            font-size: 0;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 40px;
+            position: absolute;
+            z-index: 10;
+            &.prev {
+                background-image: url("../images/common/ico/swiper_prev_w.svg");
+                left: -81px;
+            }
+            &.next {
+                background-image: url("../images/common/ico/swiper_next_w.svg");
+                right: -81px;
+            }
+        }
+    }
+    .swiper-count {
+        text-align: center;
+        color: #fff;
+        display: block;
+        position: absolute;
+        z-index: 2;
+        left: 50%;
+        bottom: 65px;
+        transform: translateX(-50%);
+        width: 70px;
+        height: 30px;
+        line-height: 28px;
+        font-size: 15px;
+        background: rgba(51, 51, 51, 0.65);
+        border-radius: 15px;
+        span {
+            font-size: $suite;
+            &.swiper-pagination-current {
+                font-weight: 500;
+            }
+        }
+        em {
+            margin: 0 4px;
+        }
+    }
+    .swiper {
+        position: relative;
+        overflow: hidden;
+        a {
+            width: 500px;
+            display: block;
+            position: relative;
+            &::after {
+                content: "";
+                display: block;
+                padding-bottom: 100%;
+            }
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    .mainpop-menu {
+        display: flex;
+        button {
+            color: #000;
+            flex: 1;
+            background: #fff;
+            font-size: 16px;
+            height: 56px;
+            line-height: 54px;
+            & + button {
+                position: relative;
+                &::before {
+                    content: "";
+                    display: inline-block;
+                    width: 1px;
+                    height: 12px;
+                    background: #a7a7a7;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1872px) {
+    .main-content {
+        .main-visual {
+            max-width: calc(100% - 32px);
+        }
+    }
+}
+
+@media (max-width: 1760px) {
+    .main-content {
+        .main-visual {
+            .swiper-navi {
+                margin-top: -20px;
+                .swiper-button {
+                    margin: 0 16px;
+                    width: 40px;
+                    height: 40px;
+                    background-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1460px) {
+    .main-content {
+        .main-cont {
+            &:not(.type-bg) {
+                margin: 70px 30px;
+            }
+            &.type-bg {
+                .w-set {
+                    max-width: calc(100% - 60px);
+                }
+            }
+        }
+        .swiper-wrap {
+            .swiper-navi {
+                margin-top: -60px;
+                left: -40px;
+                right: -40px;
+                .swiper-button {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+        }
+        // 이벤트
+        .event-wrap {
+            .swiper-wrap {
+                .swiper-navi {
+                    margin-top: -40px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet {
+    .main-content {
+        // 카통령 추천 차량
+        .recommend-wrap {
+            .recommend-cont {
+                gap: 30px;
+                .main-area {
+                    width: 36%;
+                    .prd-box {
+                        &:hover {
+                            .btn-like {
+                                right: 16px;
+                            }
+                        }
+                    }
+                }
+                .cont-area {
+                    .prd-box {
+                        max-width: calc(100% - 30px);
+                        .prd-thumb {
+                            width: 100px;
+                        }
+                    }
+                }
+            }
+        }
+        // 서브 배너
+        .sub-visual {
+            a {
+                @include imgbox(25%);
+            }
+        }
+        // 가성비 추천 차량
+        .efficient-wrap {
+            .prd-box {
+                .prd-info {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+            }
+        }
+        // 이용후기
+        .review-wrap {
+            .prd-box {
+                .prd-info {
+                    .review-tit {
+                        font-size: 15px;
+                        margin-bottom: 8px;
+                    }
+                    .review-txt {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include mobile {
+    .main-content {
+        h2.tit {
+            font-size: 20px;
+        }
+        .tit-area {
+            margin-bottom: 20px;
+        }
+        // 메인배너
+        .main-visual {
+            .img {
+                @include imgbox(79.27%);
+                border-radius: 16px;
+            }
+            .swiper-control {
+                max-width: 150px;
+                bottom: 10px;
+                left: 16px;
+                transform: initial;
+                .swiper-count {
+                    font-size: 13px;
+                    font-weight: 700;
+                    span {
+                        &.active-num {
+                            padding: 0 8px 0 0;
+                        }
+                        &.all-num {
+                            padding: 0 0 0 8px;
+                        }
+                    }
+                }
+                .pagination {
+                    max-width: 50px;
+                }
+                .pause {
+                    margin-left: 12px;
+                    width: 18px;
+                    height: 18px;
+                    background-size: 5px;
+                }
+                .play {
+                    margin-left: 12px;
+                }
+            }
+            .swiper-navi {
+                display: none;
+            }
+        }
+        .main-cont {
+            &:not(.type-bg) {
+                margin: 52px 0;
+            }
+            &.type-bg {
+                margin: 52px 0;
+                padding: 52px 0;
+                .w-set {
+                    max-width: 100%;
+                }
+            }
+        }
+        //슬라이드 공통
+        .swiper-wrap {
+            padding-bottom: 32px;
+            .swiper-control {
+                .pagination {
+                    max-width: 200px;
+                }
+            }
+            .swiper-navi {
+                display: none;
+            }
+        }
+        // 나에게 맞는 차량
+        .main-top {
+            position: relative;
+            padding-top: 64px;
+            margin-top: 16px;
+            .main-cont {
+                margin: 0;
+            }
+        }
+        .search-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0 16px;
+            box-shadow: none;
+            padding: 0;
+            border-radius: 0;
+            .search-box {
+                .total {
+                    top: 10px;
+                }
+                input {
+                    padding-right: 40px;
+                    font-size: 14px;
+                }
+            }
+            .search-area {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+        // 바로가기
+        .link-wrap {
+            margin: 46px auto 34px;
+            display: flex !important;
+            justify-content: space-between;
+            gap: 24px;
+            max-width: 560px;
+            .link {
+                flex: 1;
+                text-align: center;
+                i {
+                    display: block;
+                    box-shadow: 0px 0px 6px #0000001a;
+                    border-radius: 12px;
+                    width: 100%;
+                    max-width: 58px;
+                    margin: 0 auto;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 48px;
+                    &::after {
+                        content: "";
+                        display: block;
+                        padding-bottom: 100%;
+                    }
+                    @for $i from 1 through 4 {
+                        &.i-link#{$i} {
+                            background-image: url("../images/common/ico/main_link#{$i}.png");
+                        }
+                    }
+                }
+                .txt {
+                    display: block;
+                    margin-top: 10px;
+                    font-family: $suite;
+                    font-weight: 500;
+                    font-size: 13px;
+                }
+            }
+        }
+        // 카통령 추천 차량
+        .recommend-wrap {
+            .recommend-cont {
+                flex-direction: column;
+                .main-area {
+                    width: 100%;
+                    .prd-box {
+                        .prd-thumb {
+                            @include imgbox(84.15%);
+                        }
+                        .prd-info {
+                            bottom: 16px;
+                            left: 16px;
+                            right: 16px;
+                            .prd-name {
+                                font-size: 16px;
+                            }
+                            .price-info {
+                                padding-top: 6px;
+                                .sale-price {
+                                    font-size: 14px;
+                                }
+                                .num-price {
+                                    font-size: 16px;
+                                }
+                            }
+                            .detail-info {
+                                padding-top: 12px;
+                            }
+                        }
+                    }
+                    .btn-like {
+                        bottom: 16px;
+                        right: 16px;
+                    }
+                }
+                .cont-area {
+                    width: 100%;
+                    .prd-list {
+                        li {
+                            & + li {
+                                margin-top: 10px;
+                            }
+                        }
+                    }
+                    .btn-like {
+                        right: auto;
+                        left: 76px;
+                        bottom: 6px;
+                        top: auto;
+                        transform: initial;
+                    }
+                    .prd-box {
+                        max-width: 100%;
+                        padding-right: 0;
+                        gap: 12px;
+                        .prd-thumb {
+                            width: 120px;
+                        }
+                        .prd-info {
+                            .prd-name {
+                                font-size: 14px;
+                            }
+                            .price-info {
+                                .num-sale {
+                                    font-size: 12px;
+                                }
+                                .num-price {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                        .detail-info {
+                            span {
+                                font-size: 12px;
+                            }
+                        }
+                        &.badge {
+                            .prd-thumb {
+                                & > a {
+                                    &::before {
+                                        left: 0;
+                                        right: auto;
+                                        width: 36px;
+                                        height: 43px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // 서브 배너
+        .sub-visual {
+            border-radius: 0;
+            margin: 0 -16px;
+            .swiper-count {
+                right: 8px;
+                bottom: 8px;
+                width: 46px;
+                height: 16px;
+                line-height: 16px;
+                font-size: 10px;
+            }
+        }
+        .efficient-wrap {
+            .swiper {
+                padding: 0 0 10px;
+                margin: 0;
+            }
+        }
+        // 이벤트
+        .event-wrap {
+        }
+        // 이용후기
+        .review-wrap {
+            .prd-box {
+                .prd-thumb {
+                    @include imgbox(70.64%);
+                }
+                .prd-info {
+                    min-height: 127px;
+                    padding: 34px 10px 20px;
+                    .profile {
+                        width: 48px;
+                        height: 48px;
+                        left: 10px;
+                        top: -24px;
+                    }
+                }
+            }
+        }
+        // 최신공지
+        .notice-wrap {
+            .tit {
+                width: 68px;
+                font-size: 14px;
+            }
+            .txt-area {
+                display: flex;
+                align-items: center;
+                padding-right: 0;
+                gap: 10px;
+                .txt {
+                    font-size: 14px;
+                }
+                .date {
+                    margin-left: auto;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        // 올라 온 지 얼마 안된 매물
+        .new-wrap {
+            .new-slide {
+                margin-right: -16px;
+            }
+        }
+        // 가성비 추천 차량
+        .efficient-wrap {
+            .efficient-slide {
+                margin-right: -16px;
+            }
+        }
+        // 이용후기
+        .review-wrap {
+            .review-slide {
+                margin-right: -16px;
+            }
+        }
+    }
+    // 메인팝업
+    #mainPopup {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: initial;
+        width: 100%;
+        max-width: 100%;
+        .swiper-navi {
+            top: -18px;
+            .swiper-button {
+                background-size: 18px auto;
+                &.prev {
+                    background-image: url("../images/common/ico/swiper_prev_m.svg");
+                    left: 50%;
+                    transform: translateX(-50%);
+                    margin-left: -42px;
+                }
+                &.next {
+                    background-image: url("../images/common/ico/swiper_next_m.svg");
+                    right: 50%;
+                    transform: translateX(50%);
+                    margin-right: -42px;
+                }
+            }
+        }
+        .swiper-count {
+            bottom: auto;
+            top: -32px;
+            z-index: 1000;
+            background: transparent;
+        }
+        .swiper {
+            border-radius: 12px 12px 0px 0px;
+            overflow: hidden;
+            a {
+                width: 100%;
+            }
+        }
+        .mainpop-menu {
+            button {
+                font-size: 14px;
+                height: 40px;
+                line-height: 38px;
+                & + button {
+                    &::before {
+                        height: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

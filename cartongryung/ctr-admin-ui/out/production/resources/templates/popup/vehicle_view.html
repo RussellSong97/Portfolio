@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1>차량 상세보기</h1>
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+<div layout:fragment="pop_body" class="pop_body">
+    <div class="con_top">
+        <p>
+            <span th:text="${saleVehicle.vhrno}">123가 1234</span><br>
+            <span th:text="${saleVehicle.brandNm + ' ' + saleVehicle.carClassNm + ' ' + saleVehicle.carGradeNm}">BMW BMW 118d</span>
+        </p>
+        <span class="date">등록일 : <th:block th:text="${#temporals.format(saleVehicle.createdAt, 'yy.MM.dd')}"></th:block></span>
+    </div>
+    <div class="con_box">
+        <div class="view_wrap mt10">
+            <div class="vehicle_img">
+                <div class="sliderMain">
+                    <div class="swiper-container">
+                        <div class="swiper_navi">
+                            <button class="swiper_button swiper_prev" type="button">이전</button>
+                            <button class="swiper_button swiper_next" type="button">다음</button>
+                        </div>
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="img : ${saleVehicle.attachments}">
+                                <img th:src="@{/api/file/view/{uuid}(uuid = ${img.uuid}, size = 1500)}" alt="이미지">
+                            </div>
+                        </div>
+                        <div class="swiper-count"></div>
+                    </div>
+                </div>
+                <div class="sliderPaging">
+                    <div class="swiper_navi">
+                        <button class="swiper_button swiper_prev" type="button">이전</button>
+                        <button class="swiper_button swiper_next" type="button">다음</button>
+                    </div>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="img : ${saleVehicle.attachments}">
+                                <div class="img"
+                                     th:style="|background-image: url('/api/file/view/${img.uuid}?size=1500');|"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view_table info_wrap mt20">
+                <h3>기본정보</h3>
+                <div class="flex mt10">
+                    <table>
+                        <caption>기본정보</caption>
+                        <colgroup>
+                            <col style="width:30%;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">차량번호</th>
+                            <td th:text="${saleVehicle.vhrno}">000가 0000</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">제조사</th>
+                            <td th:text="${saleVehicle.brandNm}">현대</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">모델</th>
+                            <td th:text="${saleVehicle.repCarClassNm}">EQ900</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">세부모델</th>
+                            <td th:text="${saleVehicle.carClassNm}">EQ900 (15~18년)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">등급</th>
+                            <td th:text="${saleVehicle.carGradeNm}">3.3 T-GDI</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">세부등급</th>
+                            <td th:text="${saleVehicle.carGradeNm}">프레스티지</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">미션</th>
+                            <td th:text="${saleVehicle.istdTrans}">오토</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <caption>기본정보</caption>
+                        <colgroup>
+                            <col style="width:30%;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">연료</th>
+                            <td th:text="${saleVehicle.fuel}">휘발유</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">색상</th>
+                            <td th:text="${saleVehicle.colorNm}">검정색</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">연식</th>
+                            <td th:text="${saleVehicle.prye}">2023년 1월</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">주행거리</th>
+                            <td th:text="${#numbers.formatInteger(saleVehicle.trvlDstnc, 1, 'COMMA') + 'km'}">00,000km</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">등록일</th>
+                            <td th:text="${#temporals.format(saleVehicle.createdAt, 'yyyy-MM-dd')}">2025-01-22</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    // 제품 이미지 슬라이드
+    var vehiclePaging = new Swiper(".sliderPaging .swiper-container", {
+        spaceBetween: 10,
+        slidesPerView: 5,
+        watchSlidesProgress: true,
+        navigation: {
+            nextEl: '.vehicle_img .sliderPaging .swiper_navi .swiper_next',
+            prevEl: '.vehicle_img .sliderPaging .swiper_navi .swiper_prev',
+        },
+    });
+
+    var vehicleMain = new Swiper(".sliderMain .swiper-container", {
+        loop: true,
+        thumbs: {
+            swiper: vehiclePaging,
+        },
+        pagination: {
+            el: '.swiper-count',
+            type: 'fraction',
+            // 갯수 표현 마크업
+            renderFraction: function (currentClass, totalClass) {
+                return `<span class="${currentClass}"></span>` +
+                    `<em>/</em>` +
+                    `<span class="${totalClass}"></span>`;
+            }
+        },
+        navigation: {
+            nextEl: '.vehicle_img .sliderMain .swiper_navi .swiper_next',
+            prevEl: '.vehicle_img .sliderMain .swiper_navi .swiper_prev',
+        },
+    });
+</script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+
+	<div class="w-set">
+		<div class="boardView-wrap" style="overflow: hidden;word-break: break-word;">
+			<div class="view-top">
+				<div class="tit-area">
+					<p class="tit" th:text="${reviewDetail.title}">대형차 EQ900 5.0 방문 출고!</p>
+				</div>
+				<div class="txt-area">
+					<span class="date" th:text="${reviewDetail.formattedCreatedAt}">2024.05.13 12:06:33</span>
+				</div>
+			</div>
+			<div class="view-cont ck-content">
+          <th:block th:utext="${reviewDetail.content}"></th:block>
+			</div>
+			<div class="btn-wrap">
+				<a href="/review" class="btn color3">목록</a>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<script>
+	//서브 페이지 제목
+	var hdNm = "고객후기";
+
+	function fnBack() {
+		history.back();
+	}
+</script>
+
+
+</html>

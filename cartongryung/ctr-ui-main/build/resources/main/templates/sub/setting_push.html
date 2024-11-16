@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="setting-wrap">
+            <div class="setting-list">
+                <ul>
+                    <li class="is-total">
+                        <span class="tit">시스템 알림 설정</span>
+                        <div class="toggle">
+                            <div class="button">
+                                <input type="checkbox" name="" id="" class="checkbox" title="" checked="">
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="tit">광고성 정보</span>
+                        <div class="toggle">
+                            <div class="button">
+                                <input type="checkbox" name="" id="" class="checkbox" title="">
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="tit">공지 알림</span>
+                        <div class="toggle">
+                            <div class="button">
+                                <input type="checkbox" name="" id="" class="checkbox" title="">
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="tit">푸쉬설정</span>
+                        <div class="toggle">
+                            <div class="button">
+                                <input type="checkbox" name="" id="" class="checkbox" title="">
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "설정";
+</script>
+</html>

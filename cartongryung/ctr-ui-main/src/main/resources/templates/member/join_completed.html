@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_member}">
+
+<th:block layout:fragment="content">
+    <div class="member-wrap">
+        <div class="join-wrap">
+            <div class="completed-wrap">
+                <div class="w-set">
+                    <i class="join-completed"></i>
+                    <div class="completed-txt">
+                        <p class="txt01">카통령 가입이 완료되었습니다.</p>
+                        <p class="txt02">환영합니다!<br class="hide-pc"> 카통령의 다양한 서비스를 이용해보세요.</p>
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn" id="checkBtn">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "회원가입";
+
+    document.getElementById("checkBtn").onclick = () => {
+        location.href = "/main";
+    }
+</script>
+</html>

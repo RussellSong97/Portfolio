@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_member}">
+
+<th:block layout:fragment="content">
+    <div class="member-wrap">
+        <div class="join-wrap">
+            <div class="completed-wrap">
+                <div class="w-set">
+                    <i class="find-completed"></i>
+                    <div class="completed-txt">
+                        <p class="txt01">적어주신 <span>이메일</span>로 비밀번호 재설정<br>링크를 보냈어요!</p>
+                        <p class="txt02">이메일에서 비밀번호를 초기화 해주세요.</p>
+                    </div>
+                    <div class="btn-wrap">
+                        <a href="/login" class="btn">확인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "비밀번호 찾기";
+</script>
+</html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="338" height="180" viewBox="0 0 338 180">
+  <g id="매우짧음_그래프" data-name="매우짧음 그래프" transform="translate(-311.667 -238.41)">
+    <g id="그룹_33310" data-name="그룹 33310" transform="translate(0 436.84)">
+      <path id="패스_40126" data-name="패스 40126" d="M344.715,316.368a3.358,3.358,0,0,0-2.217,1.419c-18.743,27.373-27.9,55.568-28.83,88.73a3.4,3.4,0,0,0,3.4,3.483H372.3a3.418,3.418,0,0,0,3.384-3.243,106.275,106.275,0,0,1,17.418-52.418,3.42,3.42,0,0,0-.8-4.669l-45.011-32.7a3.368,3.368,0,0,0-1.991-.651A3.467,3.467,0,0,0,344.715,316.368Z" transform="translate(0 -437.747)" fill="#ff6464"/>
+      <text id="매우짧음" transform="translate(349.931 -42.177) rotate(-73)" fill="#fff" font-size="14" font-family="Pretendard-Bold, Pretendard" font-weight="700"><tspan x="0" y="0">매우짧음</tspan></text>
+    </g>
+    <g id="짧음">
+      <rect id="사각형_5893" data-name="사각형 5893" width="338" height="180" transform="translate(311.667 238.41)" fill="none"/>
+      <path id="패스_39111" data-name="패스 39111" d="M428.786,256.234a3.383,3.383,0,0,0-4.363-2.156c-31.253,11.127-55.237,28.552-75.478,54.838a3.4,3.4,0,0,0,.7,4.815l45.06,32.738a3.426,3.426,0,0,0,4.659-.65,106.828,106.828,0,0,1,44.586-32.313,3.418,3.418,0,0,0,2.067-4.233Z" fill="#e2e2e2"/>
+      <text id="짧음-2" data-name="짧음" transform="translate(394.89 312.984) rotate(-36)" fill="#222" font-size="14" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">짧음</tspan></text>
+    </g>
+    <g id="보통">
+      <rect id="사각형_5894" data-name="사각형 5894" width="338" height="180" transform="translate(311.667 238.41)" fill="none"/>
+      <path id="패스_39110" data-name="패스 39110" d="M453.993,310.23a107.577,107.577,0,0,1,55.12-.243,3.427,3.427,0,0,0,4.15-2.215L530.41,255a3.4,3.4,0,0,0-2.263-4.309,158.387,158.387,0,0,0-93.295,0A3.4,3.4,0,0,0,432.59,255l17.229,53.024A3.424,3.424,0,0,0,453.993,310.23Z" transform="translate(-0.333 -0.254)" fill="#e2e2e2"/>
+      <text id="보통-2" data-name="보통" transform="translate(469.167 282.41)" fill="#222" font-size="14" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">보통</tspan></text>
+    </g>
+    <g id="많음">
+      <rect id="사각형_5895" data-name="사각형 5895" width="338" height="180" transform="translate(311.667 238.41)" fill="none"/>
+      <path id="패스_39109" data-name="패스 39109" d="M518.822,313.047a106.73,106.73,0,0,1,45.7,32.625,3.015,3.015,0,0,0,4.1.558l45.058-32.736a3.01,3.01,0,0,0,.62-4.263c-20.365-26.558-44.545-44.126-76.1-55.287a3.01,3.01,0,0,0-3.861,1.907L516.973,309.3A3,3,0,0,0,518.822,313.047Z" transform="translate(-0.667)" fill="#e2e2e2"/>
+      <text id="많음-2" data-name="많음" transform="matrix(0.809, 0.588, -0.588, 0.809, 550.52, 298.877)" fill="#222" font-size="14" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">많음</tspan></text>
+    </g>
+    <g id="매우_많음" data-name="매우 많음">
+      <rect id="사각형_5896" data-name="사각형 5896" width="338" height="180" transform="translate(311.667 238.41)" fill="none"/>
+      <path id="패스_39108" data-name="패스 39108" d="M570.581,353.861a106.238,106.238,0,0,1,17.737,52.994A3.365,3.365,0,0,0,591.7,410h54.233a3.4,3.4,0,0,0,3.4-3.483c-.927-33.163-10.088-61.358-28.831-88.73a3.354,3.354,0,0,0-2.215-1.419,3.469,3.469,0,0,0-.591-.051,3.375,3.375,0,0,0-1.991.651l-23.491,17.067L571.368,349.18A3.416,3.416,0,0,0,570.581,353.861Z" transform="translate(-0.667 -0.747)" fill="#e2e2e2"/>
+      <text id="매우많음" transform="translate(600.995 347.403) rotate(72)" fill="#222" font-size="14" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">매우많음</tspan></text>
+    </g>
+  </g>
+</svg>

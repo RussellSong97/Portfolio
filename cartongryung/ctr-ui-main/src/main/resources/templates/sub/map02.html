@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="tit-area">
+            <h2 class="tit hide-m">오시는 길</h2>
+        </div>
+        <div class="map-wrap">
+            <div class="tab-list type-s">
+                <a href="/map01">본사</a>
+                <a href="/map02" class="on">공식 서비스센터</a>
+            </div>
+            <div class="map-area">
+                <div id="map">
+                    <!-- * 카카오맵 - 지도퍼가기 -->
+                    <!-- 1. 지도 노드 -->
+                    <div id="daumRoughmapContainer1715927636949" class="root_daum_roughmap root_daum_roughmap_landing"
+                         style="width: 100%;"></div>
+
+                    <!--
+                      2. 설치 스크립트
+                      * 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
+                    -->
+                    <script charset="UTF-8" class="daum_roughmap_loader_script"
+                            src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+                    <!-- 3. 실행 스크립트 -->
+                    <script charset="UTF-8">
+                        new daum.roughmap.Lander({
+                            "timestamp": "1715927636949",
+                            "key": "2jd64",
+                            "mapWidth": "",
+                            "mapHeight": ""
+                        }).render();
+                    </script>
+                </div>
+                <div class="map-info">
+                    <div class="info-address">
+                        <span class="tit">Address</span>
+                        <p class="txt">수원시 권선구 평동로 84-1, 1층 카통령 서비스센터</p>
+                    </div>
+                    <div class="info-number">
+                        <span class="tit">카통령 문의</span>
+                        <p class="txt">1800 - 0892</p>
+                    </div>
+                </div>
+                <ul class="transport-list">
+                    <li>
+                        <i class="i-car"></i>
+                        <div class="txt-area">
+                            <dl>
+                                <dt>서비스센터 주차장</dt>
+                                <dd>카통령 서비스센터 주차장 이용</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="i-bus"></i>
+                        <div class="txt-area">
+                            <dl>
+                                <dt>35, 30번 버스</dt>
+                                <dd>수원역환승센터(1승강장) 2번 출구 앞 탑승, 공구유통타운 하차</dd>
+                            </dl>
+                            <dl>
+                                <dt>700-2, 31-1번 버스</dt>
+                                <dd>수원역환승센터(1승강장) 3번 출구 앞 탑승, 공구유통타운 하차</dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "오시는 길";
+</script>
+</html>

@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="divide-flex">
+            <div class="divide-left">
+                <div class="find-wrap">
+                    <div class="find-top">
+                        <div class="count-area">
+                            <span class="count-tit">내 차 구입</span>
+                            <p class="count">
+                                <span class="num product-count">0</span>대
+                            </p>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn-reset" id="btn-reset">초기화</button>
+                        </div>
+                    </div>
+                    <div class="find-group">
+                        <fieldset>
+                            <legend>Find Car</legend>
+                            <div class="schlist model">
+                                <p class="schlist-tit">제조사 / 모델 / 상세 모델</p>
+                                <div class="filter-wrap">
+                                    <div class="deparea maker">
+                                        <dl class="deplist">
+                                            <dt class="is-blind">제조사</dt>
+                                            <dd id="category-container" style="position: relative"></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="schlist price">
+                                <a href="javascript:" class="schlist-tit">
+                                    가격
+                                    <i class="ico-toggle"></i>
+                                </a>
+                                <div class="schlist-cont">
+                                    <form name="searchPriceForm">
+                                        <div class="range-slider" id="price-range-slider">
+                                            <div id="price-range" class="range-bar"></div>
+                                            <div class="slider-labels">
+                                              <span class="range-text"></span>
+                                            </div>
+                                        </div>
+                                        <!-- 직접입력 체크 박스 클릭시 -->
+                                        <div class="input-wrap price" id="price-range-custom" style="display: none">
+                                            <div class="input-box">
+                                                <label for="startPrice">만원</label>
+                                                <input type="text" name="startPrice" id="startPrice" placeholder="" maxlength="8"/>
+                                            </div>
+                                            <span>~</span>
+                                            <div class="input-box">
+                                                <label for="endPrice">만원</label>
+                                                <input type="text" name="endPrice" id="endPrice" placeholder="" maxlength="8" />
+                                            </div>
+                                        </div>
+
+                                        <div class="input-wrap type-switch">
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="priceCustom" id="priceCustom" />
+                                                <label for="priceCustom" class="txt">직접입력</label>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button type="submit" class="btn">검색</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="schlist price">
+                                <a href="javascript:" class="schlist-tit">
+                                    주행거리
+                                    <i class="ico-toggle"></i>
+                                </a>
+                                <div class="schlist-cont">
+                                    <form name="searchKmForm">
+                                        <div class="input-wrap range" id="km-range-select">
+                                            <div class="input-box">
+                                                <label for="selectStartKm">부터</label>
+                                                <select name="selectStartKm" id="selectStartKm">
+                                                    <option value="">전체</option>
+                                                    <option th:each="km : ${kmRanges}"
+                                                            th:if="${km gt 0 and kmStat.last eq false}"
+                                                            th:value="${km}"
+                                                            th:text="${#numbers.formatInteger(km, 1, 'COMMA') + 'km'}">100,000km</option>
+                                                </select>
+                                            </div>
+                                            <span>~</span>
+                                            <div class="input-box">
+                                                <label for="selectEndKm">까지</label>
+                                                <select name="selectEndKm" id="selectEndKm">
+                                                    <option value="">전체</option>
+                                                    <option th:each="km : ${kmRanges}"
+                                                            th:if="${km gt 0 and kmStat.last eq false}"
+                                                            th:value="${km}"
+                                                            th:text="${#numbers.formatInteger(km, 1, 'COMMA') + 'km'}">100,000km</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- 직접입력 체크 박스 클릭시 -->
+                                        <div class="input-wrap price" id="km-range-custom" style="display: none">
+                                            <div class="input-box">
+                                                <label for="startKm">km</label>
+                                                <input type="text" name="startKm" id="startKm" placeholder="" />
+                                            </div>
+                                            <span>~</span>
+                                            <div class="input-box">
+                                                <label for="endKm">km</label>
+                                                <input type="text" name="endKm" id="endKm" placeholder="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="input-wrap type-switch">
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="kmCustom" id="kmCustom" />
+                                                <label for="kmCustom" class="txt">직접입력</label>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button type="submit" class="btn">검색</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="schlist year">
+                                <a href="javascript:" class="schlist-tit">
+                                    연식
+                                    <i class="ico-toggle"></i>
+                                </a>
+                                <div class="schlist-cont">
+                                    <div class="input-wrap range">
+                                        <div class="input-box">
+                                            <label for="startYear">부터</label>
+                                            <select name="startYear" id="startYear" required>
+                                                <option value="">전체</option>
+                                                <option th:each="year : ${yearRanges}"
+                                                        th:value="${year}" th:text="${year + '년'}">2023</option>
+                                            </select>
+                                        </div>
+                                        <span>~</span>
+                                        <div class="input-box">
+                                            <label for="endYear">까지</label>
+                                            <select name="endYear" id="endYear" required>
+                                                <option value="">전체</option>
+                                                <option th:each="year : ${yearRanges}"
+                                                        th:value="${year}" th:text="${year + '년'}">2023</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <ul id="productList"></ul>
+                                </div>
+                            </div>
+                            <div class="schlist fuel">
+                                <a href="javascript:" class="schlist-tit" onclick="toggleFuelFilter()">
+                                    연료
+                                    <i class="ico-toggle"></i>
+                                </a>
+                                <div class="schlist-cont">
+                                    <ul class="checkbox_list"></ul>
+                                </div>
+                            </div>
+                            <div class="schlist transmission">
+                                <a href="javascript:" class="schlist-tit" onclick="toggleTransmissionFilter()">
+                                    변속기
+                                    <i class="ico-toggle"></i>
+                                </a>
+                                <div class="schlist-cont">
+                                    <ul class="checkbox_list"></ul>
+                                </div>
+                            </div>
+                            <div class="schlist color">
+                                <a href="javascript:" class="schlist-tit" onclick="toggleColorFilter()">
+                                    색상
+                                    <i class="ico-toggle"></i>
+                                </a>
+                                <div class="schlist-cont">
+                                    <ul class="checkbox_list"></ul>
+                                    <button type="button" class="btn-popup">
+                                        + <span>다른 색상 더보기</span>
+                                    </button>
+                                    <div class="popup">
+                                        <div class="popup-header">
+                                            <span class="tit">색상 선택</span>
+                                            <button class="popup-close">닫기</button>
+                                        </div>
+                                        <ul class="color-list"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="divide-right">
+                <div class="find-result">
+
+                    <div class="search-wrap hide-m">
+                        <strong class="tit">모델, 차량번호 검색</strong>
+                        <div class="search-input">
+                            <form name="searchKeywordForm">
+                                <input type="text" name="keyword" id="searchPcKeywordValue" placeholder=""
+                                       th:value="${param.keyword}">
+                                <label for="searchPcKeywordValue" class="is-blind">검색어 입력</label>
+                                <button type="submit" class="btn-search" id="searchPcKeyword">검색</button>
+                            </form>
+                        </div>
+                    </div>
+                    <a th:href="@{/search/mobile(keyword=${param.keyword})}" class="search-box hide-pc" id="searchMobileKeywordTag" th:text="${param.keyword}">모델, 차량번호 검색</a>
+                    <div class="result-top">
+                        <div class="result-text" id="selectedFiltersContainer"></div>
+                        <button type="button" class="btn-reset hide-m" id="btn-reset-filters">초기화</button>
+                        <a href="/search/product/mobile/filter" class="btn-filter hide-pc">필터</a>
+                    </div>
+                    <div class="result-cont">
+                        <form name="searchSortForm">
+                            <input type="hidden" id="selectedSort" value="recent">
+                            <ul class="sort-list">
+                                <li>
+                                    <input type="radio" name="sortBy" value="pick" id="sort1">
+                                    <label for="sort1" class="sort">인기순</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="sortBy" value="recent" id="sort2">
+                                    <label for="sort2" class="sort">최신순</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="sortBy" value="downPrice" id="sort3">
+                                    <label for="sort3" class="sort">저가순</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="sortBy" value="upPrice" id="sort4">
+                                    <label for="sort4" class="sort">고가순</label>
+                                </li>
+                            </ul>
+                        </form>
+                        <p class="total hide-pc">
+                            <strong class="product-count" style="color: #B82927;">0</strong>대의 차량
+                        </p>
+                        <ul class="result-list" id="product-list"></ul>
+                    </div>
+                </div>
+                <div class="load-wrap" style="display: none">
+                    <div class="spinner-svg"></div>
+                </div>
+                <div class="empty" style="display: none">
+                    <p>차량이 없습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    // 서브 페이지 제목
+    let hdNm = "내 차 구입";
+
+    function fnBack() {
+        location.href = "/";
+    }
+
+    const pagePerSize = 9;
+
+    let isBackForward = false;
+
+    /** 카테고리 데이터 캐싱 변수 */
+    const cacheCategories = {};
+
+    /** 연료 데이터 캐싱 변수 */
+    let cacheFuels = [];
+
+    /** 변속기 데이터 캐싱 변수 */
+    let cacheTransmissions = [];
+
+    /** 색상 데이터 캐싱 변수 */
+    let cacheColors = [];
+
+    /** 가격 선택 범위 변수 */
+    const priceRanges = /*[[ ${priceRanges} ]]*/ [];
+
+    /** 주행거리 선택 범위 변수 */
+    const kmRanges = /*[[ ${kmRanges} ]]*/ [];
+
+    /** 연식 선택 범위 변수 */
+    const yearRanges = /*[[ ${yearRanges} ]]*/ [];
+
+    /** 색상 HEX 코드 변수 */
+    const colorStyles = {
+        '선택': "background: #fff;color: #222;border: 1px solid #222;",
+        '미선택': "background: #fff;color: #222;border: 1px solid #222;",
+        '흰색': 'background: #fff;color: #222;border: 1px solid #e8e8e8;',
+        '검정색': 'background: #000;',
+        '차콜': 'background: #777777;',
+        '쥐색': 'background: #616161;',
+        '갤럭시': 'background: #A6B2B0;color: #636569;',
+        '회색': 'background: #EEEEEE;color: #636569;',
+        '빨간색': 'background: #EF1717;',
+        '분홍색': 'background: #FFB5B5;',
+        '주황색': 'background: #FF7F00;color: #fff',
+        '노란색': 'background: #FFDD00;color: #636569;',
+        '녹색': 'background: #008000;color: #fff',
+        '담녹색': 'background: #4b654b;color: #fff',
+        '초록색': 'background: #478E18;',
+        '연두색': 'background: #89EE46;color: #636569;',
+        '파란색': 'background: #0466FA;',
+        '하늘색': 'background: #96E3E9;color: #636569;',
+        '터키옥': 'background: #2B7089;',
+        '짙은 파란색': 'background: #163463;',
+        '보라색': 'background: #8F4496;',
+        '버건디': 'background: #B70038;',
+        '갈색': 'background: #9F6335;color: #fff',
+        '베이지': 'background: #FBE4C6;color: #636569;',
+        '진주색': 'background: #F8F8E2;color: #636569;',
+        '금색': 'background: linear-gradient(to bottom, #C8A51D 0%,#F8E7AF 50%,#C8A51D 100%);color: #636569;',
+        '은색': 'background: linear-gradient(to bottom, #C0C0C0 0%,#fff 50%,#C0C0C0 100%);color: #636569;',
+        '투톤': 'background: linear-gradient(to right, #000000 0%,#000000 50%,#777777 50%,#777777 100%);'
+    };
+
+    /** 차종 코드 변수 */
+    const engNames = /*[[ ${engNames} ]]*/ [];
+
+    /** 차량 검색 결과 변수 */
+    const productResult = new Proxy({
+        items: [],
+        totalElements: 0,
+        pageLoaded: false,
+        isLoading: false,
+        hasMorePages: false
+    }, {
+        set(target, property, value, _receiver) {
+            target[property] = value;
+
+            switch (property) {
+                case 'totalElements':
+                    drawProducts();
+                    document.querySelectorAll('.product-count').forEach(element =>
+                        element.textContent = value.toLocaleString());
+                    break;
+
+                case 'isLoading':
+                    document.querySelector('.load-wrap').style.display = value ? 'block' : 'none';
+                    break;
+
+                case 'hasMorePages':
+                    const emptyDiv = document.querySelector('.empty');
+                    emptyDiv.style.display = value ? 'none' : 'block';
+                    emptyDiv.querySelector('p').textContent = target.totalElements > 0 ?
+                        '마지막 페이지입니다.' : '검색 결과가 없습니다.';
+                    break;
+            }
+
+            return true;
+        }
+    });
+
+    /** 무한 스크롤 감지 변수 */
+    const footerObserver = new IntersectionObserver((entries) => {
+        if (productResult.pageLoaded === false) return;
+        if (productResult.isLoading) return;
+        if (productResult.hasMorePages === false) return;
+
+        if (entries[0].isIntersecting) {
+            const searchParams = new URLSearchParams(window.location.search);
+
+            searchParams.set('page', String(parseInt(searchParams.get('page') || '1') + 1));
+            window.history.replaceState({}, '', `${window.location.pathname}?${searchParams.toString()}`);
+
+            fetchProducts();
+        }
+    }, {
+        root: null,
+        rootMargin: '0px 0px 100px 0px',
+        threshold: 0
+    });
+
+    /** 찜 상품 요약 정보 변수 */
+    let pickSummary = {};
+
+    /** 초기 페이지 로드 시 데이터 로드 */
+    document.addEventListener('DOMContentLoaded', () => {
+        selectSort("selectedSort", "sortBy");
+        fetchPickSummary();
+        resetQueryString(true);
+        footerObserver.observe(document.getElementById('footer'));
+    });
+
+    document.addEventListener("click", function(element){
+        getElementWidthByTarget(element);
+    });
+    //
+    // /**
+    //  * 클릭한 요소의 값 확인
+    //  * */
+    // const targetElement = () => {
+    //
+    // }
+
+    /** 페이지 로드 시 진입 종류 체크 */
+    window.addEventListener('pageshow', () => {
+        if (window.performance && performance.getEntriesByType('navigation')[0].type === 'back_forward')
+            isBackForward = true;
+    });
+
+    /* 페이지 이동 시 스크롤 위치 저장 */
+    window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('scrollPosition', String(window.scrollY));
+        console.log('beforeunload', window.scrollY);
+    });
+
+    /** 초기화 버튼 동작 이벤트 리스너 */
+    document.querySelectorAll('.btn-reset').forEach(element => {
+        element.addEventListener('click', () => {
+            selectSort("selectedSort","sortBy");
+
+            window.history.replaceState({}, '', window.location.pathname);
+            resetQueryString();
+            resetFuelFilters();
+            resetTransmissionFilters();
+            resetColorFilters();
+        });
+    });
+
+    /** 가격 검색 이벤트 리스너 */
+    document.forms['searchPriceForm'].addEventListener('submit', event => {
+        event.preventDefault();
+
+        const priceCustom = document.getElementById('priceCustom');
+        const rangeSliderValues = $('#price-range').slider('values');
+        let startPrice;
+        let endPrice;
+
+        if (priceCustom.checked) {
+            startPrice = String(Number(event.currentTarget.startPrice.value.replace(/[^0-9]/g, '')) * 10000);
+            endPrice = String(Number(event.currentTarget.endPrice.value.replace(/[^0-9]/g, '')) * 10000);
+        } else {
+            startPrice = String(priceRanges[rangeSliderValues[0]]);
+            endPrice = String(rangeSliderValues[1] === priceRanges.length - 1 ? 0 : priceRanges[rangeSliderValues[1]]);
+        }
+
+        if (startPrice === '0')
+            startPrice = '';
+        if (endPrice === '0')
+            endPrice = '';
+
+        if (startPrice !== '' && endPrice !== '' && Number(startPrice) > Number(endPrice)) {
+            $popup.alert('가격 범위가 잘못되었습니다.');
+            return;
+        }
+
+        updateRangeQueryString('price', [startPrice, endPrice]);
+        bindPriceValues();
+    });
+
+    /** 시작 가격 입력 이벤트 리스너 */
+    document.getElementById('startPrice').addEventListener('input', event => {
+        if (event.target.value === '' || event.target.value === '0') {
+            document.forms['searchPriceForm'].startPrice.value = '';
+            return;
+        }
+
+        const stripNumber = Number(event.target.value.replace(/[^0-9]/g, ''));
+        document.forms['searchPriceForm'].startPrice.value = stripNumber.toLocaleString();
+    });
+
+    /** 종료 가격 입력 이벤트 리스너 */
+    document.getElementById('endPrice').addEventListener('input', event => {
+        if (event.target.value === '' || event.target.value === '0') {
+            document.forms['searchPriceForm'].endPrice.value = '';
+            return;
+        }
+
+        const stripNumber = Number(event.target.value.replace(/[^0-9]/g, ''));
+        document.forms['searchPriceForm'].endPrice.value = stripNumber.toLocaleString();
+    });
+
+    /** 가격 직접입력 체크박스 이벤트 리스너 */
+    document.getElementById('priceCustom').addEventListener('change', togglePriceCustom);
+
+    /** 주행거리 검색 이벤트 리스너 */
+    document.forms['searchKmForm'].addEventListener('submit', event => {
+        event.preventDefault();
+
+        const kmCustom = document.getElementById('kmCustom');
+        let startKm
+        let endKm;
+
+        if (kmCustom.checked) {
+            startKm = event.currentTarget.startKm.value.replace(/[^0-9]/g, '');
+            endKm = event.currentTarget.endKm.value.replace(/[^0-9]/g, '');
+        } else {
+            startKm = event.currentTarget.selectStartKm.value;
+            endKm = event.currentTarget.selectEndKm.value;
+        }
+
+        if (startKm !== '' && endKm !== '' && Number(startKm) > Number(endKm)) {
+            $popup.alert('주행거리 범위가 잘못되었습니다.');
+            return;
+        }
+
+        updateRangeQueryString('km', [startKm, endKm]);
+        bindKmValues();
+    });
+
+    /** 시작 주행거리 입력 이벤트 리스너 */
+    document.getElementById('startKm').addEventListener('input', event => {
+        if (event.target.value === '' || event.target.value === '0') {
+            document.forms['searchKmForm'].startKm.value = '';
+            return;
+        }
+
+        const stripNumber = Number(event.target.value.replace(/[^0-9]/g, ''));
+        document.forms['searchKmForm'].startKm.value = stripNumber.toLocaleString();
+    });
+
+    /** 종료 주행거리 입력 이벤트 리스너 */
+    document.getElementById('endKm').addEventListener('input', event => {
+        if (event.target.value === '' || event.target.value === '0') {
+            document.forms['searchKmForm'].endKm.value = '';
+            return;
+        }
+
+        const stripNumber = Number(event.target.value.replace(/[^0-9]/g, ''));
+        document.forms['searchKmForm'].endKm.value = stripNumber.toLocaleString();
+    });
+
+    /** 가격 직접입력 체크박스 이벤트 리스너 */
+    document.getElementById('kmCustom').addEventListener('change', toggleKmCustom);
+
+    /** 연식 select box 이벤트 리스너 (시작, 종료) */
+    document.querySelectorAll('.schlist.year select').forEach(element => {
+        element.addEventListener('change', () => {
+            const startValue = Number(document.getElementById('startYear').value) || 0;
+            const endValue = Number(document.getElementById('endYear').value) || 0;
+
+            const values = [
+                startValue !== 0 ? startValue : null,
+                endValue !== 0 ? endValue : null
+            ];
+
+            if (endValue !== 0 && startValue > endValue) {
+                $popup.alert('시작 연식은 종료 연식보다 클 수 없습니다.');
+                return;
+            }
+
+            updateRangeQueryString('year', values);
+        });
+    });
+
+    /** 키워드 검색 이벤트 리스너 */
+    document.forms['searchKeywordForm'].addEventListener('submit', event => {
+        event.preventDefault();
+        updateQueryString('keyword', event.currentTarget.keyword.value);
+    });
+
+    /** 정렬 (인기순, 최신순, 저가순, 고가순) orderBy 이벤트 리스너 */
+    document.querySelectorAll('input[name="sortBy"]').forEach((tag) => {
+        tag.addEventListener('click', () => {
+            updateQueryString('sortBy', tag.value);
+            fetchProducts();
+        });
+    });
+
+    /** Query String 검색 조건 초기화 */
+    function resetQueryString(init = false) {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        let page = NaN;
+        if (init === true) {
+            page = Number(searchParams.get('page') || '1');
+            if (isNaN(page) || page < 1)
+                page = 1;
+        }
+
+        const newUrl = window.location.pathname + (searchParams.size > 0 ? `?${searchParams.toString()}` : '');
+        window.history.replaceState({}, '', newUrl);
+
+        Promise.all([
+            drawCategory(),
+            bindPriceValues(),
+            bindKmValues(),
+            bindYearValues(),
+            bindKeywordValues(),
+            bindSortValues()
+        ])
+            .then(() => {
+                drawSelectedFilters();
+                fetchProducts(page);
+            });
+    }
+
+    /**
+     * Query String 업데이트
+     *
+     * @param key 키
+     * @param value 값
+     */
+    function updateQueryString(key, value) {
+        let isValueJoining = false;
+        let isReplaceValue = false;
+
+        switch (key) {
+            // 특정 키에 대한 값은 다중 선택 모드
+            case 'category3':
+            case 'fuel':
+            case 'transmissions':
+            case 'color':
+                isValueJoining = true;
+                break;
+
+            // 특정 키에 대한 값은 변경 모드
+            case 'sortBy':
+                isReplaceValue = true;
+                break;
+        }
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const currentValue = searchParams.get(key);
+
+        if (key === 'keyword' && currentValue === value) {
+            return;
+        }
+
+        // 키 값이 없으면 새로 추가
+        if (currentValue === null) {
+            searchParams.set(key, value);
+        } else {
+            // 현재 키 값을 콤마로 분리한 뒤 빈 값을 제거하여 배열로 만듦
+            let currentValues = currentValue.split(',').filter(v => v.length > 1);
+
+            if (currentValues.includes(value)) {
+                // 이미 선택된 값이면 제거
+                currentValues = currentValues.filter(v => v !== value);
+            } else {
+                if (isValueJoining === true) {
+                    // 다중 선택 모드이면 추가
+                    currentValues.push(value);
+                } else {
+                    // 단일 선택 모드이면 새로운 값으로 설정
+                    currentValues = [value];
+                }
+            }
+
+            // 새로운 값으로 설정
+            if (currentValues.length > 0) {
+                searchParams.set(key, currentValues.join(','));
+            } else {
+                searchParams.delete(key);
+            }
+
+            // 카테고리 선택 시 하위 카테고리 초기화
+            switch (key) {
+                case 'category1':
+                    searchParams.delete('category2');
+                    searchParams.delete('category3');
+                    break;
+                case 'category2':
+                    searchParams.delete('category3');
+                    break;
+                case 'engName':
+                    searchParams.delete('engName');
+                    searchParams.delete('shapeType');
+                    searchParams.delete('category2');
+                    searchParams.delete('category3');
+                    break;
+            }
+        }
+
+        if (isReplaceValue === true){// 정렬 수정
+            searchParams.set(key, value);
+            selectSortByValue("selectedSort", value);
+        }
+
+        // 값이 비어있으면 변수 제거
+        if (['undefined', 'null', ''].includes(searchParams.get(key)))
+            searchParams.delete(key);
+
+        // 페이지 변수 제거
+        searchParams.delete('page');
+
+        // 새로운 URL 설정
+        const newUrl = window.location.pathname + (searchParams.size > 0 ? `?${searchParams.toString()}` : '');
+        window.history.replaceState({}, '', newUrl);
+
+        Promise.all([
+            drawCategory(),
+            drawColorFilter()
+        ])
+            .then(() => {
+                drawSelectedFilters();
+                fetchProducts();
+            });
+    }
+
+    /**
+     * Query String 업데이트 (start, end 다중 값)
+     *
+     * @param key 키
+     * @param values 값
+     */
+    function updateRangeQueryString(key, values) {
+        let searchParams = new URLSearchParams(window.location.search);
+        const upperKey = key.charAt(0).toUpperCase() + key.slice(1); // Camel Case 적용
+        const startKey = `start${upperKey}`;
+        const endKey = `end${upperKey}`;
+
+        searchParams.set(startKey, values[0]);
+        searchParams.set(endKey, values[1]);
+
+        // 값이 비어있으면 변수 제거
+        if (['undefined', 'null', ''].includes(searchParams.get(startKey)))
+            searchParams.delete(startKey);
+        if (['undefined', 'null', ''].includes(searchParams.get(endKey)))
+            searchParams.delete(endKey);
+
+        // 페이지 변수 제거
+        searchParams.delete('page');
+
+        // 새로운 URL 설정
+        const newUrl = window.location.pathname + (searchParams.size > 0 ? `?${searchParams.toString()}` : '');
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+
+        Promise.all([
+            drawCategory(),
+            drawColorFilter()
+        ])
+            .then(() => {
+                drawSelectedFilters();
+                fetchProducts();
+            });
+    }
+
+    function fetchProducts(pageSize) {
+        if (productResult.isLoading) return;
+        productResult.isLoading = true;
+
+        const searchParams = new URLSearchParams(window.location.search);
+
+        searchParams.set('page', searchParams.get('page') || '1');
+        searchParams.set('size', String(pagePerSize));
+        searchParams.set('sortBy', document.getElementById('selectedSort').value);
+
+        if (isNaN(pageSize) === false) {
+            searchParams.set('page', '1');
+            searchParams.set('size', String(pageSize * pagePerSize));
+        }
+
+        if (searchParams.get('page') === '1') {
+            productResult.items = [];
+            productResult.totalElements = 0;
+        }
+
+        fetch(`/api/search/product?${searchParams.toString()}`)
+            .then(response => response.json())
+            .then(result => {
+                productResult.items.push(...result.data.content);
+                productResult.totalElements = result.data.totalElements;
+                productResult.hasMorePages = result.data.last === false;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                $popup.alert('차량 정보를 가져오는 중 오류가 발생했습니다.');
+            })
+            .finally(() => {
+                productResult.pageLoaded = true;
+                productResult.isLoading = false;
+            });
+    }
+
+    function drawProducts() {
+        const ul = document.getElementById('product-list');
+        const cloneUl = ul.cloneNode(false);
+
+        for (let product of productResult.items) {
+            const li = document.createElement('li');
+
+            const divPrdBox = document.createElement('div');
+            divPrdBox.classList.add('prd-box');
+
+            const divPrdThumb = document.createElement('div');
+            divPrdThumb.classList.add('prd-thumb');
+
+            const labelBtnLike = document.createElement('label');
+            labelBtnLike.classList.add('btn-like');
+
+            const inputPickCheck = document.createElement('input');
+            let originalChecked = inputPickCheck.checked;
+            inputPickCheck.classList.add('pick_check');
+            inputPickCheck.type = 'checkbox';
+            inputPickCheck.name = 'product';
+            inputPickCheck.value = product.productId;
+            inputPickCheck.checked = pickSummary.productIds?.includes(product.productId);
+            inputPickCheck.onclick = () => {
+                fetch('/api/sub/pick/v2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ productId: inputPickCheck.value })
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.code !== 200) {
+                            inputPickCheck.checked = !originalChecked;
+
+                            if (!originalChecked) {
+                                inputPickCheck.nextElementSibling.style.backgroundImage = "url('../user/images/common/ico/like_on.svg')";
+                            } else {
+                                inputPickCheck.nextElementSibling.style.backgroundImage = "url('../user/images/common/ico/like.svg')";
+                            }
+                            $popup.alert(result.message, {
+                                modal: true,
+                                confirm: () => {
+                                    location.href = "/login";
+                                }
+                            });
+                        }
+                    })
+                    .then(() => fetchPickSummary())
+                    .then(() => drawProducts());
+            };
+
+            const spanLikeVisual = document.createElement('span');
+            spanLikeVisual.classList.add('like-visual');
+            spanLikeVisual.textContent = '좋아요';
+
+            const aPrdThumb = document.createElement('a');
+            aPrdThumb.href = `/product/${product.productId}`;
+            aPrdThumb.target = `_blank`;
+
+            const imgPrdThumb = document.createElement('img');
+            imgPrdThumb.src = product.carImageUrl[0].realUrl;
+            imgPrdThumb.alt = '이미지';
+
+            const aPrdInfo = document.createElement('a');
+            aPrdInfo.classList.add('prd-info');
+            aPrdInfo.href = `/product/${product.productId}`;
+
+            const pPrdName = document.createElement('p');
+            pPrdName.classList.add('prd-name');
+            pPrdName.textContent = `${product.makerName} ${product.modelName} ${product.detailGradeName}`;
+
+            const pPriceInfo = document.createElement('p');
+            pPriceInfo.classList.add('price-info');
+
+            const spanNumSale = document.createElement('span');
+            spanNumSale.classList.add('num-sale');
+            spanNumSale.textContent = product.formattedCarComma;
+
+            const spanNumPrice = document.createElement('span');
+            spanNumPrice.classList.add('num-price');
+            spanNumPrice.textContent = product.formattedCarAmountSale;
+
+            const phoneAnchor = document.createElement('a');
+            phoneAnchor.href = `tel:1800-0892`;
+            phoneAnchor.setAttribute('onclick', 'sendCallInquiry()');
+            phoneAnchor.classList.add('hide-pc');
+
+            const spanPhone = document.createElement('span');
+            spanPhone.classList.add('please-call');
+
+            const pDetailInfo = document.createElement('p');
+            pDetailInfo.classList.add('detail-info');
+
+            const spanCarRegYear = document.createElement('span');
+            spanCarRegYear.textContent = product.carRegYear;
+
+            const spanCarUseKm = document.createElement('span');
+            spanCarUseKm.textContent = `${product.carUseKm.toLocaleString()} km`;
+
+            const spanCity = document.createElement('span');
+            spanCity.textContent = product.city;
+
+            phoneAnchor.appendChild(spanPhone);
+            labelBtnLike.append(inputPickCheck, spanLikeVisual);
+            aPrdThumb.appendChild(imgPrdThumb);
+            divPrdThumb.append(labelBtnLike, aPrdThumb);
+            pPriceInfo.appendChild(phoneAnchor);
+            pPriceInfo.appendChild(spanNumPrice);
+            pDetailInfo.append(spanCarRegYear, spanCarUseKm, spanCity);
+            aPrdInfo.append(pPrdName, pPriceInfo, pDetailInfo);
+            divPrdBox.append(divPrdThumb, aPrdInfo);
+            li.appendChild(divPrdBox);
+            cloneUl.appendChild(li);
+
+            if (product.shopName.includes('디에스 오토') === true) {
+                divPrdBox.classList.add('badge');
+                pPriceInfo.insertAdjacentElement('afterbegin', spanNumSale);
+            }
+        }
+
+        ul.replaceWith(cloneUl);
+
+        if (productResult.items.length > 0) {
+            // 뒤로 가기를 통해 페이지 복귀 시 스크롤 위치 복원
+            if (isBackForward === true) {
+                isBackForward = false;
+                window.scrollTo(0, Number(sessionStorage.getItem('scrollPosition')));
+            }
+
+            sessionStorage.removeItem('scrollPosition');
+        }
+        resizeMatchMedia();
+    }
+
+    window.addEventListener("resize", function(event){
+        resizeMatchMedia();
+    });
+
+    /** 웹페이지 크기별로 작동 */
+    const resizeMatchMedia = () => {
+        if (matchMedia("screen and (max-width: 440px)").matches) {
+            removeBlank();
+        }
+        if (matchMedia("screen and (min-width: 441px)").matches) {
+            addBlank();
+        }
+    }
+
+    /** a태그 blank 추가*/
+    const addBlank = () => {
+        document.querySelectorAll('.result-list .prd-box .prd-thumb a').forEach(function (element) {
+            element.setAttribute("target", "_blank");
+        });
+    }
+
+    /** a태그 blank 삭제*/
+    const removeBlank = () => {
+        document.querySelectorAll('.result-list .prd-box .prd-thumb a').forEach(function (element) {
+            element.removeAttribute("target");
+        });
+    }
+
+    /**
+     * 카테고리 데이터 가져오기, 기존에 가져온 데이터는 캐싱하여 재사용
+     *
+     * @param categoryId 카테고리 시퀀스
+     * @param depth 카테고리 차수
+     * @returns 카테고리 데이터
+     */
+    function fetchCategories(categoryId, depth) {
+        categoryId = Number(categoryId) || 0;
+        depth = depth || 0;
+
+        if (cacheCategories[categoryId])
+            return Promise.resolve(cacheCategories[categoryId]);
+
+        return fetch('/api/search/category/children', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ categoryId, depth })
+        })
+            .then(response => response.json())
+            .then(result => {
+                cacheCategories[categoryId] = result.data;
+                return result.data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    /**
+     * 연료 필터 데이터 가져오기, 기존에 가져온 데이터는 캐싱하여 재사용
+     *
+     * @returns 연료 필터 데이터
+     */
+    function fetchFuels() {
+        if (cacheFuels.length > 0)
+            return Promise.resolve(cacheFuels);
+
+        return fetch('/api/search/product/fuel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(result => {
+                cacheFuels = result.data;
+                return result.data;
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+    /**
+     * 변속기 필터 데이터 가져오기, 기존에 가져온 데이터는 캐싱하여 재사용
+     *
+     * @returns 변속기 필터 데이터
+     */
+    function fetchTransmissions() {
+        if (cacheTransmissions.length > 0)
+            return Promise.resolve(cacheTransmissions);
+
+        return fetch('/api/search/product/istd_trans', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(result => {
+                cacheTransmissions = result.data;
+                return result.data;
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+    /**
+     * 색상 필터 데이터 가져오기, 기존에 가져온 데이터는 캐싱하여 재사용
+     *
+     * @returns 색상 필터 데이터
+     */
+    function fetchColors() {
+        if (cacheColors.length > 0)
+            return Promise.resolve(cacheColors);
+
+        return fetch('/api/search/product/more/color', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(result => {
+                cacheColors = result.data;
+                return result.data;
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+    /** 연료 필터 토글 */
+    function toggleFuelFilter() {
+        let container = document.querySelector('.schlist.fuel');
+        let content = container.querySelector('.schlist-cont');
+        let ul = content.querySelector('ul');
+
+        if (ul.childNodes.length > 0 || container.classList.contains('on') === true)
+            return Promise.resolve();
+
+        return fetchFuels()
+            .then(data => {
+                data.forEach((item, index) => {
+                    const li = document.createElement('li');
+
+                    const div = document.createElement('div');
+                    div.classList.add('input-wrap');
+
+                    const numSpan = document.createElement('span');
+                    numSpan.classList.add('num');
+                    numSpan.textContent = item.productCount.toLocaleString();
+
+                    const divInner = document.createElement('div');
+                    divInner.classList.add('checkbox');
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.classList.add('checkbox');
+                    input.name = 'fuel';
+                    input.id = `fuel-${index}`;
+                    input.value = item.carFuel;
+                    input.onclick = () => updateQueryString('fuel', input.value);
+
+                    let label = document.createElement('label');
+                    label.htmlFor = input.id;
+                    label.textContent = input.value;
+
+                    divInner.append(input, label);
+                    div.appendChild(divInner);
+                    li.append(div, numSpan);
+                    ul.appendChild(li);
+
+                    const searchParams = new URLSearchParams(window.location.search);
+                    const values = (searchParams.get('fuel') ?? '').split(',');
+
+                    if (values.includes(input.value) === true)
+                        input.checked = true;
+                });
+            });
+    }
+
+    /** 변속기 필터 토글 */
+    function toggleTransmissionFilter() {
+        let container = document.querySelector('.schlist.transmission');
+        let content = container.querySelector('.schlist-cont');
+        let ul = content.querySelector('ul');
+
+        if (ul.childNodes.length > 0 || container.classList.contains('on') === true)
+            return Promise.resolve();
+
+        return fetchTransmissions()
+            .then(data => {
+                data.forEach((item, index) => {
+                    const li = document.createElement('li');
+
+                    const div = document.createElement('div');
+                    div.classList.add('input-wrap');
+
+                    const numSpan = document.createElement('span');
+                    numSpan.classList.add('num');
+                    numSpan.textContent = item.count.toLocaleString();
+
+                    const divInner = document.createElement('div');
+                    divInner.classList.add('checkbox');
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.classList.add('checkbox');
+                    input.name = 'transmissions';
+                    input.id = `transmissions-${index}`;
+                    input.value = item.carMission;
+                    input.onclick = () => updateQueryString('transmissions', input.value);
+
+                    let label = document.createElement('label');
+                    label.htmlFor = input.id;
+                    label.textContent = input.value;
+
+                    divInner.append(input, label);
+                    div.appendChild(divInner);
+                    li.append(div, numSpan);
+                    ul.appendChild(li);
+
+                    const searchParams = new URLSearchParams(window.location.search);
+                    const values = (searchParams.get('transmissions') ?? '').split(',');
+
+                    if (values.includes(input.value) === true)
+                        input.checked = true;
+                });
+            });
+    }
+
+    /** 색상 필터 토글 */
+    function toggleColorFilter() {
+        let container = document.querySelector('.schlist.color');
+        let content = container.querySelector('.schlist-cont');
+        let ul = content.querySelector('ul');
+
+        if (ul.childNodes.length > 0 || container.classList.contains('on') === true)
+            return Promise.resolve();
+
+        return fetchColors()
+            .then(() => drawColorFilter());
+    }
+
+    /** 색상 필터 그리기 */
+    function drawColorFilter() {
+        const container = document.querySelector('.schlist.color');
+        const content = container.querySelector('.schlist-cont');
+
+        const ul = content.querySelector('ul');
+        const moreUl = content.querySelector('.color-list');
+
+        const cloneUl = ul.cloneNode(false);
+        const cloneMoreUl = moreUl.cloneNode(false);
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const values = (searchParams.get('color') ?? '').split(',');
+
+        return new Promise(resolve => {
+            cacheColors.forEach((item, index) => {
+                if (index < 6) {
+                    const li = document.createElement('li');
+
+                    const div = document.createElement('div');
+                    div.classList.add('input-wrap');
+
+                    const numSpan = document.createElement('span');
+                    numSpan.classList.add('num');
+                    numSpan.textContent = item.count.toLocaleString();
+
+                    const divInner = document.createElement('div');
+                    divInner.classList.add('checkbox');
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.classList.add('checkbox');
+                    input.name = 'color';
+                    input.id = `color-${index}`;
+                    input.value = item.colorName;
+                    input.onclick = () => updateQueryString('color', input.value);
+
+                    let label = document.createElement('label');
+                    label.htmlFor = input.id;
+                    label.textContent = input.value;
+
+                    divInner.append(input, label);
+                    div.appendChild(divInner);
+                    li.append(div, numSpan);
+                    cloneUl.appendChild(li);
+
+                    if (values.includes(input.value) === true)
+                        input.checked = true;
+                }
+
+                const li = document.createElement('li');
+
+                const div = document.createElement('div');
+                div.classList.add('checkbox');
+
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.classList.add('checkbox');
+                input.name = 'color';
+                input.id = `color-more-${index}`;
+                input.value = item.colorName;
+                input.onclick = () => updateQueryString('color', input.value);
+
+                const label = document.createElement('label');
+                label.htmlFor = input.id;
+                label.textContent = item.value;
+
+                const span = document.createElement('span');
+                span.classList.add('color');
+                span.style = colorStyles[input.value];
+                span.textContent = input.value;
+
+                const numSpan = document.createElement('span');
+                numSpan.classList.add('num');
+                numSpan.textContent = item.count.toLocaleString();
+
+                label.appendChild(span);
+                div.append(input, label);
+                li.append(div, numSpan);
+                cloneMoreUl.appendChild(li);
+
+                if (values.includes(input.value) === true)
+                    input.checked = true;
+            });
+
+            ul.replaceWith(cloneUl);
+            moreUl.replaceWith(cloneMoreUl);
+
+            resolve();
+        });
+    }
+
+    /**
+     * 연료 필터 초기화
+     *
+     @returns {Promise<VoidFunction>}
+     */
+    function resetFuelFilters() {
+        return new Promise(resolve => {
+            document.querySelectorAll('input[name="fuel"]').forEach(input => input.checked = false);
+            resolve();
+        });
+    }
+
+    /**
+     * 변속기 필터 초기화
+     *
+     * @returns {Promise<VoidFunction>}
+     */
+    function resetTransmissionFilters() {
+        return new Promise(resolve => {
+            document.querySelectorAll('input[name="transmissions"]').forEach(input => input.checked = false);
+            resolve();
+        });
+    }
+
+    /**
+     * 색상 필터 초기화
+     */
+    function resetColorFilters() {
+        return new Promise(resolve => {
+            document.querySelectorAll('input[name="color"]').forEach(input => input.checked = false);
+            resolve();
+        });
+    }
+
+    /** 카테고리 그리기 */
+    async function drawCategory() {
+        const categoryContainer = document.getElementById('category-container');
+        const cloneCategoryContainer = categoryContainer.cloneNode(false);
+
+        const categories = await fetchCategories();
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const category1 = searchParams.get('category1');
+        const category2 = searchParams.get('category2');
+        const category3 = (searchParams.get('category3') ?? '').split(',');
+
+        for (const c1 of categories) {
+            const c1Div = document.createElement('div');
+            c1Div.classList.add('filter');
+
+            const c1A = document.createElement('a');
+            c1A.href = 'javascript:';
+            c1A.dataset.key = 'category1';
+            c1A.dataset.label = c1.linkDataNm;
+            c1A.dataset.category1 = c1.id;
+            c1A.onclick = () => updateQueryString(c1A.dataset.key, c1A.dataset.category1);
+
+            const c1I = document.createElement('i');
+            c1I.classList.add('i-maker');
+            c1I.style.backgroundImage = `url(/api/file/view/${c1.carImage?.uuid}?size=1500)`;
+
+            const c1Span = document.createElement('span');
+            c1Span.classList.add('num');
+            c1Span.textContent = c1.count.toLocaleString();
+
+            const c1Button = document.createElement('button');
+            c1Button.type = 'button';
+            c1Button.classList.add('btn-del');
+            c1Button.textContent = '삭제';
+            c1Button.dataset.key = 'category1';
+            c1Button.dataset.category1 = c1.id;
+            c1Button.onclick = () => updateQueryString(c1A.dataset.key, c1A.dataset.category1);
+
+            c1A.append(c1I, c1A.dataset.label);
+            c1Div.append(c1A, c1Span, c1Button);
+            cloneCategoryContainer.appendChild(c1Div);
+
+            if (category1 === String(c1.id)) {
+                c1A.classList.add('on');
+                c1A.closest('.filter').classList.add('on');
+
+                const categories = await fetchCategories(category1, 1);
+
+                const modelDiv = document.createElement('div');
+                modelDiv.classList.add('deparea', 'model');
+                modelDiv.style.position = 'relative';
+
+                const modelDl = document.createElement('dl');
+                modelDl.classList.add('deplist');
+
+                const modelDd = document.createElement('dd');
+
+                const demodelDiv = document.createElement('div');
+                demodelDiv.classList.add('deparea', 'demodel');
+                demodelDiv.style.position = 'relative';
+
+                const demodelDl = document.createElement('dl');
+                demodelDl.classList.add('deplist');
+
+                const demodelDd = document.createElement('dd');
+
+                demodelDl.appendChild(demodelDd);
+                demodelDiv.appendChild(demodelDl);
+                modelDd.appendChild(demodelDiv);
+                modelDl.appendChild(modelDd);
+                modelDiv.appendChild(modelDl);
+                cloneCategoryContainer.appendChild(modelDiv);
+
+                for (const c2 of categories) {
+                    const c2Div = document.createElement('div');
+                    c2Div.classList.add('filter');
+
+                    const c2A = document.createElement('a');
+                    c2A.href = 'javascript:';
+                    c2A.textContent = c2.linkDataNm;
+                    c2A.dataset.key = 'category2';
+                    c2A.dataset.label = c2.linkDataNm;
+                    c2A.dataset.category1 = c1.id;
+                    c2A.dataset.category2 = c2.id;
+                    c2A.onclick = () => updateQueryString(c2A.dataset.key, c2A.dataset.category2);
+
+                    const c2Span = document.createElement('span');
+                    c2Span.classList.add('num');
+                    c2Span.textContent = c2.count.toLocaleString();
+
+                    const c2Button = document.createElement('button');
+                    c2Button.type = 'button';
+                    c2Button.classList.add('btn-del');
+                    c2Button.textContent = '삭제';
+                    c2Button.dataset.key = 'category2';
+                    c2Button.dataset.category1 = c1.id;
+                    c2Button.dataset.category2 = c2.id;
+                    c2Button.onclick = () => updateQueryString(c2A.dataset.key, c2A.dataset.category2);
+
+                    c2Div.append(c2A, c2Span, c2Button);
+                    demodelDd.appendChild(c2Div);
+
+                    if (category2 === String(c2.id)) {
+                        c2A.classList.add('on');
+                        c2A.closest('.filter').classList.add('on');
+
+                        const categories = await fetchCategories(category2, 2);
+
+                        const gradeDiv = document.createElement('div');
+                        gradeDiv.classList.add('deparea', 'grade');
+                        gradeDiv.style.position = 'relative';
+
+                        const gradeDl = document.createElement('dl');
+                        gradeDl.classList.add('deplist');
+
+                        const gradeDd = document.createElement('dd');
+
+                        gradeDl.appendChild(gradeDd);
+                        gradeDiv.appendChild(gradeDl);
+                        demodelDd.appendChild(gradeDiv);
+
+                        for (const c3 of categories) {
+                            const c3Div = document.createElement('div');
+                            c3Div.classList.add('filter');
+
+                            const wrapDiv = document.createElement('div');
+                            wrapDiv.classList.add('input-wrap');
+
+                            const checkboxDiv = document.createElement('div');
+                            checkboxDiv.classList.add('checkbox');
+
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.name = 'category3';
+                            checkbox.id = `category3-${c3.id}`;
+                            checkbox.value = c3.id;
+                            checkbox.dataset.key = 'category3';
+                            checkbox.dataset.label = c3.linkDataNm;
+                            checkbox.dataset.category1 = c1.id;
+                            checkbox.dataset.category2 = c2.id;
+                            checkbox.dataset.category3 = c3.id;
+                            checkbox.onclick = () => updateQueryString('category3', checkbox.value);
+
+                            const label = document.createElement('label');
+                            label.htmlFor = checkbox.id;
+
+                            const labelSpan = document.createElement('span');
+                            labelSpan.textContent = c3.linkDataNm;
+
+                            const blankSpan = document.createElement('span');
+                            blankSpan.textContent = ' ';
+
+                            const c3Span = document.createElement('span');
+                            c3Span.classList.add('num');
+                            c3Span.textContent = c3.count.toLocaleString();
+
+                            label.append(labelSpan, blankSpan, c3Span);
+                            checkboxDiv.append(checkbox, label);
+                            wrapDiv.appendChild(checkboxDiv);
+                            c3Div.appendChild(wrapDiv);
+                            gradeDd.appendChild(c3Div);
+
+                            if (category3.includes(String(c3.id)) === true)
+                                checkbox.checked = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        categoryContainer.replaceWith(cloneCategoryContainer);
+
+        if (searchParams.get('category3') === null) {
+            const filterWrap = document.querySelector('.filter-wrap');
+            const selectCategories = cloneCategoryContainer.querySelectorAll('a.on');
+
+            // 스크롤 위치를 현재 선택한 요소로
+            if (selectCategories.length > 0) {
+                const lastCategory = selectCategories[selectCategories.length - 1];
+                const filterOffsetTop = filterWrap.getBoundingClientRect().top;
+                const categoryOffsetTop = lastCategory.getBoundingClientRect().top;
+                filterWrap.scrollBy({ top: categoryOffsetTop - filterOffsetTop - 5, behavior: 'smooth' });
+            } else {
+                filterWrap.scrollTo(0, 0);
+            }
+        }
+    }
+
+    /** Query String 에서 가격 값 DOM 바인딩 */
+    function bindPriceValues() {
+        return new Promise(resolve => {
+            const searchParams = new URLSearchParams(window.location.search);
+            const startPrice = searchParams.get('startPrice') || 0;
+            const endPrice = searchParams.get('endPrice') || priceRanges[priceRanges.length - 1];
+
+            let startExactIndex = priceRanges.findIndex(value => value === Number(startPrice));
+            let endExactIndex = priceRanges.findIndex(value => value === Number(endPrice));
+            let rangeSlider = $('#price-range');
+
+            rangeSlider.slider({
+                range: true,
+                min: 0,
+                max: priceRanges.length - 1,
+                step: 1,
+                change: (event, ui) => updatePriceDisplay(ui.values),
+                slide: (event, ui) => updatePriceDisplay(ui.values)
+            });
+
+            if (startExactIndex === -1 || endExactIndex === -1) {
+                document.getElementById('startPrice').value = startPrice === 0 ?
+                    '' : Number(startPrice / 10000).toLocaleString();
+                document.getElementById('endPrice').value = endPrice === priceRanges[priceRanges.length - 1] ?
+                    '' : Number(endPrice / 10000).toLocaleString();
+                document.getElementById('priceCustom').checked = true;
+                togglePriceCustom();
+                rangeSlider.slider('values', [0, priceRanges.length - 1]);
+            } else {
+                rangeSlider.slider('values', [startExactIndex, endExactIndex]);
+            }
+
+            resolve();
+        });
+    }
+
+    /**
+     * Query String 에서 주행거리 값 DOM 바인딩
+     */
+    function bindKmValues() {
+        return new Promise(resolve => {
+            const searchKmForm = document.forms['searchKmForm'];
+            const searchParams = new URLSearchParams(window.location.search);
+            const startKm = searchParams.get('startKm') || '';
+            const endKm = searchParams.get('endKm') || '';
+
+            let startExactIndex = kmRanges.findIndex(value => value === Number(startKm));
+            let endExactIndex = kmRanges.findIndex(value => value === Number(endKm));
+
+            if (startExactIndex === -1 || endExactIndex === -1) {
+                searchKmForm.startKm.value = startKm === '' ? startKm : Number(startKm).toLocaleString();
+                searchKmForm.endKm.value = endKm === '' ? endKm : Number(endKm).toLocaleString();
+
+                document.getElementById('kmCustom').checked = true;
+                toggleKmCustom();
+            } else {
+                searchKmForm.selectStartKm.value = startKm;
+                searchKmForm.selectEndKm.value = endKm;
+            }
+
+            resolve();
+        });
+    }
+
+    /**
+     * Query String 에서 연식 값 DOM 바인딩
+     */
+    function bindYearValues() {
+        return new Promise(resolve => {
+            const searchParams = new URLSearchParams(window.location.search);
+            const startYear = searchParams.get('startYear');
+            const endYear = searchParams.get('endYear');
+
+            document.getElementById('startYear').value = (startYear || '');
+            document.getElementById('endYear').value = (endYear || '');
+
+            resolve();
+        });
+    }
+
+    /** Query String 에서 검색 키워드 값 DOM 바인딩 */
+    function bindKeywordValues() {
+        return new Promise(resolve => {
+            const searchParams = new URLSearchParams(window.location.search);
+
+            document.forms['searchKeywordForm'].keyword.value = (searchParams.get('keyword') || '');
+
+            resolve();
+        });
+    }
+
+    /** 인기순, 최신순, 저가순, 고가순 정렬 수정    */
+    function bindSortValues() {
+        return new Promise(resolve => {
+            selectSort("selectedSort", "sortBy");
+
+            $("input[type='radio'][name='sortBy'][value='" + selectedSort.value +"']").attr("checked", true);
+
+            resolve();
+        });
+    }
+
+    /**
+     * 선택된 필터들을 그리기
+     */
+    function drawSelectedFilters() {
+        const resultTextElement = document.querySelector('.result-text');
+        const cloneCategoryContainer = resultTextElement.cloneNode(false);
+
+        const searchParams = new URLSearchParams(window.location.search);
+
+        for (const item of searchParams) {
+            switch (item[0]) {
+                case 'category1':
+                case 'category2':
+                    const selector = `a[data-key="${item[0]}"][data-${item[0]}="${item[1]}"]`;
+                    const category = document.querySelector(selector);
+                    const filter = item[0] === 'category1' ? '제조사' : '모델';
+
+                    if (category === null) continue;
+
+                    const div = document.createElement('div');
+                    div.classList.add('txt');
+                    div.innerHTML = `<span class="fs-12">${filter}</span>: ${category.dataset.label}`;
+
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.classList.add('btn-del');
+                    button.textContent = '삭제';
+                    button.onclick = () => updateQueryString(category.dataset.key, category.dataset[item[0]]);
+
+                    div.appendChild(button);
+                    cloneCategoryContainer.appendChild(div);
+                    break;
+
+                case 'category3': {
+                    const values = item[1].split(',');
+                    for (const value of values) {
+                        const selector = `input[data-key="${item[0]}"][data-${item[0]}="${value}"]`;
+                        const category = document.querySelector(selector);
+                        const filter = '상세 모델';
+
+                        if (category === null) continue;
+
+                        const div = document.createElement('div');
+                        div.classList.add('txt');
+                        div.innerHTML = `<span class="fs-12">${filter}</span>: ${category.dataset.label}`;
+
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.classList.add('btn-del');
+                        button.textContent = '삭제';
+                        button.onclick = () => updateQueryString(category.dataset.key, category.dataset.category3);
+
+                        div.appendChild(button);
+                        cloneCategoryContainer.appendChild(div);
+                    }
+                    break;
+                }
+
+                case 'engName': {
+                    const filter = '차종';
+
+                    const div = document.createElement('div');
+                    div.classList.add('txt');
+                    div.innerHTML = `<span class="fs-12">${filter}</span>: ${engNames[item[1]]}`;
+
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.classList.add('btn-del');
+                    button.textContent = '삭제';
+                    button.onclick = () => updateQueryString(item[0], null);
+
+                    div.appendChild(button);
+                    cloneCategoryContainer.appendChild(div);
+                    break;
+                }
+
+                case 'fuel':
+                case 'transmissions': {
+                    const values = item[1].split(',');
+                    for (const value of values) {
+                        const selector = `input[name="${item[0]}"][value="${value}"]`;
+                        const checkbox = document.querySelector(selector);
+                        const filter = item[0] === 'fuel' ? '연료' : '변속기';
+
+                        const div = document.createElement('div');
+                        div.classList.add('txt');
+                        div.innerHTML = `<span class="fs-12">${filter}</span>: ${value}`;
+
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.classList.add('btn-del');
+                        button.textContent = '삭제';
+                        button.onclick = () => {
+                            if (checkbox !== null) checkbox.checked = false;
+                            updateQueryString(item[0], value);
+                        }
+
+                        div.appendChild(button);
+                        cloneCategoryContainer.appendChild(div);
+                    }
+                    break;
+                }
+
+                case 'color': {
+                    const values = item[1].split(',');
+                    for (const value of values) {
+                        const selector = `input[name="${item[0]}"][value="${value}"]`;
+                        const checkbox = document.querySelector(selector);
+                        const filter = '색상';
+
+                        const div = document.createElement('div');
+                        div.classList.add('txt');
+                        div.innerHTML = `<span class="fs-12">${filter}</span>: ${value}`;
+
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.classList.add('btn-del');
+                        button.textContent = '삭제';
+                        button.onclick = () => {
+                            if (checkbox !== null) checkbox.checked = false;
+                            updateQueryString(item[0], value);
+                        }
+
+                        div.appendChild(button);
+                        cloneCategoryContainer.appendChild(div);
+                    }
+                }
+            }
+        }
+
+        const startPrice = searchParams.get('startPrice');
+        const endPrice = searchParams.get('endPrice');
+        if (   (startPrice !== null && isNaN(Number(startPrice)) === false)
+            || (endPrice !== null && isNaN(Number(startPrice)) === false)) {
+            const startDisplay = getDisplayPriceValue(Number(startPrice));
+            const endDisplay = endPrice === null ? '' : getDisplayPriceValue(Number(endPrice));
+            const filter = '가격';
+
+            const div = document.createElement('div');
+            div.classList.add('txt');
+            div.innerHTML = `<span class="fs-12">${filter}</span>: ${startDisplay} ~ ${endDisplay}`;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('btn-del');
+            button.textContent = '삭제';
+            button.onclick = () => {
+                $('#price-range').slider('values', [0, priceRanges.length - 1]);
+                updateRangeQueryString('price', [null, null]);
+            };
+
+            div.appendChild(button);
+            cloneCategoryContainer.appendChild(div);
+        }
+
+        const startKm = searchParams.get('startKm');
+        const endKm = searchParams.get('endKm');
+        if (startKm !== null || endKm !== null) {
+            const startDisplay = (startKm == null ? 0 : Number(startKm).toLocaleString()) + 'km';
+            const endDisplay = endKm === null ? '' : `${Number(endKm).toLocaleString()}km`;
+            const filter = '주행거리';
+
+            const div = document.createElement('div');
+            div.classList.add('txt');
+            div.innerHTML = `<span class="fs-12">${filter}</span>: ${startDisplay} ~ ${endDisplay}`;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('btn-del');
+            button.textContent = '삭제';
+            button.onclick = () => {
+                document.getElementById('startKm').value = '';
+                document.getElementById('endKm').value = '';
+                updateRangeQueryString('km', [null, null]);
+            };
+
+            div.appendChild(button);
+            cloneCategoryContainer.appendChild(div);
+        }
+
+        const startYear = searchParams.get('startYear');
+        const endYear = searchParams.get('endYear');
+        if (startYear !== null || endYear !== null) {
+            const startDisplay = startYear == null ? '' : `${startYear}년`;
+            const endDisplay = endYear === null ? '' : `${endYear}년`;
+            const filter = '연식';
+
+            const div = document.createElement('div');
+            div.classList.add('txt');
+            div.innerHTML = `<span class="fs-12">${filter}</span>: ${startDisplay} ~ ${endDisplay}`;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('btn-del');
+            button.textContent = '삭제';
+            button.onclick = () => {
+                document.getElementById('startYear').value = '';
+                document.getElementById('endYear').value = '';
+                updateRangeQueryString('year', [null, null]);
+            };
+
+            div.appendChild(button);
+            cloneCategoryContainer.appendChild(div);
+        }
+
+        resultTextElement.replaceWith(cloneCategoryContainer);
+    }
+
+    /** 가격 슬라이더 선택 범위 표시 */
+    function updatePriceDisplay(values) {
+        let startPrice = priceRanges[values[0]];
+        let endPrice = priceRanges[values[1]];
+
+        let displayStart = getDisplayPriceValue(startPrice);
+        let displayEnd = getDisplayPriceValue(endPrice);
+
+        const textElement = document.querySelector('.range-text');
+
+        if (startPrice === 0 && endPrice === priceRanges[priceRanges.length - 1]) {
+            textElement.textContent = '전체';
+        } else if (endPrice === priceRanges[priceRanges.length - 1]) {
+            textElement.textContent = `${displayStart} ~`;
+        } else {
+            textElement.textContent = `${displayStart} ~ ${displayEnd}`;
+        }
+    }
+
+    /** 숫자 값을 가격 표시 형식으로 변환 (ex: 10000000 -> 1000만원) */
+    function getDisplayPriceValue(value) {
+        const priceUnits = ['조', '억', '만', ''];
+        const divides = [1_000_000_000_000, 100_000_000, 10_000, 1];
+        let displayValue = '';
+
+        for (let i = 0; i < divides.length; i++) {
+            if (value >= divides[i]) {
+                displayValue += Math.floor(value / divides[i]) + priceUnits[i] + ' ';
+                value %= divides[i];
+            }
+        }
+
+        return (displayValue.trim().length > 0 ? displayValue.trim() : 0) + '원';
+    }
+
+    /** 찜 목록 조회 */
+    function fetchPickSummary() {
+        return fetch('/api/pick/summary')
+            .then(response => response.json())
+            .then(result => {
+                pickSummary = result.data;
+
+                if (result.data.unreadCount > 0)
+                    document.getElementById('picksCheck').classList.add('on');
+                else
+                    document.getElementById('picksCheck').classList.remove('on');
+
+                return pickSummary;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    // 검색 조건 다른 카테고리 검색이랑 같이 사용가능하게
+    function searchKeyword() {
+        let keyword = document.querySelector('input[name="keyword"]').value;
+        let searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("keyword", keyword);
+        const newUrl = window.location.pathname + (searchParams.size > 0 ? `?${searchParams.toString()}` : '');
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+
+        Promise.all([
+            drawCategory(),
+            drawColorFilter()
+        ])
+            .then(() => {
+                drawSelectedFilters();
+                fetchProducts();
+            });
+    }
+
+    function togglePriceCustom() {
+        const checkbox = document.getElementById('priceCustom');
+        document.getElementById('price-range-slider').style.display = checkbox.checked ? 'none' : 'block';
+        document.getElementById('price-range-custom').style.display = checkbox.checked ? 'flex' : 'none';
+    }
+
+    function toggleKmCustom() {
+        const checkbox = document.getElementById('kmCustom');
+        document.getElementById('km-range-select').style.display = checkbox.checked ? 'none' : 'flex';
+        document.getElementById('km-range-custom').style.display = checkbox.checked ? 'flex' : 'none';
+    }
+
+
+    /* === 미사용 시작 === */
+
+    // 공통 함수 정의
+    function fetchDataAndRender(url, elementId, itemKeyMappings) {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({}) // 필요한 경우 이 부분에 데이터를 추가
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(result => {
+                let targetElement = document.getElementById(elementId);
+                targetElement.innerHTML = '';
+
+                result.data.forEach((item, index) => {
+                    let html = `
+                        <li>
+                            <div class="input-wrap">
+                                <div class="checkbox">
+                                    <input type="checkbox" ${itemKeyMappings.inputAttributes(item, index)}>
+                                    <label for="${itemKeyMappings.labelForPrefix}_${index + 1}">${itemKeyMappings.labelText(item)}</label>
+                                </div>
+                            </div>
+                            <span class="num">${itemKeyMappings.count(item)}</span>
+                        </li>`;
+                    targetElement.innerHTML += html;
+                });
+
+                if (itemKeyMappings.afterRender) {
+                    itemKeyMappings.afterRender();
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                if (itemKeyMappings.errorMessage) {
+                    alert(itemKeyMappings.errorMessage);
+                }
+            });
+    }
+
+    // 지역 / 시도 태그
+    function searchSido() {
+        fetchDataAndRender(
+            "/api/search/product/sido",
+            "sidoTag",
+            {
+                inputAttributes: (item, index) => `data-id="${item.id}" value="${item.city}" name="sido" id="sido_${index + 1}"`,
+                labelForPrefix: 'sido',
+                labelText: item => item.sido,
+                count: item => formatNumberWithCommas(item.count),
+                afterRender: () => addCheckboxListeners('sido', handleCheckboxChange)
+            }
+        );
+    }
+
+    // 옵션 태그
+    function searchOption() {
+        fetchDataAndRender(
+            "/api/search/product/option",
+            "optionTag",
+            {
+                inputAttributes: (item, index) => `value="${item.carGradeNbr}" id="option_${index + 1}" name="option"`,
+                labelForPrefix: 'option',
+                labelText: item => item.optionName,
+                count: item => formatNumberWithCommas(item.count),
+                afterRender: () => addCheckboxListeners('option', handleCheckboxChange)
+            }
+        );
+    }
+
+    // 옵션 더보기 클릭
+    function searchMoreOption() {
+        fetch("/api/search/product/more/option", {
+            method: "POST"
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code === 200) {
+                    let optionList = result.data;
+                    renderOptions(optionList);
+                }
+            });
+    }
+
+    // 옵션 더보기
+    function renderOptions(data) {
+        let container = document.getElementById("optionListTag");
+        let html = '';
+
+        data.forEach(category => {
+            html += `
+                <div class="option_area">
+                    <span class="tit">${category.specCtgry}</span>
+                    <ul class="option_list">
+                `;
+
+            category.optionList.forEach((option, index) => {
+                html += `
+                    <li>
+                        <div class="input-wrap">
+                            <div class="checkbox">
+                                <input type="checkbox" name="option" value="${option.carGradeNbr}" id="${index}" data-category="${option.specCtgry}">
+                                <label for="${index}">${option.optNm}</label>
+                            </div>
+                        </div>
+                    </li>
+                `;
+            });
+
+            html += `
+                    </ul>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+        addCheckboxListeners('option', handleCheckboxChange);
+    }
+
+    /* === 미사용 종료 === */
+</script>
+</html>

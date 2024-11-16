@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="sell-wrap">
+        <div class="member-wrap">
+            <div class="w-set">
+                <div class="tit-area">
+                    <h2 class="tit hide-m">내 차 팔기</h2>
+                </div>
+                <div class="step-wrap">
+                    <ul class="step-list">
+                        <li class="on">
+                            <i class="i-step01"></i>
+                            <span class="txt">차량정보</span>
+                        </li>
+                        <li class="step-arrow on">다음단계</li>
+                        <li class="on">
+                            <i class="i-step02"></i>
+                            <span class="txt">사진업로드</span>
+                        </li>
+                        <li class="step-arrow on">다음단계</li>
+                        <li class="on">
+                            <i class="i-step03"></i>
+                            <span class="txt">약관동의</span>
+                        </li>
+                        <li class="step-arrow on">다음단계</li>
+                        <li class="on">
+                            <i class="i-step04"></i>
+                            <span class="txt">신청완료</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="completed-wrap">
+                    <i class="sell-completed"></i>
+                    <div class="completed-txt">
+                        <p class="txt01">내 차 팔기 서비스 신청이<br class="hide-pc"> 완료 되었습니다!</p>
+                        <p class="txt02">상담원이 고객님의 연락처로 곧 연락드릴 에정입니다.</p>
+                    </div>
+                    <div class="btn-wrap">
+                        <a href="/sale/vehicle" class="btn">내 차 목록 바로가기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "내 차 팔기";
+</script>
+</html>

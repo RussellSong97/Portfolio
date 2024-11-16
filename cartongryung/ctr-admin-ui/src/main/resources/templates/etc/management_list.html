@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title th:text="'기타 &gt; ' + ${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.name :
+                        (condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.name :
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.name)} + ' 관리 &gt; 목록'"></title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_etc :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3 th:text="${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.name :
+                        (condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.name :
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.name)} + ' 관리'">딜러 관리</h3>
+    </div>
+    <div class="content_body">
+        <div class="list_wrap">
+            <div class="list_top">
+                <div class="txt_area">
+                    <p>총 <em th:text="${#numbers.formatInteger(memberAdminLists.totalElements, 1, 'COMMA')}">0,000</em>건</p>
+                </div>
+                <div class="util_area">
+                    <a th:href="@{/admin/etc/management/write(role = ${condition.role})}" class="btn btn_form2">등록</a>
+                </div>
+            </div>
+            <div class="list_table">
+                <table>
+                    <caption>검색 결과</caption>
+                    <colgroup>
+                        <col style="width:8%;">
+                        <col style="width:10%;">
+                        <col style="width:10%;">
+                        <col style="width:10%;">
+                        <col style="width:8%;">
+                        <col style="width:12%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">아이디</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">전화번호</th>
+                        <th scope="col">사용여부</th>
+                        <th scope="col">최종 접속 일시</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${memberAdminLists.isEmpty()}">
+                        <td colspan="6">등록된 <th:block th:text="${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.name :
+                        (condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.name :
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.name)}"></th:block> 정보가 없습니다.</td>
+                    </tr>
+                    <tr th:each="admin : ${memberAdminLists}">
+                        <td th:text="${#numbers.formatInteger(memberAdminLists.totalElements - memberAdminLists.number * memberAdminLists.size - adminStat.index, 1, 'COMMA')}">50</td>
+                        <td>
+                            <a th:href="@{/admin/etc/management/{id}(id = ${admin.id}, role = ${condition.role})}"
+                                class="btn_link" th:text="${admin.loginId}">dealer001</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/etc/management/{id}(id = ${admin.id}, role = ${condition.role})}"
+                                class="btn_link" th:text="${admin.realName}">김딜러</a></td>
+                        <td>
+                            <a th:href="@{/admin/etc/management/{id}(id = ${admin.id}, role = ${condition.role})}"
+                                class="btn_link" th:text="${#strings.substring(admin.mobileNumber, 0, 3)} + '-' + ${#strings.substring(admin.mobileNumber, 3, 7)} + '-' + ${#strings.substring(admin.mobileNumber, 7)}">010-0000-0000</a>
+                        </td>
+                        <td th:text="${admin.useYn.yn eq 'Y' ? '사용' : '미사용'}">사용</td>
+                        <td th:text="${#temporals.format(admin.lastLoginAt, 'yyyy-MM-dd HH:mm:ss')}">YYYY-MM-DD 00:00:00</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+</script>
+</html>

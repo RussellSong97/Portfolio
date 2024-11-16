@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="description" content="CUV">
+	<link rel="icon" href="../images/favicon/favicon_48x48.svg" sizes="48x48">
+	<link rel="icon" href="../images/favicon/favicon_96x96.svg" sizes="96x96">
+	<link rel="icon" href="../images/favicon/favicon_144x144.svg" sizes="144x144">
+	<link rel="icon" href="../images/favicon/favicon_196x196.svg" sizes="196x196">
+	<meta property="og:image" content="../images/favicon/ogi.png" />
+	<meta property="og:image:width" content="270" />
+	<meta property="og:image:height" content="270" />
+	<meta property="og:title" content="CUV" />
+	<meta property="og:description" content="" />
+	<title>카통령</title>
+	<!-- css -->
+	<link rel="stylesheet" href="../css/general.css">
+	<link rel="stylesheet" href="../css/swiper-bundle.min.css">
+	<!-- js -->
+	<script src="../js/jquery-1.12.4.min.js"></script>
+	<script src="../js/jquery-ui.js"></script>
+	<script src="../js/layout.js"></script>
+	<script src="../js/swiper-bundle.min.js"></script>
+	<script src="../js/wbz-popup.v1.js"></script>
+	<script src="../js/datepicker-ko.js"></script>
+</head>
+
+<body>
+  <!-- 본문 바로가기 -->
+	<div id="skipNav"><a href="#contents" onclick="document.getElementById('contents').tabIndex = -1;document.getElementById('contents').focus();return false;">본문 바로가기</a></div>
+	<div id="container">
+		<div class="js-include" data-include="../outline/header_sub.html" data-event="header"></div>
+    <div class="js-include" data-include="../outline/aside.html" data-event="aside"></div>
+
+		<main id="contents">
+      <div class="sub-content">
+        <div class="w-set">
+          <div class="divide-flex">
+            <div class="divide-left">
+              <div class="find-wrap">
+                <div class="find-top">
+                  <div class="count-area">
+                    <span class="count-tit">내 차 구입</span>
+                    <p class="count"><span class="num">12,150</span>대</p>
+                  </div>
+                  <div class="btn-wrap">
+                    <button type="button" class="btn-reset">초기화</button>
+                  </div>
+                </div>
+                <div class="find-group">
+                  <fieldset> 
+                    <legend>FInd Car</legend>
+                    <div class="schlist model">
+                      <p class="schlist-tit">제조사/모델 /상세 모델</p>
+                      <div class="filter-wrap">
+                        <div class="deparea maker">
+                          <dl class="deplist">
+                            <dt class="is-blind">제조사</dt>
+                            <dd>
+                              <span class="filter on">
+                                <a href="javascript:;" class="on"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>HYUNDAI</a>
+                                <span class="num">389</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                              <div class="deparea model">
+                                <dl class="deplist">
+                                  <dt class="is-blind">모델</dt>
+                                  <dd>
+                                    <span class="filter on">
+                                      <a href="javascript:;" class="on">Avante</a>
+                                      <span class="num">389</span>
+                                      <button type="button" class="btn-del">삭제</button>
+                                    </span>
+                                    <div class="deparea demodel">
+                                      <dl class="deplist">
+                                        <dt class="is-blind">세부모델</dt>
+                                        <dd>
+                                          <span class="filter on">
+                                            <a href="javascript:;" class="on">The New Avante</a>
+                                            <span class="num">20</span>
+                                            <button type="button" class="btn-del">삭제</button>
+                                          </span>
+                                          <div class="deparea grade">
+                                            <dl class="deplist">
+                                              <dt class="is-blind">연료,배기량</dt>
+                                              <dd>
+                                                <div class="filter">
+                                                  <div class="input-wrap">
+                                                    <div class="checkbox">
+                                                      <input type="checkbox" name="grade" id="grade_01" checked="">
+                                                      <label for="grade_01">Gasoline 1600cc</label>
+                                                    </div>
+                                                  </div>
+                                                  <span class="num">15</span>
+                                                </div>
+                                                <div class="deparea degrade">
+                                                  <dl class="deplist">
+                                                    <dt class="is-blind">등급</dt>
+                                                    <dd>
+                                                      <div class="filter">
+                                                        <div class="input-wrap ">
+                                                          <div class="checkbox">
+                                                            <input type="checkbox" name="degrade" id="degrade_01">
+                                                            <label for="degrade_01">1.6 Turbo N Line</label>
+                                                          </div>
+                                                        </div>
+                                                        <span class="num">11</span>
+                                                      </div>
+                                                    </dd>
+                                                    <dd>
+                                                      <div class="filter">
+                                                        <div class="input-wrap">
+                                                          <div class="checkbox">
+                                                            <input type="checkbox" name="degrade" id="degrade_02">
+                                                            <label for="degrade_02">1.6 Turbo N Line</label>
+                                                          </div>
+                                                        </div>
+                                                        <span class="num">11</span>
+                                                      </div>
+                                                    </dd>
+                                                  </dl>
+                                                </div>
+                                              </dd>
+                                              <dd>
+                                                <div class="filter">
+                                                  <div class="input-wrap">
+                                                    <div class="checkbox">
+                                                      <input type="checkbox" name="grade" id="grade_02" checked="">
+                                                      <label for="grade_02">Gasoline 1600cc</label>
+                                                    </div>
+                                                  </div>
+                                                  <span class="num">15</span>
+                                                </div>
+                                              </dd>
+                                            </dl>
+                                          </div>
+                                        </dd>
+                                      </dl>
+                                    </div>
+                                  </dd>
+                                  <dd>
+                                    <span class="filter">
+                                      <a href="javascript:;">캐스퍼</a>
+                                      <span class="num">133</span>
+                                      <button type="button" class="btn-del">삭제</button>
+                                    </span>
+                                  </dd>
+                                </dl>
+                              </div>
+                            </dd>
+                            <dd>
+                              <span class="filter">
+                                <a href="javascript:;"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>KIA</a>
+                                <span class="num">133</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                            </dd>
+                            <dd>
+                              <span class="filter">
+                                <a href="javascript:;"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>Genesis</a>
+                                <span class="num">605</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                            </dd>
+                            <dd>
+                              <span class="filter">
+                                <a href="javascript:;"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>Mcedes Benz</a>
+                                <span class="num">193</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                            </dd>
+                            <dd>
+                              <span class="filter">
+                                <a href="javascript:;"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>BMW</a>
+                                <span class="num">22</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                            </dd>
+                            <dd>
+                              <span class="filter">
+                                <a href="javascript:;"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>LEXUS</a>
+                                <span class="num">106</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                            </dd>
+                            <dd>
+                              <span class="filter">
+                                <a href="javascript:;"><i class="i-maker" style="background-image: url('../images/dummy/maker01.png');"></i>TOYOTA</a>
+                                <span class="num">1</span>
+                                <button type="button" class="btn-del">삭제</button>
+                              </span>
+                            </dd>
+                          </dl>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="schlist price">
+                      <a href="javascript:;" class="schlist-tit">
+                        가격
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <div class="slider" id="slider1">
+                          <!-- 값 표시 -->
+                          <div class="value-area">
+                              <span class="all">전체</span>
+                              <!-- 선택값 -->
+                              <!-- <div class="value-label left">1000만원</div>
+                              <span class="to">~</span>
+                              <div class="value-label right">9000만원</div> -->
+                          </div>
+                          <input type="range" id="slider1-left" min="1" max="9000" value="1" />
+                          <input type="range" id="slider1-right" min="1" max="9000" value="9000" />
+                          <div class="track">
+                              <div class="range"></div>
+                              <div class="thumb left"></div>
+                              <div class="thumb right"></div>
+                          </div>
+                        </div>
+                        <!-- 직접입력 체크 박스 클릭시 -->
+                        <div class="input-wrap price" style="display: none;">
+                            <div class="input-box">
+                                <label for="amount">만원</label>
+                                <input type="text" name="amount" id="amount" placeholder="">
+                            </div>
+                            <span>~</span>
+                            <div class="input-box">
+                                <label for="amount">만원</label>
+                                <input type="text" name="amount" id="amount" placeholder="">
+                            </div>
+                        </div>
+                        <!-- // 직접입력 체크 박스 클릭시 -->
+                        <div class="input-wrap type-switch">
+                          <div class="checkbox">
+                            <input type="checkbox" name="direct" id="direct">
+                            <label for="direct" class="txt">직접입력</label>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button type="button" class="btn">검색</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="schlist price">
+                      <a href="javascript:;" class="schlist-tit">
+                        주행거리
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <div class="slider" id="slider2">
+                          <!-- 값 표시 -->
+                          <div class="value-area">
+                              <span class="all">전체</span>
+                              <!-- 선택값 -->
+                              <!-- <div class="value-label left">1000만원</div>
+                              <span class="to">~</span>
+                              <div class="value-label right">9000만원</div> -->
+                          </div>
+                          <input type="range" id="slider2-left" min="1" max="9000" value="1" />
+                          <input type="range" id="slider2-right" min="1" max="9000" value="9000" />
+                          <div class="track">
+                              <div class="range"></div>
+                              <div class="thumb left"></div>
+                              <div class="thumb right"></div>
+                          </div>
+                        </div>
+                        <!-- 직접입력 체크 박스 클릭시 -->
+                        <div class="input-wrap price" style="display: none;">
+                            <div class="input-box">
+                                <label for="amount">Km</label>
+                                <input type="text" name="amount" id="amount" placeholder="">
+                            </div>
+                            <span>~</span>
+                            <div class="input-box">
+                                <label for="amount">Km</label>
+                                <input type="text" name="amount" id="amount" placeholder="">
+                            </div>
+                        </div>
+                        <!-- // 직접입력 체크 박스 클릭시 -->
+                        <div class="input-wrap type-switch">
+                          <div class="checkbox">
+                            <input type="checkbox" name="direct" id="direct">
+                            <label for="direct" class="txt">직접입력</label>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button type="button" class="btn">검색</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="schlist year">
+                      <a href="javascript:;" class="schlist-tit">
+                        연식
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <div class="input-wrap range">
+                          <div class="input-box">
+                            <label for="">부터</label>
+                            <select name="" id="" required>
+                              <option value="" disabled selected>YYYY</option>
+                              <option value="">2023</option>
+                              <option value="">2022</option>
+                              <option value="">2021</option>
+                              <option value="">2020</option>
+                            </select>
+                          </div>
+                          <span>~</span>
+                          <div class="input-box">
+                            <label for="">까지</label>
+                            <select name="" id="" required>
+                              <option value="" disabled selected>YYYY</option>
+                              <option value="">2023</option>
+                              <option value="">2022</option>
+                              <option value="">2021</option>
+                              <option value="">2020</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="schlist fuel">
+                      <a href="javascript:;" class="schlist-tit">
+                        연료
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <ul class="checkbox_list">
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_01">
+                                <label for="fuel_01">가솔린</label>
+                              </div>
+                            </div>
+                            <span class="num">35</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_02">
+                                <label for="fuel_02">디젤</label>
+                              </div>
+                            </div>
+                            <span class="num">37</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_03">
+                                <label for="fuel_03">LPG (일반인 구입)</label>
+                              </div>
+                            </div>
+                            <span class="num">18</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_04">
+                                <label for="fuel_04">가솔린+전기</label>
+                              </div>
+                            </div>
+                            <span class="num">41</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_05">
+                                <label for="fuel_05">LPG+전기</label>
+                              </div>
+                            </div>
+                            <span class="num">1</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_06">
+                                <label for="fuel_06">가솔린+LPG</label>
+                              </div>
+                            </div>
+                            <span class="num">1</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_07">
+                                <label for="fuel_07">가솔린+CNG</label>
+                              </div>
+                            </div>
+                            <span class="num">1</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_08">
+                                <label for="fuel_08">전기</label>
+                              </div>
+                            </div>
+                            <span class="num">1</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_09">
+                                <label for="fuel_09">수소</label>
+                              </div>
+                            </div>
+                            <span class="num">0</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_10">
+                                <label for="fuel_10">LNG</label>
+                              </div>
+                            </div>
+                            <span class="num">0</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_11">
+                                <label for="fuel_11">CNG</label>
+                              </div>
+                            </div>
+                            <span class="num">0</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="fuel" id="fuel_12">
+                                <label for="fuel_12">기타</label>
+                              </div>
+                            </div>
+                            <span class="num">0</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="schlist transmission">
+                      <a href="javascript:;" class="schlist-tit">
+                        변속기
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <ul class="checkbox_list">
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" id="transmission_01" name="transmission">
+                                <label for="transmission_01">오토</label>
+                              </div>
+                            </div>
+                            <span class="num">35</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" id="transmission_02" name="transmission">
+                                <label for="transmission_02">수동</label>
+                              </div>
+                            </div>
+                            <span class="num">37</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" id="transmission_03" name="transmission">
+                                <label for="transmission_03">세미오토</label>
+                              </div>
+                            </div>
+                            <span class="num">18</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" id="transmission_04" name="transmission">
+                                <label for="transmission_04">CVT</label>
+                              </div>
+                            </div>
+                            <span class="num">18</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" id="transmission_05" name="transmission">
+                                <label for="transmission_05">기타</label>
+                              </div>
+                            </div>
+                            <span class="num">18</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="schlist color">
+                      <a href="javascript:;" class="schlist-tit">
+                        색상
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <ul class="checkbox_list">
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="color" id="color_01">
+                                <label for="color_01">흰색</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="color" id="color_02">
+                                <label for="color_02">검정색</label>
+                              </div>
+                            </div>
+                            <span class="num">6,542</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="color" id="color_03">
+                                <label for="color_03">쥐색</label>
+                              </div>
+                            </div>
+                            <span class="num">9,639</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="color" id="color_04">
+                                <label for="color_04">은색</label>
+                              </div>
+                            </div>
+                            <span class="num">21,444</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="color" id="color_05">
+                                <label for="color_05">청색</label>
+                              </div>
+                            </div>
+                            <span class="num">12,253</span>
+                          </li>
+                        </ul>
+                        <button type="button" class="btn-popup">+ <span>다른 색상 더보기</span></button>
+                        <div class="popup">
+                          <div class="popup-header">
+                            <span class="tit">색상 선택</span>
+                            <button class="popup-close">닫기</button>
+                          </div>
+                          <ul class="color-list">
+                            <li class="color_0">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_0">
+                                <label for="colorSelect_0">
+                                  <span class="color" style="background: #fff;">흰색</span>
+                                </label>
+                              </div>
+                              <span class="num">23,221</span>
+                            </li>
+                            <li class="color_1">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_1">
+                                <label for="colorSelect_1">
+                                  <span class="color">검정색</span>
+                                </label>
+                              </div>
+                              <span class="num">999</span>
+                            </li>
+                            <li class="color_2">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_2">
+                                <label for="colorSelect_2">
+                                  <span class="color" style="background: #777777;">차콜</span>
+                                </label>
+                              </div>
+                              <span class="num">99</span>
+                            </li>
+                            <li class="color_3">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_3">
+                                <label for="colorSelect_3">
+                                  <span class="color" style="background: #A6B2B0;">갤럭시</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_4">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_4">
+                                <label for="colorSelect_4">
+                                  <span class="color" style="background: #EEEEEE;">회색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_5">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_5">
+                                <label for="colorSelect_5">
+                                  <span class="color" style="background: #F6F6F6;">흰색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_6">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_6">
+                                <label for="colorSelect_6">
+                                  <span class="color" style="background: #EF1717;">빨간색</span>
+                                </label>
+                              </div>
+                              <span class="num">23,221</span>
+                            </li>
+                            <li class="color_7">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_7">
+                                <label for="colorSelect_7">
+                                  <span class="color" style="background: #FFB5B5;">분홍색</span>
+                                </label>
+                              </div>
+                              <span class="num">999</span>
+                            </li>
+                            <li class="color_8">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_8">
+                                <label for="colorSelect_8">
+                                  <span class="color" style="background: #FF7F00;">주황색</span>
+                                </label>
+                              </div>
+                              <span class="num">99</span>
+                            </li>
+                            <li class="color_9">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_9">
+                                <label for="colorSelect_9">
+                                  <span class="color" style="background: #FFDD00;">노란색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_10">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_10">
+                                <label for="colorSelect_10">
+                                  <span class="color" style="background: #478E18;">초록색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_11">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_11">
+                                <label for="colorSelect_11">
+                                  <span class="color" style="background: #89EE46;">연두색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_12">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_12">
+                                <label for="colorSelect_12">
+                                  <span class="color" style="background: #0466FA;">파란색</span>
+                                </label>
+                              </div>
+                              <span class="num">23,221</span>
+                            </li>
+                            <li class="color_13">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_13">
+                                <label for="colorSelect_13">
+                                  <span class="color" style="background: #96E3E9;">하늘색</span>
+                                </label>
+                              </div>
+                              <span class="num">999</span>
+                            </li>
+                            <li class="color_14">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_14">
+                                <label for="colorSelect_14">
+                                  <span class="color" style="background: #2B7089;">터키옥</span>
+                                </label>
+                              </div>
+                              <span class="num">99</span>
+                            </li>
+                            <li class="color_15">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_15">
+                                <label for="colorSelect_15">
+                                  <span class="color" style="background: #163463;">짙은 파란색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_16">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_16">
+                                <label for="colorSelect_16">
+                                  <span class="color" style="background: #8F4496;">보라색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_17">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_17">
+                                <label for="colorSelect_17">
+                                  <span class="color" style="background: #B70038;">버건디</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_18">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_18">
+                                <label for="colorSelect_18">
+                                  <span class="color" style="background: #9F6335;">갈색</span>
+                                </label>
+                              </div>
+                              <span class="num">23,221</span>
+                            </li>
+                            <li class="color_19">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_19">
+                                <label for="colorSelect_19">
+                                  <span class="color" style="background: #FBE4C6;">베이지</span>
+                                </label>
+                              </div>
+                              <span class="num">999</span>
+                            </li>
+                            <li class="color_20">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_20">
+                                <label for="colorSelect_20">
+                                  <span class="color" style="background: #F8F8E2;">진주색</span>
+                                </label>
+                              </div>
+                              <span class="num">99</span>
+                            </li>
+                            <li class="color_21">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_21">
+                                <label for="colorSelect_21">
+                                  <span class="color" style="background: linear-gradient(to bottom, #C8A51D 0%,#F8E7AF 50%,#C8A51D 100%);">금색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_22">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_22">
+                                <label for="colorSelect_22">
+                                  <span class="color" style="background: linear-gradient(to bottom, #C0C0C0 0%,#fff 50%,#C0C0C0 100%);">은색</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                            <li class="color_23">
+                              <div class="checkbox">
+                                <input type="checkbox" name="colorSelect" id="colorSelect_23">
+                                <label for="colorSelect_23">
+                                  <span class="color" style="background: linear-gradient(to right, #000000 0%,#000000 50%,#777777 50%,#777777 100%);">투톤</span>
+                                </label>
+                              </div>
+                              <span class="num">9</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="schlist location">
+                      <a href="javascript:;" class="schlist-tit">
+                        지역
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <ul class="checkbox_list">
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_01">
+                                <label for="location_01">서울</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_02">
+                                <label for="location_02">부산</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_03">
+                                <label for="location_03">대구</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_04">
+                                <label for="location_04">인천</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_05">
+                                <label for="location_05">광주</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_06">
+                                <label for="location_06">대전</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_07">
+                                <label for="location_07">울산</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_08">
+                                <label for="location_08">세종</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_09">
+                                <label for="location_09">경기</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_10">
+                                <label for="location_10">강원</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_11">
+                                <label for="location_11">충북</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_12">
+                                <label for="location_12">충남</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_13">
+                                <label for="location_13">전북</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_14">
+                                <label for="location_14">전남</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_15">
+                                <label for="location_15">경북</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="location" id="location_16">
+                                <label for="location_16">경남</label>
+                              </div>
+                            </div>
+                            <span class="num">10,584</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="schlist option">
+                      <a href="javascript:;" class="schlist-tit">
+                        옵션
+                        <i class="ico-toggle"></i>
+                      </a>
+                      <div class="schlist-cont">
+                        <ul class="checkbox_list">
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_01">
+                                <label for="option_01">썬팅</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_02">
+                                <label for="option_02">썬루프</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_03">
+                                <label for="option_03">핸들리모컨</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_04">
+                                <label for="option_04">전동접이식백미러</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_05">
+                                <label for="option_05">원격시동장치</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_06">
+                                <label for="option_06">스마트키</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_07">
+                                <label for="option_07">감지센서 (전방)</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_08">
+                                <label for="option_08">감지센서 (후방)</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_08">
+                                <label for="option_08">차선이탈경보장치</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_08">
+                                <label for="option_08">열선시트 (앞좌석)</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_08">
+                                <label for="option_08">열선시트 (뒷좌석)</label>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-wrap">
+                              <div class="checkbox">
+                                <input type="checkbox" name="option" id="option_08">
+                                <label for="option_08">내비게이션</label>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <button type="button" class="btn-popup">+ <span>다른 옵션 더 보기</span></button>
+                        <div class="popup">
+                          <div class="popup-header">
+                            <span class="tit">옵션</span>
+                            <a href="#" class="link">옵션설명보기</a>
+                            <button class="popup-close">닫기</button>
+                          </div>
+                          <div class="option_wrap">
+                            <div class="option_area">
+                              <span class="tit">외관/내장</span>
+                              <ul class="option_list">
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_01">
+                                      <label for="exterior_01">선루프</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_02">
+                                      <label for="exterior_02">헤드램프</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="radiobox">
+                                        <input type="radio" name="optionDetail" id="option_hd">
+                                        <label for="option_hd">HD</label>
+                                      </div>
+                                      <div class="radiobox">
+                                        <input type="radio" name="optionDetail" id="option_led">
+                                        <label for="option_led">LED</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_03">
+                                      <label for="exterior_03">파워 전동 트렁크</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_04">
+                                      <label for="exterior_04">고스트 도어 클로징</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_05">
+                                      <label for="exterior_05">전동접이 사이드 미러</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_06">
+                                      <label for="exterior_06">알루미늄 휠</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_07">
+                                      <label for="exterior_07">루프랙</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_08">
+                                      <label for="exterior_08">열선 스티어링 휠</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_09">
+                                      <label for="exterior_09">전동 조절 스티어링 휠</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_10">
+                                      <label for="exterior_10">패들 시프트</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_11">
+                                      <label for="exterior_11">스티어링 휠 리모컨</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_12">
+                                      <label for="exterior_12">ECM 룸미러</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_13">
+                                      <label for="exterior_13">하이패스</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_14">
+                                      <label for="exterior_14">파워 도어록</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_15">
+                                      <label for="exterior_15">파워 스티어링 휠</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="exterior" id="exterior_16">
+                                      <label for="exterior_16">파워 윈도우</label>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="option_area">
+                              <span class="tit">안전</span>
+                              <ul class="option_list">
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_01">
+                                      <label for="safety_01">에어백</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">운전석</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">동승석</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_02">
+                                      <label for="safety_02">에어백(사이드)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_03">
+                                      <label for="safety_03">에어백(커튼)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_04">
+                                      <label for="safety_04">브레이크 잠김 방지(ABS)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_05">
+                                      <label for="safety_05">미그럼 방지(TCS)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_06">
+                                      <label for="safety_06">차체자세 제어장치(ECS)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_07">
+                                      <label for="safety_07">타이어 공기압 센서(TPMS)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_08">
+                                      <label for="safety_08">차선이탈 경보 시스템(LDWS)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_09">
+                                      <label for="safety_09">전자제어 서스펜션(ECS)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_10">
+                                      <label for="safety_10">주차감지센서</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">전방</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">후방</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_11">
+                                      <label for="safety_11">후측방 경보 시스템</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_12">
+                                      <label for="safety_12">후방 카메라</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="safety" id="safety_13">
+                                      <label for="safety_13">360도 어라운드 뷰</label>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="option_area">
+                              <span class="tit">편의/멀티미디어</span>
+                              <ul class="option_list">
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_01">
+                                      <label for="convenience_01">크루즈 컨트롤</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="radiobox">
+                                        <input type="radio" name="optionDetail" id="">
+                                        <label for="">일반</label>
+                                      </div>
+                                      <div class="radiobox">
+                                        <input type="radio" name="optionDetail" id="">
+                                        <label for="">어댑티브</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_02">
+                                      <label for="convenience_02">헤드업 디스플레이(HUD)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_03">
+                                      <label for="convenience_03">전자식 주차브레이크(EPB)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_04">
+                                      <label for="convenience_04">자동 에어컨</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_05">
+                                      <label for="convenience_05">스마트키</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_06">
+                                      <label for="convenience_06">무선도어 잠금장치</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_07">
+                                      <label for="convenience_07">레인센서</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_08">
+                                      <label for="convenience_08">오토 라이트</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_09">
+                                      <label for="convenience_09">커튼/블라인드</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">뒷자석</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">후방</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_10">
+                                      <label for="convenience_10">내비게이션</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_11">
+                                      <label for="convenience_11">앞좌석 AV 모니터</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_12">
+                                      <label for="convenience_12">뒷좌석 AV 모니터</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_13">
+                                      <label for="convenience_13">블루투스</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_14">
+                                      <label for="convenience_14">CD 플레이어</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_15">
+                                      <label for="convenience_15">USB 단자</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="convenience" id="convenience_16">
+                                      <label for="convenience_16">AUX 단자</label>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="option_area">
+                              <span class="tit">시트</span>
+                              <ul class="option_list">
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_01">
+                                      <label for="sheet_01">가죽시트</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_02">
+                                      <label for="sheet_02">전동시트</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">운전석</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">동승석</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_03">
+                                      <label for="sheet_03">전동시트</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_04">
+                                      <label for="sheet_04">열선시트</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">앞좌석</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">뒷좌석</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_05">
+                                      <label for="sheet_05">메모리 시트</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">운전석</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">동승석</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_06">
+                                      <label for="sheet_06">통풍시트</label>
+                                    </div>
+                                    <div class="bracket_area">
+                                      <em>(</em>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">운전석</label>
+                                      </div>
+                                      <div class="checkbox">
+                                        <input type="checkbox" name="optionDetail" id="">
+                                        <label for="">동승석</label>
+                                      </div>
+                                      <em>)</em>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_07">
+                                      <label for="sheet_07">통풍시트(뒷좌석)</label>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="input-wrap">
+                                    <div class="checkbox">
+                                      <input type="checkbox" name="sheet" id="sheet_08">
+                                      <label for="sheet_08">마사지시트</label>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="schlist search">
+                      <p class="schlist-tit">차량번호 검색</p>
+                      <div class="search_form">
+                        <input type="text" name="" id="" placeholder="">
+                        <button type="button" class="btn_search">Search</button>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+            <div class="divide-right">
+              <div class="find-result">
+                <a href="../sub/search.html" class="search-box hide-pc">모델, 차량번호 검색</a>
+                <div class="result-top">
+                  <div class="result-text">
+                    <div class="txt">현대 더 뉴 아반떼<button type="button" class="btn-del">삭제</button></div>
+                    <div class="txt">제네시스<button type="button" class="btn-del">삭제</button></div>
+                    <div class="txt">제네시스<button type="button" class="btn-del">삭제</button></div>
+                    <div class="txt">제네시스<button type="button" class="btn-del">삭제</button></div>
+                    <div class="txt">제네시스<button type="button" class="btn-del">삭제</button></div>
+                  </div>
+                  <button type="button" class="btn-reset hide-m">초기화</button>
+                  <a href="../sub/search_filter.html" class="btn-filter hide-pc">필터</a>
+                </div>
+                <div class="result-cont">
+                  <ul class="sort-list">
+                    <li>
+                      <input type="radio" name="sort" id="sort1" checked>
+                      <label for="sort1" class="sort">인기순</label>
+                    </li>
+                    <li>
+                      <input type="radio" name="sort" id="sort2">
+                      <label for="sort2" class="sort">최신순</label>
+                    </li>
+                    <li>
+                      <input type="radio" name="sort" id="sort3">
+                      <label for="sort3" class="sort">저가순</label>
+                    </li>
+                    <li>
+                      <input type="radio" name="sort" id="sort4">
+                      <label for="sort4" class="sort">고가순</label>
+                    </li>
+                  </ul>
+                  <p class="total hide-pc"><strong>1,500</strong>개의 상품</p>
+                  <ul class="result-list">
+                    <li>
+                      <!-- 선착순 특가 badge -->
+                        <div class="prd-box badge">
+                          <div class="prd-thumb">
+                            <label class="btn-like">
+                              <input type="checkbox" checked>
+                              <span class="like-visual">좋아요</span>
+                            </label>
+                            <a href="../vehicle/vehicle_view.html">
+                              <img src="../images/dummy/sample01.png" alt="">
+                            </a>
+                          </div>
+                          <a href="../vehicle/vehicle_view.html" class="prd-info">
+                            <p class="prd-name">KIA 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                              쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+                            <p class="price-info">
+                              <span class="num-sale">13,800만원</span>
+                              <span class="num-price">13,700만원</span>
+                            </p>
+                            <p class="detail-info">
+                              <span>2019/04(2019)</span>
+                              <span>11,179 km</span>
+                              <span>서울</span>
+                            </p>
+                          </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="prd-box">
+                          <div class="prd-thumb">
+                            <label class="btn-like">
+                              <input type="checkbox">
+                              <span class="like-visual">좋아요</span>
+                            </label>
+                            <a href="javascript:;">
+                              <img src="../images/dummy/sample01.png" alt="">
+                            </a>
+                          </div>
+                          <a href="javascript:;" class="prd-info">
+                            <p class="prd-name">KIA 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                              쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+                            <p class="price-info">
+                              <span class="num-price">13,700만원</span>
+                            </p>
+                            <p class="detail-info">
+                              <span>2019/04(2019)</span>
+                              <span>11,179 km</span>
+                              <span>서울</span>
+                            </p>
+                          </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="prd-box">
+                          <div class="prd-thumb">
+                            <label class="btn-like">
+                              <input type="checkbox">
+                              <span class="like-visual">좋아요</span>
+                            </label>
+                            <a href="javascript:;">
+                              <img src="../images/dummy/sample01.png" alt="">
+                            </a>
+                          </div>
+                          <a href="javascript:;" class="prd-info">
+                            <p class="prd-name">KIA 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                              쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+                            <p class="price-info">
+                              <span class="num-price">13,700만원</span>
+                            </p>
+                            <p class="detail-info">
+                              <span>2019/04(2019)</span>
+                              <span>11,179 km</span>
+                              <span>서울</span>
+                            </p>
+                          </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="prd-box">
+                          <div class="prd-thumb">
+                            <label class="btn-like">
+                              <input type="checkbox">
+                              <span class="like-visual">좋아요</span>
+                            </label>
+                            <a href="javascript:;">
+                              <img src="../images/dummy/sample01.png" alt="">
+                            </a>
+                          </div>
+                          <a href="javascript:;" class="prd-info">
+                            <p class="prd-name">KIA 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                              쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+                            <p class="price-info">
+                              <span class="num-price">13,700만원</span>
+                            </p>
+                            <p class="detail-info">
+                              <span>2019/04(2019)</span>
+                              <span>11,179 km</span>
+                              <span>서울</span>
+                            </p>
+                          </a>
+                        </div>
+                    </li>
+                  </ul>
+                  <!-- 로딩바 -->
+                  <div class="load-wrap">
+                    <div class="spinner-svg"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="js-include" data-include="../outline/footer.html" data-event="footer"></div>
+  </div>
+
+  <script>
+    //서브 페이지 제목
+		var hdNm = "내 차 구입";
+
+  </script>
+</body>
+
+</html>

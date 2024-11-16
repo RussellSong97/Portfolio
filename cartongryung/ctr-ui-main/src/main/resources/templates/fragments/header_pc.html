@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- 분류 main: gnb,logo,pc그림자X | sub: back,title,pc그림자O | hide-m: 모바일X-->
+<header id="header" th:fragment="header_pc" class="hide-m">
+    <th:block th:if="${!topStripBanner.isEmpty()}">
+        <th:block th:each="banner : ${topStripBanner}">
+            <div class="banner-top">
+                <p class="txt" th:text="${banner.content}">신규가입 시 <strong>5천원</strong> 웰컴 쿠폰 증정</p>
+                <button type="button" class="btn-close">닫기</button>
+            </div>
+        </th:block>
+    </th:block>
+    <div class="inner">
+        <div class="hd-top">
+            <h1 class="hd-logo">
+                <a href="/" class="logo-link">
+                    <span class="is-blind">카통령</span>
+                </a>
+            </h1>
+            <div class="gnb-wrap">
+                <ul class="gnb">
+                    <li class="is-buy">
+                        <a href="/search/product">내 차 구입</a>
+                    </li>
+                    <li>
+                        <a href="/sale/intro">내 차 팔기</a>
+                    </li>
+                    <li>
+                        <a href="/product/recommend">추천 차량</a>
+                    </li>
+                </ul>
+                <ul class="gnb-sub">
+                    <li>
+                        <a href="/service01">평생책임서비스</a>
+                    </li>
+                    <li>
+                        <a href="/event">이벤트</a>
+                    </li>
+                    <li>
+                        <a href="/review">고객후기</a>
+                    </li>
+                    <li>
+                        <a href="/map01">오시는 길</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hd-utils">
+                <ul>
+                    <th:block sec:authorize="isAnonymous()">
+                        <li class="hide-m">
+                            <a href="/login" class="btn-login">로그인/회원가입</a>
+                        </li>
+                    </th:block>
+                    <li class="is-search hide-pc">
+                        <a href="#" class="link">검색</a>
+                    </li>
+
+                    <li class="is-like">
+                        <a href="/mypage/pick" th:class="${picksCheck > 0 ? 'link on' : 'link'}">찜</a>
+                    </li>
+
+                    <li class="is-notification">
+                        <a href="/mypage/notification" th:class="${notificationsCheck > 0 ? 'link on' : 'link'}">알림</a>
+                    </li>
+                    <li class="is-menu hide-m">
+                        <a href="#" class="link">전체메뉴</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-mobile">
+            <button type="button" class="btn-back" onclick="history.back()">뒤로가기</button>
+            <div class="hd-center">
+                <span class="title"></span>
+            </div>
+            <!-- 해당페이지 : login -->
+            <!-- <a href="../main/index.html" class="btn-home">홈</a> -->
+        </div>
+    </div>
+</header>
+</html>

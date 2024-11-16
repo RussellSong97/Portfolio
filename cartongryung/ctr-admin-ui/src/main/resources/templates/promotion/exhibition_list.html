@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>프로모션 &gt; 전시 관리 &gt; 목록 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_promotion :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <th:block th:switch="${condition.type}">
+            <th:block th:case="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.detail}"></h3>
+            </th:block>
+            <th:block th:case="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code}">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.detail}"></h3>
+            </th:block>
+            <th:block th:case="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.detail}"></h3>
+            </th:block>
+            <th:block th:case="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.code}">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.detail}"></h3>
+            </th:block>
+            <th:block th:case="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_SUB.code}">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_SUB.detail}"></h3>
+            </th:block>
+            <th:block th:case="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).FINANCIAL.code}">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).FINANCIAL.detail}"></h3>
+            </th:block>
+            <th:block th:case="*">
+                <h3 th:text="${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).LOGIN.detail}"></h3>
+            </th:block>
+        </th:block>
+    </div>
+    <div class="content_body">
+        <div class="promotion">
+            <div class="search_wrap">
+                <form>
+                    <table>
+                        <caption>검색</caption>
+                        <colgroup>
+                            <col style="width:8%;">
+                            <col style="width:auto;">
+                            <col style="width:8%;;">
+                            <col style="width:auto;">
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <col style="width:8%;;">
+                                <col style="width:auto;">
+                            </th:block>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row"
+                                th:text="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code ? '내용' : '제목'}">제목
+                            </th>
+                            <td>
+                                <input type="text" id="s" name="s" th:value="${condition.s}" style="width: 60%;">
+                                <label for="s" class="blind">키워드 입력</label>
+                            </td>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <th scope="row">상태</th>
+                                <td>
+                                    <div class="radiobox">
+                                        <input type="radio" name="eventYn" id="eventYn_all" value="" checked>
+                                        <label for="eventYn_all">전체</label>
+                                    </div>
+                                    <div class="radiobox">
+                                        <input type="radio" name="eventYn" id="eventYn_W" value="W" th:checked="${condition.eventYn eq 'W'}">
+                                        <label for="eventYn_W">대기</label>
+                                    </div>
+                                    <div class="radiobox">
+                                        <input type="radio" name="eventYn" id="eventYn_Y" value="Y" th:checked="${condition.eventYn eq 'Y'}">
+                                        <label for="eventYn_Y">진행중</label>
+                                    </div>
+                                    <div class="radiobox">
+                                        <input type="radio" name="eventYn" id="eventYn_N" value="N" th:checked="${condition.eventYn eq 'N'}">
+                                        <label for="eventYn_N">종료</label>
+                                    </div>
+                                </td>
+                            </th:block>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <th scope="row">기간검색</th>
+                                <td>
+                                    <input type="text" id="datepicker1" class="ico_date" name="sdate" th:value="${condition.sdate}" placeholder="시작일">
+                                    <span class="tilde">~</span>
+                                    <input type="text" id="datepicker2" class="ico_date" name="edate" th:value="${condition.edate}" placeholder="종료일">
+                                </td>
+                            </th:block>
+                            <th:block th:unless="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <th scope="row">노출상태</th>
+                                <td>
+                                    <div class="radiobox">
+                                        <input type="radio" name="viewYn" id="viewYn_all" value="" checked>
+                                        <label for="viewYn_all">전체</label>
+                                    </div>
+                                    <div class="radiobox">
+                                        <input type="radio" name="viewYn" id="viewYn_Y" value="Y" th:checked="${condition.viewYn eq 'Y'}">
+                                        <label for="viewYn_Y">노출</label>
+                                    </div>
+                                    <div class="radiobox">
+                                        <input type="radio" name="viewYn" id="viewYn_N" value="N" th:checked="${condition.viewYn eq 'N'}">
+                                        <label for="viewYn_N">미노출</label>
+                                    </div>
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_area align_c mt20">
+                        <input type="hidden" name="type" th:value="${condition.type}">
+                        <button type="submit" class="btn">검색</button>
+                    </div>
+                </form>
+            </div>
+            <div class="list_wrap">
+                <div class="list_top">
+                    <div class="txt_area">
+                        <p>총 <em th:text="${#numbers.formatInteger(exhibitionLists.totalElements, 1, 'COMMA')}">0,000</em>건</p>
+                    </div>
+                    <div class="util_area">
+                        <a th:href="@{/admin/promotion/exhibition/write(type = ${condition.type})}" class="btn btn_form2">등록</a>
+                        <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                        <button type="button" id="delBtn" class="btn btn_form5">삭제</button>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="list_table">
+                    <table>
+                        <caption>검색 결과</caption>
+                        <colgroup>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <col style="width:2%;">
+                            </th:block>
+                            <col style="width:3%;">
+                            <th:block th:unless="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <col style="width:10%;">
+                            </th:block>
+                            <col style="width:20%;">
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <col style="width:6%;">
+                            </th:block>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <col style="width:12%;">
+                            </th:block>
+                            <col style="width:8%;">
+                            <col style="width:6%;">
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <col style="width:6%;">
+                            </th:block>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <th scope="col">
+                                    <input type="checkbox" id="allChk">
+                                    <label for="allChk" class="blind">전체선택</label>
+                                </th>
+                            </th:block>
+                            <th scope="col">번호</th>
+                            <th:block th:unless="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <th scope="col">배너이미지</th>
+                            </th:block>
+                            <th scope="col" th:text="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code ? '내용' : '제목'}">제목</th>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <th scope="col">이벤트 상태</th>
+                            </th:block>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <th scope="col" th:text="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code ? '이벤트 기간' : '노출 기간'}">이벤트 기간</th>
+                            </th:block>
+                            <th scope="col">등록일</th>
+                            <th scope="col">노출상태</th>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <th scope="col">조회수</th>
+                            </th:block>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${exhibitionLists.isEmpty()}">
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <td colspan="9">등록된 프로모션이 없습니다.</td>
+                            </th:block>
+                            <th:block th:unless="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <td colspan="5">등록된 프로모션이 없습니다.</td>
+                            </th:block>
+                        </tr>
+                        <!-- 진행중일 경우 tr에 working 클래스 추가 -->
+                        <tr th:each="exhibition : ${exhibitionLists}"
+                            th:class="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code ? exhibition.getEventStatus('class', exhibition.exhibitionStartDate, exhibition.exhibitionEndDate) : ''}">
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <td>
+                                    <input type="checkbox" th:id="|exhibition_${exhibition.id}|" name="id" th:value="${exhibition.id}">
+                                    <label th:for="|exhibition_${exhibition.id}|" class="blind">선택</label>
+                                </td>
+                            </th:block>
+                            <td th:text="${#numbers.formatInteger(exhibitionLists.totalElements - exhibitionLists.number * exhibitionLists.size - exhibitionStat.index, 1, 'COMMA')}">50</td>
+                            <th:block th:unless="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <td>
+                                    <div class="imgbox">
+                                        <img th:src="@{/api/file/view/{uuid}(uuid = ${exhibition.pcAttachment.uuid}, size = 300)}" alt="이미지">
+                                    </div>
+                                </td>
+                            </th:block>
+                            <td class="align_l">
+                                <a th:href="@{/admin/promotion/exhibition/{id}(id = ${exhibition.id}, type = ${condition.type})}" class="btn_link txt_over"
+                                   th:text="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code ? exhibition.content : exhibition.title}">입력한 제목을 노출합니다.
+                                길면 한 줄로 처리됩니다. 입력한 제목을 노출합니다. 길면 한 줄로 처리됩니다.</a>
+                            </td>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <td class="e_state" th:text="${exhibition.getEventStatus('td', exhibition.exhibitionStartDate, exhibition.exhibitionEndDate)}">
+                                    진행중</td>
+                            </th:block>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code
+                            or condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code}">
+                                <td th:text="${#temporals.format(exhibition.exhibitionStartDate, 'yyyy-MM-dd')} + ' ~ ' +
+                                    ${#temporals.format(exhibition.exhibitionEndDate, 'yyyy-MM-dd')}">yyyy-mm-dd ~ yyyy-mm-dd</td>
+                            </th:block>
+                            <td th:text="${#temporals.format(exhibition.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
+                            <td th:text="${exhibition.viewYn.yn eq 'Y' ? '노출' : '미노출'}">노출</td>
+                            <th:block th:if="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code}">
+                                <td th:text="${exhibition.hits}">000</td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:replace="~{fragments/pagination :: pagination (${exhibitionLists})}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    let allCheckbox = document.getElementById('allChk');
+    let checkboxes = document.querySelectorAll('input[name="id"]');
+
+    // 체크박스 조작
+    if (allCheckbox && checkboxes) {
+        allCheckbox.addEventListener('click', () => {
+            checkboxes.forEach(chk => chk.checked = allCheckbox.checked);
+        });
+
+        checkboxes.forEach(chk => {
+            chk.addEventListener('click', () => {
+                if (!chk.checked) {
+                    allCheckbox.checked = false;
+                } else {
+                    allCheckbox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                }
+            });
+        });
+    }
+
+    // 삭제
+    const delBtn = document.getElementById('delBtn');
+    if(delBtn) {
+        delBtn.addEventListener('click', () => {
+            const deletingExhibition = document.querySelectorAll('input[name="id"]:checked');
+
+            if (deletingExhibition.length < 1) {
+                alert('삭제할 글을 선택해주세요.');
+                return;
+            }
+
+            if (!confirm('삭제하시겠습니까?')) return;
+
+            let exhibitionIds = [];
+
+            deletingExhibition.forEach(exhibition => {
+                exhibitionIds.push(exhibition.value);
+            });
+
+            const formData = new FormData();
+            exhibitionIds.forEach(value => {
+                formData.append('id[]', value);
+            });
+
+            fetch(`/admin/promotion/exhibition/delete`, {
+                method: 'DELETE',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    alert('삭제되었습니다.');
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
+        });
+    }
+
+</script>
+</html>

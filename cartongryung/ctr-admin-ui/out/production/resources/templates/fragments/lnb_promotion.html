@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div id="lnb" th:fragment="lnb">
+    <button type="button" class="openBtn">&lt;</button>
+    <h2 class="tit">
+        <span>프로모션</span>
+    </h2>
+    <ul class="menu">
+        <li class="btn_sub">
+            <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code})}"
+               th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).EVENT.code} ? 'skin_bg'">
+                이벤트 관리
+            </a>
+        </li>
+        <li class="btn_sub">
+            <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code})}"
+               th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).POPUP.code} ? 'skin_bg'">
+                팝업 관리
+            </a>
+        </li>
+        <li class="btn_sub">
+            <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code})}"
+               th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).TOP_STRIP.code} ? 'skin_bg'">
+                상단 띠 배너 관리
+            </a>
+        </li>
+        <li class="btn_sub">
+            <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.code})}"
+               th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.code or
+                condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_SUB.code or
+                condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).LOGIN.code} ? 'skin_bg'">
+                배너 관리
+            </a>
+            <ul class="sub_menu"
+                th:style="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.code or
+                condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_SUB.code or
+                condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).LOGIN.code} ? '' : 'display: none;'">
+                <li th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.code} ? 'on'">
+                    <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_TOP.code})}">메인
+                        상단배너
+                    </a>
+                </li>
+                <li th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_SUB.code} ? 'on'">
+                    <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).MAIN_SUB.code})}">메인
+                        서브배너
+                    </a>
+                </li>
+                <li th:classappend="${condition.type eq T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).LOGIN.code} ? 'on'">
+                    <a th:href="@{/admin/promotion/exhibition('type' = ${T(com.cuv.admin.domain.exhibition.enumset.ExhibitionType).LOGIN.code})}">
+                        로그인 배너
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/promotion/recommend"
+               th:classappend="${requestValue.getRequestURI().startsWith('/admin/promotion/recommend')} ? 'skin_bg'">
+                메인 상품 진열
+            </a>
+            <ul class="sub_menu"
+                th:style="${requestValue.getRequestURI().startsWith('/admin/promotion/recommend') ? '' : 'display: none;'}">
+                <li th:classappend="${condition.type eq 'car'} ? 'on'">
+                    <a href="/admin/promotion/recommend">카통령 추천차량</a>
+                </li>
+                <li th:classappend="${condition.type eq 'value'} ? 'on'">
+                    <a href="/admin/promotion/recommend?type=value">가성비 추천차량</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</html>

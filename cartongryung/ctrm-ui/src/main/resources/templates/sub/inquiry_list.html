@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set2">
+        <div class="tit-area">
+            <h2 class="tit hide-m">상담</h2>
+        </div>
+        <div class="counsel-wrap">
+            <div class="table-wrap type-pc">
+                <div class="table">
+                    <div class="list-row table-title">
+                        <div class="date">상담 날짜</div>
+                        <div class="counselor">상담원</div>
+                        <div class="state">상태</div>
+                    </div>
+                    <div class="list-row" th:each="inquiry : ${purchaseInquiryLists}">
+                        <div class="date" th:text="${inquiry.inquiryDetailCreatedAt eq null ?
+                        #temporals.format(inquiry.createdAt, 'yyyy.MM.dd') : #temporals.format(inquiry.inquiryDetailCreatedAt, 'yyyy.MM.dd')}">2024.03.22</div>
+                        <div class="counselor" th:text="${inquiry.inquiryDetailWriter eq null ? '-' : inquiry.inquiryDetailRole.name + ' - ' + inquiry.inquiryDetailWriter}">딜러 - 홍길동</div>
+                        <div class="state" th:text="${inquiry.consultationStatus.code eq null ? '-' : inquiry.consultationStatus.detail}">상담접수완료</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "상담";
+
+    function fnBack() {
+        location.href = "/";
+    }
+</script>
+</html>

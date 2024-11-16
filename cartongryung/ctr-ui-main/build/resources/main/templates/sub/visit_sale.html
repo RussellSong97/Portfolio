@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set2">
+        <div class="tit-area">
+            <h2 class="tit hide-m">방문</h2>
+        </div>
+        <div class="visit-wrap">
+            <div class="tab-list type-s">
+                <a href="/mypage/purchase">내 차 살때</a>
+                <a href="/mypage/sale" class="on">내 차 팔때</a>
+            </div>
+            <div class="visit-area">
+                <ul>
+                    <li th:each="sale : ${saleInquiryLists}">
+                        <a href="#" class="visit-top">
+                            <div class="img">
+                                <img th:src="@{/api/file/view/__${sale.profileImage.uuid}__?size=500}" alt="">
+                            </div>
+                            <div class="txt-area">
+                                <strong class="tit" th:text="${sale.realName}">홍길동</strong>
+                                <p class="txt">
+                                    <span th:text="${sale.mobileNumber}">010-8888-9999</span>
+                                </p>
+                            </div>
+                        </a>
+                        <div class="visit-btm">
+                            <strong class="tit">방문예약 신청 내역</strong>
+                            <dl>
+                                <dt>방문예약 날짜</dt>
+                                <dd th:text="${sale.visitReservationAt eq null ? '-' : #temporals.format(sale.visitReservationAt, 'yyyy. MM. dd')}">2024. 03. 01</dd>
+                            </dl>
+                            <dl>
+                                <dt>시간</dt>
+                                <dd th:text="${sale.visitReservationAt eq null ? '-' : #temporals.format(sale.visitReservationAt, 'HH:mm')}">10:00</dd>
+                            </dl>
+                            <dl>
+                                <dt>상태</dt>
+                                <dd th:text="${sale.consultationStatus.code eq null ? '-' : sale.consultationStatus.detail}">상담대기</dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "방문";
+</script>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div id="lnb" th:fragment="lnb">
+    <button type="button" class="openBtn">&lt;</button>
+    <h2 class="tit">
+        <span>게시판</span>
+    </h2>
+    <ul class="menu">
+        <li class="btn_sub">
+            <a href="/admin/board/notice" th:classappend="${requestValue.getRequestURI().startsWith('/admin/board/notice')} ? 'skin_bg'">공지사항</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/board/faq" th:classappend="${requestValue.getRequestURI().startsWith('/admin/board/faq')} ? 'skin_bg'">자주 묻는 질문</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/board/guide" th:classappend="${requestValue.getRequestURI().startsWith('/admin/board/guide')} ? 'skin_bg'">중고차 가이드</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/board/review" th:classappend="${requestValue.getRequestURI().startsWith('/admin/board/review')} ? 'skin_bg'">리뷰</a>
+        </li>
+    </ul>
+</div>
+</html>

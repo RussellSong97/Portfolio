@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_main}">
+
+<th:block layout:fragment="content">
+    <div class="main-top">
+        <th:block th:if="${!mainTopBannerLists.isEmpty()}">
+            <div class="main-visual">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" id="mainTop" th:each="top : ${mainTopBannerLists}">
+                            <a th:href="${top.linkUrl}" th:target="${top.linkType.target}" class="img main-banner">
+                                <!-- pc용 이미지 -->
+                                <img th:src="@{/api/file/view/__${top.pcAttachment.uuid}__?size=1000}"
+                                     alt="메인 배너" class="main-banner hide-m">
+                                <!-- // pc용 이미지 -->
+                                <!-- 모바일용 이미지 -->
+                                <img th:src="@{/api/file/view/__${top.pcAttachment.uuid}__?size=700}"
+                                     alt="메인 배너" class="main-banner hide-t">
+                                <!-- // 모바일용 이미지 -->
+                                <!-- 모바일용 이미지 -->
+                                <img th:src="@{/api/file/view/__${top.mobileAttachment.uuid}__?size=1000}"
+                                     alt="메인 배너" class="main-banner hide-pc">
+                                <!-- // 모바일용 이미지 -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-control bullets">
+                    <div class="swiper-pagination-bullets">
+                        <span class="swiper-pagination-bullet swiper-pagination-clickable swiper-pagination-bullet-active" th:each="top : ${mainTopBannerLists}"></span>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <div class="w-set">
+            <div class="main-cont main-search">
+                <div class="search-wrap main-search">
+                    <div class="tit-area main-search">
+                        <h2 class="tit hide-m pt-10 pb-35">나에게 맞는 차량을 찾아보세요.</h2>
+                        <div class="search-area">
+                            <div class="search-box main-box">
+                                <form action="/search/product">
+                                    <input type="text" name="keyword" id="searchBox" placeholder="찾으시는 차량명을 검색해주세요.">
+                                    <label for="searchBox" class="is-blind">검색창</label>
+                                    <button type="submit" class="btn-search">검색</button>
+                                    <input type="hidden" name="page" value="1">
+                                </form>
+                            </div>
+                            <div class="search-list hide-m">
+                                <div class="swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" th:each="keyword : ${popularKeywordLists}">
+                                            <a href="javascript:;" onclick="searchPopularCar(this)" th:attr="data-makerCodeId=${keyword.makerCodeId},
+                                            data-modelCodeId=${keyword.modelCodeId}, data-makerName=${keyword.makerName}, data-modelName=${keyword.modelName}"
+                                               th:text="${keyword.makerName != null ? keyword.makerName : ''}
+                                                    + ' ' + ${keyword.modelName != null ? keyword.modelName : ''}">뉴카니발</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="select-wrap hide-m">
+                        <div class="select-box" id="category1">
+                            <button type="button" class="select" id="makerNameBtn" onclick="firstCategoryList()">제조사
+                            </button>
+                        </div>
+                        <div class="select-box disabled" id="category2">
+                            <button type="button" class="select" id="modelNameBtn" onclick="fetchSubCategory()">모델
+                            </button>
+                            <div class="option-box" style="display: none" id="modelListTag">
+                                <ul class="option-list" id="modelList"></ul>
+                            </div>
+                        </div>
+                        <div class="select-box disabled" id="category3">
+                            <button type="button" class="select" id="detailModelBtn" onclick="fetchThirdCategory()">
+                                세부모델
+                            </button>
+                            <div class="option-box" style="display: none" id="detailModelListTag">
+                                <ul class="option-list" id="detailModelList"></ul>
+                            </div>
+                        </div>
+                        <button type="button" class="btn" onclick="submitSearch()">검색하기</button>
+                        <div class="option-box" id="makerListTag">
+                            <!--                            <ul class="option-list" id="categoryListTag">-->
+                            <!--                                <li>-->
+                            <!--                                    <a href="javascript:;" id="categoryName">기아</a>-->
+                            <!--                                </li>-->
+                            <!--                            </ul>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="main-cont type-bg">
+            <div class="w-set">
+                <div class="efficient-wrap">
+                    <div class="tit-area">
+                        <h2 class="tit">실시간 인기 차량</h2>
+                        <a href="/search/product?sortBy=pick" class="btn-more">더보기</a>
+                    </div>
+                    <div class="cont-area">
+                        <div class="prd-box display-grid display-grid-col-4 display-grid-row-2 display-grid-gap-r16-c31 hide-m">
+                            <th:block th:each="car, iterStat : ${hitsCarList}" th:if="${iterStat.index < 8}">
+                                <div class="prd-box" th:classappend="${car.shopName.contains('디에스 오토')} ? ' badge' : ''">
+                                    <div class="prd-thumb popular-thumb">
+                                        <label class="btn-like">
+                                            <input type="checkbox"
+                                                   th:attr="productId=${car.productId}"
+                                                   th:checked="${car.picked}"
+                                                   class="pick_check" />
+                                            <span class="like-visual">좋아요</span>
+                                        </label>
+                                        <a th:href="'/product/' + ${car.productId}">
+                                            <img th:src="${car.carImageUrl[0].realUrl}"
+                                                 alt="">
+                                        </a>
+                                    </div>
+                                    <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                                        <p class="prd-name"
+                                           th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">
+                                            아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                                            쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)
+                                        </p>
+                                        <p class="price-info">
+                                            <span class="num-price">차량가 <span class="num-price-black" th:text="${car.getCarAmount()}">11,400</span>만원</span><br />
+                                            <span class="num-month-price">월 <span class="num-month-price-red" th:text="${car.getFormattedMonthlyPayment()}">11,400</span>만원</span>
+                                        </p>
+                                        <p class="detail-info">
+                                            <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                            <span th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>
+                                            <span th:text="${car.city}">서울</span>
+                                        </p>
+                                    </a>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                    <div class="swiper-wrap efficient-slide hide-pc">
+                        <div class="swiper-control">
+                            <div class="pagination"></div>
+                        </div>
+                        <div class="swiper-navi">
+                            <button type="button" class="swiper-button prev">이전</button>
+                            <button type="button" class="swiper-button next">다음</button>
+                        </div>
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" th:each="car : ${hitsCarList}">
+                                    <div class="prd-box"
+                                         th:classappend="${car.shopName.contains('디에스 오토')} ? ' badge' : ''">
+                                        <div class="prd-thumb">
+                                            <label class="btn-like">
+                                                <input type="checkbox"
+                                                       th:attr="productId=${car.productId}"
+                                                       th:checked="${car.picked}"
+                                                       class="pick_check">
+                                                <span class="like-visual">좋아요</span>
+                                            </label>
+                                            <a th:href="'/product/' + ${car.productId}">
+                                                <img th:src="${car.carImageUrl[0].realUrl}"
+                                                     alt="">
+                                            </a>
+                                        </div>
+                                        <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                                            <p class="prd-name"
+                                               th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">
+                                                아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                                                쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+                                            <p class="price-info">
+                                                <span class="num-price">차량가 <span class="num-price-black" th:text="${car.getCarAmount()}">11,400</span>만원</span><br />
+                                                <span class="num-month-price">월 <span class="num-month-price-red" th:text="${car.getFormattedMonthlyPayment()}">11,400</span>만원</span>
+                                            </p>
+                                            <p class="detail-info">
+                                                <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                                <span th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>-->
+                                                <span th:text="${car.city}">서울</span>
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-cont">
+        <div class="w-set">
+            <div class="recommend-wrap">
+                <div class="tit-area pt-10">
+                    <h2 class="tit">카통령 특가 차량</h2>
+                    <a href="/product/recommend" class="btn-more">더보기</a>
+                </div>
+                <div>
+                    <div class="recommend-cont">
+                        <div class="main-area" th:each="car, iterStat : ${cuvRecommendList}"
+                             th:if="${iterStat.index == 0}">
+                            <div class="prd-box"
+                                 th:classappend="${car.shopName.contains('디에스 오토')} ? ' badge' : ''">
+                                <div class="prd-thumb">
+                                    <a th:href="'/product/' + ${car.productId}">
+                                        <img th:src="${car.carImageUrl[0].realUrl}"
+                                             alt="">
+                                    </a>
+                                </div>
+                                <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                                    <p class="prd-name"
+                                       th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">
+                                        기아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승) 길면</p>
+                                    <p class="price-info">
+                                        <span class="num-sale" th:if="${car.shopName.contains('디에스 오토')}"
+                                              th:text="${car.getFormattedCarComma()}">13,800만원</span>
+                                        <span class="num-price"
+                                              th:text="${car.getFormattedCarAmountSale()}">11,400만원</span>
+                                    </p>
+                                    <p class="detail-info">
+                                        <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                        <span th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>
+                                        <span th:text="${car.city}">서울</span>
+                                    </p>
+                                </a>
+                                <label class="btn-like">
+                                    <input type="checkbox"
+                                           th:attr="productId=${car.productId}"
+                                           th:checked="${car.picked}"
+                                           class="pick_check">
+                                    <span class="like-visual">좋아요</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cont-area">
+                            <ul class="prd-list prd-row">
+                                <li th:each="car, iterStat : ${cuvRecommendList}"
+                                    th:if="${iterStat.index != 0}">
+                                    <div class="prd-box badge">
+                                        <div class="prd-thumb">
+                                            <a th:href="'/product/' + ${car.productId}">
+                                                <img th:src="${car.carImageUrl[0].realUrl}"
+                                                     alt="">
+                                            </a>
+                                        </div>
+                                        <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                                            <p class="prd-name"
+                                               th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">
+                                                기아 더 뉴 쏘렌토</p>
+                                            <p class="price-info">
+                                                <span class="num-sale" th:if="${car.shopName.contains('디에스 오토')}"
+                                                      th:text="${car.getFormattedCarComma()}">13,800만원</span>
+                                                <span class="num-price" th:text="${car.getFormattedCarAmountSale()}">11,400만원</span>
+                                            </p>
+                                            <p class="detail-info">
+                                                <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                                <span
+                                                        th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>
+                                                <span th:text="${car.city}">서울</span>
+                                            </p>
+                                        </a>
+                                        <label class="btn-like">
+                                            <input type="checkbox"
+                                                   th:attr="productId=${car.productId}"
+                                                   th:checked="${car.picked}"
+                                                   class="pick_check">
+                                            <span class="like-visual">좋아요</span>
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-set" id="mainSub">
+        <th:block th:if="${!mainSubBannerLists.isEmpty()}">
+            <div class="main-cont">
+                <div class="sub-visual">
+<!--                    <div class="swiper-count"></div>-->
+                    <div class="swiper">
+                        <div class="mt-40 hide-t hide-m"></div>
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="sub : ${mainSubBannerLists}">
+                                <a th:href="${sub.linkUrl}" th:target="${sub.linkType.target}" class="img">
+                                    <!--  pc용 이미지  -->
+                                    <img th:src="@{/api/file/view/__${sub.pcAttachment.uuid}__?size=1000}"
+                                         alt="pc 서브 배너" class="for-pc" />
+                                    <!--  모바일용 이미지  -->
+                                    <img th:src="@{/api/file/view/__${sub.mobileAttachment.uuid}__?size=1000}"
+                                         alt="모바일 서브 배너" class="for-t" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <div class="main-content">
+        <div class="main-cont type-bg">
+            <!--  올라온지 얼마 안된 차량 -->
+            <div class="w-set">
+                <div class="new-wrap">
+                    <div class="tit-area">
+                        <h2 class="tit">올라온 지 얼마 안된 차량</h2>
+                        <a href="/search/product?sortBy=recent" class="btn-more">더보기</a>
+                    </div>
+                    <div class="cont-area">
+                        <div class="prd-box display-grid display-grid-col-4 display-grid-row-2 display-grid-gap-r16-c31 hide-m">
+                            <th:block th:each="car, iterStat : ${recentCarList}" th:if="${iterStat.index < 8}">
+                                <div class="prd-box" th:classappend="${car.shopName.contains('디에스 오토')} ? ' badge' : ''">
+                                    <div class="prd-thumb">
+                                        <label class="btn-like">
+                                            <input type="checkbox"
+                                                   th:attr="productId=${car.productId}"
+                                                   th:checked="${car.picked}"
+                                                   class="pick_check" />
+                                            <span class="like-visual">좋아요</span>
+                                        </label>
+                                        <a th:href="'/product/' + ${car.productId}">
+                                            <img th:src="${car.carImageUrl[0].realUrl}"
+                                                 alt="">
+                                        </a>
+                                    </div>
+                                    <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                                        <p class="prd-name"
+                                           th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">
+                                            아 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                                            쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)
+                                        </p>
+                                        <p class="price-info">
+                                            <span class="num-price">차량가 <span class="num-price-black" th:text="${car.getCarAmount()}">11,400</span>만원</span><br />
+                                            <span class="num-month-price">월 <span class="num-month-price-red" th:text="${car.getFormattedMonthlyPayment()}">11,400</span>만원</span>
+                                        </p>
+                                        <p class="detail-info">
+                                            <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                            <span th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>
+                                            <span th:text="${car.city}">서울</span>
+                                        </p>
+                                    </a>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                    <div class="swiper-wrap new-slide hide-pc">
+                        <div class="swiper-control">
+                            <div class="pagination"></div>
+                        </div>
+                        <div class="swiper-navi">
+                            <button type="button" class="swiper-button prev">이전</button>
+                            <button type="button" class="swiper-button next">다음</button>
+                        </div>
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <!-- 차량 정보 반복 -->
+                                <div class="swiper-slide" th:each="car : ${recentCarList}">
+                                    <!-- 선착순 특가 badge -->
+                                    <div class="prd-box"
+                                         th:classappend="${car.shopName.contains('디에스 오토')} ? ' badge' : ''">
+                                        <div class="prd-thumb">
+                                            <label class="btn-like">
+                                                <input type="checkbox"
+                                                       th:attr="productId=${car.productId}"
+                                                       th:checked="${car.picked}"
+                                                       class="pick_check">
+                                                <span class="like-visual">좋아요</span>
+                                            </label>
+                                            <a th:href="'/product/' + ${car.productId}">
+                                                <!-- carImageUrl에서 첫 번째 이미지 사용 -->
+                                                <img th:src="${car.carImageUrl[0].realUrl}"
+                                                     alt="">
+                                            </a>
+                                        </div>
+                                        <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                                            <p class="prd-name"
+                                               th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">
+                                                <!-- 메이커명, 모델명, 디테일 등급명 출력 -->
+                                            </p>
+                                            <p class="price-info">
+                                                <!-- 판매 가격  출력 -->
+<!--                                                <span class="num-sale" th:if="${car.shopName.contains('디에스 오토')}"-->
+<!--                                                      th:text="${car.getFormattedCarComma()}">13,800만원</span>-->
+<!--                                                <span class="num-price"-->
+<!--                                                      th:text="${car.getFormattedCarAmountSale()}">13,700만원</span>-->
+                                                <span class="num-price">차량가 <span class="num-price-black" th:text="${car.getCarAmount()}">11,400</span>만원</span><br />
+                                                <span class="num-month-price">월 <span class="num-month-price-red" th:text="${car.getFormattedMonthlyPayment()}">11,400</span>만원</span>
+                                            </p>
+                                            <p class="detail-info">
+                                                <!-- 등록 연도, 주행 거리, 도시 정보 출력 -->
+                                                <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                                <span th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>
+                                                <span th:text="${car.city}"> 서울</span>
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--올라온지 얼마 안된 차량 끝 -->
+        </div>
+    </div>
+        <!--
+    <div class="w-set">
+        <div class="link-wrap hide-pc">
+            <a href="/warranty" class="link">
+                <i class="i-link1"></i>
+                <span class="txt">워런티</span>
+            </a>
+            <a href="/event" class="link">
+                <i class="i-link2"></i>
+                <span class="txt">이벤트</span>
+            </a>
+            <a href="/review" class="link">
+                <i class="i-link3"></i>
+                <span class="txt">고객후기</span>
+            </a>
+            <a href="/map01" class="link">
+                <i class="i-link4"></i>
+                <span class="txt">오시는 길</span>
+            </a>
+        </div>-->
+        <!--<div class="w-set" id="mainSub">
+            <th:block th:if="${!mainSubBannerLists.isEmpty()}">
+                <div class="main-cont">
+                    <div class="sub-visual">
+                        <div class="swiper-count"></div>
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" th:each="sub : ${mainSubBannerLists}">
+                                    <a th:href="${sub.linkUrl}" th:target="${sub.linkType.target}">
+                                        &lt;!&ndash; pc용 이미지 &ndash;&gt;
+                                        <img th:src="@{/api/file/view/__${sub.pcAttachment.uuid}__?size=1000}"
+                                             alt="서브 배너" class="for-pc">
+                                        &lt;!&ndash; 모바일용 이미지 &ndash;&gt;
+                                        <img th:src="@{/api/file/view/__${sub.mobileAttachment.uuid}__?size=1000}"
+                                             alt="서브 배너" class="for-t">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>  -->
+    <!--<div class="w-set">
+        <div class="main-cont">
+            <div class="video-wrap">
+                <div class="tit-area">
+                    <h2 class="tit">카통령 유튜브</h2>
+                    <a href="https://www.youtube.com/@carpresident" class="btn-more">더보기</a>
+                </div>
+                <div class="swiper-wrap video-slide">
+                    <div class="swiper-control">
+                        <div class="pagination"></div>
+                    </div>
+                    <div class="swiper-navi">
+                        <button type="button" class="swiper-button prev">이전</button>
+                        <button type="button" class="swiper-button next">다음</button>
+                    </div>
+                    <div class="swiper">
+                        <div class="swiper-wrapper" id="video_slider"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <th:block th:if="${!eventLists.isEmpty()}">
+        <div class="main-cont">
+            <div class="event-wrap">
+                <div class="tit-area">
+                    <h2 class="tit">카통령 이벤트</h2>
+                    <a href="/event" class="btn-more">더보기</a>
+                </div>
+                <div class="swiper-wrap event-slide">
+                    <div class="swiper-control">
+                        <div class="pagination"></div>
+                    </div>
+                    <div class="swiper-navi">
+                        <button type="button" class="swiper-button prev">이전</button>
+                        <button type="button" class="swiper-button next">다음</button>
+                    </div>
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="event : ${eventLists}">
+                                <a th:href="@{/event/__${event.id}__}">
+                                    <div class="event-img">
+                                        &lt;!&ndash; pc용 이미지 &ndash;&gt;
+                                        <img th:src="@{/api/file/view/__${event.pcAttachment.uuid}__?size=500}"
+                                             alt="이벤트 배너" class="hide-m">
+                                        &lt;!&ndash; 모바일용 이미지 &ndash;&gt;
+                                        <img
+                                                th:src="@{/api/file/view/__${event.mobileAttachment.uuid}__?size=500}"
+                                                alt="이벤트 배너" class="hide-pc">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+        <div class="main-cont">
+            <div class="review-wrap">
+                <div class="tit-area">
+                    <h2 class="tit">이용후기</h2>
+                    <a href="/review" class="btn-more">더보기</a>
+                </div>
+                <div class="swiper-wrap review-slide">
+                    <div class="swiper-control">
+                        <div class="pagination"></div>
+                    </div>
+                    <div class="swiper-navi">
+                        <button type="button" class="swiper-button prev">이전</button>
+                        <button type="button" class="swiper-button next">다음</button>
+                    </div>
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div th:each="review : ${reviewList}" class="swiper-slide">
+                                <a th:href="@{/review/__${review.id}__}">
+                                    <div class="prd-box">
+                                        <div class="prd-thumb">
+                                            <img th:src="@{/api/file/view/__${review.attachment.uuid}__?size=500}"
+                                                 alt="리뷰 이미지">
+                                        </div>
+                                        <div class="prd-info">
+                                            <div class="profile">
+                                                <img th:src="${review.profileImageJson != null && review.profileImageJson.realUrl != null ?
+                                                    '/api/file/view/' + review.profileImageJson.uuid + '?size=500' :
+                                                        '/user/images/common/img/profile_default.png'}" alt="프로필 이미지">
+                                            </div>
+                                            <p class="review-tit" th:text="${review.title}">Review Title</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div class="main-cont">
+        <div class="w-set">
+            <div class="financial-wrap">
+                <div class="tit-area">
+                    <h2 class="tit">제휴 금융사</h2>
+                </div>
+                <div class="financial-cont">
+                    <div class="cont-area">
+                        <p class="text-area">
+                            금융사에서 직접 인증한 차량을 카통령에서 만나보실 수 있습니다.<br />
+                            카통령은 국내 다수 금융사와의 제휴를 통해 고객 여러분께 신뢰로 보답해 드리고자 합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-wrap financial-slide mt-80">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="fin : ${financialList}">
+                                    <a th:href="${fin.linkUrl}" th:target="${fin.linkType.target}" class="img">
+                                        <!-- pc용 이미지 -->
+                                        <img th:src="@{/api/file/view/__${fin.pcAttachment.uuid}__?size=1000}"
+                                             alt="컴퓨터 금융 배너" class="hide-m" />
+                                        <!-- // pc용 이미지 -->
+                                        <!-- 모바일용 이미지 -->
+                                        <img th:src="@{/api/file/view/__${fin.mobileAttachment.uuid}__?size=1000}"
+                                             alt="모바일 배너" class="hide-pc" />
+                                        <!-- // 모바일용 이미지 -->
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="notice-wrap">
+        <div class="w-set">
+            <span class="tit">공지사항</span>
+            <th:block th:if="${boardNotice ne null}">
+                <a th:href="@{/board/notice/__${boardNotice.id}__}" class="txt-area">
+                    <p class="txt" th:text="${boardNotice.title}">홈페이지가 오픈 되었습니다</p>
+                    <span class="date" th:text="${#temporals.format(boardNotice.createdAt, 'yy.MM.dd')}">24-04-04</span>
+                </a>
+            </th:block>
+        </div>
+    </div>
+    <th:block th:if="${!popupLists.isEmpty()}">
+        <div id="mainPopupBg" style="display: none;"></div>
+        <div id="mainPopup" style="display: none;">
+            <div class="swiper-navi">
+                <button type="button" class="swiper-button prev">이전</button>
+                <button type="button" class="swiper-button next">다음</button>
+            </div>
+            <div class="swiper-count"></div>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="popup : ${popupLists}">
+                        <a th:href="${popup.linkUrl}" th:target="${popup.linkType.target}" class="img">
+                            <!-- pc용 이미지 -->
+                            <img th:src="@{/api/file/view/__${popup.pcAttachment.uuid}__?size=800}"
+                                 alt="팝업" class="hide-m">
+                            <!-- 모바일용 이미지 -->
+                            <img th:src="@{/api/file/view/__${popup.mobileAttachment.uuid}__?size=800}"
+                                 alt="팝업" class="hide-pc">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mainpop-menu">
+                <button type="button" class="mp-close mp-close-day">오늘 하루 보지 않기</button>
+                <button type="button" class="mp-close mp-close-x">닫기</button>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    // 카테고리 정보를 저장하는 객체
+    let fetchCategory = {
+        categoryId: null,
+        category1: null,
+        category2: null,
+        category3: null,
+        depth: 0
+    };
+
+    // URL 검색 파라미터 관리를 위한 객체
+    let searchParams = new URLSearchParams();
+
+    // 검색 파라미터 업데이트 함수 (검색 페이지 이동)
+    function updateSearchParams() {
+        ["category1", "category2", "category3"].forEach(category => {
+            if (fetchCategory[category]) {
+                searchParams.set(category, fetchCategory[category]);
+            } else {
+                searchParams.delete(category);
+            }
+        });
+        console.log("Updated searchParams:", searchParams.toString());
+    }
+
+    // 카테고리 데이터 및 class, 이름 수정해주는 부분
+    function resetCategories() {
+        fetchCategory = {
+            categoryId: null,
+            category1: null,
+            category2: null,
+            category3: null,
+            depth: 0
+        };
+
+        ["modelNameBtn", "detailModelBtn"].forEach(id => {
+            document.getElementById(id).innerText = id === "modelNameBtn" ? "모델명" : "세부모델명";
+        });
+
+        ["category2", "category3"].forEach(id => {
+            const element = document.getElementById(id);
+            element.classList.remove("on");
+            element.classList.add("disabled");
+        });
+
+        // URL 초기화
+        window.history.replaceState({}, "", "/search/product");
+    }
+
+    // 1차 카테고리 목록 가져오기 및 표시
+    function firstCategoryList() {
+        console.log("Before:", fetchCategory);
+        let firstCataClass = document.querySelector("#makerNameBtn").className;
+        if (firstCataClass.indexOf("select on") > -1) {
+            return;
+        }
+        resetCategories();
+        fetchCategory.depth = 0;
+        fetchCategory.categoryId = 0;
+        console.log("After:", fetchCategory);
+
+        fetchCategoryData("/api/search/main/category", fetchCategory)
+            .then(result => {
+                if (result.code === 200) {
+                    renderCategoryList(result.data, "first-option-id", (category) => {
+                        fetchCategory.categoryId = category.id;
+                        fetchCategory.category1 = category.id;
+                        fetchCategory.depth = 1;
+                        document.getElementById("makerNameBtn").innerText = category.linkDataNm;
+                        updateSearchParams();
+                        fetchSubCategory();
+                    });
+                }
+            });
+    }
+
+    // 2차 카테고리 목록 가져오기 및 표시
+    function fetchSubCategory() {
+        console.log("Before:", fetchCategory);
+        if (fetchCategory.category2 !== null) {
+            fetchCategory.category3 = null;
+            fetchCategory.depth = 1;
+            document.getElementById("detailModelBtn").innerText = "세부모델명";
+            document.getElementById("category3").classList.remove("on");
+            document.getElementById("category3").classList.add("disabled");
+        }
+
+        document.getElementById("category2").classList.remove("disabled");
+        document.getElementById("category2").classList.add("on");
+        console.log("After:", fetchCategory);
+
+        fetchCategoryData("/api/search/main/category", fetchCategory)
+            .then(result => {
+                if (result.code === 200) {
+                    renderCategoryList(result.data, "second-option-id", (subCategory) => {
+                        fetchCategory.categoryId = subCategory.id;
+                        fetchCategory.category2 = subCategory.id;
+                        fetchCategory.depth = 2;
+                        document.getElementById("modelNameBtn").innerText = subCategory.linkDataNm;
+                        updateSearchParams();
+                        fetchThirdCategory();
+                    });
+                }
+            });
+    }
+
+    // 3차 카테고리 목록 가져오기 및 표시
+    function fetchThirdCategory() {
+        console.log("Before:", fetchCategory);
+        fetchCategory.category3 = null;
+        document.getElementById("category3").classList.remove("disabled");
+        document.getElementById("category3").classList.add("on");
+        console.log("After:", fetchCategory);
+
+        fetchCategoryData("/api/search/main/category", fetchCategory)
+            .then(result => {
+                if (result.code === 200) {
+                    renderCategoryList(result.data, "third-option-id", (category) => {
+                        fetchCategory.category3 = category.id;
+                        document.getElementById("detailModelBtn").innerText = category.linkDataNm;
+                        document.getElementById("category3").classList.remove("disabled");
+                        document.getElementById("makerListTag").style.display = "none";
+                        updateSearchParams();
+                    });
+                    document.getElementById("category2").classList.remove("on");
+                }
+            });
+    }
+
+    // 카테고리 데이터를 가져오는 공통 함수
+    function fetchCategoryData(url, data) {
+        return fetch(url, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .catch(error => {
+                console.log(error);
+                return {code: 500, data: []};
+            });
+    }
+
+    // 카테고리 목록 공통 함수
+    function renderCategoryList(data, listId, clickHandler) {
+        const makerListTag = document.getElementById("makerListTag");
+        const categoryListTag = document.createElement("ul");
+        categoryListTag.className = "option-list";
+        categoryListTag.id = listId;
+
+        data.forEach(category => {
+            const listItem = document.createElement("li");
+            const anchor = document.createElement("a");
+            anchor.href = "javascript:;";
+            anchor.textContent = category.linkDataNm;
+            anchor.addEventListener("click", () => clickHandler(category));
+            listItem.appendChild(anchor);
+            categoryListTag.appendChild(listItem);
+        });
+
+        makerListTag.innerHTML = "";
+        makerListTag.appendChild(categoryListTag);
+        makerListTag.style.display = "block";
+    }
+
+    // 카테고리 리스트 닫기 함수
+    function closeCategoryList() {
+        const makerListTag = document.getElementById("makerListTag");
+        makerListTag.style.display = "none";
+
+        // 각 버튼의 클래스 "on" 제거
+        ["category1", "category2", "category3"].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.remove("on");
+            }
+        });
+
+        // 모델명 버튼의 "on" 상태 제거
+        document.getElementById("modelNameBtn").classList.remove("on");
+        document.getElementById("detailModelBtn").classList.remove("on");
+    }
+
+    // 카테고리 리스트 외부 클릭 감지 함수
+    function detectClickOutside(event) {
+        const makerListTag = document.getElementById("makerListTag");
+        if (!makerListTag.contains(event.target)) {
+            closeCategoryList();
+        }
+    }
+
+    // 초기화 및 이벤트 리스너 설정
+    function initialize() {
+        document.addEventListener("click", detectClickOutside);
+    }
+
+    // 페이지 로드 시 초기화
+    initialize();
+
+
+    // 검색을 제출하는 함수
+    function submitSearch() {
+
+        console.log(searchParams.toString());
+        window.location.href = "/search/product?" + searchParams.toString();
+    }
+
+
+    // 메인 팝업
+    var handleStorage = {
+        // 스토리지에 데이터 쓰기(이름, 만료일)
+        setStorage: function (name, exp) {
+            // 만료 시간 구하기(exp를 ms단위로 변경)
+            var date = new Date();
+            date = date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+
+            // 로컬 스토리지에 저장하기
+            // (값을 따로 저장하지 않고 만료 시간을 저장)
+            localStorage.setItem(name, date);
+        },
+        // 스토리지 읽어오기
+        getStorage: function (name) {
+            var now = new Date();
+            now = now.setTime(now.getTime());
+            // 현재 시각과 스토리지에 저장된 시각을 각각 비교하여
+            // 시간이 남아 있으면 true, 아니면 false 리턴
+            return parseInt(localStorage.getItem(name)) > now;
+        }
+    };
+
+    // Check if the user has chosen not to see the popup again
+    if (!handleStorage.getStorage("promoshowtime")) {
+        // Display the popup
+        if (document.querySelector("#mainPopupBg") && document.querySelector("#mainPopup")) {
+            document.querySelector("#mainPopupBg").style.display = "";
+            document.querySelector("#mainPopup").style.display = "";
+        }
+
+        const mainpopSwiper = new Swiper("#mainPopup .swiper", {
+            autoplay: true,
+            speed: 800,
+            loop: true,
+            autoHeight: true,
+            pagination: {
+                el: "#mainPopup .swiper-count",
+                type: "fraction",
+                // 갯수 표현 마크업
+                renderFraction: function (currentClass, totalClass) {
+                    return `<span class="${currentClass}"></span>` +
+                        `<em>/</em>` +
+                        `<span class="${totalClass}"></span>`;
+                }
+            },
+            navigation: {
+                nextEl: "#mainPopup .swiper-navi .next",
+                prevEl: "#mainPopup .swiper-navi .prev",
+            },
+        });
+
+        // 일반 닫기 이벤트
+        document.querySelectorAll(".mp-close").forEach(($el) => {
+            $el.addEventListener("click", (e) => {
+                if (document.querySelector("#mainPopupBg") && document.querySelector("#mainPopup")) {
+                    document.querySelector("#mainPopupBg").remove();
+                    document.querySelector("#mainPopup").remove();
+                }
+            });
+        });
+
+        // 그만보기 체크
+        if (document.querySelector(".mp-close.mp-close-day")) {
+            document.querySelector(".mp-close.mp-close-day").addEventListener("click", () => {
+                // 하루동안 보지 않게 세팅
+                handleStorage.setStorage("promoshowtime", 1);
+            });
+        }
+    }
+
+    // 메인비쥬얼 슬라이드
+    const mainSlide = new Swiper(".main-visual .swiper", {
+        slidesPerView: 1,
+        loop: true,
+        speed: 800,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            clickable : true,
+            el: ".main-visual .swiper-pagination-bullets",
+            type: "bullets"
+        },
+        on: {
+            beforeInit: function () {
+                var slideCnt = this.wrapperEl.querySelectorAll(".main-visual .swiper-slide").length;
+                if (slideCnt === 1) {
+                    $(".main-visual .swiper-control").hide();
+                } else {
+                    // swiper-pagination-bullet swiper-pagination-bullet-active
+                    $(".main-visual .active-num").text(pad(1, 2));
+                    $(".main-visual .all-num").text(pad(slideCnt, 2));
+                }
+            },
+            init: function () {
+                var swiper = this;
+                var $playButton = $(".main-visual .play");
+                var $pauseButton = $(".main-visual .pause");
+
+                $playButton.hide();
+
+                $pauseButton.on("click", function () {
+                    swiper.autoplay.stop();
+                    $playButton.show();
+                    $pauseButton.hide();
+                });
+
+                $playButton.on("click", function () {
+                    swiper.autoplay.start();
+                    $playButton.hide();
+                    $pauseButton.show();
+                });
+            },
+            activeIndexChange: function () {
+                $(".main-visual .active-num").text(pad((this.realIndex + 1), 2));
+            },
+        },
+        navigation: {
+            nextEl: ".main-visual .swiper-navi .next",
+            prevEl: ".main-visual .swiper-navi .prev",
+        }
+    });
+
+    function pad(num, size) {
+        var s = num + "";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+
+
+    // 나에게 맞는 차량
+    const searchSlide = new Swiper(".search-list .swiper", {
+        slidesPerView: "auto",
+        speed: 800,
+        spaceBetween: 10,
+        // autoplay: {
+        //     delay: 3000,
+        // },
+        navigation: {
+            nextEl: ".search-list .swiper-navi .next",
+            prevEl: ".search-list .swiper-navi .prev",
+        },
+    });
+
+    // 올라 온 지 얼마 안된 차량 슬라이드
+    const newSlide = new Swiper(".new-wrap .new-slide .swiper", {
+        slidesPerView: 1.65,
+        slidesPerGroup: 1,
+        speed: 800,
+        spaceBetween: 12,
+        slidesOffsetAfter: 16,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".new-wrap .new-slide .pagination",
+            type: "progressbar"
+        },
+        navigation: {
+            nextEl: ".new-wrap .new-slide .swiper-navi .next",
+            prevEl: ".new-wrap .new-slide .swiper-navi .prev",
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                slidesOffsetAfter: 0,
+            },
+            1024: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+                spaceBetween: 16,
+                slidesOffsetAfter: 0,
+            }
+        }
+    });
+
+    const newContainer = document.querySelector(".new-wrap .new-slide");
+
+    newContainer.addEventListener("mouseenter", () => {
+        newSlide.autoplay.stop();
+    });
+
+    newContainer.addEventListener("mouseleave", () => {
+        newSlide.autoplay.start();
+    });
+
+    // 서브배너 슬라이드
+    const subSlide = new Swiper(".sub-visual .swiper", {
+        slidesPerView: 1,
+        speed: 800,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".sub-visual .swiper-count",
+            type: "fraction",
+            // 갯수 표현 마크업
+            renderFraction: function (currentClass, totalClass) {
+                return `<span class="${currentClass}"></span>` +
+                    `<em>/</em>` +
+                    `<span class="${totalClass}"></span>`;
+            }
+        },
+
+    });
+
+    // 가성비 추천 차량 슬라이드
+    const efficientSlide = new Swiper(".efficient-wrap .efficient-slide .swiper", {
+        slidesPerView: 1.65,
+        slidesPerGroup: 1,
+        speed: 800,
+        spaceBetween: 14,
+        slidesOffsetAfter: 16,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".efficient-wrap .efficient-slide .pagination",
+            type: "progressbar"
+        },
+        navigation: {
+            nextEl: ".efficient-wrap .efficient-slide .swiper-navi .next",
+            prevEl: ".efficient-wrap .efficient-slide .swiper-navi .prev",
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                slidesOffsetAfter: 0,
+            },
+            1024: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+                spaceBetween: 16,
+                slidesOffsetAfter: 0,
+            },
+            1400: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+                spaceBetween: 24,
+                slidesOffsetAfter: 0,
+            }
+        }
+    });
+
+    const efficientContainer = document.querySelector(".efficient-wrap .efficient-slide");
+
+    efficientContainer.addEventListener("mouseenter", () => {
+        efficientSlide.autoplay.stop();
+    });
+
+    efficientContainer.addEventListener("mouseleave", () => {
+        efficientSlide.autoplay.start();
+    });
+
+    // 제휴 금융사 슬라이드
+    const financialSlide = new Swiper(".financial-wrap .financial-slide .swiper", {
+        loop: true,
+        slidesPerView: 1.65,
+        slidesPerGroup: 1,
+        speed: 800,
+        spaceBetween: 14,
+        slidesOffsetAfter: 16,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".financial-wrap .financial-slide .pagination",
+            type: "progressbar"
+        },
+        navigation: {
+            nextEl: ".financial-wrap .financial-slide .swiper-navi .next",
+            prevEl: ".financial-wrap .financial-slide .swiper-navi .prev",
+        },
+        breakpoints: {
+            430: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                spaceBetween: 4,
+                slidesOffsetAfter: 0,
+            },
+            768: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+                spaceBetween: 8,
+                slidesOffsetAfter: 0,
+            },
+            1024: {
+                slidesPerView: 5,
+                slidesPerGroup: 5,
+                spaceBetween: 16,
+                slidesOffsetAfter: 0,
+            },
+            1400: {
+                slidesPerView: 6,
+                slidesPerGroup: 6,
+                spaceBetween: 20,
+                slidesOffsetAfter: 0,
+            }
+        }
+    });
+
+    /*const financialContainer = document.querySelector(".financial-wrap .financial-slide");
+
+    financialContainer.addEventListener("mouseenter", () => {
+        financialSlide.autoplay.stop();
+    });
+
+    financialContainer.addEventListener("mouseleave", () => {
+        financialSlide.autoplay.start();
+    });*/
+
+    // 이벤트 슬라이드
+    const eventSlide = new Swiper(".event-wrap .event-slide .swiper", {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        speed: 800,
+        spaceBetween: 0,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".event-wrap .event-slide .pagination",
+            type: "progressbar"
+        },
+        navigation: {
+            nextEl: ".event-wrap .event-slide .swiper-navi .next",
+            prevEl: ".event-wrap .event-slide .swiper-navi .prev",
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 2,
+                slidesPerGroup: 2,
+                spaceBetween: 24,
+            }
+        }
+    });
+
+    // 이용후기 슬라이드
+    const reviewSlide = new Swiper(".review-wrap .review-slide .swiper", {
+        slidesPerView: 2.1,
+        slidesPerGroup: 1,
+        speed: 800,
+        spaceBetween: 10,
+        slidesOffsetAfter: 16,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".review-wrap .review-slide .pagination",
+            type: "progressbar"
+        },
+        navigation: {
+            nextEl: ".review-wrap .review-slide .swiper-navi .next",
+            prevEl: ".review-wrap .review-slide .swiper-navi .prev",
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                spaceBetween: 20,
+                slidesOffsetAfter: 0,
+            },
+            1024: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+                spaceBetween: 24,
+                slidesOffsetAfter: 0,
+            }
+        }
+    });
+
+
+    // 카통령 유튜브 슬라이드
+    /*const videoSlide = new Swiper('.video-wrap .video-slide .swiper', {
+        slidesPerView: 2.1,
+        slidesPerGroup: 1,
+        speed: 800,
+        spaceBetween: 10,
+        slidesOffsetAfter: 16,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".video-wrap .video-slide .pagination",
+            type: "progressbar"
+        },
+        navigation: {
+            nextEl: '.video-wrap .video-slide .swiper-navi .next',
+            prevEl: '.video-wrap .video-slide .swiper-navi .prev',
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                spaceBetween: 20,
+                slidesOffsetAfter: 0,
+            },
+            1024: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+                spaceBetween: 24,
+                slidesOffsetAfter: 0,
+            }
+        }
+    });
+
+    const videoContainer = document.querySelector('.video-wrap .video-slide');
+
+    videoContainer.addEventListener('mouseenter', () => {
+        videoSlide.autoplay.stop();
+    });
+
+    videoContainer.addEventListener('mouseleave', () => {
+        videoSlide.autoplay.start();
+    });*/
+
+
+
+    $(document).on("click", function (event) {
+        // .search-box 내에서 클릭된 경우에는 total을 숨깁니다.
+        if ($(event.target).closest(".search-box").length) {
+            $(".search-box .total").css("display", "none");
+        } else {
+            // .search-box 외의 영역 클릭 시에는 total을 보여줍니다.
+            // 그리고 입력란에 텍스트가 있는 경우에는 total을 숨깁니다.
+            if ($(".search-box input").val().trim() === "") {
+                $(".search-box .total").css("display", "block");
+            } else {
+                $(".search-box .total").css("display", "none");
+            }
+        }
+    });
+
+    $(".search-box input").on("click", function () {
+        // input을 클릭하면 total을 숨깁니다.
+        $(this).parent().find(".total").css("display", "none");
+    });
+
+    // 서버에서 픽의 productId 가져오기
+    async function getProductIdOfPick() {
+        try {
+            const response = await fetch("/api/sub/getProductIdOfPick");
+            const data = await response.json();
+            return data; // 서버에서 받은 데이터 반환
+        } catch (error) {
+            console.error("Error:", error);
+            return []; // 에러 발생 시 빈 배열 반환
+        }
+    }
+
+    // 서버에서 픽의 delYN 가져오기
+    async function getDelYNOfPick(productId) {
+        console.log("sadfas " + productId);
+        try {
+            const response = await fetch(`/api/sub/getDelYNOfPick/${productId}`);
+            const data = await response.json();
+            console.log(data);
+            return data; // 서버에서 받은 데이터 반환
+        } catch (error) {
+            console.error("Error:", error);
+            return []; // 에러 발생 시 빈 배열 반환
+        }
+    }
+
+    // 픽하기 동적 반영
+    async function handleInsertPickCheck() {
+        // 서버에서 픽의 productId 가져오기
+        let prodList = await getProductIdOfPick();
+
+        if (prodList.length !== 0) {
+            document.querySelectorAll(".pick_check").forEach(item => {
+                // 서버에서 가져온 픽리스트 안에 productId가 있으면
+                if (prodList.length !== 0) {
+                    // productId의 데이터 타입 int로 변환해서 비교하기
+                    if (prodList.includes(parseInt(item.getAttribute("productId")))) {
+                        item.checked = true;
+                        document.querySelector(".is-like").querySelector(".link").classList.add("on");
+                    }
+                }
+            });
+        }
+    }
+
+    // 픽 취소하기 동적 반영
+    async function handleDeletePickCheck(productId) {
+        // 서버에서 픽의 productId 가져오기
+        let delList = await getDelYNOfPick(productId);
+
+        if (delList.length !== 0) {
+
+            document.querySelectorAll(".pick_check").forEach(item => {
+                // picksCheck 요소의 클래스에서 'on'을 제거
+                document.getElementById("picksCheck").classList.remove("on");
+
+                // 서버에서 가져온 픽리스트 안에 productId가 있으면
+                if (delList.includes(productId)) {
+                    console.log("서버에서 가져온 픽리스트 안에 productId가 있으면");
+                    item.checked = false;
+                }
+
+            });
+        }
+    }
+
+    // 좋아요 누르면 픽에 추가됨
+    document.querySelectorAll(".pick_check").forEach(tag => {
+        tag.addEventListener("click", function () {
+            let productId = tag.getAttribute("productId");
+            let originalChecked = tag.checked;
+
+            fetch("/api/sub/pick/v2", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                })
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.code !== 200) {
+                        tag.checked = !originalChecked;
+
+                        if (!originalChecked) {
+                            tag.nextElementSibling.style.backgroundImage = "url('../user/images/common/ico/like_on.svg')";
+                        } else {
+                            tag.nextElementSibling.style.backgroundImage = "url('../user/images/common/ico/like.svg')";
+                        }
+                        $popup.alert(result.message, {
+                            modal: true,
+                            confirm: () => {
+                                location.href = "/login";
+                            }
+                        });
+                    }
+                        // 픽 제거하기
+                    // 클릭하면 즉시 false됨 따라서 클릭한 거랑 같은 productId 지닌 것 불빛 x
+                    else if (tag.checked === false) {
+                        console.log("제거진입");
+                        handleDeletePickCheck(productId);
+                    }
+
+                    // 픽하기
+                    else if (tag.checked === true) {
+                        console.log("진입");
+                        handleInsertPickCheck();
+                    }
+                });
+        });
+    });
+
+    function searchPopularCar(_this) {
+        let maker = _this.getAttribute("data-makerCodeId");
+        let model = _this.getAttribute("data-modelCodeId");
+        searchParams.set("category1", maker);
+        searchParams.set("category2", model);
+        window.location.href = "/search/product?" + searchParams.toString();
+    }
+
+    //fcm 토큰 발급
+    function load_fcm_token() {
+        console.log("발급함수 진입");
+
+        // 기기 타입 확인
+        if (typeof Android !== "undefined") {
+            Android.get_fcm_token();
+        } else if (typeof navigator.userAgent === "string" && navigator.userAgent.indexOf("ios-app") > -1) {
+            window.webkit.messageHandlers.get_fcm_token.postMessage({});
+        }
+    }
+
+    // 토큰 발급해 변수에 저장하고 보내기
+
+    //fcm 토큰 저장
+    // data는 토큰값
+    // 앱을 실행 시에만 가능
+    async function set_fcm_token(data) {
+        console.log(data);
+
+        const response = await fetch("/token/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({"token": data}),
+        });
+
+        const result = await response.json();
+        console.log(result);
+    }
+
+    // DOM 로드 시 토큰 요청 및 저장
+    document.addEventListener("DOMContentLoaded", () => {
+        load_fcm_token();
+    });
+
+</script>
+</html>

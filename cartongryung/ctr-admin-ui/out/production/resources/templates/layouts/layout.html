@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ADMINISTRATOR</title>
+    <link rel="stylesheet" href="/admin/css/general.css?v=1656408363">
+    <link rel="stylesheet" href="/admin/css/jquery-ui.css">
+    <script src="/admin/js/jquery-1.12.4.min.js"></script>
+    <script src="/admin/js/jquery-ui.js"></script>
+    <script src="/admin/js/layout.js"></script>
+    <script src="/admin/js/common.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div id="container">
+        <h2 class="blind"></h2>
+        <section class="sub_section">
+            <div class="content_wrap">
+                <div layout:fragment="lnb"></div>
+                <div class="content" layout:fragment="content">
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1>추천차량</h1>
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+<div layout:fragment="pop_body" class="pop_body">
+    <div class="con_box">
+        <div class="content_wrap">
+            <div class="promotion">
+                <form>
+                    <input type="hidden" name="type" th:value="${condition.type}">
+                    <div class="search_wrap">
+                        <table>
+                            <caption>검색</caption>
+                            <colgroup>
+                                <col style="width:8%;">
+                                <col style="width:auto;">
+                                <col style="width:8%;;">
+                                <col style="width:auto;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th scope="row">차량명</th>
+                                <td colspan="3">
+                                    <label>
+                                        <select name="maker" class="category" style="width: 150px;">
+                                            <option value="">제조사</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select name="model" class="category" style="width: 150px;">
+                                            <option value="">모델</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select name="detailModel" class="category" style="width: 150px;">
+                                            <option value="">상세 모델</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select name="detailGrade" class="category" style="width: 150px;">
+                                            <option value="">상세 등급</option>
+                                        </select>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">키워드</th>
+                                <td>
+                                    <select name="field" id="field" style="width: 150px;">
+                                        <option value="all">전체</option>
+                                        <option value="productUniqueNumber" th:selected="${condition.field eq 'productUniqueNumber'}">차량 NO</option>
+                                        <option value="carPlateNumber" th:selected="${condition.field eq 'carPlateNumber'}">차량 번호</option>
+                                        <option value="shopName" th:selected="${condition.field eq 'shopName'}">상사명</option>
+                                        <option value="carName" th:selected="${condition.field eq 'carName'}">차량명</option>
+                                    </select>
+                                    <input type="text" name="s" th:value="${condition.s}" title="키워드" style="width: 60%;">
+                                    <label for="field" class="blind">키워드 입력</label>
+                                </td>
+                                <th scope="row">등록일</th>
+                                <td>
+                                    <input type="text" id="datepicker1" class="ico_date" name="sdate" th:value="${condition.sdate}"
+                                           placeholder="시작일" autocomplete="off">
+                                    <span class="tilde">~</span>
+                                    <input type="text" id="datepicker2" class="ico_date" name="edate" th:value="${condition.edate}"
+                                           placeholder="종료일" autocomplete="off">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">딜러</th>
+                                <td colspan="3">
+                                    <select name="dealer" style="width: 150px;">
+                                        <option value="">전체</option>
+                                        <th:block th:each="list : ${memberDealerLists}">
+                                            <option th:value="${list.id}" th:text="${list.realName}"
+                                                    th:selected="${condition.dealer eq list.id}">등록된 딜러 명</option>
+                                        </th:block>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn_area align_c">
+                            <button type="submit" class="btn">검색</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="list_wrap scroll_y">
+                    <div class="list_table">
+                        <table>
+                            <caption>검색 결과</caption>
+                            <colgroup>
+                                <col style="width:2%;">
+                                <col style="width:5%;">
+                                <col style="width:5%;">
+                                <col style="width:5%;">
+                                <col style="width:4%;">
+                                <col style="width:6%;">
+                                <col style="width:4%;">
+                                <col style="width:4%;">
+                                <col style="width:4%;">
+                                <col style="width:5%;">
+                                <col style="width:3%;">
+                                <col style="width:4%;">
+                                <col style="width:3%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col">
+                                    <input type="checkbox" id="allChk">
+                                    <label for="allChk" class="blind">전체선택</label>
+                                </th>
+                                <th scope="col">차량 NO</th>
+                                <th scope="col">차량 번호</th>
+                                <th scope="col">이미지</th>
+                                <th scope="col">상사명</th>
+                                <th scope="col">차량명</th>
+                                <th scope="col">연식</th>
+                                <th scope="col">주행거리</th>
+                                <th scope="col">가격</th>
+                                <th scope="col">등록일</th>
+                                <th scope="col">상태</th>
+                                <th scope="col">딜러명</th>
+                                <th scope="col">지역</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${recommendCarLists.isEmpty()}">
+                                <td colspan="12">등록된 차량이 없습니다.</td>
+                            </tr>
+                            <tr th:each="car : ${recommendCarLists}">
+                                <td>
+                                    <input type="checkbox" th:id="|car_${car.productId}|" name="id" th:value="${car.productId}">
+                                    <label th:for="|car_${car.productId}|" class="blind">선택</label>
+                                </td>
+                                <td th:text="${car.productUniqueNumber}">C240506-001</td>
+                                <td th:text="${car.carPlateNumber}">12가123</td>
+                                <td>
+                                    <div class="imgbox">
+                                        <img th:src="${car.carImageUrl[0].realUrl}" alt="이미지">
+                                    </div>
+                                </td>
+                                <td th:text="${car.shopName}">DS오토</td>
+                                <td>
+                                    <span class="txt_over2" th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">제조사모델명등급</span>
+                                </td>
+                                <td th:text="${car.carRegYear}">yymmdd</td>
+                                <td th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + 'km'}" class="align_r">000,000km</td>
+                                <td th:text="${#numbers.formatInteger(car.carAmountSale, 1, 'COMMA')}" class="align_r">000,000</td>
+                                <td th:text="${#temporals.format(car.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
+                                <td th:text="${car.postStatus.detail}" class="state">게시</td>
+                                <td th:text="${car.realName}">홍길동</td>
+                                <td th:text="${car.city}">서울</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="btn_area">
+                    <button type="button" id="saveBtn" class="btn btn_form2">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    const linkCodeLists = /*[[ ${linkCodeLists} ]]*/ [];
+
+    // 제조사, 모델, 상세 모델, 상세 등급
+    document.addEventListener('DOMContentLoaded', () => {
+        if (/*[[ ${condition.model} ]]*/ ''
+            === null) {
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.maker} ]]*/ '');
+        } else if(/*[[ ${condition.detailModel} ]]*/ ''
+            === null) {
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.model} ]]*/ '');
+        } else if(/*[[ ${condition.detailGrade} ]]*/ ''
+            === null){
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.detailModel} ]]*/ '');
+        } else {
+            initProductCategory('.category', linkCodeLists, /*[[ ${condition.detailGrade} ]]*/ '');
+        }
+    });
+
+    // 클래스, 리스트, 값 고정시켜 줄 id
+    function initProductCategory(selector, categories, initId) {
+        // X차 카테고리 값 구하기
+        const selectIds = [];
+        for (let findCategory; (findCategory = categories.find(category => category.id === initId)) !== undefined;) {
+            selectIds.push(findCategory);
+            initId = findCategory.parentLinkNbrId;
+        }
+
+        // ${selector} 자식 SELECT 선택
+        const selectElements = Array.prototype
+            .filter
+            .call(document.querySelectorAll('select' + selector), childElement => childElement.nodeName === 'SELECT');
+
+        Array.prototype.forEach.call(selectElements, (select, index) => {
+            // 첫 번째 엘리먼트는 값에 상관없이 항상 출력해야함
+            if (index === 0) {
+                let optionHtml = '';
+
+                categories
+                    .filter(category => category.depth === 0)
+                    .forEach(category => optionHtml += `<option value="${category.id}">${category.linkDataNm}</option>`);
+                select.innerHTML = select.options[0].outerHTML + optionHtml;
+            }
+
+            // 이벤트 리스너 등록
+            select.addEventListener('change', event => {
+                // 마지막 엘리먼트는 change 이벤트 처리하지 않음
+                if (event.currentTarget === selectElements[selectElements.length - 1])
+                    return;
+
+                // 루프를 돌기위한 변수 선택
+                let currentElement = event.currentTarget;
+                let nextElement = event.currentTarget;
+
+                // SELECT 엘리먼트가 없을때까지 반복
+                for (let i = index; (nextElement = selectElements[i + 1]) != null; i++) {
+                    let optionHtml = '';
+
+                    categories
+                        .filter(category => ('' + category.parentLinkNbrId) === currentElement.value)
+                        .forEach(category => optionHtml += `<option value="${category.id}">${category.linkDataNm}</option>`);
+                    nextElement.innerHTML = nextElement.options[0].outerHTML + optionHtml;
+
+                    currentElement = nextElement; // 다음 요소로 전환
+                }
+            });
+
+            // 초기 값이 지정되어 있다면 SELECT 값 지정
+            selectIds.forEach(category => {
+                if (category.depth === index) {
+                    select.value = category.id;
+                    select.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+    }
+
+    let allCheckBox = document.getElementById('allChk');
+    let checkboxes = document.querySelectorAll('input[name="id"]');
+
+    // 체크박스 조작
+    allCheckBox.addEventListener('click', () => {
+        checkboxes.forEach(chk => chk.checked = allCheckBox.checked);
+    });
+
+    checkboxes.forEach(chk => {
+        chk.addEventListener('click', () => {
+            if (!chk.checked) {
+                allCheckBox.checked = false;
+            } else {
+                allCheckBox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            }
+        });
+    });
+
+    // 확인
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        let checkedIdLists = document.querySelectorAll('input[name="id"]:checked');
+        if (checkedIdLists.length < 1) {
+            alert('차량을 선택해주세요.');
+            return;
+        }
+
+        let idList = [];
+        checkedIdLists.forEach(id => {
+            idList.push(id.value);
+        });
+
+        const formData = new FormData();
+        idList.forEach(value => {
+            formData.append('id', value);
+        });
+
+        formData.append('type', /*[[ ${condition.type} ]]*/ '')
+
+        fetch('/admin/promotion/recommend/save', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                closeTabClick();
+                window.opener.location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

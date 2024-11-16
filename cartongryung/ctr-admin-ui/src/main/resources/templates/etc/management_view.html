@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <    <title th:text="'기타 &gt; ' + ${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.name :
+                        (condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.name :
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.name)} + ' 관리 &gt; 상세/수정'"></title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_etc :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3 th:text="${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role ?
+                            T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.name :
+                            (condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role ?
+                            T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.name :
+                            T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.name)} + ' 관리'">딜러 관리</h3>
+    </div>
+    <div class="content_body">
+        <div class="view_wrap">
+            <p class="align_r"><span class="asta">*</span>필수 입력</p>
+            <div class="view_table mt10">
+                <form>
+                    <table>
+                        <caption>상세/수정</caption>
+                        <colgroup>
+                            <col style="width:20%;">
+                            <col style="width:80%;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">아이디 <span class="asta">*</span></th>
+                            <td>
+                                <input type="text" name="loginId" id="loginId" th:value="${memberAdmin.loginId}" disabled>
+                                <label for="loginId" class="blind">아이디</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">비밀번호 <span class="asta">*</span></th>
+                            <td>
+                                <input type="password" name="password" id="password">
+                                <label for="password" class="blind">비밀번호</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">비밀번호 확인 <span class="asta">*</span></th>
+                            <td>
+                                <input type="password" name="confirmPassword" id="confirmPassword">
+                                <label for="confirmPassword" class="blind">비밀번호 확인</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">이름 <span class="asta">*</span></th>
+                            <td>
+                                <input type="text" name="realName" id="realName" th:value="${memberAdmin.realName}">
+                                <label for="realName" class="blind">이름</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">전화번호 <span class="asta">*</span></th>
+                            <td>
+                                <input type="text" id="tel01" name="tel01" style="width: 200px;" maxlength="3" th:value="${memberAdmin.mobileNumber.substring(0,3)}">
+                                <label for="tel01" class="blind">전화번호</label>
+                                <input type="text" id="tel02" name="tel02" style="width: 200px;" maxlength="4" th:value="${memberAdmin.mobileNumber.substring(3,7)}">
+                                <label for="tel02" class="blind">전화번호</label>
+                                <input type="text" id="tel03" name="tel03" style="width: 200px;" maxlength="4" th:value="${memberAdmin.mobileNumber.substring(7,11)}">
+                                <label for="tel03" class="blind">전화번호</label>
+                            </td>
+                        </tr>
+                        <th:block th:if="${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role}">
+                            <tr>
+                                <th scope="row">사원증 번호 <span class="asta">*</span></th>
+                                <td>
+                                    <input type="text" name="employeeNumber" id="employeeNumber" th:value="${memberAdmin.employeeNumber}">
+                                    <label for="employeeNumber" class="blind">사원증 번호</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">프로필 이미지 <span class="asta">*</span></th>
+                                <td>
+                                    <div class="file_area">
+                                        <input type="file" id="uploadFile" accept=".jpg, .jpeg, .png, .gif">
+                                        <label for="uploadFile">
+                                            <span class="btn_s" style="cursor: pointer;">찾아보기</span>
+                                        </label>
+                                        <span>&#40;파일형식 : jpg, jpeg,.png, gif&#41;</span>
+                                    </div>
+                                    <div id="infoDiv" class="files">
+                                        <div class="file" th:id="|file_${memberAdmin.profileImageJson.uuid}|">
+                                            <div class="imgbox">
+                                                <img th:src="@{/api/file/view/{uuid}(uuid = ${memberAdmin.profileImageJson.uuid}, size = 300)}" alt="리스트 이미지">
+                                            </div>
+                                            <span class="name" th:text="${memberAdmin.profileImageJson.originalName}">첨부 파일명.확장자</span>
+                                            <input type="hidden" name="fileUUID" th:value="${memberAdmin.profileImageJson.uuid}">
+                                            <button type="button" class="btn_del" onclick="deleteFile(this.dataset.uuid);" th:data-uuid="${memberAdmin.profileImageJson.uuid}">삭제</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">한줄 소개 <span class="asta">*</span></th>
+                                <td>
+                                    <label for="intro">
+                                        <textarea name="intro" id="intro" cols="30" rows="10" maxlength="300"
+                                                    th:text="${memberAdmin.intro}"></textarea>
+                                    </label>
+                                </td>
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${condition.role ne T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.role}">
+                            <tr>
+                                <th scope="row">사용권한 <span class="asta">*</span></th>
+                                <td>
+                                    <th:block th:each="authority : ${authorityMenus}" th:if="${authority.urlPattern ne '/**'}">
+                                        <div class="checkbox">
+                                            <input type="checkbox" name="authorityMenus"
+                                                    th:id="|authorityMenu${authority.id}|"
+                                                    th:value="${authority.id}"
+                                                    th:checked="${selectedAuthorityMenus.contains(authority)}">
+                                            <label th:for="|authorityMenu${authority.id}|"
+                                                    th:text="${authority.description}">회원</label>
+                                        </div>
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </th:block>
+                        <tr>
+                            <th scope="row">사용여부 <span class="asta">*</span></th>
+                            <td>
+                                <div class="radiobox">
+                                    <input type="radio" id="use_Y" name="useYn" th:checked="${memberAdmin.useYn.yn eq 'Y'}"
+                                           th:value="${T(com.cuv.admin.common.YN).Y}">
+                                    <label for="use_Y">사용</label>
+                                </div>
+                                <div class="radiobox">
+                                    <input type="radio" id="use_N" name="useYn" th:checked="${memberAdmin.useYn.yn eq 'N'}"
+                                           th:value="${T(com.cuv.admin.common.YN).N}">
+                                    <label for="use_N">미사용</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">최종 접속 일시</th>
+                            <td th:text="${#temporals.format(memberAdmin.lastLoginAt, 'yyyy-MM-dd HH:mm:dd')}">YYYY-MM-DD 00:00:00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_area align_c mt20">
+                        <input type="hidden" name="id" th:value="${memberAdmin.id}">
+                        <input type="hidden" name="role" th:value="
+                        ${condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role :
+                        (condition.role eq T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role ?
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).COUNSELOR.role :
+                        T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.role)}">
+                        <button type="submit" class="btn">저장</button>
+                        <button type="button" id="delBtn" class="btn btn_form5">삭제</button>
+                        <a th:href="@{/admin/etc/management(role = ${condition.role})}" class="btn btn_form4">취소</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    const uploadFile = document.getElementById('uploadFile');
+
+    if (uploadFile !== null) {
+        uploadFile.addEventListener('change', event => {
+            const inputfile = event.currentTarget;
+            uploadFiles(inputfile, 'dealer-editor');
+            inputfile.value = '';
+        });
+
+        function uploadFiles(inputFile, source) {
+            // inputFile: <input type="file"> 영역
+            // infoDiv: 파일 정보를 표시할 div 영역
+            // source: 첨부파일 타입
+            if (inputFile.files.length === 0) return;
+
+            const formData = new FormData();
+            if (source != null) formData.append('source', source);
+            Array.prototype.forEach.call(inputFile.files, file => formData.append('files', file));
+
+            fetch('/api/file/uploads', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    uploadFilesAfterTrigger(inputFile, result.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(error);
+                });
+        }
+
+        function uploadFilesAfterTrigger(inputFile, data) {
+            const infoDiv = document.getElementById('infoDiv');
+
+            infoDiv.innerHTML = data.map(file => {
+                return `
+                        <div class="file" id="file_${file.uuid}">
+                            <div class="imgbox">
+                                <img src="/api/file/view/${file.uuid}?size=300" alt="리스트 이미지">
+                            </div>
+                            <span class="name">${file.originalName}</span>
+                            <input type="hidden" name="fileUUID" value="${file.uuid}">
+                            <button type="button" class="btn_del" onclick="deleteFile(this.dataset.uuid, true);" data-uuid="${file.uuid}">삭제</button>
+                        </div>
+                        `;
+            }).join('');
+        }
+
+        function deleteFile(uuid, isReal) {
+            if (isReal === undefined) isReal = false;
+
+            const element = document.getElementById(`file_${uuid}`);
+            if (element === null) return;
+            if (isReal === false) return element.remove();
+
+            fetch(`/api/file/delete/${uuid}`, {
+                method: 'DELETE'
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    element.remove();
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(error);
+                });
+        }
+    }
+
+    const password = document.querySelector('input[name="password"]');
+    const confirmPassword = document.querySelector('input[name="confirmPassword"]');
+    const realName = document.querySelector('input[name="realName"]');
+    const tel01 = document.querySelector('input[name="tel01"]');
+    const tel02 = document.querySelector('input[name="tel02"]');
+    const tel03 = document.querySelector('input[name="tel03"]');
+    const employeeNumber = document.querySelector('input[name="employeeNumber"]');
+    const infoDiv =  document.getElementById('infoDiv');
+    const intro = document.querySelector('textarea[name="intro"]');
+    const conditionRole = document.querySelector('input[name="role"]').value;
+
+    tel01.addEventListener("input", function() {
+        this.value = this.value.replace(/\D/g, '');
+    });
+
+    tel02.addEventListener("input", function() {
+        this.value = this.value.replace(/\D/g, '');
+    });
+
+    tel03.addEventListener("input", function() {
+        this.value = this.value.replace(/\D/g, '');
+    });
+
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+
+        if (password.value.trim().length < 1) {
+            alert('비밀번호를 입력해주세요.');
+            password.focus();
+            return;
+        }
+
+        if (confirmPassword.value.trim().length < 1) {
+            alert('비밀번호 확인을 입력해주세요.');
+            confirmPassword.focus();
+            return;
+        }
+
+        if (password.value !== confirmPassword.value) {
+            alert('비밀번호가 일치하지 않습니다.');
+            confirmPassword.focus();
+            return;
+        }
+
+        if (realName.value.trim().length < 1) {
+            alert('이름을 입력해주세요.');
+            realName.focus();
+            return;
+        }
+
+        if (tel01.value.trim().length < 1) {
+            alert('전화번호 첫 번째 자리를 입력해주세요.');
+            tel01.focus();
+            return;
+        }
+
+        if (tel02.value.trim().length < 1) {
+            alert('전화번호 두 번째 자리를 입력해주세요.');
+            tel02.focus();
+            return;
+        }
+
+        if (tel03.value.trim().length < 1) {
+            alert('전화번호 세 번째 자리를 입력해주세요.');
+            tel03.focus();
+            return;
+        }
+
+        if (/*[[ ${T(com.cuv.admin.domain.member.enumset.MemberRole).DEALER.role} ]]*/ ''
+            === /*[[ ${condition.role} ]]*/ '') {
+            if (employeeNumber.value.trim().length < 1) {
+                alert('사원증 번호를 입력해주세요.');
+                employeeNumber.focus();
+                return;
+            }
+
+            if (infoDiv.children.length < 1) {
+                alert('프로필 이미지를 첨부해주세요.');
+                return;
+            }
+
+            if (intro.value.trim().length < 1) {
+                alert('한줄 소개를 입력해주세요.');
+                intro.focus();
+                return;
+            }
+        }
+
+        if (/*[[ ${T(com.cuv.admin.domain.member.enumset.MemberRole).ADMIN.role} ]]*/ ''
+            !== /*[[ ${condition.role} ]]*/ '') {
+            if (document.querySelectorAll('input[name="authorityMenus"]:checked').length < 1) {
+                alert('1개 이상의 사용 권한을 선택해주세요.');
+                return;
+            }
+        }
+
+        if (!confirm('저장하시겠습니까?')) return;
+
+        const formData = new FormData(event.currentTarget);
+        formData.append('mobileNumber', tel01.value + tel02.value + tel03.value);
+
+        fetch('/admin/etc/management/edit', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.')
+                location.href = '/admin/etc/management?role=' + conditionRole;
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error.message);
+            });
+    });
+
+    document.getElementById('delBtn').addEventListener('click', () => {
+        if (!confirm('삭제하시겠습니까?')) return;
+
+        const id = document.querySelector('input[name="id"]').value;
+
+        fetch(`/admin/etc/management/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('삭제되었습니다.');
+                location.href = '/admin/etc/management?role=' + conditionRole;
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

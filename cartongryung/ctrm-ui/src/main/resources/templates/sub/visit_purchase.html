@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="w-set2">
+        <div class="tit-area">
+            <h2 class="tit hide-m">방문</h2>
+        </div>
+        <div class="visit-wrap">
+            <div class="tab-list type-s">
+                <a href="/mypage/purchase" class="on">내 차 살때</a>
+                <a href="/mypage/sale">내 차 팔때</a>
+            </div>
+            <div class="visit-area">
+                <th:block th:if="${purchaseInquiryLists.isEmpty()}">
+                    <div class="empty">
+                        <p>방문예약된 차량이 없습니다.</p>
+                    </div>
+                </th:block>
+                <ul>
+                    <li th:each="purchase : ${purchaseInquiryLists}">
+                        <a th:href="@{/product/__${purchase.productId}__}" class="visit-top">
+                            <div class="img">
+                                <img th:src="${purchase.carImageUrl[0].realUrl}" alt="차량 이미지">
+                            </div>
+                            <div class="txt-area">
+                                <strong class="tit"
+                                        th:text="${'[' + purchase.carPlateNumber + ']' + purchase.makerName + ' '
+                                        + purchase.detailModelName + ' ' + purchase.detailGradeName}">
+                                    [000가0000] 신형 소나타 2.0 가솔린</strong>
+                                <p class="txt">
+                                    <span class="date" th:text="${purchase.carRegYear}">22년04월(23년형)</span>
+                                    <span th:text="${#numbers.formatInteger(purchase.carUseKm, 1 ,'COMMA') + 'km'}">98,408km</span>
+                                    <span th:text="${purchase.carFuel}">가솔린</span>
+                                    <span th:text="${purchase.city}">인천</span>
+                                </p>
+                            </div>
+                        </a>
+                        <div class="visit-btm">
+                            <strong class="tit">방문예약 신청 내역</strong>
+                            <dl>
+                                <dt>방문예약 날짜</dt>
+                                <dd th:text="${#temporals.format(purchase.visitReservationAt, 'yyyy. MM. dd')}">2024. 03. 01</dd>
+                            </dl>
+                            <dl>
+                                <dt>시간</dt>
+                                <dd th:text="${#temporals.format(purchase.visitReservationAt, 'HH:mm')}">10:00</dd>
+                            </dl>
+                            <dl>
+                                <dt>상태</dt>
+                                <dd th:text="${purchase.consultationStatus.detail}">상담대기</dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "방문";
+
+    function fnBack() {
+        location.href = "/";
+    }
+</script>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>회원 > 활동회원 > 상세 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_member :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>활동 회원</h3>
+    </div>
+    <div class="content_body">
+        <div class="member">
+
+            <!-- View Start -->
+            <div class="view_wrap">
+                <div class="flex">
+                    <div class="left_wrap">
+                        <div class="account_wrap flex">
+                            <th:block th:if="${memberDetail.profileImage eq null}">
+                                <div class="imgbox">
+                                    <img src="/admin/images/common/profile_basic.png" alt="회원 이미지">
+                                </div>
+                            </th:block>
+                            <th:block th:if="${memberDetail.profileImage ne null}">
+                                <div class="imgbox">
+                                    <img th:src="@{/api/file/view/{uuid}(uuid=${memberDetail.profileImage.uuid})}" alt="회원 이미지">
+                                </div>
+                            </th:block>
+                            <div class="account">
+                                <div class="cate" th:if="${memberDetail.regCode.code == 'REG001'}">카카오계정</div>
+                                <div class="cate" th:if="${memberDetail.regCode.code == 'REG002'}">네이버계정</div>
+                                <div class="cate" th:if="${memberDetail.regCode.code == 'REG003'}">애플계정</div>
+                                <div class="cate" th:if="${memberDetail.regCode.code == 'REG004'}">구글계정</div>
+                                <div class="cate" th:if="${memberDetail.regCode.code == 'REG005'}">이메일계정</div>
+                                <p><strong>[[${memberDetail.realName != null ? memberDetail.realName : '미등록'}]] / </strong>[[${memberDetail.email}]]</p>
+                            </div>
+                        </div>
+                        <div class="view_table mt20">
+                            <form action="" method="post" id="frmForm">
+                                <input type="hidden" name="id" th:value="${memberDetail.id}">
+                                <table>
+                                    <caption>상세</caption>
+                                    <colgroup>
+                                        <col style="width:20%;">
+                                        <col style="width:80%;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">휴대폰번호 <span class="asta">*</span></th>
+                                        <td><label for=""><input type="text" name="phone" readonly th:value="${memberDetail.mobileNumber}"></label></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">비밀번호</th>
+                                        <td><label for=""><input type="password" name="password"></label></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">마케팅 수신여부</th>
+                                        <td>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="marketingYn" th:checked="${memberDetail.agreeMarketingYn.yn eq 'Y'}" id="agree">
+                                                <label for="agree">수신</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">가입일자</th>
+                                        <td th:text="${#temporals.format(memberDetail.memberCreatedAt, 'yyyy-MM-dd')}">YYYY-MM-DD</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">최근방문일시</th>
+                                        <td th:text="${#temporals.format(memberDetail.lastLoginAt, 'yyyy-MM-dd HH:mm:ss')}">YYYY-MM-DD 15:00:00</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">상태 변경 <span class="asta">*</span></th>
+                                        <td>
+                                            <div class="radiobox">
+                                                <input type="radio" id="state01" name="memberStatus" value="MST001" th:checked="${memberDetail.statusCode.code eq 'MST001'}">
+                                                <label for="state01">정상</label>
+                                                <input type="radio" id="state02" name="memberStatus" value="MST002" th:checked="${memberDetail.statusCode.code eq 'MST002'}">
+                                                <label for="state02">정지</label>
+                                                <input type="radio" id="state03" name="memberStatus" value="MST003" th:checked="${memberDetail.statusCode.code eq 'MST003'}">
+                                                <label for="state03">탈퇴</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="btn_area align_r mt10">
+                                    <button type="button" class="btn_m" id="saveBtn">저장</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="view_table mt20">
+                            <div class="table_top">
+                                <h3>관리자 메모</h3>
+                                <form action="" class="flex mt10">
+                                    <div class="input_wrap">
+                                        <label for=""><input type="text" id="memoContent" placeholder="사유입력"></label>
+                                    </div>
+                                    <button type="button" class="btn_m" id="memoSaveBtn">입력</button>
+                                </form>
+                            </div>
+                            <div class="table_btm mt10">
+                                <p class="empty" th:if="${memberAdminMemoList.isEmpty()}">등록된 관리자 메모가 없습니다.</p>
+                                <table>
+                                    <caption>상세</caption>
+                                    <colgroup>
+                                        <col style="width:80%;">
+                                        <col style="width:20%;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr th:each="memo : ${memberAdminMemoList}">
+                                        <td th:text="${memo.content}">이 고객은 vip 고객입니다. 친절하고 구매 방식이 나이스 합니다.</td>
+                                        <td class="align_r" th:text="${#temporals.format(memo.createdAt, 'yyyy-MM-dd')}">2024.06.08</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right_wrap">
+                        <div class="view_table">
+                            <div class="table_top">
+                                <h3>내차 구입</h3>
+                            </div>
+                            <div class="table_btm mt10">
+                                <p class="empty" th:if="${purchaseInquiryList.isEmpty()}">구매 이력이 없습니다.</p>
+                                <table>
+                                    <caption>상세</caption>
+                                    <colgroup>
+                                        <col style="width:5%;">
+                                        <col style="width:20%;">
+                                        <col style="width:20%;">
+                                        <col style="width:10%;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr th:each="purchase, stat : ${purchaseInquiryList}">
+                                        <td class="align_c" th:text="${stat.index + 1}">3</td>
+                                        <td><a th:href="@{/admin/purchase/inquiry/__${purchase.id}__}" class="btn_link" th:text="${purchase.inquiryNumber}">Q240506-001</a></td>
+                                        <td><a th:href="@{/admin/purchase/inquiry/__${purchase.id}__}" class="btn_link" th:text="${purchase.carPlateNumber}">52가 0000</a></td>
+                                        <td class="align_r" th:text="${#temporals.format(purchase.createdAt, 'yyyy-MM-dd')}">2024.06.07</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="view_table mt20">
+                            <div class="table_top">
+                                <h3>내차 팔기</h3>
+                            </div>
+                            <div class="table_btm mt10">
+                                <p class="empty" th:if="${saleInquiryList.isEmpty()}">판매 이력이 없습니다.</p>
+                                <table>
+                                    <caption>상세</caption>
+                                    <colgroup>
+                                        <col style="width:5%;">
+                                        <col style="width:20%;">
+                                        <col style="width:20%;">
+                                        <col style="width:10%;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr th:each="sale, stat : ${saleInquiryList}">
+                                        <td class="align_c" th:text="${stat.index + 1}">3</td>
+                                        <td><a th:href="@{/admin/sale/inquiry/__${sale.id}__}" class="btn_link" th:text="${sale.inquiryNumber}">Q240506-001</a></td>
+                                        <td><a th:href="@{/admin/sale/inquiry/__${sale.id}__}" class="btn_link" th:text="${sale.carPlateNumber}">52가 0000</a>
+                                        </td>
+                                        <td class="align_r" th:text="${#temporals.format(sale.createdAt, 'yyyy-MM-dd')}">2024.06.07</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="btn_area align_r mt20"><a href="/admin/member/member" class="btn btn_form4">목록</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- //View Start -->
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+    // 관리자 메모 입력 버튼 클릭했을때
+    document.getElementById("memoSaveBtn").onclick = () => {
+        let memberId = [[${memberDetail.id}]];
+        console.log(memberId);
+        let memoContent = document.getElementById("memoContent").value;
+        if (memoContent === "") {
+            alert("메모를 입력해주세요.");
+            return;
+        }
+
+        fetch("/admin/member/member/memo", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                memberId : memberId,
+                content : memoContent
+            })
+        })
+            .then(res => res.json())
+            .then(result => {
+                if(result.code === 200) {
+                    alert("메모가 등록되었습니다.");
+                    location.reload();
+                }
+            })
+    }
+
+    // 저장 버튼 클릭했을때
+    document.getElementById("saveBtn").onclick = () => {
+        let formData = new FormData(document.getElementById("frmForm"));
+
+        fetch("/admin/member/member/update", {
+            method : "POST",
+            body : formData
+        })
+            .then(res => res.json())
+            .then(result => {
+                if(result.code === 200) {
+                    alert("저장되었습니다.");
+                    location.href = "/admin/member/member"
+                }
+            })
+    }
+</script>
+</html>

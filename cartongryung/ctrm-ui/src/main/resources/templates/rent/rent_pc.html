@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block class="rent-wrap" th:fragment="rentPcContents">
+    <div class="w-set hide-m">
+        <div id="visual">
+            <div class="copy">
+                <div class="cp1">
+                    <h2>나에게 딱! 맞는 차량 추천</h2>
+                </div>
+                <div class="cp2">
+                    <h1>저신용, 무심사</h1>
+                    <h1>누구나 가능한 장기렌트</h1>
+                </div>
+                <div class="btns">
+                    <a href="#" class="contact-btn" onclick="$popup.template('#quickAskPopup')">상담신청</a>
+                </div>
+            </div>
+            <div class="tel">
+                <ul>
+                    <li><img src="/user/images/common/ico/icon_phone.svg" alt="" /></li>
+                    <li><h3>1644-5567</h3></li>
+                </ul>
+            </div>
+        </div><!-- END visual -->
+    </div>
+    <div class="hide-m">
+        <div th:replace="~{rent/personal/pc_personal_list :: personalPcContents}"></div>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,84 @@
+variables:
+  APP_NAME: app
+  JAR_PATH: build/libs/*.jar
+
+stages:
+  - build
+  - dev-deploy
+  - prod-deploy
+
+build:
+  image: gradle:jdk17
+  stage: build
+  script:
+    - ./gradlew build
+  artifacts:
+    paths:
+      - $JAR_PATH
+    expire_in: 3 day
+  only:
+    - dev
+    - main
+
+dev-deploy:
+  stage: dev-deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - apt-get update && apt-get install -y openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - scp -o StrictHostKeyChecking=no $JAR_PATH $SSH_USER@$DEV_IP:/home/ubuntu
+    - |
+      ssh -o StrictHostKeyChecking=no $SSH_USER@$DEV_IP -p $SSH_PORT << EOF
+      if docker ps -a | grep $APP_NAME; then
+        docker stop $APP_NAME
+        docker rm $APP_NAME
+      fi
+      if docker images | grep $APP_NAME; then
+        docker rmi $APP_NAME
+      fi
+      docker build -t $APP_NAME .
+      docker run -d --restart unless-stopped --name $APP_NAME -p $DOCKER_PORT -v $DOCKER_IMAGE_VOLUME -v $DOCKER_LOG_VOLUME $APP_NAME
+      rm -r *.jar
+      EOF
+  dependencies:
+    - build
+  only:
+    - dev
+
+prod-deploy:
+  stage: prod-deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - apt-get update && apt-get install -y openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - scp -o StrictHostKeyChecking=no $JAR_PATH $SSH_USER@$PROD_IP:/home/ubuntu
+    - |
+      ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_IP -p $SSH_PORT << EOF
+      if docker ps -a | grep $APP_NAME; then
+        docker stop $APP_NAME
+        docker rm $APP_NAME
+      fi
+      if docker images | grep $APP_NAME; then
+        docker rmi $APP_NAME
+      fi
+      docker build -t $APP_NAME .
+      docker run -d --restart unless-stopped --name $APP_NAME -p $DOCKER_PORT -v $DOCKER_IMAGE_VOLUME -v $DOCKER_LOG_VOLUME $APP_NAME
+      rm -r *.jar
+      EOF
+  dependencies:
+    - build
+  when: manual
+  only:
+    - main

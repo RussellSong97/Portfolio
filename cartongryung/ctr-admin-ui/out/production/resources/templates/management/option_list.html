@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>차량관리 &gt; 코드 관리 &gt; 옵션 설정 </title>
+</head>
+
+<div layout:fragment="lnb" th:replace="~{fragments/lnb_management :: lnb}"></div>
+<div class="content" layout:fragment="content">
+    <div class="content_head">
+        <h3>옵션 설정</h3>
+    </div>
+    <div class="content_body">
+        <div class="management">
+            <div class="view_wrap flex">
+                <div class="code_box">
+                    <form name="primaryForm">
+                        <div class="view_table">
+                            <div class="flex_m">
+                                <div class="tit_wrap mb0">
+                                    <h3>1차</h3>
+                                </div>
+                                <a class="btn_m btn_form2 add_code">추가</a>
+                            </div>
+                            <table class="mt10 category_list" id="manufacturer" data-depth="0" data-id="0">
+                                <caption>1차 옵션</caption>
+                                <colgroup>
+                                    <col style="width:30%">
+                                    <col style="width:14%">
+                                    <col style="width:26%;">
+                                </colgroup>
+                                <tbody>
+                                <tr th:if="${codeCategoryLists.isEmpty()}">
+                                    <td colspan="3" id="noData0" class="align_c">등록된 데이터가 없습니다.</td>
+                                </tr>
+                                <tr th:each="code : ${codeCategoryLists}" class="code_category manufacturer" th:id="${code.id}">
+                                    <td class="align_c" th:text="${code.codeName}">경유</td>
+                                    <td class="align_c" th:text="${code.viewYn.yn eq 'Y' ? '노출' : '미노출'}">노출</td>
+
+                                    <td class="align_c chk_box" onclick="event.stopPropagation();">
+                                        <input type="hidden" name="id[]" th:value="${code.id}">
+                                        <button type="button" class="btn btn_up" onclick="moveUp(this);">↑</button>
+                                        <button type="button" class="btn btn_down" onclick="moveDown(this);">↓</button>
+                                        <button type="button" class="btn_s" th:onclick="'editPopup(0, ' + ${code.id} + ')'">수정</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="align_r mt10">
+                            <button type="submit" class="btn btn_form5">노출순서 변경</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="code_box">
+                    <form name="secondaryForm">
+                        <div class="view_table">
+                            <div class="flex_m">
+                                <div class="tit_wrap mb0">
+                                    <h3>2차</h3>
+                                </div>
+                                <a class="btn_m btn_form2 add_code">추가</a>
+                            </div>
+                            <table class="mt10 category_list" id="model">
+                                <caption>2차 옵션</caption>
+                                <colgroup>
+                                    <col style="width:30%">
+                                    <col style="width:14%">
+                                    <col style="width:26%;">
+                                </colgroup>
+                                <tbody>
+                                <tr class="code_category model">
+                                    <td colspan="3" class="align_c">1차 옵션을 선택해주세요.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="align_r mt10">
+                            <button type="submit" class="btn btn_form5">노출순서 변경</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    // 페이지 로드 시 이벤트 리스너 초기 등록
+    document.addEventListener('DOMContentLoaded', rebindEventListeners);
+
+    // 추가 버튼 눌렀을 때
+    document.querySelectorAll('.add_code').forEach(button => {
+        button.addEventListener('click', event => {
+            let optionTable = event.currentTarget.closest('.view_table').querySelector('table');
+            let id = optionTable.dataset.id;
+            let depth = optionTable.dataset.depth;
+
+            if (id == null) {
+                alert('상위 분류를 선택해주세요.');
+            } else {
+                window.open('/admin/management/code/option/write/' + depth + '/' + id, '팝업창','width=800, height=500');
+            }
+        });
+    });
+
+    // 수정 팝업
+    function editPopup(depth, id) {
+        window.open('/admin/management/code/' + depth + '/' + id, '팝업창', 'width=800, height=500')
+    }
+
+    // 데이터 행 눌렀을 때
+    function rebindEventListeners() {
+        document.querySelectorAll('.code_category').forEach(list => {
+            list.addEventListener('click', event => {
+                let target = event.currentTarget;
+                let id = target.id;
+                let depth = "";
+                let className = "";
+
+                // 옵션 1차일 때
+                if (target.classList.contains('manufacturer')) {
+                    depth = 1;
+                    className = 'model';
+                }
+
+                const formData = new FormData();
+                formData.append('parentCodeCategoryId', id);
+                formData.append('depth', depth);
+
+                // 데이터가 존재할 때
+                if (id.trim().length > 0) {
+                    fetch('/admin/management/code/option/list/', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.code !== 200)
+                                throw new Error(result.message);
+
+                            let html = "";
+
+                            if(result.data.length > 0) {
+                                result.data.forEach(item => {
+                                    html += `<tr class="code_category ${className}" id="${item.id}">
+                                                <td class="align_c">${item.codeName}</td>
+                                                <td class="align_c">${item.viewYn === "Y" ? "노출" : "미노출"}</td>
+                                                <td class="align_c chk_box" onclick="event.stopPropagation()">
+                                                    <input type="hidden" name="id[]" value="${item.id}">
+                                                    <button type="button" class="btn btn_up" onclick="moveUp(this)">↑</button>
+                                                    <button type="button" class="btn btn_down" onclick="moveDown(this)">↓</button>
+                                                    <button type="button" class="btn_s" onclick="editPopup(${depth}, ${item.id})">수정
+                                                    </button>
+                                                </td>
+                                            </tr>`;
+                                });
+                            } else {
+                                html = `<tr>
+                                            <td colspan="3" class="align_c" id="noData${depth}">데이터가 없습니다.</td>
+                                        </tr>`;
+                            }
+
+                            // 옵션 1차일 때
+                            if (target.classList.contains('manufacturer')) {
+                                document.querySelector("#model tbody").innerHTML = html;
+                                document.getElementById("model").dataset.id = id;
+                                document.getElementById("model").dataset.depth = '1';
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert(error);
+                        });
+                }
+            });
+        });
+    }
+
+    // 위로 이동
+    function moveUp(row) {
+        const tr = row.parentNode.parentNode;
+        const prevTr = tr.previousElementSibling;
+
+        if (prevTr) {
+            tr.parentNode.insertBefore(tr, prevTr);
+        }
+    }
+
+    // 아래로 이동
+    function moveDown(row) {
+        const tr = row.parentNode.parentNode;
+        const nextTr = tr.nextElementSibling;
+
+        if (nextTr) {
+            nextTr.parentNode.insertBefore(tr, nextTr.nextSibling);
+        }
+    }
+
+    // 1차 노출 순서 변경
+    document.querySelector('form[name="primaryForm"]').addEventListener('submit', event => {
+        orderChange(event);
+    });
+
+    // 2차 노출 순서 변경
+    document.querySelector('form[name="secondaryForm"]').addEventListener('submit', event => {
+        orderChange(event);
+    });
+
+    // 노출 순서 변경
+    function orderChange(event) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        if (!confirm('노출순서를 변경하시겠습니까?')) return;
+
+        fetch('/admin/management/code/change', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    }
+
+</script>
+</html>

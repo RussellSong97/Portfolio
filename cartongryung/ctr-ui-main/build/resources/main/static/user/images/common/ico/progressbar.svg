@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="39" height="31" viewBox="0 0 39 31">
+  <g id="그룹_32085" data-name="그룹 32085" transform="translate(1.5 1.5)">
+    <g id="그룹_32084" data-name="그룹 32084" transform="translate(0)">
+      <path id="패스_37410" data-name="패스 37410" d="M483.078,460.182h22.271v9.44h6.488l7.241,7.935V484.5h-4.3c.009.1.03.2.03.306a3.356,3.356,0,1,1-6.712,0c0-.1.023-.2.031-.306l-13.012.153c0,.051.015.1.015.153a3.355,3.355,0,1,1-6.71,0c0-.053.013-.1.015-.153h-5.355Z" transform="translate(-483.078 -460.182)" fill="#fff" stroke="#ff767f" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <line id="선_736" data-name="선 736" y2="6.594" transform="translate(22.285 9.541)" fill="#fff" stroke="#ff767f" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <line id="선_737" data-name="선 737" x1="5.316" transform="translate(6.313 6.747)" fill="none" stroke="#e6232b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <line id="선_738" data-name="선 738" x1="5.316" transform="translate(6.313 11.964)" fill="none" stroke="#e6232b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+  </g>
+</svg>

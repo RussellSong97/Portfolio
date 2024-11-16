@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1>연락가능문의 등록</h1>
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+<div layout:fragment="pop_body" class="pop_body">
+    <div class="con_box">
+        <div class="view_wrap">
+            <div class="top_btn align_r">
+                <button type="button" class="btn ms_btn">회원 조회<i class="arrow"></i></button>
+            </div>
+            <div class="view_table mt10">
+                <form>
+                    <input type="hidden" name="id" th:value="${purchaseInquiryMemberInfo.id}">
+                    <input type="hidden" name="memberId" th:value="${purchaseInquiryMemberInfo.memberId}">
+                    <table>
+                        <caption>연락가능문의 등록</caption>
+                        <colgroup>
+                            <col style="width:20%;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">이름<span class="c_red">*</span></th>
+                            <td>
+                                <input type="text" id="realName" name="realName"
+                                       th:value="${purchaseInquiryMemberInfo != null ?
+                                       (purchaseInquiryMemberInfo.memberId == null ? purchaseInquiryMemberInfo.realName
+                                       : purchaseInquiryMemberInfo.memberRealName) : ''}"
+                                       th:disabled="${!#strings.isEmpty(purchaseInquiryMemberInfo.memberId)}">
+                                <label for="realName" class="blind">이름</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">이메일<span class="c_red">*</span></th>
+                            <td>
+                                <input type="text" id="email" name="email"
+                                       th:value="${purchaseInquiryMemberInfo != null ?
+                                       (purchaseInquiryMemberInfo.memberId == null ? purchaseInquiryMemberInfo.email
+                                       : purchaseInquiryMemberInfo.memberEmail) : ''}"
+                                       th:disabled="${!#strings.isEmpty(purchaseInquiryMemberInfo.memberId)}">
+                                <label for="email" class="blind">이메일</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">휴대폰 번호<span class="c_red">*</span></th>
+                            <td>
+                                <input type="text" id="mobileNumber" name="mobileNumber"
+                                       th:value="${purchaseInquiryMemberInfo != null ?
+                                       (purchaseInquiryMemberInfo.memberId == null ? purchaseInquiryMemberInfo.mobileNumber
+                                       : purchaseInquiryMemberInfo.memberMobileNumber) : ''}"
+                                       th:disabled="${!#strings.isEmpty(purchaseInquiryMemberInfo.memberId)}">
+                                <label for="mobileNumber" class="blind">휴대폰 번호</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">상담 구분<span class="c_red">*</span></th>
+                            <td>
+                                <div class="radiobox">
+                                    <input type="radio" name="consultationTypeCode" id="consultationTypeCode_call" checked
+                                           th:value="${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CALL}"
+                                           th:checked="${purchaseInquiryMemberInfo.consultationTypeCode == null ||
+                                            purchaseInquiryMemberInfo.consultationTypeCode != null &&
+                                            purchaseInquiryMemberInfo.consultationTypeCode ==
+                                            T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CALL}">
+                                    <label for="consultationTypeCode_call">전화</label>
+                                </div>
+                                <div class="radiobox">
+                                    <input type="radio" name="consultationTypeCode" id="consultationTypeCode_chat"
+                                           th:value="${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CHATTING}"
+                                           th:checked="${
+                                            purchaseInquiryMemberInfo.consultationTypeCode != null &&
+                                            purchaseInquiryMemberInfo.consultationTypeCode ==
+                                            T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).CHATTING}">
+                                    <label for="consultationTypeCode_chat">채팅</label>
+                                </div>
+                                <div class="radiobox">
+                                    <input type="radio" name="consultationTypeCode" id="consultationTypeCode_visit"
+                                           th:value="${T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).VISIT}"
+                                           th:checked="${
+                                            purchaseInquiryMemberInfo.consultationTypeCode != null &&
+                                            purchaseInquiryMemberInfo.consultationTypeCode ==
+                                            T(com.cuv.admin.domain.purchaseinquiry.enumset.ConsultationType).VISIT}">
+                                    <label for="consultationTypeCode_visit">방문예약</label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_area">
+                        <button type="button" id="saveBtn" class="btn btn_form2">저장</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal">
+        <div>
+            <div class="title_wrap">
+                <h3>회원 조회</h3>
+                <button type="button" class="btn_del">닫기</button>
+            </div>
+            <div class="search_wrap">
+                <form>
+                    <div class="search">
+                        <div class="input_area">
+                            <input type="text" id="s" placeholder="이름, 이메일, 전화번호">
+                            <label for="s" class="blind">검색어</label>
+                        </div>
+                        <button type="button" id="searchBtn" class="btn">검색</button>
+                    </div>
+                </form>
+                <div class="list_wrap">
+                    <div class="list_table">
+                        <table>
+                            <caption>검색 결과</caption>
+                            <colgroup>
+                                <col style="width:15%;">
+                                <col style="width:15%;">
+                                <col style="width:40%;">
+                                <col style="width:30%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col">번호</th>
+                                <th scope="col">이름</th>
+                                <th scope="col">이메일</th>
+                                <th scope="col">휴대폰번호</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="empty">
+                                <td colspan="4">등록된 데이터가 없습니다.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    //모달창 여닫는 스크립트
+    const openBtn = document.querySelector('.top_btn .ms_btn');
+    const closeBtn = document.querySelector('.modal .btn_del');
+    const modal = document.querySelector('.modal');
+
+    openBtn.addEventListener('click', () => {
+        modal.classList.add('on');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('on');
+    });
+
+    // enter 이벤트 막기
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+
+    let page = 1;
+    let size = 5;
+    let pageArea = document.querySelector('.pagination');
+
+    let memberLists = document.querySelector('.list_table tbody');
+    let s = document.getElementById('s');
+    document.getElementById('searchBtn').addEventListener('click', () => {
+        if (s.value.trim().length < 1) {
+            alert("검색어를 입력해주세요.");
+            s.focus();
+            return;
+        }
+
+        getMemberList(page, size);
+    });
+
+    // 회원 목록
+    function getMemberList(page, size) {
+        fetch('/admin/purchase/member?s=' + s.value + '&page=' + page + '&size=' + size, {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200) {
+                    throw new Error(result.message);
+                }
+
+                // 데이터가 있는 경우
+                if (result.data.content.length > 0) {
+                    memberLists.innerHTML = result.data.content.map((member, index) => `
+                        <tr class="link">
+                            <input type="hidden" value="${member.id}">
+                            <td>${result.data.totalElements - ((result.data.number * result.data.size) + index)}</td>
+                            <td>${member.realName}</td>
+                            <td>${member.email}</td>
+                            <td>${member.mobileNumber}</td>
+                        </tr>
+                        `).join('');
+                } else {
+                    // 데이터가 없는 경우
+                    memberLists.innerHTML = `<tr class="empty">
+                                                <td colspan="4">등록된 데이터가 없습니다.</td>
+                                            </tr>`;
+                    pageArea.innerHTML = '';
+                }
+
+                // 데이터가 있을 때만 페이징 생성
+                if (result.data.totalPages > 1) {
+                    generatePagination(result.data.totalPages, page);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    }
+
+    // 페이징 생성
+    function generatePagination(totalPages, currentPage) {
+        pageArea.innerHTML = '';
+
+        let startPage = Math.max(currentPage - 5, 1);
+        let endPage = Math.min(startPage + 9, totalPages);
+
+        // '처음 페이지' 링크 생성
+        let firstPageLink = document.createElement('a');
+        firstPageLink.href = '#';
+        firstPageLink.innerText = '처음 페이지';
+        firstPageLink.classList.add('first');
+        pageArea.appendChild(firstPageLink);
+
+        firstPageLink.addEventListener('click', () => {
+            getMemberList(1, size);
+        });
+
+        // '이전 페이지' 링크 생성
+        if (currentPage > 1) {
+            let prevPageLink = document.createElement('a');
+            prevPageLink.href = '#';
+            prevPageLink.innerText = '이전 페이지';
+            prevPageLink.classList.add('prev');
+            pageArea.appendChild(prevPageLink);
+
+            prevPageLink.addEventListener('click', () => {
+                getMemberList(currentPage - 1, size);
+            });
+        }
+
+        // 페이지 번호 링크 생성
+        for (let i = startPage; i <= endPage; i++) {
+            let pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.innerText = `${i}`;
+
+            if (i === currentPage) {
+                pageLink.classList.add('on');
+            }
+
+            pageArea.appendChild(pageLink);
+
+            pageLink.addEventListener('click', () => {
+                getMemberList(i, size);
+            });
+        }
+
+        // '다음 페이지' 링크 생성
+        if (currentPage < totalPages) {
+            let nextPageLink = document.createElement('a');
+            nextPageLink.href = '#';
+            nextPageLink.innerText = '다음 페이지';
+            nextPageLink.classList.add('next');
+            pageArea.appendChild(nextPageLink);
+
+            nextPageLink.addEventListener('click', () => {
+                getMemberList(currentPage + 1, size);
+            });
+        }
+
+        // '마지막 페이지' 링크 생성
+        let lastPageLink = document.createElement('a');
+        lastPageLink.href = '#';
+        lastPageLink.innerText = '마지막 페이지';
+        lastPageLink.classList.add('last');
+        pageArea.appendChild(lastPageLink);
+
+        lastPageLink.addEventListener('click', () => {
+            getMemberList(totalPages, size);
+        });
+    }
+
+    let id = document.querySelector('input[name="id"]');
+    let memberId = document.querySelector('input[name="memberId"]');
+    let email = document.querySelector('input[name="email"]');
+    let realName = document.querySelector('input[name="realName"]');
+    let mobileNumber = document.querySelector('input[name="mobileNumber"]');
+
+    mobileNumber.addEventListener('input', event => {
+        let onlyNumber = event.target.value.replace(/\D/g, '');
+        onlyNumber = onlyNumber.slice(0, 11);
+        mobileNumber.value = onlyNumber;
+    })
+
+    // 회원 데이터 클릭 시
+    document.addEventListener('DOMContentLoaded', () => {
+        memberLists.addEventListener('click', event => {
+            const targetTr = event.target.closest('tr');
+            if (targetTr && targetTr.classList.contains('link')) {
+                const tds = targetTr.querySelectorAll('td');
+                memberId.value = targetTr.querySelector('input[type="hidden"]').value;
+                realName.value = tds[1].textContent;
+                email.value = tds[2].textContent;
+                mobileNumber.value = tds[3].textContent;
+
+                modal.classList.remove('on');
+
+                realName.disabled = true;
+                email.disabled = true;
+                mobileNumber.disabled = true;
+            }
+        });
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        if (memberId.value.trim().length < 1) {
+            if (realName.value.trim().length < 1) {
+                alert("이름을 입력해주세요.");
+                realName.focus();
+                return;
+            }
+        }
+
+        if (email.value.trim().length < 1) {
+            alert("이메일을 입력해주세요.");
+            email.focus();
+            return;
+        }
+
+        if (mobileNumber.value.trim().length < 1) {
+            alert("휴대폰 번호를 입력해주세요.");
+            mobileNumber.focus();
+            return;
+        }
+
+        const formData = new FormData();
+        if (memberId.value.trim().length > 0) {
+            formData.append('memberId', memberId.value);
+        } else {
+            formData.append('realName', realName.value);
+            formData.append('email', email.value);
+            formData.append('mobileNumber', mobileNumber.value);
+        }
+
+        formData.append('id', id.value);
+        formData.append('saveConsultationTypeCode', document.querySelector('input[name="consultationTypeCode"]:checked').value);
+
+        fetch('/admin/purchase/member/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                closeTabClick();
+                window.opener.location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+</script>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>내차 구입 > 연락가능 문의 > 상세/수정 </title>
+        <link rel="stylesheet" href="../css/general.css?v=1656408363">
+        <link rel="stylesheet" href="../css/jquery-ui.css">
+        <script src="../js/jquery-1.12.4.min.js"></script>
+        <script src="../js/jquery-ui.js"></script>
+        <script src="../js/layout.js"></script>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <!-- Header Start-->
+            <header id="header">
+                <div class="header_top">
+                    <div class="header_info">
+                        <h1 class="admin_title">ADMINISTRATOR</h1>
+                    </div>
+                    <div class="header_util">
+                        <div class="user_info">
+                            <i class="ico_profile"></i>
+                            <span class="user_name"><span>OOO</span> 님 로그인 하였습니다.</span>
+                        </div>
+                        <a href="javascript:;" class="btn_u"><i class="ico_logout"></i>LOGOUT</a>
+                    </div>
+                </div>
+                <div class="header_btm">
+                    <nav id="gnb" class="gnb">
+                        <ul>
+                            <li><a href="../main/index.html">홈</a></li>
+                            <li><a href="../member/member_list.html">회원</a></li>
+                            <li><a href="../purchase/purchase_list_able.html">내차 구입</a></li>
+                            <li><a href="../sale/sale_list_able.html">내차 팔기</a></li>
+                            <li><a href="../management/sale_vehicle_list.html">차량관리</a></li>
+                            <li><a href="../board/notice_list.html">게시판</a></li>
+                            <li><a href="../promotion/event_list.html">프로모션</a></li>
+                            <li><a href="../stats/stats_member.html">통계/분석</a></li>
+                            <li><a href="../etc/dealer_list.html">기타</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+            <!-- //Header End-->
+
+            <div id="container">
+                <h2 class="blind">상세 페이지</h2>
+                <section class="sub_section">
+                    <div class="content_wrap">
+
+                        <!--Content Start-->
+                        <div class="content">
+                            <div class="content_head">
+                                <h3>내차 구입</h3>
+                                <div class="list_count">
+                                    <a href="./purchase_list_able.html" class="tab_list01 on">연락가능 문의 <span>00</span></a>
+                                    <a href="./purchase_list_unable.html" class="tab_list02">연락처 없는 문의 <span>00</span></a>
+                                    <a href="./visit_list.html" class="tab_list03">방문 예약 <span>00</span></a>
+                                </div>
+                            </div>
+                            <div class="content_body">
+                                <div class="mycar">
+
+                                    <!-- View Start -->
+                                    <div class="view_wrap">
+                                        <div class="flex">
+                                            <div class="left_wrap">
+                                                <div class="view_table">
+                                                    <div class="table_top">
+                                                        <h3>상담 기록</h3>
+                                                        <form action="">
+                                                            <div class="search_wrap flex mt10">
+                                                                <select name="" id="" style="width: 150px;">
+                                                                    <option value="" selected disabled>상담 상태 선택</option>
+                                                                    <option value="">방문예약완료</option>
+                                                                    <option value="">차량 상담완료</option>
+                                                                    <option value="">결제 준비중</option>
+                                                                    <option value="">승인결과안내</option>
+                                                                    <option value="">결제완료</option>
+                                                                    <option value="">인수완료</option>
+                                                                    <option value="">승인불가</option>
+                                                                </select>
+                                                                <div class="input_wrap">
+                                                                    <label for=""><input type="text" placeholder="상담 기록을 입력해주세요"></label>
+                                                                </div>
+                                                                <button type="button" class="btn_m">입력</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="table_btm mt10">
+                                                        <table>
+                                                            <caption>검색 결과</caption>
+                                                            <colgroup>
+                                                                <col style="width:8%;">
+                                                                <col style="width:12%;">
+                                                                <col style="width:16%;">
+                                                                <col style="width:20%;">
+                                                                <col style="width:auto;">
+                                                            </colgroup>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">No.</th>
+                                                                    <th scope="col">등록자</th>
+                                                                    <th scope="col">상태</th>
+                                                                    <th scope="col">등록일시</th>
+                                                                    <th scope="col">내용</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>6</td>
+                                                                    <td>정호연</td>
+                                                                    <td class="state">상담접수완료</td>
+                                                                    <td>2024-01-02 12:33:11</td>
+                                                                    <td><div class="align_l">승인취소</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5</td>
+                                                                    <td>정호연</td>
+                                                                    <td class="state">방문예약완료</td>
+                                                                    <td>2024-01-02 12:33:11</td>
+                                                                    <td><div class="align_l">최종 인수 완료</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>정호연</td>
+                                                                    <td class="state">차량 상담완료</td>
+                                                                    <td>2024-01-02 12:33:11</td>
+                                                                    <td><div class="align_l">방문 하시고 바로 결제까지 다 하심</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>정호연</td>
+                                                                    <td class="state">결제 준비중</td>
+                                                                    <td>2024-01-02 12:33:11</td>
+                                                                    <td><div class="align_l">(딜러 배정 완료)</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>김진솔</td>
+                                                                    <td class="state">승인결과안내</td>
+                                                                    <td>2024-01-02 12:33:11</td>
+                                                                    <td><div class="align_l">금일 방문 예정입니다.</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>김진솔</td>
+                                                                    <td class="state">결제완료</td>
+                                                                    <td>2024-01-02 12:33:11</td>
+                                                                    <td><div class="align_l">서수형님 통화 완료. 저렴한 차 추천 원하십니다. 12/30일 방문 예정</div></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="right_wrap">
+                                                <div class="view_table">
+                                                    <div class="table_top">
+                                                        <h3>문의 내용</h3>
+                                                    </div>
+                                                    <div class="table_btm mt10">
+                                                        <form action="" method="post">
+                                                            <table>
+                                                                <caption>상세</caption>
+                                                                <colgroup>
+                                                                    <col style="width:20%;">
+                                                                    <col style="width:80%;">
+                                                                </colgroup>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">문의 No.</th>
+                                                                        <td>240501-001</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">상담 상태</th>
+                                                                        <td class="state">상담접수완료</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">상담 구분</th>
+                                                                        <td>
+                                                                            <div class="radiobox">
+                                                                                <input type="radio" id="" name=""  placeholder="">
+                                                                                <label for="">전화</label>
+                                                                            </div>
+                                                                            <div class="radiobox">
+                                                                                <input type="radio" id="" name=""  placeholder="">
+                                                                                <label for="">채팅</label>
+                                                                            </div>
+                                                                            <div class="radiobox">
+                                                                                <input type="radio" id="" name=""  placeholder="">
+                                                                                <label for="">방문예약</label>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">회원정보</th>
+                                                                        <td>
+                                                                            <a href="../member/member_view.html" class="btn_link">홍길동</a>
+                                                                            <a href="../member/member_view.html" class="btn_link ml10">010-8823-1242</a>
+                                                                            <a href="../member/member_view.html" class="btn_link ml10">seosoo@nate.com</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">등록일시</th>
+                                                                        <td>2023-12-29 09:57:44</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">방문 예약 일시</th>
+                                                                        <td>
+                                                                            <div class="input_wrap">
+                                                                                <input type="text" id="datepicker1" class="ico_date" name="period01"  placeholder="">
+                                                                                <input type="text" id="" name=""  placeholder="시 입력" style="width: 100px;">
+                                                                                <span>:</span>
+                                                                                <input type="text" id="" name=""  placeholder="분 입력" style="width: 100px;">
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="view_table mt20">
+                                                    <div class="table_top flex">
+                                                        <h3>구매희망 차량번호</h3>
+                                                        <div class="btn_area align_r">
+                                                            <a href="javascript: window.open('../popup/vehicle_search.html', '팝업창','width=600, height=700');" class="btn_m btn_form2">차량 조회</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table_btm mt10">
+                                                        <form action="" method="post">
+                                                            <table>
+                                                                <caption>상세</caption>
+                                                                <colgroup>
+                                                                    <col style="width:45%;">
+                                                                    <col style="width:45%;">
+                                                                    <col style="width:10%;">
+                                                                </colgroup>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="row">구매희망 차량번호</th>
+                                                                        <th scope="row">딜러명</th>
+                                                                        <th scope="row"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="align_c">
+                                                                        <td>00가 0000</td>
+                                                                        <td>홍길동</td>
+                                                                        <td>
+                                                                            <button type="button" class="btn_del">삭제</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="btn_area align_r mt20">
+                                                    <button type="button" class="btn">저장</button>
+                                                    <a href="./purchase_list_able.html" class="btn btn_form4">목록</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- //View Start -->
+                                </div>
+                            </div>
+                        </div>
+                        <!--//Content End-->
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script>
+            // 페이지에서만 사용하는 스크립트
+            $('#gnb ul li').eq(2).addClass('on');
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup_layout}">
+
+<head>
+    <title>카통령 관리자시스템</title>
+</head>
+
+<div layout:fragment="pop_header" class="pop_header">
+    <h1 th:if="${depth eq 0}">제조사 추가</h1>
+    <h1 th:if="${depth eq 1}">모델 추가</h1>
+    <h1 th:if="${depth eq 2}">싱세모델 추가</h1>
+    <h1 th:if="${depth eq 3}">등급 추가</h1>
+<!--    <h1 th:if="${condition.codeType eq T(com.cuv.admin.domain.codecategory.enumset.CodeType).VEHICLE_CLASS.code && depth eq 4}">상세등급 추가</h1>-->
+<!--    <h1 th:if="${condition.codeType eq T(com.cuv.admin.domain.codecategory.enumset.CodeType).OPTION.code}" th:text="(${depth} + 1) + '차 추가'">1차 추가</h1>-->
+    <button class="pop_close" onclick="closeTabClick()">닫기</button>
+</div>
+<div layout:fragment="pop_body" class="pop_body">
+    <div class="align_r"><span class="asta">*</span>필수입력</div>
+    <div class="con_box">
+        <div class="view_wrap">
+            <div class="view_table">
+                <form>
+                    <table class="mt20">
+                        <caption>입력</caption>
+                        <colgroup>
+                            <col style="width:20%;">
+                            <col style="width:80%;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">노출상태 <span class="asta">*</span></th>
+                            <td>
+                                <input type="radio" id="show" name="viewYn" value="Y" checked>
+                                <label for="show">노출</label>
+                                <input type="radio" id="hide" name="viewYn" value="N">
+                                <label for="hide">미노출</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" th:if="${condition.depth eq 0}">
+                                제조사명<span class="asta">*</span>
+                            </th>
+                            <th scope="row" th:if="${condition.depth eq 1}">
+                                모델명<span class="asta">*</span>
+                            </th>
+                            <th scope="row" th:if="${condition.depth eq 2}">
+                                싱세모델명<span class="asta">*</span>
+                            </th>
+                            <th scope="row" th:if="${condition.depth eq 3}">
+                                상세등급명<span class="asta">*</span>
+                            </th>
+<!--                            <th scope="row" th:if="${condition.codeType eq T(com.cuv.admin.domain.codecategory.enumset.CodeType).VEHICLE_CLASS.code && condition.depth eq 4}">-->
+<!--                                상세등급명<span class="asta">*</span>-->
+<!--                            </th>-->
+<!--                            <th scope="row" th:if="${condition.codeType eq T(com.cuv.admin.domain.codecategory.enumset.CodeType).OPTION.code}">-->
+<!--                                <th:block th:text="(${depth} + 1) + '차'"></th:block>-->
+<!--                                <span class="asta">*</span>-->
+<!--                            </th>-->
+                            <td>
+                                <input type="text" id="linkDataNm" name="linkDataNm">
+                                <input type="hidden" name="parentCodeCategoryId" th:value="${id}">
+                                <input type="hidden" name="depth" th:value="${depth}">
+<!--                                <input type="hidden" name="codeType" th:value="${condition.codeType}">-->
+                                <label for="linkDataNm" class="blind">1차 옵션 입력</label>
+                            </td>
+                        </tr>
+                        <th:block th:if="${condition.depth eq 0}">
+                            <tr>
+                                <th scope="row">이미지 <span class="asta">*</span></th>
+                                <td>
+                                    <div class="file_area">
+                                        <input type="file" id="uploadFile" accept=".jpg, .jpeg, .png">
+                                        <label for="uploadFile">
+                                            <span class="btn_s" style="cursor: pointer;">찾아보기</span>
+                                        </label>
+                                        <span>&#40;파일형식 : jpg, jpeg,.png, gif&#41;</span>
+                                    </div>
+                                    <div id="infoDiv" class="files"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">A/S 기간 <span class="asta">*</span></th>
+                                <td>
+                                    <label for="datepicker1">
+                                        <input type="text" id="datepicker1" class="ico_date" name="afterServiceDate" autocomplete="off">
+                                    </label>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <div class="btn_area">
+                        <button type="submit" class="btn">저장</button>
+                        <button type="button" class="btn btn_form4" onclick="closeTabClick()">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="pop_script" th:inline="javascript">
+    function closeTabClick() {
+        window.close();
+    }
+
+    const uploadFile = document.getElementById('uploadFile');
+
+    if (uploadFile !== null) {
+        uploadFile.addEventListener('change', event => {
+            const inputfile = event.currentTarget;
+            uploadFiles(inputfile, 'code-editor');
+            inputfile.value = '';
+        });
+
+        function uploadFiles(inputFile, source) {
+            // inputFile: <input type="file"> 영역
+            // infoDiv: 파일 정보를 표시할 div 영역
+            // source: 첨부파일 타입
+            if (inputFile.files.length === 0) return;
+
+            const formData = new FormData();
+            if (source != null) formData.append('source', source);
+            Array.prototype.forEach.call(inputFile.files, file => formData.append('files', file));
+
+            fetch('/api/file/uploads', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    uploadFilesAfterTrigger(inputFile, result.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(error);
+                });
+        }
+
+        function uploadFilesAfterTrigger(inputFile, data) {
+            const infoDiv = document.getElementById('infoDiv');
+
+            infoDiv.innerHTML = data.map(file => {
+                return `
+                        <div class="file" id="file_${file.uuid}">
+                            <div class="imgbox">
+                                <img src="/api/file/view/${file.uuid}?size=300" alt="이미지">
+                            </div>
+                            <span class="name">${file.originalName}</span>
+                            <input type="hidden" name="fileUUID" value="${file.uuid}">
+                            <button type="button" class="btn_del" onclick="deleteFile(this.dataset.uuid, true);" data-uuid="${file.uuid}">삭제</button>
+                        </div>
+                        `;
+            }).join('');
+        }
+
+        function deleteFile(uuid, isReal) {
+            if (isReal === undefined) isReal = false;
+
+            const element = document.getElementById(`file_${uuid}`);
+            if (element === null) return;
+            if (isReal === false) return element.remove();
+
+            fetch(`/api/file/delete/${uuid}`, {
+                method: 'DELETE'
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200)
+                        throw new Error(result.message);
+
+                    element.remove();
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(error);
+                });
+        }
+    }
+
+    // 팝업 내용 저장
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        const linkDataNm = document.getElementById('linkDataNm');
+        if (linkDataNm.value.trim().length < 1) {
+            alert("내용을 입력해주세요.");
+            linkDataNm.focus();
+            return;
+        }
+
+        // 차량 등급 설정 > 제조사일 때
+        if (/*[[ ${condition.depth} ]]*/ ''
+            === 0) {
+            const infoDiv =  document.getElementById('infoDiv');
+            if (infoDiv.children.length < 1) {
+                alert('이미지를 첨부해주세요.');
+                return;
+            }
+
+            const afterServiceDate = document.querySelector('input[name="afterServiceDate"]');
+            if (afterServiceDate.value.trim().length < 1) {
+                alert("A/S 기간을 입력해주세요.");
+                afterServiceDate.focus();
+                return;
+            }
+        }
+
+        if (!confirm('저장하시겠습니까?')) return;
+
+        fetch('/admin/management/code/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                alert('저장되었습니다.');
+                addHtml(result.data);
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+            });
+    });
+
+    // 저장 후 저장된 데이터 추가
+    function addHtml(data) {
+        let depth = data.depth;
+        let className = "";
+        let imgBox = "";
+
+        switch(depth) {
+            case 0: // 제조사, 옵션 1차
+                className = "manufacturer";
+                break;
+            case 1: // 모델, 옵션 2차
+                className = "model";
+                break;
+            case 2: // 상세모델
+                className = "detail_model";
+                break;
+            case 3: // 등급
+                className = "grade";
+                break;
+            // case 4: // 상세등급
+            //     className = "detail_grade";
+            //     break;
+        }
+
+        // 차량 등급 설정 > 제조사일 때
+        if (/*[[ ${condition.depth} ]]*/ ''
+            === 0) {
+            imgBox = `<td><a href="#" class="imgbox"><img src="/api/file/view/${data.fileUUID}?size=300" alt="이미지"></a></td>`;
+        }
+
+        let html = `<tr class="code_category ${className}" id="${data.id}">
+                        ${imgBox}
+                        <td class="align_c">${data.linkDataNm}</td>
+                        <td class="align_c">${data.viewYn === "Y" ? "노출" : "미노출"}</td>
+                        <td class="align_c chk_box" onclick="event.stopPropagation()">
+                            <input type="hidden" name="id[]" value="${data.id}">
+                            <button type="button" class="btn btn_up" onclick="moveUp(this)">↑</button>
+                            <button type="button" class="btn btn_down" onclick="moveDown(this)">↓</button>
+                            <button type="button" class="btn_s" onclick="editPopup(${depth}, ${data.id})">수정
+                            </button>
+                        </td>
+                    </tr>`;
+
+        const openerDocument = opener.document;
+        const noDataRow = openerDocument.getElementById('noData' + depth);
+        let tbody = openerDocument.querySelector('#' + className + ' tbody');
+
+        if (noDataRow !== null) {
+            noDataRow.remove();
+        }
+
+        tbody.insertAdjacentHTML('beforeend', html);
+
+        window.close();
+    }
+
+</script>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div id="lnb" th:fragment="lnb">
+    <button type="button" class="openBtn">&lt;</button>
+    <h2 class="tit">
+        <span>차량관리</span>
+    </h2>
+    <ul class="menu">
+        <li class="btn_sub">
+            <a href="/admin/management/product" th:classappend="${requestValue.getRequestURI().startsWith('/admin/management/product')} ? 'skin_bg'">판매 차량</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/management/linkage" th:classappend="${requestValue.getRequestURI().startsWith('/admin/management/linkage')} ? 'skin_bg'">매물 연동 관리</a>
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/management/code/class" th:classappend="${requestValue.getRequestURI().startsWith('/admin/management/code')} ? 'skin_bg'">코드 관리</a>
+<!--            <ul class="sub_menu" th:style="${requestValue.getRequestURI().startsWith('/admin/management/code') ? '' : 'display: none;'}">-->
+<!--                <li th:classappend="${requestValue.getRequestURI().startsWith('/admin/management/code/class')} ? 'on'">-->
+<!--                    <a href="/admin/management/code/class">차량 등급 설정</a>-->
+<!--                </li>-->
+<!--                <li th:classappend="${requestValue.getRequestURI().startsWith('/admin/management/code/option')} ? 'on'">-->
+<!--                    <a href="/admin/management/code/option">옵션 설정</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+        </li>
+        <li class="btn_sub">
+            <a href="/admin/management/recommend" th:classappend="${requestValue.getRequestURI().startsWith('/admin/management/recommend')} ? 'skin_bg'">추천 차량</a>
+        </li>
+    </ul>
+</div>
+</html>

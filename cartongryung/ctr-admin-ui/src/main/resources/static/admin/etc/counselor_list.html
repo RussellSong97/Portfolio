@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>기타 > 상담사 관리 > 목록 </title>
+		<link rel="stylesheet" href="../css/general.css?v=1656408363">
+		<link rel="stylesheet" href="../css/jquery-ui.css">
+		<script src="../js/jquery-1.12.4.min.js"></script>
+		<script src="../js/jquery-ui.js"></script>
+		<script src="../js/layout.js"></script>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<!-- Header Start-->
+			<header id="header">
+				<div class="header_top">
+					<div class="header_info">
+						<h1 class="admin_title">ADMINISTRATOR</h1>
+					</div>
+					<div class="header_util">
+						<div class="user_info">
+							<i class="ico_profile"></i>
+							<span class="user_name"><span>OOO</span> 님 로그인 하였습니다.</span>
+						</div>
+						<a href="javascript:;" class="btn_u"><i class="ico_logout"></i>LOGOUT</a>
+					</div>
+				</div>
+				<div class="header_btm">
+					<nav id="gnb" class="gnb">
+						<ul>
+							<li><a href="../main/index.html">홈</a></li>
+							<li><a href="../member/member_list.html">회원</a></li>
+							<li><a href="../purchase/purchase_list_able.html">내차 구입</a></li>
+							<li><a href="../sale/sale_list_able.html">내차 팔기</a></li>
+							<li><a href="../management/sale_vehicle_list.html">차량관리</a></li>
+							<li><a href="../board/notice_list.html">게시판</a></li>
+							<li><a href="../promotion/event_list.html">프로모션</a></li>
+							<li><a href="../stats/stats_member.html">통계/분석</a></li>
+							<li><a href="../etc/dealer_list.html">기타</a></li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+			<!-- //Header End-->
+
+			<div id="container">
+				<h2 class="blind">리스트 페이지</h2>
+				<section class="sub_section">
+					<div class="content_wrap">
+						<!--Lnb Start-->
+						<div id="lnb">
+							<button type="button" class="openBtn">&lt;</button>
+							<h2 class="tit">
+								<span>기타</span>
+							</h2>
+							<ul class="menu">
+								<li class="btn_sub">
+									<a href="./dealer_list.html">딜러 관리</a>
+								</li>
+								<li class="btn_sub">
+									<a href="./counselor_list.html">상담사 관리</a>
+								</li>
+								<li class="btn_sub">
+									<a href="./admin_list.html">운영자 관리</a>
+								</li>
+                                <li class="btn_sub">
+									<a href="./terms_list.html">서비스 약관 관리</a>
+								</li>
+                                <li class="btn_sub">
+									<a href="./popular_list.html">인기 검색어 관리</a>
+								</li>
+							</ul>
+						</div>
+						<!--//Lnb End-->
+
+						<!--Content Start-->
+						<div class="content">
+							<div class="content_head">
+								<h3>상담사 관리</h3>
+							</div>
+							<div class="content_body">
+								<div class="admin">
+									
+									<!-- List Start -->
+									<div class="list_wrap">
+										<div class="list_top">
+											<div class="txt_area">
+												<p>총 <em>0,000</em>건</p>
+											</div>
+											<div class="util_area">
+												<a href="./counselor_write.html" class="btn btn_form2">등록</a>
+											</div>
+										</div>
+										<div class="list_table">
+											<table>
+												<caption>검색 결과</caption>
+												<colgroup>
+													<col style="width:8%;">
+													<col style="width:10%;">
+													<col style="width:10%;">
+													<col style="width:10%;">
+													<col style="width:8%;">
+													<col style="width:12%;">
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col">번호</th>
+														<th scope="col">아이디</th>
+														<th scope="col">이름</th>
+														<th scope="col">전화번호</th>
+														<th scope="col">사용여부</th>
+														<th scope="col">최종 접속 일시</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td colspan="6">등록된 상담사 정보가 없습니다.</td>
+													</tr>
+													<tr>
+														<td>50</td>
+														<td><a href="./counselor_view.html" class="btn_link">dealer001</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">김딜러</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">010-0000-0000</a></td>
+														<td>사용</td>
+														<td>YYYY-MM-DD 00:00:00</td>
+													</tr>
+													<tr>
+														<td>49</td>
+														<td><a href="./counselor_view.html" class="btn_link">dealer002</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">이딜러</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">010-0000-0000</a></td>
+														<td>미사용</td>
+														<td>YYYY-MM-DD 00:00:00</td>
+													</tr>
+													<tr>
+														<td>48</td>
+														<td><a href="./counselor_view.html" class="btn_link">dealer003</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">박딜러</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">010-0000-0000</a></td>
+														<td>사용</td>
+														<td>YYYY-MM-DD 00:00:00</td>
+													</tr>
+													<td>1</td>
+														<td><a href="./counselor_view.html" class="btn_link">dealer000</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">강딜러</a></td>
+														<td><a href="./counselor_view.html" class="btn_link">010-0000-0000</a></td>
+														<td>사용</td>
+														<td>YYYY-MM-DD 00:00:00</td>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!-- //List Start -->
+								</div>
+							</div>
+						</div>
+						<!--//Content End-->
+					</div>
+				</section>
+			</div>
+		</div>
+		<script>
+			// 페이지에서만 사용하는 스크립트
+			$('#gnb ul li').eq(8).addClass('on');
+			$('#lnb ul.menu > li').eq(1).find(' > a ').addClass('skin_bg');
+		</script>
+	</body>
+
+</html>

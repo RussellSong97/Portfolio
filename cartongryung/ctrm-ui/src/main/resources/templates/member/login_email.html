@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_member}">
+
+<th:block layout:fragment="content">
+    <div class="member-wrap">
+        <div class="login-wrap">
+            <div class="w-set">
+                <div class="tit-area">
+                    <div class="logo">
+                        <span class="is-blind">카통령</span>
+                    </div>
+                </div>
+                <form action="/login" method="POST" id="loginForm" name="loginForm">
+                    <div class="input-wrap">
+                        <div class="input-item">
+                            <input type="text" name="username" id="username" placeholder="이메일">
+                            <label for="username" class="is-blind">이메일</label>
+                        </div>
+                        <div class="input-item">
+                            <input type="password" name="password" id="password" placeholder="비밀번호">
+                            <label for="password" class="is-blind">비밀번호</label>
+                        </div>
+                    </div>
+                    <div class="reset-pw">
+                        <a href="/find/password">비밀번호 찾기</a>
+                    </div>
+                    <div class="btn-wrap type-column">
+                        <button type="submit" class="btn">로그인</button>
+                        <a href="/join/step1" class="btn color3">이메일로 회원가입</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    var hdNm = "이메일로 로그인";
+
+    function fnBack() {
+        location.href = "/login";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        let errorMessage = /*[[${errorMessage}]]*/ '';
+
+        if (errorMessage && errorMessage.trim() !== '') {
+            $popup.alert(errorMessage);
+        }
+    });
+</script>
+</html>

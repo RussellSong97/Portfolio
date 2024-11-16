@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>카통령 관리자시스템</title>
+    <link rel="stylesheet" href="../css/general.css?v=1656408363">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
+    <script src="../js/jquery-1.12.4.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/layout.js"></script>
+</head>
+
+<body style="background-color:#fff">
+    <div class="pop_wrap">
+        <div class="pop_header">
+            <h1>등급 추가</h1>
+            <button class="pop_close" onclick="closeTabClick()">닫기</button>
+        </div>
+        <div class="pop_body">
+            <div class="align_r"><span class="asta">*</span>필수입력</div>
+            <div class="con_box">
+                <div class="view_wrap">
+                    <div class="view_table">
+                        <form action="">
+                            <table class="mt20">
+                                <caption>입력</caption>
+                                <colgroup>
+                                    <col style="width:20%;">
+                                    <col style="width:80%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">노출상태 <span class="asta">*</span></th>
+                                        <td>
+                                            <input type="radio" id="show" name="show" checked>
+                                            <label for="show">노출</label>
+                                            <input type="radio" id="hide" name="show">
+                                            <label for="hide">미노출</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">제조사 명 <span class="asta">*</span></th>
+                                        <td>
+                                            <label for="" class="blind">제조사 명</label>
+                                            <select name="" id="">
+                                                <option value="">현대</option>
+                                                <option value="">기아</option>
+                                                <option value="">BMW</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">모델 <span class="asta">*</span></th>
+                                        <td>
+                                            <label for="" class="blind">모델 명 선택</label>
+                                            <select name="" id="">
+                                                <option value="">소나타</option>
+                                                <option value="">그랜저</option>
+                                                <option value="">아반떼</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">상세 모델 <span class="asta">*</span></th>
+                                        <td>
+                                            <label for="" class="blind">상세 모델 명 선택</label>
+                                            <select name="" id="">
+                                                <option value="">투싼 IX</option>
+                                                <option value="">뉴 투싼 IX</option>
+                                                <option value="">올 뉴 투싼	</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">등급 <span class="asta">*</span></th>
+                                        <td>
+                                            <input type="text" name=""  value="">
+                                            <label for="" class="blind">등급 입력</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn_area">
+                                <button type="button" class="btn">저장</button>
+                                <button type="button" class="btn btn_form4" onclick="closeTabClick()">취소</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function closeTabClick() {
+            window.close();
+        }
+    </script>
+</body>
+
+</html>

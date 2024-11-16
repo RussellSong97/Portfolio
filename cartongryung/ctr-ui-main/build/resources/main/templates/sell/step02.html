@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+    <div class="sell-wrap">
+        <div class="member-wrap">
+            <div class="w-set">
+                <div class="tit-area">
+                    <h2 class="tit hide-m">내 차 팔기</h2>
+                </div>
+                <div class="step-wrap">
+                    <ul class="step-list">
+                        <li class="on">
+                            <i class="i-step01"></i>
+                            <span class="txt">차량정보</span>
+                        </li>
+                        <li class="step-arrow on">다음단계</li>
+                        <li class="on">
+                            <i class="i-step02"></i>
+                            <span class="txt">사진업로드</span>
+                        </li>
+                        <li class="step-arrow on">다음단계</li>
+                        <li>
+                            <i class="i-step03"></i>
+                            <span class="txt">약관동의</span>
+                        </li>
+                        <li class="step-arrow">다음단계</li>
+                        <li>
+                            <i class="i-step04"></i>
+                            <span class="txt">신청완료</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="vehicle-info">
+                    <div class="img"></div>
+                    <div class="txt-area">
+                        <p class="num" th:text="${payload.get('vhrno')}">123가 1234</p>
+                        <strong class="name" th:text="${payload.get('brandNm') + ' ' + payload.get('carClassNm')}">기아 K5 하이브리드</strong>
+                    </div>
+                </div>
+                <form>
+                    <input type="hidden" name="jwtToken" th:value="${jwtToken}">
+                    <div class="input-wrap add-photo">
+                        <div>
+                            <p class="tit">차량 사진을 등록해주세요.</p>
+                            <p class="txt">*사진등록(최소 3장, 최대 10장)<br>이미지를 드래그 시 순서변경이 가능합니다</p>
+                        </div>
+                        <input type="file" id="uploadFile" accept=".jpg, .jpeg, .png, .gif" multiple>
+                        <label for="uploadFile" class="db">
+                            <span class="btn-add">사진 찾기</span>
+                        </label>
+                    </div>
+                    <div class="photo-wrap">
+                        <button type="button" class="btn-delAll" onclick="deleteAllFile(true);">사진 전체삭제</button>
+                        <ul id="infoDiv" class="photo-list">
+                        </ul>
+                        <div class="btn-wrap">
+                            <!-- 활성화시 is-disabled 클래스 삭제 -->
+                            <a href="/sale/vehicle/first" class="btn color4">취소</a>
+                            <button type="submit" id="checkBtn" class="btn is-disabled" disabled>다음</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "내 차 팔기";
+
+    const checkButton = document.getElementById('checkBtn');
+    const infoDiv = document.getElementById('infoDiv');
+    const infoDivErrorText = '사진은 최소 3장, 최대 10장까지 업로드 할 수 있습니다.';
+    let isValid = true;
+
+    // 사진 순서 바꾸기
+    new Sortable(infoDiv, {
+        animation: 150,
+    });
+
+    document.getElementById('uploadFile').addEventListener('change', event => {
+        const inputfile = event.currentTarget;
+        uploadFiles(inputfile, 'sell-editor');
+        inputfile.value = '';
+    });
+
+    function uploadFiles(inputFile, source) {
+        // inputFile: <input type="file"> 영역
+        // infoDiv: 파일 정보를 표시할 div 영역
+        // source: 첨부파일 타입
+        if (inputFile.files.length === 0) return;
+
+        const formData = new FormData();
+        if (source != null) formData.append('source', source);
+        Array.prototype.forEach.call(inputFile.files, file => formData.append('files', file));
+
+        fetch('/api/file/uploads', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                uploadFilesAfterTrigger(inputFile, result.data);
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    }
+
+    function uploadFilesAfterTrigger(inputFile, data) {
+        if (infoDiv.children.length + data.length > 10) {
+            $popup.alert(infoDivErrorText);
+            isValid = false;
+        } else {
+            isValid = true;
+        }
+
+        if (isValid) {
+            infoDiv.innerHTML += data.map(file => {
+                return `
+                        <li id="file_${file.uuid}">
+                            <div class="img">
+                                <input type="hidden" name="fileUUIDs" value="${file.uuid}">
+                                <button type="button" class="btn-del" onclick="deleteFile(this.dataset.uuid, true);" data-uuid="${file.uuid}">삭제</button>
+                                <img src="/api/file/view/${file.uuid}?size=300" alt="리스트 이미지">
+                            </div>
+                        </li>
+                        `;
+            }).join('');
+
+            checkDisabled();
+        }
+    }
+
+    function deleteFile(uuid, isReal) {
+        if (isReal === undefined) isReal = false;
+
+        const element = document.getElementById(`file_${uuid}`);
+        if (element === null) return;
+        if (isReal === false) return element.remove();
+
+        fetch(`/api/file/delete/${uuid}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.code !== 200)
+                    throw new Error(result.message);
+
+                element.remove();
+                checkDisabled();
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    }
+
+    // 파일 전체 삭제
+    function deleteAllFile(isReal) {
+        if (isReal === undefined) isReal = false;
+
+        document.querySelectorAll('input[name="fileUUIDs"]').forEach(file => {
+            deleteFile(file.value, isReal);
+        });
+
+        checkDisabled();
+    }
+
+    // 버튼 disabled
+    function checkDisabled() {
+        if (infoDiv.children.length >= 3 && infoDiv.children.length <= 10) {
+            checkButton.classList.remove('is-disabled');
+            checkButton.disabled = false;
+            isValid = true;
+        } else {
+            checkButton.classList.add('is-disabled');
+            checkButton.disabled = true;
+            isValid = false;
+        }
+    }
+
+    document.forms[0].addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        if (infoDiv.children.length < 3 || infoDiv.children.length > 10) {
+            $popup.alert(infoDivErrorText);
+            isValid = false;
+        } else {
+            isValid = true;
+        }
+
+        if (isValid) {
+            fetch('/sale/vehicle/second', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.code !== 200) {
+                        $popup.alert(result.message);
+                    } else {
+                        location.href = '/sale/vehicle/third';
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
+        }
+    });
+
+</script>
+</html>

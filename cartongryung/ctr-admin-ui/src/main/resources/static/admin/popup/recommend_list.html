@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    <head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>카통령 관리자시스템</title>
+		<link rel="stylesheet" href="../css/general.css?v=1656408363">
+		<link rel="stylesheet" href="../css/jquery-ui.css">
+		<script src="../js/jquery-1.12.4.min.js"></script>
+		<script src="../js/jquery-ui.js"></script>
+		<script src="../js/layout.js"></script>
+	</head>
+
+    <body style="background-color:#fff">
+        <div class="pop_wrap">
+            <div class="pop_header">
+                <h1>추천차량</h1>
+                <button class="pop_close" onclick="closeTabClick()">닫기</button>
+            </div>
+            <div class="pop_body">
+                <div class="con_box">
+                    <div class="content_wrap">
+                        <!--Content Start-->
+                        <div class="promotion">
+
+                            <!-- Search Start -->
+                            <div class="search_wrap">
+                                <table>
+                                    <caption>검색</caption>
+                                    <colgroup>
+                                        <col style="width:8%;">
+                                        <col style="width:auto;">
+                                        <col style="width:8%;;">
+                                        <col style="width:auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">차량명</th>
+                                            <td colspan="3">
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">제조사</option>
+                                                </select>
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">모델명</option>
+                                                </select>
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">세부 모델</option>
+                                                </select>
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">등급</option>
+                                                </select>
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">상세 등급</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">키워드</th>
+                                            <td>
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">차량번호</option>
+                                                </select>
+                                                <input type="text" title="키워드" placeholder="" style="width: 60%;">
+                                                <label for="" class="blind">키워드 입력</label>
+                                            </td>
+                                            <th scope="row">등록일</th>
+                                            <td>
+                                                <input type="text" id="datepicker1" class="ico_date" name="period01"  placeholder="시작일">
+                                                <span class="tilde">~</span>
+                                                <input type="text" id="datepicker2" class="ico_date" name="period01"  placeholder="종료일">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">딜러</th>
+                                            <td colspan="3">
+                                                <select name="" id="" style="width: 150px;">
+                                                    <option value="">선택하세요</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="btn_area align_c">
+                                    <button type="button" class="btn">검색</button>
+                                </div>
+                            </div>
+                            <!-- //Search End -->
+
+                            <!-- List Start -->
+                            <div class="list_wrap scroll_y">
+                                <div class="list_table ">
+                                    <table>
+                                        <caption>검색 결과</caption>
+                                        <colgroup>
+                                            <col style="width:2%;">
+                                            <col style="width:4%;">
+                                            <col style="width:5%;">
+                                            <col style="width:5%;">
+                                            <col style="width:5%;">
+                                            <col style="width:4%;">
+                                            <col style="width:6%;">
+                                            <col style="width:4%;">
+                                            <col style="width:4%;">
+                                            <col style="width:4%;">
+                                            <col style="width:5%;">
+                                            <col style="width:3%;">
+                                            <col style="width:4%;">
+                                            <col style="width:3%;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    <input type="checkbox" id="" name="choice">
+                                                    <label for="" class="blind">전체선택</label>
+                                                </th>
+                                                <th scope="col">선착순 특가</th>
+                                                <th scope="col">차량 NO.</th>
+                                                <th scope="col">차량 번호</th>
+                                                <th scope="col">이미지</th>
+                                                <th scope="col">상사 명</th>
+                                                <th scope="col">차량 명</th>
+                                                <th scope="col">연식</th>
+                                                <th scope="col">주행거리</th>
+                                                <th scope="col">가격</th>
+                                                <th scope="col">등록일</th>
+                                                <th scope="col">상태</th>
+                                                <th scope="col">딜러 명</th>
+                                                <th scope="col">지역</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="" name="choice">
+                                                    <label for="" class="blind">선택</label>
+                                                </td>
+                                                <td>선착순 특가</td>
+                                                <td>C240506-001</td>
+                                                <td>12가123</td>
+                                                <td><div class="imgbox"><img  src="../images/sub/img_sample.jpg" alt="이미지"></div></td>
+                                                <td>DS오토</td>
+                                                <td><span class="txt_over2">제조사모델명등급</span></td>
+                                                <td>yymmdd</td>
+                                                <td class="align_r">000.000km</td>
+                                                <td class="align_r">000.000</td>
+                                                <td>yyyy-mm-dd</td>
+                                                <td class="state">게시</td>
+                                                <td>홍길동</td>
+                                                <td>서울</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="" name="choice">
+                                                    <label for="" class="blind">선택</label>
+                                                </td>
+                                                <td>선착순 특가</td>
+                                                <td>C240506-001</td>
+                                                <td>12가123</td>
+                                                <td><div class="imgbox"><img  src="../images/sub/img_sample.jpg" alt="이미지"></div></td>
+                                                <td>DS오토</td>
+                                                <td><span class="txt_over2">제조사모델명등급</span></td>
+                                                <td>yymmdd</td>
+                                                <td class="align_r">000.000km</td>
+                                                <td class="align_r">000.000</td>
+                                                <td>yyyy-mm-dd</td>
+                                                <td class="state">게시</td>
+                                                <td>OOO</td>
+                                                <td>서울</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="" name="choice">
+                                                    <label for="" class="blind">선택</label>
+                                                </td>
+                                                <td>선착순 특가</td>
+                                                <td>C240506-001</td>
+                                                <td>12가123</td>
+                                                <td><div class="imgbox"><img  src="../images/sub/img_sample.jpg" alt="이미지"></div></td>
+                                                <td>DS오토</td>
+                                                <td><span class="txt_over2">제조사모델명등급</span></td>
+                                                <td>yymmdd</td>
+                                                <td class="align_r">000.000km</td>
+                                                <td class="align_r">000.000</td>
+                                                <td>yyyy-mm-dd</td>
+                                                <td class="state">게시</td>
+                                                <td>OOO</td>
+                                                <td>서울</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="" name="choice">
+                                                    <label for="" class="blind">선택</label>
+                                                </td>
+                                                <td>-</td>
+                                                <td>CYYMMDD-001</td>
+                                                <td>00가0000</td>
+                                                <td><div class="imgbox"><img  src="../images/sub/img_sample.jpg" alt="이미지"></div></td>
+                                                <td>OOO상사</td>
+                                                <td><span class="txt_over2">제조사모델명등급</span></td>
+                                                <td>yymmdd</td>
+                                                <td class="align_r">000.000km</td>
+                                                <td class="align_r">000.000</td>
+                                                <td>yyyy-mm-dd</td>
+                                                <td class="state">게시</td>
+                                                <td>OOO</td>
+                                                <td>서울</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="" name="choice">
+                                                    <label for="" class="blind">선택</label>
+                                                </td>
+                                                <td>-</td>
+                                                <td>CYYMMDD-001</td>
+                                                <td>00가0000</td>
+                                                <td><div class="imgbox"><img  src="../images/sub/img_sample.jpg" alt="이미지"></div></td>
+                                                <td>OOO상사</td>
+                                                <td><span class="txt_over2">제조사모델명등급</span></td>
+                                                <td>yymmdd</td>
+                                                <td class="align_r">000.000km</td>
+                                                <td class="align_r">000.000</td>
+                                                <td>yyyy-mm-dd</td>
+                                                <td class="state">게시</td>
+                                                <td>OOO</td>
+                                                <td>서울</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="btn_area">
+                                <button type="button" class="btn btn_form2">확인</button>
+                            </div>
+                            <!-- //List Start -->
+                        </div>
+                        <!--//Content End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function closeTabClick() {
+                window.close();
+            }
+
+        </script>
+    </body>
+</html>

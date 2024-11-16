@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+    <div class="w-set">
+        <div class="tit-area">
+            <h2 class="tit hide-m">최근 본 차량</h2>
+        </div>
+        <div class="recommend-wrap">
+            <div class="board-top">
+                <p class="total"><strong th:text="${#lists.size(myRecentCarLists)}">1,500</strong>개의 상품</p>
+            </div>
+            <ul class="result-list">
+                <li th:each="car : ${myRecentCarLists}">
+                    <!-- 선착순 특가 badge -->
+                    <div class="prd-box" th:classappend="${car.shopName.contains('(주)디에스오토')} ? ' badge' : ''">
+                        <div class="prd-thumb">
+                            <label class="btn-like">
+                                <input type="checkbox" checked>
+                                <span class="like-visual">좋아요</span>
+                            </label>
+                            <a th:href="'/product/' + ${car.productId}">
+                                <img th:src="${car.carImageUrl[0].realUrl}" alt="">
+                            </a>
+                        </div>
+                        <a th:href="'/product/' + ${car.productId}" class="prd-info">
+                            <p class="prd-name" th:text="${car.makerName + ' ' + car.modelName + ' ' + car.detailGradeName}">KIA 더 뉴 쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)아 더 뉴
+                                쏘렌토 4세대(MQ4) 디젤 2.2 2WD 노블레스(5인승)</p>
+                            <p class="price-info">
+                                <span class="num-price" th:text="${car.getFormattedCarAmountSale()}">13,700만원</span>
+                            </p>
+                            <p class="detail-info">
+                                <span th:text="${car.carRegYear}">2019/04(2019)</span>
+                                <span th:text="${#numbers.formatInteger(car.carUseKm, 1, 'COMMA') + ' km'}">11,179 km</span>
+                                <span th:text="${car.city}">서울</span>
+                            </p>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</th:block>
+<script layout:fragment="script" th:inline="javascript">
+    //서브 페이지 제목
+    var hdNm = "최근 본 차량";
+</script>
+</body>
+
+</html>
