@@ -1,0 +1,17 @@
+/*
+main.stylesheet
+*/
+
+body{margin:0px;}
+a { text-decoration:none } 
+#header{border:1px solid black;border-spacing: 0px;margin:0px;padding:0px;}
+#navigator, #header ul, li {
+	display:inline;	font-size:20px;margin:0px;padding:0px;
+}
+#logo{margin:0px; padding:0px;}
+#naviBar li{border: 1px solid black; padding:0px 50px 0px 25px;}
+#contents
+#introduce
+#skill
+#history
+#footer
