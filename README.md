@@ -9,4 +9,4 @@ Portfolio 위치 구성도
 05. study - 개발하면서 공부하거나 혹은 자주 사용하는 명령어들을 모아둠.
 
 
-![포폴 구성도](https://github.com/user-attachments/assets/535e8efd-d138-44c4-b28d-54158c419908)
+![포폴 구성도](https://github.com/user-attachments/assets/06dd18cc-2558-48ec-b8b3-559b090d3095)
