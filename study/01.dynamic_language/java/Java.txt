@@ -1,0 +1,54 @@
+
+Java
+
+1. Array List를 Map으로 변경하는 방법
+	public void rstSvcPlnInsert(Map param) throws SQLException{
+			List rptPlnDataList = (List) param.get("rptPlnReqList");
+			Map paramAlyMap = (Map) param.get("alyData");
+			
+
+			String trgterId = (String) paramAlyMap.get("trgterId");
+			String mngNum = (String) paramAlyMap.get("mngNum");
+			String mngSn = (String) paramAlyMap.get("mngSn");
+			
+			if(rptPlnDataList != null){
+				for (int c = 0; c < rptPlnDataList.size(); c++) {
+					HashMap rptPlnData = (HashMap) rptPlnDataList.get(c);
+					rptPlnData.put("trgterId", trgterId);
+					rptPlnData.put("mngNum", mngNum);
+					rptPlnData.put("mngSn", mngSn);
+					
+					boSoApplyMapper.rstSvcPlnInsert(rptPlnData);
+				}
+			}
+			return ;
+	}
+
+
+1. Map을 Array List으로 변경하는 방법
+	List tempList = new ArrayList();
+	for(int i = 0; i< list.size(); i++){
+		Map mergeMap = (Map)list.get(i);
+		String answer = mergeMap.get("answer").toString();
+		
+		classname = "";
+		classname2 = "txtShort2";
+		classname3 = "";
+		if("X".equals(answer)){
+			answer = "";
+		}else{
+			//classname2="txtShort2";
+			if("답변완료".equals(answer)){
+				classname= "notice notice2 bg_c1 fli";
+			}else{
+				classname= "notice notice2 bg_c2 fli";
+			}
+		}
+		
+		mergeMap.put("classname",classname);
+		mergeMap.put("classname2",classname2);
+		mergeMap.put("classname3",classname3);
+		mergeMap.put("answer",answer);
+		
+		tempList.add(mergeMap);
+	}

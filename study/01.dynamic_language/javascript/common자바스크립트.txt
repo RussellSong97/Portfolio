@@ -1,0 +1,57 @@
+common.js 
+
+let userAgent = navigator.userAgent;
+let isMobile = userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i);
+let isMobileMedia = isMobile;
+
+    window.addEventListener("resize", function(event){
+       console.log(window.innerWidth);
+       if(!isMobile){
+           if(window.innerWidth >= 1024){
+               isMobileMedia = true;
+           }else{
+               isMobileMedia = false;
+           }
+       }
+    });
+
+
+
+
+
+
+
+
+
+
+자바 스크립트
+
+var a = document.getElementById("pSpan");
+var b = document.getElementById("consoleSpan");
+
+window.addEventListener('DOMContentLoaded', function(event){
+  document.addEventListener('mousemove', function (e){
+    mousemoveDOMEvent(event);
+    mousemoveEvent(e);
+  });
+  b.innerHTML += "<span>" + event.target + "</span><br />";
+  // console.log(event.target);
+});
+
+const mousemoveDOMEvent = (event) =>{
+  var e = event;
+  var eTrgt = e.target;
+  var eTLoc = eTrgt.location;
+  var eTLAorgin = eTLoc.ancestorOrigins[1];
+  var path = eTLoc.pathname;
+  // console.log(e);
+  // console.log(e.target.location);
+  // console.log("X : " + xVal + ", Y : " + yVal);
+}
+
+const mousemoveEvent = (event) =>{
+  var e = event;
+  var xVal = e.offsetX;
+  var yVal = e.offsetY;
+  console.log("X : " + xVal + " , Y : " + yVal);
+}

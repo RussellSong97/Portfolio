@@ -1,0 +1,8 @@
+
+	<select id="selectTrgterId" parameterType="Map" resultType="java.lang.String">
+		SELECT  MAX(A.TRGTER_ID) AS TRGTER_ID
+		  FROM  TP_INFO A
+		 WHERE  1 = 1
+		   AND  A.TRGTER_NM = #{trgterNm}
+		   AND  A.IHIDNUM = damo.encrypt_var_b64('ENC_KEY', #{ihidnum}, '')
+	</select>

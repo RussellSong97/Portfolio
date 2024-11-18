@@ -1,0 +1,23 @@
+NGINX (윈도우)
+
+nginx 실행
+- nginx가 설치된 폴더로 이동하여 nginx.exe 실행
+- cmd창에서 nginx가 설치된 폴더로 이동하여 아래 커맨드 실행
+   > nginx
+
+nginx 실행 확인
+- cmd창에서 호출하여 아래 커맨드 실행
+   > tasklist /fi "imagename eq nginx.exe"
+
+nginx 종료
+- cmd창에서 nginx가 설치된 폴더로 이동하여 아래 커맨드 실행
+   > nginx -s stop ( 빠른 종료 )
+   > nginx -s quit ( 일반 종료 )
+   > nginx -s reload ( 재기동 )
+   > nginx -s reopen ( 로그파일 다시쓰기 시작 )
+
+
+window에서 ssh 진입하는 방법
+1) powershell에서 하단 줄을 친다.
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+- 그러면 Operation Running이 뜨면서 실행함

@@ -1,0 +1,14 @@
+
+Jquery
+
+Property VS Attribute
+	attribute = html document/file 안에서 존재
+		- 정적으로 값이 변하지 않음
+			- "html" 정보 조회 시 style, src등 사용 (값이 모두 String)
+		- attr()
+		
+	property = html DOM tree 안에서 존재
+		- 동적으로 그 값이 변할 수 있음
+			- "javascript" 정보 조회 시 date, function, boolean 형식등을 사용
+			- 활성화, 체크, 선택 여부를 제어
+		- prop()

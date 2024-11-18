@@ -1,0 +1,895 @@
+	<select id="selectDay" parameterType="map" resultType="egovMap">
+        SELECT 
+               DAY
+             , TRGTER_ID
+             , TRGTER_NM
+             , BRTHDY
+             , PROVDDE
+             , GUIDANCEDE
+             , RESRCE_NM
+             , RESRCE_S_CL_NM
+             , SUPRT_SE_NM
+             , CASE WHEN  SUM(PROVD_AMNT) IS NULL AND SUM(BOOK_VAL) IS NULL THEN '0'
+                    WHEN SUPRT_SE_NM = '현금' THEN DECODE(SUM(BOOK_VAL), NULL , SUM(PROVD_AMNT) , SUM(BOOK_VAL)) ||''
+                    WHEN  SUM(PROVD_AMNT) IS NOT NULL AND SUM(BOOK_VAL) IS NOT NULL THEN SUM(PROVD_AMNT) || ''
+                    WHEN  SUM(PROVD_AMNT) IS NULL AND SUM(BOOK_VAL) IS NOT NULL  THEN ''||SUM(BOOK_VAL)
+                    WHEN  SUM(PROVD_AMNT) IS NOT NULL AND SUM(BOOK_VAL) IS NULL  THEN SUM(PROVD_AMNT)||''
+                ELSE ''
+                END
+                AS PROVD_VAL
+             , CASE WHEN SUPRT_SE_NM = '현금' THEN '원'
+                    ELSE UNIT
+                END AS UNIT
+             , CASE WHEN SUPRT_SE_NM = '현금' THEN NULL
+                    ELSE BOOK_VAL
+                END AS PROVD_AMNT
+             , CASE WHEN SUPRT_SE_NM = '현금' THEN NULL
+                    ELSE SUM(TOTAL_VAL)
+                END AS TOTAL_VAL
+             , PROVD_MBY_NM
+             , BSNS_BS_NM
+             , BSNS_SE_NM
+             , PROVD_CN
+             , COMPT_TY_NM
+             , ATDRC_NM
+             , ADSTRD_NM
+             , INSTT_NM
+             , DIV_NM
+             , REG_NM             
+             , RGSDE
+             , UPDDE
+             , BOOK_VAL
+             , INSTT_ID
+             , RESRCE_NO
+          FROM ( 
+                    SELECT            
+                         TO_CHAR(NVL(T1.PROVDDE,T1.GUIDANCEDE), 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR(T1.PROVDDE, 'YYYY-MM-DD') AS PROVDDE
+                       , TO_CHAR ( T1.GUIDANCEDE , 'YYYY-MM-DD') AS GUIDANCEDE 
+                       , T2.RESRCE_NM 
+                       , T4.RESRCE_S_CL_NM 
+                       , T1.INSTT_ID
+                       , TO_CHAR(T1.RESRCE_NO,'')  AS RESRCE_NO                       
+                       , F_AD_01_CMMNCDNM ('RS0003',T2.RESRCE_SE_CD) AS SUPRT_SE_NM                      
+                       , T2.UNIT
+                       , SUM(T1.PROVD_AMNT) AS PROVD_AMNT
+                       , SUM(T2.BOOK_VAL) AS BOOK_VAL
+                       , SUM(T1.PROVD_AMNT) * SUM(T2.BOOK_VAL) AS TOTAL_VAL
+                       , T3.PROVD_MBY_NM
+                       , '자원관리' AS BSNS_BS_NM
+                       , '자원연계' AS BSNS_SE_NM
+                       , T1.PROVD_CN
+                       , F_AD_01_CMMNCDNM('RS0102',T2.COMPT_TY_CD) AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       ,(SELECT T.INSTT_NM
+                          FROM RS_INSTT_INFO T
+                          WHERE T.INSTT_ID = T1.INSTT_ID )
+                        AS INSTT_NM              
+                       ,(SELECT T.DIV_NM
+                          FROM AD_DIV_INFO T
+                         WHERE T.DIV_CD = M.DIV_CD)  AS DIV_NM 
+                     ,(SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                     , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                     , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                 FROM RS_PROVD T1
+                      JOIN RS_MNG T2
+                        ON(T1.INSTT_ID = T2.INSTT_ID AND T1.RESRCE_NO = T2.RESRCE_NO)
+                      LEFT JOIN RS_PROVD_INFO T3
+                        ON(T2.PROVD_MBY_ID = T3.PROVD_MBY_ID)
+                      LEFT JOIN RS_SCL_CD T4
+                        ON(T1.RESRCE_S_CL_CD= T4.RESRCE_S_CL_CD)
+                      JOIN TP_INFO TP
+                      ON (T1.TRGTER_ID =TP.TRGTER_ID)
+                      LEFT JOIN RS_DESIRE DE
+                       ON (T1.TRGTER_ID =DE.TRGTER_ID AND T1.DESR_SN = DE.DESR_SN)
+                      LEFT JOIN RS_BSNS_INFO BS
+                       ON (T2.BSNS_ID = BS.BSNS_ID)
+                      LEFT JOIN AD_MBER_INFO M
+                       ON (T1.CHRG_ID = M.MBER_ID)                                                                                                                                    
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}    
+                      AND (T1.CARE_SOS_CTR_AT ='N' OR T1.CARE_SOS_CTR_AT IS NULL)
+                      AND (T2.CARE_SOS_CTR_AT ='N' OR T2.CARE_SOS_CTR_AT IS NULL)
+                      AND T2.RESRCE_GUBUN = 'GNRL'
+                   GROUP BY T1.PROVDDE
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TP.BRTHDY
+                       , T1.PROVDDE
+                       , T1.GUIDANCEDE 
+                       , T2.RESRCE_NM 
+                       , T4.RESRCE_S_CL_NM 
+                       , T1.INSTT_ID
+                       , T1.RESRCE_NO                       
+                       , T2.RESRCE_SE_CD                      
+                       , T2.UNIT
+                       , T3.PROVD_MBY_NM
+                       , '' 
+                       , BS.BSNS_SE_CD 
+                       , T1.PROVD_CN
+                       , T2.COMPT_TY_CD
+                       , TP.REAL_ATDRC_CD
+                       , TP.ATDRC_CD
+                       , TP.REAL_ATDRC_CD
+                       , TP.REAL_ADSTRD_CD
+                       , TP.ADSTRD_CD
+                       , TP.REAL_ADSTRD_CD
+                       , M.DIV_CD 
+                       , T1.REG_ID                         
+                       , T1.RGSDE 
+                       , T1.UPDDE                       
+                      
+                  UNION ALL
+                  
+                    SELECT            
+                         TO_CHAR(T1.PROVDDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR(T1.PROVDDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE 
+                       , T1.RESRCE_NM 
+                       , '' AS RESRCE_S_CL_NM 
+                       , T1.INSTT_ID
+                       , NULL AS RESRCE_NO                       
+                       , '' AS SUPRT_SE_NM                      
+                       , '' AS UNIT
+                       , SUM(T1.PROVD_AMNT) AS PROVD_AMNT
+                       , NULL AS BOOK_VAL
+                       , NULL AS TOTAL_VAL
+                       , T1.PROVD_MBY_NM
+                       , '자원관리' AS BSNS_BS_NM
+                       , '자원제공(요약)' AS BSNS_SE_NM
+                       , T1.PROVD_CN
+                       , '연계' AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT T.INSTT_NM FROM RS_INSTT_INFO T WHERE T.INSTT_ID = T1.INSTT_ID ) AS INSTT_NM              
+                       , (SELECT T.DIV_NM FROM AD_DIV_INFO T WHERE T.DIV_CD = M.DIV_CD)  AS DIV_NM 
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR (T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR (T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                 FROM RS_PROVD_SUMMARY  T1
+                      JOIN TP_INFO TP ON (T1.TRGTER_ID =TP.TRGTER_ID)
+                      LEFT JOIN AD_MBER_INFO M ON (T1.REG_ID = M.MBER_ID)
+                   WHERE  1=1
+                       AND T1.TRGTER_ID = #{trgterId}
+                   GROUP BY T1.PROVDDE
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TP.BRTHDY
+                       , T1.PROVDDE
+                       , T1.RESRCE_NM 
+                       , T1.INSTT_ID
+                       , T1.PROVD_MBY_NM
+                       , T1.PROVD_CN
+                       , TP.ATDRC_CD
+                       , TP.REAL_ATDRC_CD
+                       , TP.ADSTRD_CD
+                       , TP.REAL_ADSTRD_CD
+                       , M.DIV_CD 
+                       , T1.REG_ID                         
+                       , T1.RGSDE 
+                       , T1.UPDDE  
+                       
+                  UNION ALL
+                  
+                    SELECT
+                            TO_CHAR(T1.PROVDDE, 'YYYYMMDD') AS DAY
+                           , T1.TRGTER_ID
+                           , TP.TRGTER_NM 
+                           , TO_CHAR(TP.BRTHDY , 'YYYY-MM-DD') AS BRTHDY
+                           , TO_CHAR(T1.PROVDDE, 'YYYY-MM-DD') AS PROVDDE
+                           , '' AS GUIDANCEDE
+                           , T4.RESRCE_NM 
+                           , VR.RESRCE_S_CL_NM 
+                           , T1.INSTT_ID
+                           , '' AS RESRCE_NO  
+                           , F_AD_01_CMMNCDNM ('RS0003', T4.RESRCE_SE_CD)  AS SUPRT_SE_NM
+                           , NVL(T4.UNIT,'') AS UNIT
+                           , 1 AS PROVD_AMNT
+                           , T1.CNTB AS BOOK_VAL
+                           , T1.CNTB AS TOTAL_VAL
+                           , T3.PROVD_MBY_NM
+                           , '자원관리' AS BSNS_BS_NM
+                           , '정기후원' AS BSNS_SE_NM
+                           , T5.PROVD_CN
+                           , F_AD_01_CMMNCDNM('RS0102',T4.COMPT_TY_CD) AS COMPT_TY_NM
+                           , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                           , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                           ,(SELECT T.INSTT_NM
+                               FROM RS_INSTT_INFO T
+                             WHERE T.INSTT_ID = T1.INSTT_ID ) AS INSTT_NM              
+                           ,(SELECT T.DIV_NM
+                              FROM AD_DIV_INFO T
+                             WHERE T.DIV_CD = M.DIV_CD)  AS DIV_NM
+                           ,(SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                           , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                           , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+			            FROM RS_SUPRT_PROVD T1
+			                 LEFT JOIN RS_SUPRT T2
+			                    ON (T1.INSTT_ID = T2.INSTT_ID
+			                        AND T1.RESRCE_NO = T2.RESRCE_NO)
+			                 JOIN TP_INFO TP
+			                    ON (T1.TRGTER_ID = TP.TRGTER_ID)
+			                 LEFT JOIN RS_PROVD_INFO T3
+			                    ON (T2.PROVD_MBY_ID = T3.PROVD_MBY_ID)
+			                 LEFT JOIN RS_MNG T4
+			                    ON (T1.INSTT_ID = T4.INSTT_ID
+			                        AND T1.RESRCE_NO = T4.RESRCE_NO)
+			                 LEFT JOIN RS_PROVD T5
+			                    ON (T4.INSTT_ID = T5.INSTT_ID
+			                        AND T4.RESRCE_NO = T5.RESRCE_NO)
+			                 JOIN RS_MNG_SCL SC
+			                    ON (T1.INSTT_ID = SC.INSTT_ID
+			                        AND T1.RESRCE_NO = SC.RESRCE_NO)
+			                 JOIN V_RS_05_CL_CD VR
+			                    ON (SC.RESRCE_S_CL_CD = VR.RESRCE_S_CL_CD AND SC.RESRCE_D_CL_CD = VR.RESRCE_D_CL_CD )
+			                 LEFT JOIN RS_SCL_CD T6
+			                    ON (T5.RESRCE_S_CL_CD = T6.RESRCE_S_CL_CD)
+			                 LEFT JOIN RS_DESIRE DE
+			                    ON (T1.TRGTER_ID = DE.TRGTER_ID AND T5.DESR_SN = DE.DESR_SN)
+			                 LEFT JOIN AD_MBER_INFO M
+			                    ON (T2.CHRG_ID = M.MBER_ID)
+			                 LEFT JOIN RS_BSNS_INFO BS
+			                    ON (T2.BSNS_ID = BS.BSNS_ID)
+                   WHERE  1=1 
+                      AND T4.RESRCE_GUBUN ='SUPRT'                               
+			          AND T4.RESRCE_SE_CD IN ('02', '03')
+                       AND T1.TRGTER_ID = #{trgterId}
+                  UNION ALL
+                  
+                    SELECT
+                            TO_CHAR(T1.PROVDDE, 'YYYYMMDD') AS DAY
+                           , T1.TRGTER_ID
+                           , TP.TRGTER_NM 
+                           , TO_CHAR(TP.BRTHDY , 'YYYY-MM-DD') AS BRTHDY
+                           , TO_CHAR(T1.PROVDDE, 'YYYY-MM-DD') AS PROVDDE
+                           , '' AS GUIDANCEDE
+                           , '국가형긴급/'||T1.DECSN_CN AS RESRCE_NM 
+                           , '기타(999999)' AS RESRCE_S_CL_NM 
+                           , T1.INSTT_ID
+                           , '' AS RESRCE_NO  
+                           , '현금'  AS SUPRT_SE_NM
+                           , '원' AS UNIT
+                           , 0 AS PROVD_AMNT
+                           , T1.CNTB AS BOOK_VAL
+                           , T1.CNTB AS TOTAL_VAL
+                           , T3.PROVD_MBY_NM
+                           , '자원관리' AS BSNS_BS_NM
+                           , '국가형긴급지원' AS BSNS_SE_NM
+                           , T5.PROVD_CN
+                           , F_AD_01_CMMNCDNM('RS0102',T4.COMPT_TY_CD) AS COMPT_TY_NM
+                           , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                           , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                           ,(SELECT T.INSTT_NM
+                               FROM RS_INSTT_INFO T
+                             WHERE T.INSTT_ID = T1.INSTT_ID ) AS INSTT_NM              
+                           ,(SELECT T.DIV_NM
+                              FROM AD_DIV_INFO T
+                             WHERE T.DIV_CD = M.DIV_CD)  AS DIV_NM
+                           ,(SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                           , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                           , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                      FROM RS_SUPRT_PROVD T1
+                        JOIN RS_SUPRT T2
+                           ON (T1.INSTT_ID = T2.INSTT_ID
+                          AND T1.RESRCE_NO = T2.RESRCE_NO)
+                        JOIN RS_INFO INF
+                           ON (T1.TRGTER_ID =INF.TRGTER_ID)
+                        JOIN TP_INFO TP
+                          ON (T1.TRGTER_ID =TP.TRGTER_ID)                                                                                  
+                        LEFT JOIN  RS_PROVD_INFO T3 
+                          ON (T2.PROVD_MBY_ID = T3.PROVD_MBY_ID)
+                        LEFT JOIN  RS_MNG T4 
+                           ON ( T1.INSTT_ID = T4.INSTT_ID
+                          AND T1.RESRCE_NO = T4.RESRCE_NO)
+                        LEFT JOIN  RS_PROVD T5
+                           ON(T4.INSTT_ID = T5.INSTT_ID AND T4.RESRCE_NO = T5.RESRCE_NO)
+                        LEFT JOIN RS_SCL_CD T6
+                           ON(T5.RESRCE_S_CL_CD= T6.RESRCE_S_CL_CD) 
+                        LEFT JOIN RS_DESIRE DE
+                           ON (T1.TRGTER_ID =DE.TRGTER_ID AND T5.DESR_SN = DE.DESR_SN)
+		                LEFT JOIN AD_MBER_INFO M
+        		           ON (T2.CHRG_ID = M.MBER_ID)
+		                LEFT JOIN RS_BSNS_INFO BS
+        		           ON (T2.BSNS_ID = BS.BSNS_ID)
+                   WHERE  1=1 
+                      AND INF.EMG_TP_AT = 'Y'                          
+			          AND T2.SUPRT_SE_CD = '02'
+                       AND T1.TRGTER_ID = #{trgterId}    
+                  UNION ALL
+                  
+                    SELECT
+                            TO_CHAR(T1.PROVDDE, 'YYYYMMDD') AS DAY
+                           , T1.TRGTER_ID
+                           , TP.TRGTER_NM 
+                           , TO_CHAR(TP.BRTHDY , 'YYYY-MM-DD') AS BRTHDY
+                           , TO_CHAR(T1.PROVDDE, 'YYYY-MM-DD') AS PROVDDE
+                           , '' AS GUIDANCEDE
+                           , '학비지원/'||T1.SCHUL_NM AS RESRCE_NM 
+                           , '교육비지원(707802)' AS RESRCE_S_CL_NM 
+                           , T1.INSTT_ID
+                           , '' AS RESRCE_NO  
+                           , F_AD_01_CMMNCDNM ('RS0003', T2.SUPRT_SE_CD)  AS SUPRT_SE_NM
+                           , NVL(T4.UNIT,'') AS UNIT
+                           , 0 AS PROVD_AMNT
+                           , T1.CNTB AS BOOK_VAL
+                           , T1.CNTB AS TOTAL_VAL
+                           , T3.PROVD_MBY_NM
+                           , '자원관리' AS BSNS_BS_NM
+                           , '자치구특화 지원' AS BSNS_SE_NM
+                           , T5.PROVD_CN
+                           , F_AD_01_CMMNCDNM('RS0102',T4.COMPT_TY_CD) AS COMPT_TY_NM
+                           , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                           , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                           ,(SELECT T.INSTT_NM
+                               FROM RS_INSTT_INFO T
+                             WHERE T.INSTT_ID = T1.INSTT_ID ) AS INSTT_NM              
+                           ,(SELECT T.DIV_NM
+                              FROM AD_DIV_INFO T
+                             WHERE T.DIV_CD = M.DIV_CD)  AS DIV_NM
+                           ,(SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                           , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                           , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                      FROM RS_SUPRT_PROVD T1
+                        JOIN RS_SUPRT T2
+                           ON (T1.INSTT_ID = T2.INSTT_ID
+                          AND T1.RESRCE_NO = T2.RESRCE_NO)
+                        JOIN RS_INFO INF
+                           ON (T1.TRGTER_ID =INF.TRGTER_ID)
+                        JOIN TP_INFO TP
+                          ON (T1.TRGTER_ID =TP.TRGTER_ID)                                                                                  
+                        LEFT JOIN  RS_PROVD_INFO T3 
+                          ON (T2.PROVD_MBY_ID = T3.PROVD_MBY_ID)
+                        LEFT JOIN  RS_MNG T4 
+                           ON ( T1.INSTT_ID = T4.INSTT_ID
+                          AND T1.RESRCE_NO = T4.RESRCE_NO)
+                        LEFT JOIN  RS_PROVD T5
+                           ON(T4.INSTT_ID = T5.INSTT_ID AND T4.RESRCE_NO = T5.RESRCE_NO)
+                        LEFT JOIN RS_SCL_CD T6
+                           ON(T5.RESRCE_S_CL_CD= T6.RESRCE_S_CL_CD) 
+                        LEFT JOIN RS_DESIRE DE
+                           ON (T1.TRGTER_ID =DE.TRGTER_ID AND T5.DESR_SN = DE.DESR_SN)
+		                LEFT JOIN AD_MBER_INFO M
+        		           ON (T2.CHRG_ID = M.MBER_ID)
+		                LEFT JOIN RS_BSNS_INFO BS
+        		           ON (T2.BSNS_ID = BS.BSNS_ID)
+                   WHERE  1=1 
+                      AND INF.SCHXPN_TP_AT = 'Y'              
+			          AND T2.SUPRT_SE_CD = '03'
+                       AND T1.TRGTER_ID = #{trgterId}    
+                   
+                  UNION ALL     
+                  (                  
+                  SELECT TO_CHAR (T1.SPORTDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR(T1.SPORTDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE
+                       , '서울형긴급/'||CASE WHEN  SPORT_IEM_CD IN ('303607','202302','404604','505701','606702','707703','808704','909705','999999') THEN  F_AD_01_CMMNCDNM('SE0002', SPORT_IEM_CD)
+                                                     WHEN  SPORT_IEM_CD IN ('606602') THEN  F_AD_01_CMMNCDNM('SE0002', SPORT_IEM_CD)||'('||LTRIM(F_VW_01_SPLITCDNM(APL_CN, 'SE0013'), ',') ||')'     
+                                                     ELSE ''
+                                                     END    
+                          AS RESRCE_NM
+                       , CASE  WHEN  T1.SPORT_IEM_CD  IN ('303607') THEN '생계비지원(303607)'
+                                  WHEN  T1.SPORT_IEM_CD  IN ('202302') THEN '주거보증금지원(202304)'
+                                  WHEN  T1.SPORT_IEM_CD  IN ('404604') THEN '의료비지원(404604)'   
+                                  WHEN  T1.SPORT_IEM_CD  IN ('505701') THEN '교육비지원(707802)'   
+                                  WHEN  T1.SPORT_IEM_CD  IN ('707703') THEN '출산비용지원(303614)'   
+                                  WHEN  T1.SPORT_IEM_CD  IN ('808704') THEN '장제급여지원(606504)'   
+                                  WHEN  T1.SPORT_IEM_CD  IN ('909705') THEN '전기요금지원(303612)'      
+                        ELSE '기타(999999)' END  AS RESRCE_S_CL_NM 
+                       , '' AS INSTT_ID
+                       , '' AS RESRCE_NO  
+                       ,F_AD_01_CMMNCDNM ('RS0003', '03')  AS SUPRT_SE_NM 
+                       , '' AS UNIT
+                       , 0 AS PROVD_AMNT
+                       , T1.SPRMNY AS BOOK_VAL
+                       , T1.SPORT_TME * T1.SPRMNY AS TOTAL_VAL
+                       , '' AS PROVD_MBY_NM
+                       , '서울형긴급복지' AS BSNS_BS_NM
+                       , '' AS BSNS_SE_NM
+                       , '' AS PROVD_CN
+                       , '연계' AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT (SELECT INSTT_NM FROM RS_INSTT_INFO WHERE INSTT_ID = AD.INSTT_ID) FROM AD_CHRG AD WHERE AD.CHRG_ID = T1.REG_ID) AS INSTT_NM
+                       , (SELECT(SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD)  FROM AD_MBER_INFO MB WHERE MB.MBER_ID = T1.REG_ID) AS DIV_NM
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                    FROM SE_SPORT_INFO T1
+                    JOIN TP_INFO TP
+                        ON (T1.TRGTER_ID =TP.TRGTER_ID)
+		            JOIN SE_HSHLD_MBER B ON T1.TRGTER_ID = B.TRGTER_ID
+                    JOIN SE_HSHLD C ON B.HSHLD_REGNO = C.HSHLD_REGNO
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}    
+                  UNION                       
+                  SELECT TO_CHAR (T1.SPORTDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR(T1.SPORTDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE
+                       , '서울형긴급/'||CASE WHEN  SPORT_IEM_CD IN ('303607','202302','404604','505701','606702','707703','808704','909705','999999') THEN  F_AD_01_CMMNCDNM('SE0002', SPORT_IEM_CD)
+                                          WHEN  SPORT_IEM_CD IN ('606602') THEN  F_AD_01_CMMNCDNM('SE0002', SPORT_IEM_CD)||'('||LTRIM(F_VW_01_SPLITCDNM(APL_CN, 'SE0013'), ',') ||')'     
+                                          ELSE ''
+                          	              END    
+                          AS RESRCE_NM
+                       , CASE  WHEN  T1.SPORT_IEM_CD  IN ('303607') THEN '생계비지원(303607)'
+                               WHEN  T1.SPORT_IEM_CD  IN ('202302') THEN '주거보증금지원(202304)'
+                               WHEN  T1.SPORT_IEM_CD  IN ('404604') THEN '의료비지원(404604)'   
+                               WHEN  T1.SPORT_IEM_CD  IN ('505701') THEN '교육비지원(707802)'   
+        	                   WHEN  T1.SPORT_IEM_CD  IN ('707703') THEN '출산비용지원(303614)'   
+                               WHEN  T1.SPORT_IEM_CD  IN ('808704') THEN '장제급여지원(606504)'   
+                               WHEN  T1.SPORT_IEM_CD  IN ('909705') THEN '전기요금지원(303612)'      
+		                       ELSE '기타(999999)' END  AS RESRCE_S_CL_NM 
+                       , '' AS INSTT_ID
+                       , '' AS RESRCE_NO  
+                       ,F_AD_01_CMMNCDNM ('RS0003', '03')  AS SUPRT_SE_NM 
+                       , '' AS UNIT
+                       , 0 AS PROVD_AMNT
+                       , T1.SPRMNY AS BOOK_VAL
+                       , T1.SPORT_TME * T1.SPRMNY AS TOTAL_VAL
+                       , '' AS PROVD_MBY_NM
+                       , '서울형긴급복지' AS BSNS_BS_NM
+                       , '' AS BSNS_SE_NM
+                       , '' AS PROVD_CN
+                       , '연계' AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT (SELECT INSTT_NM FROM RS_INSTT_INFO WHERE INSTT_ID = AD.INSTT_ID) FROM AD_CHRG AD WHERE AD.CHRG_ID = T1.REG_ID) AS INSTT_NM
+                       , (SELECT(SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD)  FROM AD_MBER_INFO MB WHERE MB.MBER_ID = T1.REG_ID) AS DIV_NM
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                    FROM SE_SPORT_INFO T1
+                    JOIN TP_INFO TP
+                        ON (T1.TRGTER_ID =TP.TRGTER_ID)
+	                JOIN SE_HSHLD_MBER B ON T1.TRGTER_ID = B.TRGTER_ID
+    	            JOIN SE_HSHLD C ON B.HSHLD_REGNO = C.HSHLD_REGNO
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}    
+                 )
+                   UNION ALL
+                  SELECT
+                        TO_CHAR (T1.PROVDDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR (T1.PROVDDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE
+                       , T2.THNG_NM AS RESRCE_NM 
+                       , '영양보충제지원(404513)' AS RESRCE_S_CL_NM 
+                       , '' AS INSTT_ID
+                       , '' AS RESRCE_NO  
+                       , '현물'  AS SUPRT_SE_NM 
+                       , T2.UNIT AS UNIT
+                       , T1.PROVD_AMNT AS PROVD_AMNT
+                       , T2.AMNT AS BOOK_VAL
+                       , 1  AS TOTAL_VAL
+                       , TO_CHAR (T1.PROVD_AMNT,'') AS PROVD_MBY_NM
+                       , '어르신방문건강' AS BSNS_BS_NM
+                       , '' AS BSNS_SE_NM
+                       , '' AS PROVD_CN
+                       , '연계' AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT (SELECT INSTT_NM FROM RS_INSTT_INFO WHERE INSTT_ID = AD.INSTT_ID) FROM AD_CHRG AD WHERE AD.CHRG_ID = T1.REG_ID) AS INSTT_NM
+                       , (SELECT(SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD)  FROM AD_MBER_INFO MB WHERE MB.MBER_ID = T1.REG_ID) AS DIV_NM
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                    FROM    VH_OP_THNG_PROVD T1
+                     LEFT JOIN VH_OP_THNG_LST T2
+                         ON (T1.THNG_NO = T2.THNG_NO AND T1.INSTT_ID = T2.INSTT_ID)
+                     JOIN TP_INFO TP
+                         ON (T1.TRGTER_ID =TP.TRGTER_ID)
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}    
+                   UNION ALL
+                  SELECT
+                        TO_CHAR (T1.WRTDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR (T1.WRTDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE
+                       , '보건소내 연계'
+                       			 ||'/'||DECODE(CLNIC_VISIT_AT,NULL,'','' || '방문진료') 
+                                 ||DECODE(CLNIC_COME_AT,NULL,'','/' || '내소진료')
+                                 ||DECODE(HT_PRHSMK_PRGM_AT,NULL,'','/' || '금연프로그램')
+                                 ||DECODE(HT_TMPR_PRGM_AT,NULL,'','/' || '절주프로그램')
+                                 ||DECODE(HT_BDY_ACT_PRGM_AT,NULL,'','/' || '신체활동프로그램')
+                                 ||DECODE(HT_NTR_PRGM_AT,NULL,'','/' || '영양프로그램')
+                                 ||DECODE(HT_OBEST_PRGM_AT,NULL,'','/' || '비만프로그램')
+                                 ||DECODE(HT_LF_HT_AT,NULL,'','/' || '소생활권건강생태계')
+                                 ||DECODE(CH_HHPRS_AT,NULL,'','/' || '고혈압교실')
+                                 ||DECODE(CH_GLYCSR_AT,NULL,'','/' || '당뇨교실')
+                                 ||DECODE(CH_ETC_AT,NULL,'','/' || CH_ETC_OPN)
+                                 ||DECODE(OR_COME_AT,NULL,'','/' || '내소구강관리')
+                                 ||DECODE(OR_DNTR_AT,NULL,'','/' || '노인의치보철사업')
+                                 ||DECODE(OR_FLRN_AT,NULL,'','/' || '노인불소도포스케일링')
+                                 ||DECODE(OR_ETC_AT,NULL,'','/' || '구강보건기타')
+                                 ||DECODE(OP_OTHMG_MDEXMN_AT,NULL,'','/' || '노인안검진및개안수술')
+                                 ||DECODE(OP_IMBCLTY_MDEXMN_AT,NULL,'','/' || '치매치료관리비지원')
+                                 ||DECODE(ETC_MCP_AT,NULL,'','/' || '의료비(암환자, 희귀난치성질환)지원')
+                                 ||DECODE(ETC_FREE_SURGR_AT,NULL,'','/' || '무료수술지원')
+                                 ||DECODE(ETC_ERYND_INSPCT_AT,NULL,'','/' || '각종검사')
+                                 ||DECODE(ETC_EASING_MDLC_AT,NULL,'','/' || '완화의료서비스')
+                                 ||DECODE(ETC_ETC_AT,NULL,'','/' || ETC_ETC_OPN)              
+                                 ||DECODE(MO_IRON_AT,NULL,'','/' || '철분제엽산제지원')
+                                 ||DECODE(MO_BFPRTN_FE_AT,NULL,'','/' || '산전진료비지원')
+                                 ||DECODE(MO_HELPER_AT,NULL,'','/' || '산모신생아도우미서비스')
+                                 ||DECODE(MO_MTBL_AT,NULL,'','/' || '선천성대사이상검사')
+                                 ||DECODE(MO_IRFNT_AT,NULL,'','/' || '미숙아선천성 이상아 의료비 지원')
+                                 ||DECODE(MO_ARSCR_AT,NULL,'','/' || '신생아청각선별검사')
+                                 ||DECODE(MO_NTR_AT,NULL,'','/' || '신생아영양플러스사업')
+                                 ||DECODE(IN_VACNTN_AT,NULL,'','/' || '영유아국가필수예방접종')
+                                 ||DECODE(IN_MDEXMN_AT,NULL,'','/' || '영유아건강검진')
+                                 ||DECODE(IN_NTR_AT,NULL,'','/' || '영유아영양플러스사업')
+                         AS RESRCE_NM
+                       , '건강관리(404103)' AS RESRCE_S_CL_NM 
+                       , '' AS INSTT_ID
+                       , '' AS RESRCE_NO  
+                       , '프로그램'  AS SUPRT_SE_NM 
+                       , '' AS UNIT
+                       , 0 AS PROVD_AMNT
+                       , 0 AS BOOK_VAL
+                       , 0  AS TOTAL_VAL
+                       , '' AS PROVD_MBY_NM
+                       , '어르신방문건강' AS BSNS_BS_NM
+                       , '' AS BSNS_SE_NM
+                       , '' AS PROVD_CN
+                       , '연계' AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT (SELECT INSTT_NM FROM RS_INSTT_INFO WHERE INSTT_ID = AD.INSTT_ID) FROM AD_CHRG AD WHERE AD.CHRG_ID = T1.REG_ID) AS INSTT_NM
+                       , (SELECT(SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD)  FROM AD_MBER_INFO MB WHERE MB.MBER_ID = T1.REG_ID) AS DIV_NM
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                    FROM    VH_OP_LNSVC_RCORDI T1
+                     JOIN TP_INFO TP
+                         ON (T1.TRGTER_ID =TP.TRGTER_ID)
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}    
+                   UNION ALL
+                  SELECT
+                        TO_CHAR (T1.WRTDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR (T1.WRTDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE
+                       , '보건소외 연계'
+                       			 ||DECODE(HT_MDLCNST_AT,NULL,'','/' || '의료기관') 
+                                 ||DECODE(HT_IMBCLTY_SPORT_AT,NULL,'','/' || '치매지원센터')
+                                 ||DECODE(HT_MENTAL_AT,NULL,'','/' || '정신건강복지센터')
+                                 ||DECODE(HT_SUCDE_PREVNT_AT,NULL,'','/' || '자살예방센터')
+                                 ||DECODE(HT_ALCHLSM_AT,NULL,'','/' || '중독관리통합지원센터')                                 
+                                 ||DECODE(HT_ETC_OPN,NULL,'','/' || HT_ETC_OPN)
+                                 ||DECODE(WF_MULTI_CULT_SPORT_AT,NULL,'','/' || '다문화가족지원센터')
+                                 ||DECODE(WF_ODSN_DWL_AT,NULL,'','/' || '노인주거복지시설')
+                                 ||DECODE(WF_NRTR_SPORT_AT,NULL,'','/' || '보육교육비지원')
+                                 ||DECODE(WF_SITR_COMPTDE,NULL,'','/' || '아이돌보미지원')
+                                 ||DECODE(WF_DERAM_START_AT,NULL,'','/' || '드림스타트')
+                                 ||DECODE(WF_ODSNCARE_AT,NULL,'','/' || '노인돌봄서비스')
+                                 ||DECODE(WF_DSPSN_SPORT_AT,NULL,'','/' || '장애인활동지원제도')
+                                 ||DECODE(WF_HSKP_SPORT_AT,NULL,'','/' || '가사(밑반찬,도시락)및 간병서비스 지원')
+                                 ||DECODE(WF_BATH_SPORT_AT,NULL,'','/' || '목욕서비스 지원')
+                                 ||DECODE(WF_DWL_ENVRN_AT,NULL,'','/' || '주거환경개선')
+                                 ||DECODE(WF_LRN_CCH_AT,NULL,'','/' || '학습(한국어 교육 등) 지도')
+                                 ||DECODE(WF_INTRPR_AT,NULL,'','/' || '통번역 서비스')
+                                 ||DECODE(WF_VHCLE_SPORT_AT,NULL,'','/' || '차량 및 말벗지원, 외출보조')
+                                 ||DECODE(WF_VOUCH_AT,NULL,'','/' || '기타 바우처 사업')
+                                 ||DECODE(WF_ETC_AT,NULL,'','/' || WF_ETC_OPN)
+                         AS RESRCE_NM 
+                       , (CASE WHEN (HT_MDLCNST_AT = 'Y' 
+                        		OR HT_IMBCLTY_SPORT_AT = 'Y'
+                       			OR HT_MENTAL_AT = 'Y' 
+                       			OR HT_SUCDE_PREVNT_AT = 'Y'
+                       			OR HT_MENTAL_AT = 'Y'
+                       			OR HT_SUCDE_PREVNT_AT = 'Y'
+                       			OR HT_ALCHLSM_AT = 'Y'
+                       			OR HT_ETC_AT = 'Y')  THEN '건강관리(404103)'
+                       			ELSE ''
+                       			END) 
+                                 ||DECODE(WF_MULTI_CULT_SPORT_AT,NULL,'','/' || '기타(999999)')
+                                 ||DECODE(WF_ODSN_DWL_AT,NULL,'','/' || '시설입소지원(202201)')
+                                 ||DECODE(WF_NRTR_SPORT_AT,NULL,'','/' || '보육료지원(707803)')
+                                 ||DECODE(WF_SITR_COMPTDE,NULL,'','/' || '보육서비스(707204)')
+                                 ||DECODE(WF_DERAM_START_AT,NULL,'','/' || '보육서비스(707204)')
+                                 ||DECODE(WF_ODSNCARE_AT,NULL,'','/' || '노인돌봄서비스(606402)')
+                                 ||DECODE(WF_DSPSN_SPORT_AT,NULL,'','/' || '장애인활동지원(303312)')
+                                 ||DECODE(WF_HSKP_SPORT_AT,NULL,'','/' || '가사간병서비스(303101)')
+                                 ||DECODE(WF_BATH_SPORT_AT,NULL,'','/' || '목욕서비스 지원')
+                                 ||DECODE(WF_DWL_ENVRN_AT,NULL,'','/' || '목욕(303402)')
+                                 ||DECODE(WF_LRN_CCH_AT,NULL,'','/' || '다문화 한국어교육(707304)')
+                                 ||DECODE(WF_INTRPR_AT,NULL,'','/' || '외국인통역서비스(303309)')
+                                 ||DECODE(WF_VHCLE_SPORT_AT,NULL,'','/' || '동행지원(303303)')
+                                 ||DECODE(WF_VOUCH_OPN,NULL,'','/' || WF_VOUCH_OPN)
+                                 ||DECODE(WF_ETC_OPN,NULL,'','/' || WF_ETC_OPN) 
+                         AS RESRCE_S_CL_NM 
+                       , '' AS INSTT_ID
+                       , '' AS RESRCE_NO  
+                       , '프로그램'  AS SUPRT_SE_NM 
+                       , '' AS UNIT
+                       , 0 AS PROVD_AMNT
+                       , 0 AS BOOK_VAL
+                       , 0  AS TOTAL_VAL
+                       , '' AS PROVD_MBY_NM
+                       , '어르신방문건강' AS BSNS_BS_NM
+                       , '' AS BSNS_SE_NM
+                       , '' AS PROVD_CN
+                       , '연계' AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT (SELECT INSTT_NM FROM RS_INSTT_INFO WHERE INSTT_ID = AD.INSTT_ID) FROM AD_CHRG AD WHERE AD.CHRG_ID = T1.REG_ID) AS INSTT_NM
+                       , (SELECT(SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD)  FROM AD_MBER_INFO MB WHERE MB.MBER_ID = T1.REG_ID) AS DIV_NM
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                    FROM VH_OP_LNSVC_RCORDO T1
+                     JOIN TP_INFO TP
+                         ON (T1.TRGTER_ID =TP.TRGTER_ID)                                                                                                                                    
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}    
+                     UNION ALL
+                  SELECT
+                        TO_CHAR (T1.VISITDE, 'YYYYMMDD') AS DAY
+                       , T1.TRGTER_ID
+                       , TP.TRGTER_NM 
+                       , TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY
+                       , TO_CHAR (T1.VISITDE, 'YYYY-MM-DD') AS PROVDDE
+                       , '' AS GUIDANCEDE
+                       , '보건소 연계안내 '||DECODE(LINK_PROGRM1_CD,NULL,'','' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM1_CD)) 
+                           ||DECODE(LINK_PROGRM2_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM2_CD)) 
+                           ||DECODE(LINK_PROGRM3_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM3_CD))
+                           ||DECODE(LINK_PROGRM4_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM4_CD))
+                           ||DECODE(LINK_PROGRM5_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM5_CD))
+                           ||DECODE(LINK_PROGRM6_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM6_CD))
+                           ||DECODE(LINK_PROGRM7_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM7_CD))
+                           ||DECODE(LINK_PROGRM8_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM8_CD))
+                           ||DECODE(LINK_PROGRM9_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM9_CD))
+                           ||DECODE(LINK_PROGRM10_CD,NULL,'',' / ' ||F_AD_01_CMMNCDNM('VHN023', LINK_PROGRM10_CD))
+                         AS RESRCE_NM 
+                       , DECODE(LINK_PROGRM1_CD,'04','외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM1_CD,'05','다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM1_CD IN ('07','14','17') THEN '보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM1_CD,'18','양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM1_CD,'19','장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM1_CD,'22','기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM1_CD IN ('02','06','08','23','21','01') THEN '건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM1_CD,'09','의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM1_CD,'11','산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM1_CD,'12','선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM1_CD,'13','산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM1_CD,'15','임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM1_CD IN ('16','03') THEN '출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM1_CD,'24','우울증상담(505303)','')
+                       
+                       ||DECODE(LINK_PROGRM2_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM2_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM2_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM2_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM2_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM2_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM2_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM2_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM2_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM2_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM2_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM2_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM2_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM2_CD,'24','/우울증상담(505303)','')                                                         
+
+                       ||DECODE(LINK_PROGRM3_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM3_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM3_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM3_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM3_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM3_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM3_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM3_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM3_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM3_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM3_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM3_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM3_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM3_CD,'24','/우울증상담(505303)','')                         
+                       
+                       ||DECODE(LINK_PROGRM4_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM4_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM4_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM4_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM4_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM4_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM4_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM4_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM4_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM4_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM4_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM4_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM4_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM4_CD,'24','/우울증상담(505303)','')                                                           
+
+                       ||DECODE(LINK_PROGRM5_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM5_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM5_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM5_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM5_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM5_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM5_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM5_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM5_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM5_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM5_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM5_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM5_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM5_CD,'24','/우울증상담(505303)','')                                                           
+                         
+                       ||DECODE(LINK_PROGRM6_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM6_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM6_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM6_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM6_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM6_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM6_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM6_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM6_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM6_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM6_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM6_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM6_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM6_CD,'24','/우울증상담(505303)','')                                                           
+                       
+                       ||DECODE(LINK_PROGRM7_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM7_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM7_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM7_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM7_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM7_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM7_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM7_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM7_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM7_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM7_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM7_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM7_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM7_CD,'24','/우울증상담(505303)','')                                                           
+
+                       ||DECODE(LINK_PROGRM8_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM8_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM8_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM8_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM8_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM8_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM8_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM8_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM8_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM8_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM8_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM8_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM8_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM8_CD,'24','/우울증상담(505303)','')                                                           
+
+                       ||DECODE(LINK_PROGRM9_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM9_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM9_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM9_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM9_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM9_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM9_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM9_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM9_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM9_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM9_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM9_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM9_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM9_CD,'24','/우울증상담(505303)','')                
+                       
+                       ||DECODE(LINK_PROGRM10_CD,'04','/외국인통역서비스(303309)','') 
+                       ||DECODE(LINK_PROGRM10_CD,'05','/다문화 한국어교육(707304)','')
+                       ||CASE WHEN LINK_PROGRM10_CD IN ('07','14','17') THEN '/보육서비스(707204)' ELSE '' END
+                       ||DECODE(LINK_PROGRM10_CD,'18','/양육상담(707102)','')
+                       ||DECODE(LINK_PROGRM10_CD,'19','/장애인활동지원(303312)','')
+                       ||DECODE(LINK_PROGRM10_CD,'22','/기타(999999)','')
+                       ||CASE WHEN LINK_PROGRM10_CD IN ('02','06','08','23','21','01') THEN '/건강관리(404103)' ELSE '' END
+                       ||DECODE(LINK_PROGRM10_CD,'09','/의료비지원(404604)','')
+                       ||DECODE(LINK_PROGRM10_CD,'11','/산모신생아돌봄서비스(606405)','')
+                       ||DECODE(LINK_PROGRM10_CD,'12','/선천성대사이상검사(404206)','')
+                       ||DECODE(LINK_PROGRM10_CD,'13','/산전후건강관리(404401)','')
+                       ||DECODE(LINK_PROGRM10_CD,'15','/임산부영유아영양보충(404404)','')
+                       ||CASE WHEN LINK_PROGRM10_CD IN ('16','03') THEN '/출산용품지원(303512)' ELSE '' END
+                       ||DECODE(LINK_PROGRM10_CD,'24','/우울증상담(505303)','')                                                           
+                       AS RESRCE_S_CL_NM 
+                       , '' AS INSTT_ID
+                       , '' AS RESRCE_NO  
+                       , '프로그램'  AS SUPRT_SE_NM 
+                       , '' AS UNIT
+                       , 0 AS PROVD_AMNT
+                       , 0 AS BOOK_VAL
+                       , 0  AS TOTAL_VAL
+                       , '' AS PROVD_MBY_NM
+                       , '서울아기건강첫걸음' AS BSNS_BS_NM
+                       , '' AS BSNS_SE_NM
+                       , '' AS PROVD_CN
+                       , CASE WHEN  T1.LINK_1_AT  = 'Y' 
+                                   OR  T1.LINK_2_AT  = 'Y' 
+                                   OR  T1.LINK_3_AT  = 'Y' 
+                                   OR  T1.LINK_4_AT  = 'Y' 
+                                   OR  T1.LINK_5_AT  = 'Y' 
+                                   OR  T1.LINK_6_AT  = 'Y' 
+                                   OR  T1.LINK_7_AT  = 'Y' 
+                                   OR  T1.LINK_8_AT  = 'Y' 
+                                   OR  T1.LINK_9_AT  = 'Y' 
+                                   OR  T1.LINK_10_AT  = 'Y' 
+                         THEN '연계' ELSE '안내' END  AS COMPT_TY_NM
+                       , F_AD_01_CMMNCDNM('AD0001', DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD)) AS ATDRC_NM
+                       , F_AD_01_CMMNCDNM(DECODE(TP.REAL_ATDRC_CD,NULL,TP.ATDRC_CD,TP.REAL_ATDRC_CD), DECODE(TP.REAL_ADSTRD_CD,NULL,TP.ADSTRD_CD,TP.REAL_ADSTRD_CD)) AS ADSTRD_NM
+                       , (SELECT (SELECT INSTT_NM FROM RS_INSTT_INFO WHERE INSTT_ID = AD.INSTT_ID) FROM AD_CHRG AD WHERE AD.CHRG_ID = T1.REG_ID) AS INSTT_NM
+                       , (SELECT(SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD)  FROM AD_MBER_INFO MB WHERE MB.MBER_ID = T1.REG_ID) AS DIV_NM
+                       , (SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = T1.REG_ID) AS REG_NM                         
+                       , TO_CHAR ( T1.RGSDE , 'YYYY-MM-DD') AS RGSDE
+                       , TO_CHAR ( T1.UPDDE , 'YYYY-MM-DD') AS UPDDE
+                    FROM    VH_PWNM_SOC T1
+                     JOIN TP_INFO TP
+                         ON (T1.TRGTER_ID =TP.TRGTER_ID)                                                                                                                                    
+                   WHERE  1=1 
+                       AND T1.TRGTER_ID = #{trgterId}
+        
+			UNION ALL
+                   
+			SELECT
+				TO_CHAR (SSR.DT_FR, 'YYYYMMDD')||'~'||TO_CHAR (SSR.DT_TO, 'YYYYMMDD') AS DAY,
+				SSR.TRGTER_ID AS TRGTER_ID,
+				TP.TRGTER_NM , 
+				TO_CHAR(TP.BRTHDY, 'YYYY-MM-DD') AS BRTHDY,
+				TO_CHAR (SSR.DT_FR, 'YYYY-MM-DD')||'~'||TO_CHAR (SSR.DT_TO, 'YYYY-MM-DD') AS PROVDDE,
+				'' AS GUIDANCEDE,                           
+				T1.RESRCE_NM AS RESRCE_NM,
+				(SELECT RESRCE_S_CL_NM FROM V_RS_05_CL_CD WHERE RESRCE_D_CL_CD = S1.RESRCE_D_CL_CD) AS RESRCE_S_CL_NM,
+				SR.REQ_INSTT_ID AS INSTT_ID,
+				TO_CHAR (T1.RESRCE_NO, NULL) AS RESRCE_NO,
+				F_AD_01_CMMNCDNM ('RS0003',T1.RESRCE_SE_CD) AS SUPRT_SE_NM,
+				CASE WHEN SR.REQ_SVC_CD IN ('01','03','04') THEN '시간' WHEN SR.REQ_SVC_CD = '02' THEN '일' WHEN SR.REQ_SVC_CD = '05' THEN '회' ELSE '' END AS UNIT,
+				CASE WHEN SR.REQ_SVC_CD IN ('01','03','04') THEN NVL(DECODE(SSR.YR_TTL,'연중 수시', 0, ssr.yr_ttl), 0)/60 ELSE NVL(DECODE(SSR.YR_TTL,'연중 수시', 0, ssr.yr_ttl), 0)/1 END AS PROVD_AMNT,
+				NULL AS BOOK_VAL,
+				NVL(SSR.TTL_AMT, 0) - NVL(SSR.SLF_TTL_AMT, 0) AS TOTAL_VAL,                           
+				T6.PROVD_MBY_NM AS PROVD_MBY_NM,
+				'돌봄SOS센터' AS BSNS_BS_NM,
+				F_AD_01_CMMNCDNM('SO0002', SR.REQ_SVC_CD) AS BSNS_SE_NM,
+				SSR.SVC_OPN AS PROVD_CN,
+				'연계' AS COMPT_TY_NM,
+				F_AD_01_CMMNCDNM('AD0001', SI.MNG_ATDRC_CD) AS ATDRC_NM,
+				F_AD_01_CMMNCDNM(SI.MNG_ATDRC_CD, SI.MNG_ADSTRD_CD) AS ADSTRD_NM,
+				'' AS INSTT_NM,
+				(SELECT (SELECT DIV_NM FROM AD_DIV_INFO WHERE DIV_CD = MB.DIV_CD) FROM AD_MBER_INFO MB WHERE MB.MBER_ID = SSR.REG_ID) AS DIV_NM,
+				(SELECT MBER_NM FROM AD_MBER_INFO WHERE MBER_ID = SSR.REG_ID) AS REG_NM,
+				TO_CHAR (SSR.RGSDE, 'YYYY-MM-DD') AS RGSDE,
+				TO_CHAR (SSR.UPDDE, 'YYYY-MM-DD') AS UPDDE
+			FROM SOS_SERVICE_RST SSR
+                JOIN TP_INFO TP ON (SSR.TRGTER_ID = TP.TRGTER_ID)
+                JOIN SOS_INFO SI ON (SI.TRGTER_ID = SSR.TRGTER_ID AND SI.MNG_NUM = SSR.MNG_NUM AND SI.MNG_SN = SSR.MNG_SN)
+                JOIN SOS_REQUEST SR ON (SR.TRGTER_ID = SSR.TRGTER_ID AND SR.MNG_NUM = SSR.MNG_NUM AND SR.MNG_SN = SSR.MNG_SN AND SR.REQ_SN = SSR.REQ_SN)
+                JOIN SOS_REQUEST_PRC_LST SRPL ON (SRPL.TRGTER_ID = SSR.TRGTER_ID AND SRPL.MNG_NUM = SSR.MNG_NUM AND SRPL.MNG_SN = SSR.MNG_SN AND SRPL.REQ_SN = SSR.REQ_SN AND SRPL.RPT_SN = SSR.RPT_SN AND SRPL.REQ_SVC_PRG = 'P16')
+                LEFT JOIN RS_MNG T1 ON (SR.RESRCE_INSTT_ID = T1.INSTT_ID AND SR.RESRCE_NO = T1.RESRCE_NO AND T1.CARE_SOS_CTR_AT = 'Y' AND T1.COMPT_TY_CD = '01')
+                LEFT JOIN RS_INS_PROVD_MNG T7 ON (T1.INSTT_ID = T7.INSTT_ID AND T1.PROVD_MBY_ID = T7.PROVD_MBY_ID)
+                LEFT JOIN RS_PROVD_INFO T6 ON (T7.PROVD_MBY_ID = T6.PROVD_MBY_ID)
+                LEFT JOIN RS_MNG_SCL S1 ON (T1.INSTT_ID = S1.INSTT_ID AND T1.RESRCE_NO = S1.RESRCE_NO AND S1.RPRSNTV_AT = 'Y')
+			WHERE 1 = 1
+				AND SSR.TRGTER_ID = #{trgterId}    
+
+		)
+        GROUP BY DAY,TRGTER_ID, TRGTER_NM , BRTHDY ,PROVDDE, GUIDANCEDE , RESRCE_NM , RESRCE_S_CL_NM , INSTT_ID , RESRCE_NO , SUPRT_SE_NM
+               , UNIT,PROVD_MBY_NM, BOOK_VAL, BSNS_BS_NM , BSNS_SE_NM, PROVD_CN, COMPT_TY_NM, ATDRC_NM, ADSTRD_NM, INSTT_NM, DIV_NM,REG_NM,RGSDE,UPDDE
+        ORDER BY DAY DESC , BSNS_SE_NM
+	</select>

@@ -1,0 +1,50 @@
+
+MyBatis
+
+	1. if문
+		조건문(test="")에는 데이터 타입이 객체인 것만 들어가는 것 같음...
+		 - 조건에서 확인할 게 null, 숫자, 배열일 경우 
+			- null	: <if test="test == null"></if>
+			- 숫자	: <if test="test == '01'"></if>
+			- 배열	: <if test="test != null"></if>
+		 - 조건에서 확인할 게 문자열일 경우
+			- 문자열	: <if test="test eq 'Y'.toString()"></if>
+					  배열명.equals('Y')n
+	
+	2. choose문
+		if문과 달리 자유로움		
+		  <choose>
+				<when test='svcCdListYn == "N" '>
+					<foreach collection="svcCdList" item="item" open="AND (SR.REQ_SVC_CD IN (" close="))" separator=",">
+					   #{item}
+					</foreach>	
+				</when>
+				<when test='svcCdListYn == "Y" '>
+					<foreach collection="svcCdList" item="item" open="AND (SR.REQ_SVC_CD IS NULL OR TRIM(SR.REQ_SVC_CD) IN (" close="))" separator=",">
+					   #{item}
+				   </foreach>
+				</when>
+		  </choose>
+		  <choose>
+			  <when test='schSoVwYn == "Y" '>
+				  AND instr(ITG.RPT_FN, '03') > 0
+			  </when>
+			  <when test='schSoVwYn == "N" '>
+				  AND ITG.RPT_FN IS NULL
+			  </when>
+			  <when test='schSoVwYn == "01"'>
+				  AND instr(ITG.RPT_FN, '01') > 0
+			  </when>
+			  <when test='schSoVwYn == "02"'>
+				  AND instr(ITG.RPT_FN, '02') > 0
+			  </when>
+			  <when test='schSoVwYn == "other"'>
+				  AND regexp_like (ITG.RPT_FN, '01|02')
+			  </when>
+		  </choose>
+	
+	3. test문
+		조건문에서 값이 없을 표현할 때
+		 - 파라미터 값 == "" 만 해도 충분
+		 List 형태에서 null 값이 들어갈 경우
+		 - svcCdList.equals("")를 해야 먹힘.

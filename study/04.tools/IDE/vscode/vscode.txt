@@ -1,0 +1,29 @@
+vscode 다중윈도우사용
+
+https://velog.io/@altmshfkgudtjr/VS-Code-%EB%8B%A4%EC%A4%91-Window%EB%A1%9C-%EC%9E%91%EC%97%85%ED%95%98%EA%B8%B0
+
+open -a Google\ Chrome --args --disable-web-security
+출처: https://wizardee.tistory.com/189 [JUST DO IT~!!  :):티스토리]
+
+[Ctrl] + [Shift] + [P] -> 작업 영역 : 새창에 작업 영역으로 복제
+
+
+오라클 클라우드
+identity > Compartments > compartment details > dsautonetworks 
+
+vscode 단축키
+
+1. 파일 찾기
+[Ctrl] + [P]
+2. 파일내용 검색
+[Shift] + [Ctrl] + [F]
+3. 프로젝트 실행
+[F5]
+4. 프로젝트 중지
+[Shift] + [F5]
+5. 자동 import
+[Alt] + [Shift] + [O]
+
+
+¬에 대한 char :
+The ¬ character is also used in AppleScript to force a long line of code to break onto the next line. On a French Mac keyboard, you get it with Option (alt) "L", which has a kind of logic to it :)

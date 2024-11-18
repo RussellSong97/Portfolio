@@ -1,0 +1,23 @@
+도커
+
+
+기본 명령어
+	- docker [오브젝트|system] prune [옵션]
+
+
+
+
+서버 용량 확보
+1) 이미지
+	- docker image prune [옵션]
+2) 컨테이너 (stop 상태인 컨테이너 삭제)
+	- docker container prune
+3) 볼륨(로그로 예상)
+	- docker volume prune
+4) 네트워크
+	- docker network prune
+5) 시스템(1~4까지 일괄삭제)
+	1) stop된 컨테이너
+	2) 미사용 네트워크
+	3) dangling images		:  <none>:<none>처럼 이름도 태그도 없는 이미지
+	4) dangling build cache	: 이전에 빌드할 때 캐싱한 이미지 (가장 용량 차지)

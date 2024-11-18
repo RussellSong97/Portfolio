@@ -1,0 +1,17 @@
+인텔리제이
+
+명령어 실행
+1) 실행 : shift + F10
+2) DEBUG : shift + F9
+3) 설정 : alt + shift + F10
+
+
+인텔리제이 MySQL DB
+
+- DUMP
+1) 해당 스키마의 TABLE 우클릭
+2) [EXPORT DUMP... ]
+3) 1번째는 MYSQL SERVER
+  - C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe 선택
+4) 어디에 저장할 건지 경로 선택
+ - D:\work\programs\MySQL\DUMP

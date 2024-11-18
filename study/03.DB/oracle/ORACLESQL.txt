@@ -1,0 +1,236 @@
+
+ORACLE SQL
+
+	1. 중복 찾기
+		SELECT
+			A.untact_application_cd,
+			COUNT(*)
+		FROM
+			crisis_family_support_HIST A
+		GROUP BY
+			A.untact_application_cd
+		HAVING COUNT(*) > 1 ;
+
+	2. 통계 내기
+		-- 서비스결과보고서접수 진행이력이 포함
+
+WITH  WITH_LABEL AS (
+                    SELECT ATDRC_CD
+						   , ADSTRD_CD
+                        FROM (
+							  SELECT CD                        AS ATDRC_CD
+								   , CDNM                      AS ATDRC_NM
+								FROM AD_CMMN_CD
+							   WHERE GROUP_CD = 'AD0001'
+ 
+							) A
+						INNER JOIN (
+								SELECT ADSTRD_CD
+									, GROUP_CD
+									, ADSTRD_NM
+								FROM (
+										SELECT GROUP_CD AS GROUP_CD
+											, CD       AS ADSTRD_CD
+											, CDNM     AS ADSTRD_NM
+										FROM AD_CMMN_CD)
+										)B
+							ON(A.ATDRC_CD =B.GROUP_CD)
+					)
+        ,WITH_SOS_RE_REQUEST AS (
+							SELECT MNG_ATDRC_CD
+							, MNG_ADSTRD_CD
+							, RCP_PROVD_MBY_ID
+							, REQ_SVC_CD
+							, ROW_NUMBER() OVER(PARTITION BY RCP_PROVD_MBY_ID,MNG_ATDRC_CD ORDER BY MAX(RGSDE) DESC) AS PRSN_CNT
+							, ROW_NUMBER() OVER(PARTITION BY RCP_PROVD_MBY_ID,MNG_ATDRC_CD , REQ_SVC_CD ORDER BY MAX(RGSDE) DESC) AS REQ_PRSN_CNT
+								FROM (
+									SELECT SO.TRGTER_ID
+									, SO.MNG_NUM
+									, SO.MNG_SN
+									, SO.REQ_SN
+									, SO.MNG_ATDRC_CD
+									, SO.MNG_ADSTRD_CD
+									, SO.RCP_PROVD_MBY_ID
+									, SO.RCP_INSTT_ID
+									, SO.RGSDE
+									, SO.REQ_SVC_CD
+									, SO.APL_DT
+										FROM (
+											SELECT SI.TRGTER_ID
+											, SI.MNG_NUM
+											, SI.MNG_SN
+											, SR.REQ_SN
+											, NVL(SI.MNG_ATDRC_CD,'99999')  AS MNG_ATDRC_CD
+											, NVL(SI.MNG_ADSTRD_CD,'99999') AS MNG_ADSTRD_CD
+											, SR.RCP_INSTT_ID
+											, SR.RCP_PROVD_MBY_ID
+											, SI.APL_DT
+											, SR.RGSDE
+											, SR.REQ_SVC_CD
+												FROM SOS_REQUEST SR
+												INNER JOIN SOS_INFO SI
+													ON (SI.TRGTER_ID =  SR.TRGTER_ID
+														  AND SI.MNG_NUM = SR.MNG_NUM
+														  AND SI.MNG_SN = SR.MNG_SN)
+												LEFT JOIN SOS_REQUEST_PRC_LST SRPL
+													ON (SRPL.TRGTER_ID =  SR.TRGTER_ID
+														  AND SRPL.MNG_NUM = SR.MNG_NUM
+														  AND SRPL.MNG_SN = SR.MNG_SN
+														  AND SRPL.REQ_SN = SR.REQ_SN )
+											WHERE SR.REQ_PRE_AT = 'N'
+												AND SR.REQ_SVC_CD NOT IN ('06', '07')
+												AND SR.DEL_AT ='N'
+												AND  RCP_PROVD_MBY_ID IS NOT NULL
+												AND SRPL.REQ_SVC_PRG IN('P16')					 
+											AND SI.APL_DT BETWEEN TO_DATE( '2022-01-01' /**P*/, 'YYYY-MM-DD') AND TO_DATE( '2022-06-23' /**P*/, 'YYYY-MM-DD')
+											) SO
+										)
+								GROUP BY RCP_PROVD_MBY_ID
+								, REQ_SVC_CD
+								, MNG_ATDRC_CD
+								, MNG_ADSTRD_CD
+								)
+        ,WITH_RS_ALL_PROVD AS (
+							SELECT MNG_ATDRC_CD
+									, MNG_ADSTRD_CD
+									, COUNT(*) AS ACP_CNT
+									FROM (
+										SELECT NVL(RI.ATDRC_CD,'99999')  AS MNG_ATDRC_CD
+											, NVL(RI.ADSTRD_CD,'99999') AS MNG_ADSTRD_CD
+											, RPM.INSTT_ID
+											, RPM.PROVD_MBY_ID
+												FROM RS_INS_PROVD_MNG RPM
+												INNER JOIN RS_PROVD_INFO RPI
+													ON (RPM.PROVD_MBY_ID = RPI.PROVD_MBY_ID)
+												INNER JOIN RS_INSTT_INFO RI
+													ON (RI.INSTT_ID = RPM.INSTT_ID)
+											WHERE RPM.CARE_SOS_CTR_AT =   'Y'					 
+											)
+								GROUP BY MNG_ATDRC_CD , MNG_ADSTRD_CD
+								)
+
+
+
+
+
+        SELECT MNG_ATDRC_CD
+        , CASE WHEN SORT1 = 1 AND SORT1 = 1 THEN '합계'
+        WHEN MNG_ATDRC_CD = '99999' THEN '기타'
+        ELSE F_AD_01_CMMNCDNM('AD0001', MNG_ATDRC_CD)
+        END AS DIV
+        , ACP_CNT
+        , PRSN_CNT
+        , ROUND(DECODE(ACP_CNT, 0, 0, NULL, 0, (PRSN_CNT/ ACP_CNT) * 100) ,1) AS PRSN_CNT_PRSN
+        , PRSN_FMY_PRSN
+        , PRSN01_FMY_PRSN
+        , PRSN02_FMY_PRSN
+        , PRSN03_FMY_PRSN
+        , PRSN04_FMY_PRSN
+        , PRSN05_FMY_PRSN
+        FROM (
+        SELECT PR_ALL.MNG_ATDRC_CD
+        , NVL(PR_ALL.ACP_CNT,0)               AS ACP_CNT
+        , NVL(WSR.PRSN_CNT,0)                 AS PRSN_CNT
+        , NVL(WSR.PRSN01_FMY_PRSN,0)          AS PRSN01_FMY_PRSN
+        , NVL(WSR.PRSN02_FMY_PRSN,0)          AS PRSN02_FMY_PRSN
+        , NVL(WSR.PRSN03_FMY_PRSN,0)          AS PRSN03_FMY_PRSN
+        , NVL(WSR.PRSN04_FMY_PRSN,0)          AS PRSN04_FMY_PRSN
+        , NVL(WSR.PRSN05_FMY_PRSN,0)          AS PRSN05_FMY_PRSN
+        , (NVL(WSR.PRSN01_FMY_PRSN,0)
+            + NVL(WSR.PRSN02_FMY_PRSN,0)
+            + NVL(WSR.PRSN03_FMY_PRSN,0)
+            + NVL(WSR.PRSN04_FMY_PRSN,0)
+            + NVL(WSR.PRSN05_FMY_PRSN,0))     AS PRSN_FMY_PRSN
+        , WSR.SORT1
+        , PR_ALL.SORT2
+        FROM (
+        SELECT NVL(MNG_ATDRC_CD,'99')  AS MNG_ATDRC_CD
+        -- , NVL(REQ_PRSN_CNT,0)  AS REQ_PRSN_CNT
+        , SUM(PRSN_CNT)           AS PRSN_CNT
+        , SUM(PRSN01_FMY_PRSN) 	  AS PRSN01_FMY_PRSN
+        , SUM(PRSN02_FMY_PRSN)     AS PRSN02_FMY_PRSN
+        , SUM(PRSN03_FMY_PRSN)     AS PRSN03_FMY_PRSN
+        , SUM(PRSN04_FMY_PRSN)     AS PRSN04_FMY_PRSN
+        , SUM(PRSN05_FMY_PRSN)     AS PRSN05_FMY_PRSN
+        , GROUPING(MNG_ATDRC_CD)   AS SORT1
+        FROM (
+        SELECT CASE WHEN WSR.PRSN_CNT ='1' THEN 1
+        ELSE 0
+        END AS PRSN_CNT
+        , WL.ATDRC_CD 										 AS MNG_ATDRC_CD
+        , WSR.REQ_SVC_CD
+        -- , WSR.REQ_PRSN_CNT                                     AS REQ_PRSN_CNT
+        , CASE WHEN WSR.REQ_SVC_CD = '01' AND WSR.REQ_PRSN_CNT ='1' THEN 1 ELSE 0 END AS PRSN01_FMY_PRSN
+        , CASE WHEN WSR.REQ_SVC_CD = '02' AND WSR.REQ_PRSN_CNT ='1' THEN 1 ELSE 0 END AS PRSN02_FMY_PRSN
+        , CASE WHEN WSR.REQ_SVC_CD = '03' AND WSR.REQ_PRSN_CNT ='1' THEN 1 ELSE 0 END AS PRSN03_FMY_PRSN
+        , CASE WHEN WSR.REQ_SVC_CD = '04' AND WSR.REQ_PRSN_CNT ='1' THEN 1 ELSE 0 END AS PRSN04_FMY_PRSN
+        , CASE WHEN WSR.REQ_SVC_CD = '05' AND WSR.REQ_PRSN_CNT ='1' THEN 1 ELSE 0 END AS PRSN05_FMY_PRSN
+        FROM WITH_LABEL WL
+        LEFT JOIN WITH_SOS_RE_REQUEST WSR
+        ON (WL.ATDRC_CD = WSR.MNG_ATDRC_CD
+        AND WL.ADSTRD_CD = WSR.MNG_ADSTRD_CD)
+        )
+        GROUP BY ROLLUP (MNG_ATDRC_CD)
+        ) WSR
+        RIGHT JOIN (
+        SELECT NVL(MNG_ATDRC_CD,'99') AS MNG_ATDRC_CD
+        , SUM(ACP_CNT)           AS ACP_CNT
+        , GROUPING(MNG_ATDRC_CD) AS SORT2
+        FROM (
+        SELECT PR_ALL.ACP_CNT
+        , WL.ATDRC_CD        AS MNG_ATDRC_CD
+        FROM WITH_LABEL WL
+        LEFT JOIN WITH_RS_ALL_PROVD PR_ALL
+        ON (WL.ATDRC_CD = PR_ALL.MNG_ATDRC_CD
+        AND WL.ADSTRD_CD = PR_ALL.MNG_ADSTRD_CD)
+        )
+        GROUP BY ROLLUP (MNG_ATDRC_CD)
+        ) PR_ALL
+        ON (WSR.MNG_ATDRC_CD = PR_ALL.MNG_ATDRC_CD
+        AND WSR.SORT1 = PR_ALL.SORT2)
+        )
+        ORDER BY SORT2 DESC
+        , MNG_ATDRC_CD ASC;
+		
+		
+		
+	3.뷰 만들기
+	  CREATE OR REPLACE FORCE EDITIONABLE VIEW "LWIS"."V_RS_05_CL_CD" ("RESRCE_L_CL_CD", "RESRCE_L_CL_NM", "RESRCE_M_CL_CD", "RESRCE_M_CL_NM", "RESRCE_S_CL_CD", "RESRCE_S_CL_NM", "RESRCE_D_CL_CD", "RESRCE_D_CL_NM", "RESRCE_M_CL_CN", "RESRCE_S_CL_CN", "RESRCE_D_CL_CN", "SEARCH_EX", "USE_AT") AS 
+	  SELECT A.RESRCE_L_CL_CD,
+				A.RESRCE_L_CL_NM,
+				B.RESRCE_M_CL_CD,
+				B.RESRCE_M_CL_NM,
+				C.RESRCE_S_CL_CD,
+				C.RESRCE_S_CL_NM,
+				D.RESRCE_D_CL_CD,
+				D.RESRCE_D_CL_NM,
+				B.RESRCE_CL_CN AS RESRCE_M_CL_CN,
+				C.RESRCE_CL_CN AS RESRCE_S_CL_CN,
+				D.RESRCE_CL_CN AS RESRCE_D_CL_CN,
+				D.SEARCH_EX_CN AS SEARCH_EX,
+				DECODE (
+				   A.USE_AT,
+				   'Y', DECODE (B.USE_AT,
+								'Y', DECODE (C.USE_AT, 'Y', D.USE_AT, 'N'),
+								'N'),
+				   'N')
+				   AS USE_AT                                /* 상위코드의 사용여부에 따른다. */
+		   FROM RS_LCL_CD A
+				JOIN RS_MCL_CD B ON (A.RESRCE_L_CL_CD = B.RESRCE_L_CL_CD)
+				JOIN RS_SCL_CD C ON (B.RESRCE_M_CL_CD = C.RESRCE_M_CL_CD)
+				JOIN RS_DCL_CD D ON (C.RESRCE_S_CL_CD = D.RESRCE_S_CL_CD)
+	   ORDER BY A.SORT_ORDR,
+				B.SORT_ORDR,
+				C.SORT_ORDR,
+				D.SORT_ORDR
+	 ;
+	 
+	 
+	 
+	 4. 오라클 버전 찾기
+		select * from v$version;
+
+
+
+
+

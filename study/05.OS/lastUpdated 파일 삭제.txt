@@ -1,0 +1,7 @@
+lastUpdated 파일 삭제
+
+D:
+
+cd D:\work\Dev_programs\maven\repository
+for /r %i in (*Updated.properties) do del %i
+for /r %i in (*.lastUpdated) do del %i
