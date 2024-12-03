@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component inherit-compiler-output="true" inheritJdk="true">
-	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$/../../../ctr-ui-main">
-		<excludeFolder url="file://$MODULE_DIR$/../../../ctr-ui-main/.gradle"/>
-		<excludeFolder url="file://$MODULE_DIR$/../../../ctr-ui-main/build"/>
-		<excludeFolder url="file://$MODULE_DIR$/../../../ctr-ui-main"/>
-	</contentEntry>
-</component>
